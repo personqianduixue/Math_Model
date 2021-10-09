@@ -1,0 +1,346 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>LVQ&#31070;&#32463;&#32593;&#32476;&#30340;&#39044;&#27979;&#8212;&#8212;&#20154;&#33080;&#35782;&#21035;</title>
+      <meta name="generator" content="MATLAB 7.8">
+      <meta name="date" content="2010-11-16">
+      <meta name="m-file" content="chapter22_lvq"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head>
+   <body>
+      <div class="content">
+         <h1>LVQ&#31070;&#32463;&#32593;&#32476;&#30340;&#39044;&#27979;&#8212;&#8212;&#20154;&#33080;&#35782;&#21035;</h1>
+         <!--introduction-->
+         <p><html> <table border="0" width="600px" id="table1">	<tr>		<td><b><font size="2">该案例作者申明：</font></b></td>	</tr>	<tr><td><span
+            class="comment"><font size="2">1：本人长期驻扎在此<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html"><font color="#0000FF">板块</font></a>里，对该案例提问，做到有问必答。本套书籍官方网站为：<a
+            href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></span></td></tr><tr>		<td><font size="2">2：点此<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">从当当预定本书</a>：<a
+            href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">《Matlab神经网络30个案例分析》</a>。</td></tr><tr>	<td><p
+            class="comment"></font><font size="2">3</font><font size="2">：此案例有配套的教学视频，视频下载方式<a href="http://video.ourmatlab.com/vbuy.html">video.ourmatlab.com/vbuy.html</a></font><font
+            size="2">。 </font></p></td>	</tr>			<tr>		<td><span class="comment"><font size="2">		4：此案例为原创案例，转载请注明出处（《Matlab神经网络30个案例分析》）。</font></span></td>	</tr>		<tr>		<td><span
+            class="comment"><font size="2">		5：若此案例碰巧与您的研究有关联，我们欢迎您提意见，要求等，我们考虑后可以加在案例里。</font></span></td>	</tr>		</table> </html>
+         </p>
+         <!--/introduction-->
+         <h2>Contents</h2>
+         <div>
+            <ul>
+               <li><a href="#1">&#28165;&#38500;&#29615;&#22659;&#21464;&#37327;</a></li>
+               <li><a href="#2">&#20154;&#33080;&#29305;&#24449;&#21521;&#37327;&#25552;&#21462;</a></li>
+               <li><a href="#3">&#35757;&#32451;&#38598;/&#27979;&#35797;&#38598;&#20135;&#29983;</a></li>
+               <li><a href="#4">&#21019;&#24314;LVQ&#32593;&#32476;</a></li>
+               <li><a href="#5">&#35757;&#32451;&#32593;&#32476;</a></li>
+               <li><a href="#6">&#20154;&#33080;&#35782;&#21035;&#27979;&#35797;</a></li>
+               <li><a href="#7">&#32467;&#26524;&#26174;&#31034;</a></li>
+            </ul>
+         </div>
+         <h2>&#28165;&#38500;&#29615;&#22659;&#21464;&#37327;<a name="1"></a></h2><pre class="codeinput">clear <span class="string">all</span>
+clc
+</pre><h2>&#20154;&#33080;&#29305;&#24449;&#21521;&#37327;&#25552;&#21462;<a name="2"></a></h2>
+         <p>&#20154;&#25968;</p><pre class="codeinput">M = 10;
+<span class="comment">% &#20154;&#33080;&#26397;&#21521;&#31867;&#21035;&#25968;</span>
+N = 5;
+<span class="comment">% &#29305;&#24449;&#21521;&#37327;&#25552;&#21462;</span>
+pixel_value = feature_extraction(M,N);
+</pre><h2>&#35757;&#32451;&#38598;/&#27979;&#35797;&#38598;&#20135;&#29983;<a name="3"></a></h2>
+         <p>&#20135;&#29983;&#22270;&#20687;&#24207;&#21495;&#30340;&#38543;&#26426;&#24207;&#21015;</p><pre class="codeinput">rand_label = randperm(M*N);
+<span class="comment">% &#20154;&#33080;&#26397;&#21521;&#26631;&#21495;</span>
+direction_label = repmat(1:N,1,M);
+<span class="comment">% &#35757;&#32451;&#38598;</span>
+train_label = rand_label(1:30);
+P_train = pixel_value(train_label,:)';
+Tc_train = direction_label(train_label);
+T_train = ind2vec(Tc_train);
+<span class="comment">% &#27979;&#35797;&#38598;</span>
+test_label = rand_label(31:end);
+P_test = pixel_value(test_label,:)';
+Tc_test = direction_label(test_label);
+</pre><h2>&#21019;&#24314;LVQ&#32593;&#32476;<a name="4"></a></h2><pre class="codeinput"><span class="keyword">for</span> i = 1:5
+    rate{i} = length(find(Tc_train == i))/30;
+<span class="keyword">end</span>
+net = newlvq(minmax(P_train),20,cell2mat(rate),0.01,<span class="string">'learnlv1'</span>);
+<span class="comment">% &#35774;&#32622;&#35757;&#32451;&#21442;&#25968;</span>
+net.trainParam.epochs = 100;
+net.trainParam.goal = 0.001;
+net.trainParam.lr = 0.1;
+</pre><h2>&#35757;&#32451;&#32593;&#32476;<a name="5"></a></h2><pre class="codeinput">net = train(net,P_train,T_train);
+</pre><h2>&#20154;&#33080;&#35782;&#21035;&#27979;&#35797;<a name="6"></a></h2><pre class="codeinput">T_sim = sim(net,P_test);
+Tc_sim = vec2ind(T_sim);
+result = [Tc_test;Tc_sim]
+</pre><pre class="codeoutput">
+result =
+
+  Columns 1 through 16
+
+     2     3     3     5     2     1     4     5     5     3     2     1     1     4     1     1
+     2     3     3     5     2     1     4     5     5     3     2     1     1     4     1     1
+
+  Columns 17 through 20
+
+     5     2     5     4
+     5     2     5     4
+
+</pre><h2>&#32467;&#26524;&#26174;&#31034;<a name="7"></a></h2>
+         <p>&#35757;&#32451;&#38598;&#20154;&#33080;&#26631;&#21495;</p><pre class="codeinput">strain_label = sort(train_label);
+htrain_label = ceil(strain_label/N);
+<span class="comment">% &#35757;&#32451;&#38598;&#20154;&#33080;&#26397;&#21521;&#26631;&#21495;</span>
+dtrain_label = strain_label - floor(strain_label/N)*N;
+dtrain_label(dtrain_label == 0) = N;
+<span class="comment">% &#26174;&#31034;&#35757;&#32451;&#38598;&#22270;&#20687;&#24207;&#21495;</span>
+disp(<span class="string">'&#35757;&#32451;&#38598;&#22270;&#20687;&#20026;&#65306;'</span> );
+<span class="keyword">for</span> i = 1:30
+    str_train = [num2str(htrain_label(i)) <span class="string">'_'</span><span class="keyword">...</span>
+               num2str(dtrain_label(i)) <span class="string">'  '</span>];
+    fprintf(<span class="string">'%s'</span>,str_train)
+    <span class="keyword">if</span> mod(i,5) == 0
+        fprintf(<span class="string">'\n'</span>);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="comment">% &#27979;&#35797;&#38598;&#20154;&#33080;&#26631;&#21495;</span>
+stest_label = sort(test_label);
+htest_label = ceil(stest_label/N);
+<span class="comment">% &#27979;&#35797;&#38598;&#20154;&#33080;&#26397;&#21521;&#26631;&#21495;</span>
+dtest_label = stest_label - floor(stest_label/N)*N;
+dtest_label(dtest_label == 0) = N;
+<span class="comment">% &#26174;&#31034;&#27979;&#35797;&#38598;&#22270;&#20687;&#24207;&#21495;</span>
+disp(<span class="string">'&#27979;&#35797;&#38598;&#22270;&#20687;&#20026;&#65306;'</span>);
+<span class="keyword">for</span> i = 1:20
+    str_test = [num2str(htest_label(i)) <span class="string">'_'</span><span class="keyword">...</span>
+              num2str(dtest_label(i)) <span class="string">'  '</span>];
+    fprintf(<span class="string">'%s'</span>,str_test)
+    <span class="keyword">if</span> mod(i,5) == 0
+        fprintf(<span class="string">'\n'</span>);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="comment">% &#26174;&#31034;&#35782;&#21035;&#20986;&#38169;&#22270;&#20687;</span>
+error = Tc_sim - Tc_test;
+location = {<span class="string">'&#24038;&#26041;'</span> <span class="string">'&#24038;&#21069;&#26041;'</span> <span class="string">'&#21069;&#26041;'</span> <span class="string">'&#21491;&#21069;&#26041;'</span> <span class="string">'&#21491;&#26041;'</span>};
+<span class="keyword">for</span> i = 1:length(error)
+    <span class="keyword">if</span> error(i) ~= 0
+        <span class="comment">% &#35782;&#21035;&#20986;&#38169;&#22270;&#20687;&#20154;&#33080;&#26631;&#21495;</span>
+        herror_label = ceil(test_label(i)/N);
+        <span class="comment">% &#35782;&#21035;&#20986;&#38169;&#22270;&#20687;&#20154;&#33080;&#26397;&#21521;&#26631;&#21495;</span>
+        derror_label = test_label(i) - floor(test_label(i)/N)*N;
+        derror_label(derror_label == 0) = N;
+        <span class="comment">% &#22270;&#20687;&#21407;&#22987;&#26397;&#21521;</span>
+        standard = location{Tc_test(i)};
+        <span class="comment">% &#22270;&#20687;&#35782;&#21035;&#32467;&#26524;&#26397;&#21521;</span>
+        identify = location{Tc_sim(i)};
+        str_err = strcat([<span class="string">'&#22270;&#20687;'</span> num2str(herror_label) <span class="string">'_'</span><span class="keyword">...</span>
+                        num2str(derror_label) <span class="string">'&#35782;&#21035;&#20986;&#38169;.'</span>]);
+        disp([str_err <span class="string">'(&#27491;&#30830;&#32467;&#26524;&#65306;&#26397;&#21521;'</span> standard<span class="keyword">...</span>
+                      <span class="string">'&#65307;&#35782;&#21035;&#32467;&#26524;&#65306;&#26397;&#21521;'</span> identify <span class="string">')'</span>]);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="comment">% &#26174;&#31034;&#35782;&#21035;&#29575;</span>
+disp([<span class="string">'&#35782;&#21035;&#29575;&#20026;&#65306;'</span> num2str(length(find(error == 0))/20*100) <span class="string">'%'</span>]);
+
+web <span class="string">browser</span> <span class="string">http://www.matlabsky.com/thread-11193-1-1.html</span>
+</pre><pre class="codeoutput">&#35757;&#32451;&#38598;&#22270;&#20687;&#20026;&#65306;
+1_1  1_2  1_3  1_4  1_5  
+2_2  2_4  3_1  3_2  3_4  
+4_1  4_3  4_5  5_1  5_5  
+6_3  6_4  6_5  7_1  7_2  
+7_3  7_4  8_2  8_3  8_4  
+8_5  9_3  9_4  10_2  10_3  
+&#27979;&#35797;&#38598;&#22270;&#20687;&#20026;&#65306;
+2_1  2_3  2_5  3_3  3_5  
+4_2  4_4  5_2  5_3  5_4  
+6_1  6_2  7_5  8_1  9_1  
+9_2  9_5  10_1  10_4  10_5  
+&#35782;&#21035;&#29575;&#20026;&#65306;100%
+</pre><p><html> <table width="656" align="left" >	<tr><td align="center"><p><font size="2"><a href="http://video.ourmatlab.com/">Matlab神经网络30个案例分析</a></font></p><p
+            align="left"><font size="2">相关论坛：</font></p><p align="left"><font size="2">《Matlab神经网络30个案例分析》官方网站：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></p><p
+            align="left"><font size="2">Matlab技术论坛：<a href="http://www.matlabsky.com">www.matlabsky.com</a></font></p><p align="left"><font
+            size="2">M</font><font size="2">atlab函数百科：<a href="http://www.mfun.la">www.mfun.la</a></font></p><p align="left"><font size="2">Matlab中文论坛：<a
+            href="http://www.ilovematlab.com">www.ilovematlab.com</a></font></p></td>	</tr></table> </html>
+         </p>
+         <p class="footer"><br>
+            Published with MATLAB&reg; 7.8<br></p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+%% LVQ神经网络的预测——人脸识别
+%
+% <html>
+% <table border="0" width="600px" id="table1">	<tr>		<td><b><font size="2">该案例作者申明：</font></b></td>	</tr>	<tr><td><span class="comment"><font size="2">1：本人长期驻扎在此<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html"><font color="#0000FF">板块</font></a>里，对该案例提问，做到有问必答。本套书籍官方网站为：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></span></td></tr><tr>		<td><font size="2">2：点此<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">从当当预定本书</a>：<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">《Matlab神经网络30个案例分析》</a>。</td></tr><tr>	<td><p class="comment"></font><font size="2">3</font><font size="2">：此案例有配套的教学视频，视频下载方式<a href="http://video.ourmatlab.com/vbuy.html">video.ourmatlab.com/vbuy.html</a></font><font size="2">。 </font></p></td>	</tr>			<tr>		<td><span class="comment"><font size="2">		4：此案例为原创案例，转载请注明出处（《Matlab神经网络30个案例分析》）。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		5：若此案例碰巧与您的研究有关联，我们欢迎您提意见，要求等，我们考虑后可以加在案例里。</font></span></td>	</tr>		</table>
+% </html>
+
+%% 清除环境变量
+clear all
+clc
+
+%% 人脸特征向量提取 
+% 人数
+M = 10;
+% 人脸朝向类别数
+N = 5; 
+% 特征向量提取
+pixel_value = feature_extraction(M,N);
+
+%% 训练集/测试集产生
+% 产生图像序号的随机序列
+rand_label = randperm(M*N);  
+% 人脸朝向标号
+direction_label = repmat(1:N,1,M);
+% 训练集
+train_label = rand_label(1:30);
+P_train = pixel_value(train_label,:)';
+Tc_train = direction_label(train_label);
+T_train = ind2vec(Tc_train);
+% 测试集
+test_label = rand_label(31:end);
+P_test = pixel_value(test_label,:)';
+Tc_test = direction_label(test_label);
+
+%% 创建LVQ网络
+for i = 1:5
+    rate{i} = length(find(Tc_train == i))/30;
+end
+net = newlvq(minmax(P_train),20,cell2mat(rate),0.01,'learnlv1');
+% 设置训练参数
+net.trainParam.epochs = 100;
+net.trainParam.goal = 0.001;
+net.trainParam.lr = 0.1;
+
+%% 训练网络
+net = train(net,P_train,T_train);
+
+%% 人脸识别测试
+T_sim = sim(net,P_test);
+Tc_sim = vec2ind(T_sim);
+result = [Tc_test;Tc_sim]
+
+%% 结果显示
+% 训练集人脸标号
+strain_label = sort(train_label);
+htrain_label = ceil(strain_label/N);
+% 训练集人脸朝向标号
+dtrain_label = strain_label - floor(strain_label/N)*N;
+dtrain_label(dtrain_label == 0) = N;
+% 显示训练集图像序号
+disp('训练集图像为：' );
+for i = 1:30 
+    str_train = [num2str(htrain_label(i)) '_'...
+               num2str(dtrain_label(i)) '  '];
+    fprintf('%s',str_train)
+    if mod(i,5) == 0
+        fprintf('\n');
+    end
+end
+% 测试集人脸标号
+stest_label = sort(test_label);
+htest_label = ceil(stest_label/N);
+% 测试集人脸朝向标号
+dtest_label = stest_label - floor(stest_label/N)*N;
+dtest_label(dtest_label == 0) = N;
+% 显示测试集图像序号
+disp('测试集图像为：');
+for i = 1:20 
+    str_test = [num2str(htest_label(i)) '_'...
+              num2str(dtest_label(i)) '  '];
+    fprintf('%s',str_test)
+    if mod(i,5) == 0
+        fprintf('\n');
+    end
+end
+% 显示识别出错图像
+error = Tc_sim - Tc_test;
+location = {'左方' '左前方' '前方' '右前方' '右方'};
+for i = 1:length(error)
+    if error(i) ~= 0
+        % 识别出错图像人脸标号
+        herror_label = ceil(test_label(i)/N);
+        % 识别出错图像人脸朝向标号
+        derror_label = test_label(i) - floor(test_label(i)/N)*N;
+        derror_label(derror_label == 0) = N;
+        % 图像原始朝向
+        standard = location{Tc_test(i)};
+        % 图像识别结果朝向
+        identify = location{Tc_sim(i)};
+        str_err = strcat(['图像' num2str(herror_label) '_'...
+                        num2str(derror_label) '识别出错.']);
+        disp([str_err '(正确结果：朝向' standard...
+                      '；识别结果：朝向' identify ')']);
+    end
+end
+% 显示识别率
+disp(['识别率为：' num2str(length(find(error == 0))/20*100) '%']);
+
+web browser http://www.matlabsky.com/thread-11193-1-1.html
+
+%%
+% <html>
+% <table width="656" align="left" >	<tr><td align="center"><p><font size="2"><a href="http://video.ourmatlab.com/">Matlab神经网络30个案例分析</a></font></p><p align="left"><font size="2">相关论坛：</font></p><p align="left"><font size="2">《Matlab神经网络30个案例分析》官方网站：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></p><p align="left"><font size="2">Matlab技术论坛：<a href="http://www.matlabsky.com">www.matlabsky.com</a></font></p><p align="left"><font size="2">M</font><font size="2">atlab函数百科：<a href="http://www.mfun.la">www.mfun.la</a></font></p><p align="left"><font size="2">Matlab中文论坛：<a href="http://www.ilovematlab.com">www.ilovematlab.com</a></font></p></td>	</tr></table>
+% </html>
+
+
+
+        
+        
+        
+
+##### SOURCE END #####
+-->
+   </body>
+</html>

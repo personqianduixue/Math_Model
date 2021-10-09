@@ -1,0 +1,215 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>addon</title><meta name="generator" content="MATLAB 8.0"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2013-08-21"><meta name="DC.source" content="addon.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;</a></li><li><a href="#2">SOM&#32467;&#26500;&#20989;&#25968;</a></li><li><a href="#3">plotsom(pos)</a></li><li><a href="#4">&#32467;&#26500;</a></li><li><a href="#5">&#36317; &#31163;</a></li></ul></div><h2>Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;<a name="1"></a></h2><pre class="codeinput"><span class="comment">% &#21333;&#23618;&#31454;&#20105;&#31070;&#32463;&#32593;&#32476;&#30340;&#25968;&#25454;&#20998;&#31867;&#8212;&#24739;&#32773;&#30284;&#30151;&#21457;&#30149;&#39044;&#27979;</span>
+<span class="comment">% by &#29579;&#23567;&#24029;(@&#29579;&#23567;&#24029;_matlab)</span>
+<span class="comment">% http://www.matlabsky.com</span>
+<span class="comment">% Email:sina363@163.com</span>
+<span class="comment">% http://weibo.com/hgsz2003</span>
+</pre><h2>SOM&#32467;&#26500;&#20989;&#25968;<a name="2"></a></h2><h2>plotsom(pos)<a name="3"></a></h2><h2>&#32467;&#26500;<a name="4"></a></h2><p>&#32593;&#26684;&#23618;&#32467;&#26500;&#20989;&#25968;</p><pre class="codeinput">pos = gridtop(2,3)
+
+pos = gridtop(3,2)
+
+pos = gridtop(8,10);
+
+
+<span class="comment">% &#20845;&#35282;&#32467;&#26500;&#20989;&#25968;</span>
+pos = hextop(2,3)
+
+pos = hextop(8,10);
+
+<span class="comment">% &#38543;&#26426;&#23618;&#32467;&#26500;&#20989;&#25968;</span>
+pos = randtop(2,3)
+
+pos = randtop(8,10);
+</pre><pre class="codeoutput">
+pos =
+
+     0     1     0     1     0     1
+     0     0     1     1     2     2
+
+
+pos =
+
+     0     1     2     0     1     2
+     0     0     0     1     1     1
+
+
+pos =
+
+         0    1.0000    0.5000    1.5000         0    1.0000
+         0         0    0.8660    0.8660    1.7321    1.7321
+
+
+pos =
+
+         0    0.9582    0.2695    0.9562    0.2435    0.6920
+         0    0.1449    0.6346    0.6581    1.2527    1.1094
+
+</pre><h2>&#36317; &#31163;<a name="5"></a></h2><p>boxdist()</p><pre class="codeinput"><span class="comment">% Box&#36317;&#31163;&#12290;&#22312;&#32473;&#23450;&#31070;&#32463;&#32593;&#32476;&#26576;&#23618;&#31070;&#32463;&#20803;&#30340;&#20301;&#32622;&#21518;&#65292;&#21487;&#20197;&#21033;&#29992;&#35813;&#20989;&#25968;&#35745;&#31639;&#31070;&#32463;&#20803;&#20043;&#38388;&#30340;&#36317;&#31163;&#12290;&#35813;&#20989;&#25968;&#36890;&#24120;&#29992;&#20110;&#32467;&#26500;&#20989;&#25968;&#30340;gridtop&#30340;&#31070;&#32463;&#32593;&#32476;&#23618;&#12290;</span>
+pos=gridtop(2,2)
+plotsom(pos)
+boxdist(pos)
+
+<span class="comment">% dist &#27431;&#24335;&#36317;&#31163;&#20989;&#25968;</span>
+dist(pos)
+
+<span class="comment">% linkdist &#36317;&#31163; &#36830;&#25509;&#36317;&#31163;&#20989;&#25968;&#12290;</span>
+linkdist(pos)
+
+<span class="comment">% mandist &#36317;&#31163; Manhattan&#36317;&#31163;&#26435;&#20989;&#25968;</span>
+mandist(pos)
+</pre><pre class="codeoutput">
+pos =
+
+     0     1     0     1
+     0     0     1     1
+
+
+ans =
+
+     0     1     1     1
+     1     0     1     1
+     1     1     0     1
+     1     1     1     0
+
+
+ans =
+
+         0    1.0000    1.0000    1.4142
+    1.0000         0    1.4142    1.0000
+    1.0000    1.4142         0    1.0000
+    1.4142    1.0000    1.0000         0
+
+
+ans =
+
+     0     1     1     2
+     1     0     2     1
+     1     2     0     1
+     2     1     1     0
+
+
+ans =
+
+     0     1     1     2
+     1     0     2     1
+     1     2     0     1
+     2     1     1     0
+
+</pre><img vspace="5" hspace="5" src="addon_01.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2012b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Matlab神经网络43个案例分析
+
+% 单层竞争神经网络的数据分类—患者癌症发病预测
+% by 王小川(@王小川_matlab)
+% http://www.matlabsky.com
+% Email:sina363@163.com
+% http://weibo.com/hgsz2003
+
+%% SOM结构函数
+
+%% plotsom(pos)
+
+%% 结构
+% 网格层结构函数
+pos = gridtop(2,3)
+
+pos = gridtop(3,2)
+
+pos = gridtop(8,10);
+
+
+% 六角结构函数
+pos = hextop(2,3)
+
+pos = hextop(8,10);
+
+% 随机层结构函数
+pos = randtop(2,3)
+
+pos = randtop(8,10);
+
+%% 距 离
+% boxdist()
+
+% Box距离。在给定神经网络某层神经元的位置后，可以利用该函数计算神经元之间的距离。该函数通常用于结构函数的gridtop的神经网络层。
+pos=gridtop(2,2)
+plotsom(pos)
+boxdist(pos)
+
+% dist 欧式距离函数
+dist(pos)
+
+% linkdist 距离 连接距离函数。
+linkdist(pos)
+
+% mandist 距离 Manhattan距离权函数
+mandist(pos) 
+
+##### SOURCE END #####
+--></body></html>

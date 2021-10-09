@@ -1,0 +1,3 @@
+function R = unidrndKPM(min, max, nr, nc)
+
+R = unidrnd(max-min+1, nr, nc) + (min-1);

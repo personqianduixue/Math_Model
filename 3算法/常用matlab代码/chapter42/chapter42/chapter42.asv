@@ -1,0 +1,16 @@
+%% Matlab神经网络43个案例分析
+
+% 并行运算与神经网络-基于CPU/GPU的并行神经网络运算
+% by 王小川(@王小川_matlab)
+% http://www.matlabsky.com
+% Email:sina363@163.com
+% http://weibo.com/hgsz2003
+
+%% 标准单线程的神经网络训练与仿真过程
+[x,t]=house_dataset;
+net1=feedforwardnet(10);
+net2=train(net1,x,t);
+y=sim(net2,x);
+
+%% 打开MATLAB workers
+matlabpool open

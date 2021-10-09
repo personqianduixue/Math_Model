@@ -1,0 +1,172 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>&#26696;&#20363;8&#65306;GRNN&#30340;&#25968;&#25454;&#39044;&#27979;&#8212;&#22522;&#20110;&#24191;&#20041;&#22238;&#24402;&#31070;&#32463;&#32593;&#32476;&#30340;&#36135;&#36816;&#37327;&#39044;&#27979;</title><meta name="generator" content="MATLAB 7.11"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2010-11-20"><meta name="DC.source" content="chapter8_2.m"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><h1>&#26696;&#20363;8&#65306;GRNN&#30340;&#25968;&#25454;&#39044;&#27979;&#8212;&#22522;&#20110;&#24191;&#20041;&#22238;&#24402;&#31070;&#32463;&#32593;&#32476;&#30340;&#36135;&#36816;&#37327;&#39044;&#27979;</h1><!--introduction--><p>
+<table border="0" width="600px" id="table1">	<tr>		<td><b><font size="2">该案例作者申明：</font></b></td>	</tr>	<tr><td><span class="comment"><font size="2">1：本人长期驻扎在此<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html"><font color="#0000FF">板块</font></a>里，对该案例提问，做到有问必答。本套书籍官方网站为：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></span></td></tr><tr>		<td><font size="2">2：点此<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">从当当预定本书</a>：<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">《Matlab神经网络30个案例分析》</a>。</td></tr><tr>	<td><p class="comment"></font><font size="2">3</font><font size="2">：此案例有配套的教学视频，视频下载方式<a href="http://video.ourmatlab.com/vbuy.html">video.ourmatlab.com/vbuy.html</a></font><font size="2">。 </font></p></td>	</tr>			<tr>		<td><span class="comment"><font size="2">		4：此案例为原创案例，转载请注明出处（《Matlab神经网络30个案例分析》）。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		5：若此案例碰巧与您的研究有关联，我们欢迎您提意见，要求等，我们考虑后可以加在案例里。</font></span></td>	</tr>		</table>
+</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">&#20197;&#19979;&#31243;&#24207;&#20026;&#26696;&#20363;&#25193;&#23637;&#37324;&#30340;GRNN&#21644;BP&#27604;&#36739; &#38656;&#35201;load chapter8.1&#30340;&#30456;&#20851;&#25968;&#25454;</a></li></ul></div><h2>&#20197;&#19979;&#31243;&#24207;&#20026;&#26696;&#20363;&#25193;&#23637;&#37324;&#30340;GRNN&#21644;BP&#27604;&#36739; &#38656;&#35201;load chapter8.1&#30340;&#30456;&#20851;&#25968;&#25454;<a name="1"></a></h2><pre class="codeinput">clear <span class="string">all</span>
+load <span class="string">best</span>
+n=13
+p=desired_input
+t=desired_output
+net_bp=newff(minmax(p),[n,3],{<span class="string">'tansig'</span>,<span class="string">'purelin'</span>},<span class="string">'trainlm'</span>);
+<span class="comment">% &#35757;&#32451;&#32593;&#32476;</span>
+net.trainParam.show=50;
+net.trainParam.epochs=2000;
+net.trainParam.goal=1e-3;
+<span class="comment">%&#35843;&#29992;TRAINLM&#31639;&#27861;&#35757;&#32451;BP&#32593;&#32476;</span>
+net_bp=train(net_bp,p,t);
+bp_prediction_result=sim(net_bp,p_test);
+bp_prediction_result=postmnmx(bp_prediction_result,mint,maxt);
+bp_error=t_test-bp_prediction_result';
+disp([<span class="string">'BP&#31070;&#32463;&#32593;&#32476;&#19977;&#39033;&#27969;&#37327;&#39044;&#27979;&#30340;&#35823;&#24046;&#20026;'</span>,num2str(abs(bp_error))])
+
+web <span class="string">browser</span> <span class="string">http://www.matlabsky.com/thread-11144-1-2.html</span>
+</pre><pre class="codeoutput">n =
+    13
+p =
+  Columns 1 through 3
+   -1.0000   -0.7570   -0.4706
+   -1.0000   -0.1551   -0.0304
+   -1.0000   -0.4969   -0.4969
+   -1.0000   -0.0769    0.5385
+   -1.0000   -0.8934   -0.7555
+   -1.0000   -0.7391   -0.3043
+   -1.0000   -0.9852   -0.9852
+   -1.0000   -0.6639   -0.7291
+  Columns 4 through 6
+   -0.0351    0.1779    0.3968
+    0.3266    0.5025    0.6099
+    0.3333    0.4465    0.6478
+    0.3846    0.3846    0.6923
+   -0.3103   -0.0157    0.2602
+   -0.0435    0.1304    0.3043
+   -0.2781   -0.0228    0.2302
+   -0.4229   -0.1527    0.0881
+  Columns 7 through 9
+    0.6723    0.8793    1.0000
+    0.7788    0.9357    1.0000
+    0.6604    1.0000    1.0000
+    0.6923    1.0000    1.0000
+    0.5674    0.7367    1.0000
+    0.5652    0.8261    1.0000
+    0.5418    0.7240    1.0000
+    0.3674    0.6368    1.0000
+t =
+  Columns 1 through 3
+   -1.0000   -0.9770   -0.7068
+   -1.0000   -0.8046   -0.5911
+   -1.0000   -0.7602   -0.5070
+  Columns 4 through 6
+   -0.2420    0.0160    0.2887
+   -0.1924   -0.0446    0.2360
+   -0.0244    0.0650    0.2688
+  Columns 7 through 9
+    0.5410    0.7795    1.0000
+    0.4292    0.7311    1.0000
+    0.4823    0.8349    1.0000
+Warning: NEWFF used in an obsolete
+way. 
+          See help for NEWFF to update calls to the new argument list.
+ 
+BP&#31070;&#32463;&#32593;&#32476;&#19977;&#39033;&#27969;&#37327;&#39044;&#27979;&#30340;&#35823;&#24046;&#20026;22900.149      6259.19942      8890.66076
+</pre><p>
+<table width="656" align="left" >	<tr><td align="center"><p><font size="2"><a href="http://video.ourmatlab.com/">Matlab神经网络30个案例分析</a></font></p><p align="left"><font size="2">相关论坛：</font></p><p align="left"><font size="2">《Matlab神经网络30个案例分析》官方网站：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></p><p align="left"><font size="2">Matlab技术论坛：<a href="http://www.matlabsky.com">www.matlabsky.com</a></font></p><p align="left"><font size="2">M</font><font size="2">atlab函数百科：<a href="http://www.mfun.la">www.mfun.la</a></font></p><p align="left"><font size="2">Matlab中文论坛：<a href="http://www.ilovematlab.com">www.ilovematlab.com</a></font></p></td>	</tr></table>
+</p><p class="footer"><br>
+      Published with MATLAB&reg; 7.11<br></p></div><!--
+##### SOURCE BEGIN #####
+%% 案例8：GRNN的数据预测—基于广义回归神经网络的货运量预测
+%
+%
+% <html>
+% <table border="0" width="600px" id="table1">	<tr>		<td><b><font size="2">该案例作者申明：</font></b></td>	</tr>	<tr><td><span class="comment"><font size="2">1：本人长期驻扎在此<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html"><font color="#0000FF">板块</font></a>里，对该案例提问，做到有问必答。本套书籍官方网站为：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></span></td></tr><tr>		<td><font size="2">2：点此<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">从当当预定本书</a>：<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">《Matlab神经网络30个案例分析》</a>。</td></tr><tr>	<td><p class="comment"></font><font size="2">3</font><font size="2">：此案例有配套的教学视频，视频下载方式<a href="http://video.ourmatlab.com/vbuy.html">video.ourmatlab.com/vbuy.html</a></font><font size="2">。 </font></p></td>	</tr>			<tr>		<td><span class="comment"><font size="2">		4：此案例为原创案例，转载请注明出处（《Matlab神经网络30个案例分析》）。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		5：若此案例碰巧与您的研究有关联，我们欢迎您提意见，要求等，我们考虑后可以加在案例里。</font></span></td>	</tr>		</table>
+% </html>
+%% 以下程序为案例扩展里的GRNN和BP比较 需要load chapter8.1的相关数据
+clear all
+load best
+n=13
+p=desired_input
+t=desired_output
+net_bp=newff(minmax(p),[n,3],{'tansig','purelin'},'trainlm');
+% 训练网络
+net.trainParam.show=50;
+net.trainParam.epochs=2000;
+net.trainParam.goal=1e-3;
+%调用TRAINLM算法训练BP网络
+net_bp=train(net_bp,p,t);
+bp_prediction_result=sim(net_bp,p_test);
+bp_prediction_result=postmnmx(bp_prediction_result,mint,maxt);
+bp_error=t_test-bp_prediction_result';
+disp(['BP神经网络三项流量预测的误差为',num2str(abs(bp_error))])
+
+web browser http://www.matlabsky.com/thread-11144-1-2.html
+
+%%
+% <html>
+% <table width="656" align="left" >	<tr><td align="center"><p><font size="2"><a href="http://video.ourmatlab.com/">Matlab神经网络30个案例分析</a></font></p><p align="left"><font size="2">相关论坛：</font></p><p align="left"><font size="2">《Matlab神经网络30个案例分析》官方网站：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></p><p align="left"><font size="2">Matlab技术论坛：<a href="http://www.matlabsky.com">www.matlabsky.com</a></font></p><p align="left"><font size="2">M</font><font size="2">atlab函数百科：<a href="http://www.mfun.la">www.mfun.la</a></font></p><p align="left"><font size="2">Matlab中文论坛：<a href="http://www.ilovematlab.com">www.ilovematlab.com</a></font></p></td>	</tr></table>
+% </html>
+
+
+
+##### SOURCE END #####
+--></body></html>

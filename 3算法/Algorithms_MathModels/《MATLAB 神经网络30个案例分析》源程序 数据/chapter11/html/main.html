@@ -1,0 +1,331 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>&#36830;&#32493;Hopfield&#31070;&#32463;&#32593;&#32476;&#30340;&#20248;&#21270;&#8212;&#26053;&#34892;&#21830;&#38382;&#39064;&#20248;&#21270;&#35745;&#31639;</title>
+      <meta name="generator" content="MATLAB 7.8">
+      <meta name="date" content="2010-11-16">
+      <meta name="m-file" content="main"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head>
+   <body>
+      <div class="content">
+         <h1>&#36830;&#32493;Hopfield&#31070;&#32463;&#32593;&#32476;&#30340;&#20248;&#21270;&#8212;&#26053;&#34892;&#21830;&#38382;&#39064;&#20248;&#21270;&#35745;&#31639;</h1>
+         <!--introduction-->
+         <p><html> <table border="0" width="600px" id="table1">	<tr>		<td><b><font size="2">该案例作者申明：</font></b></td>	</tr>	<tr><td><span
+            class="comment"><font size="2">1：本人长期驻扎在此<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html"><font color="#0000FF">板块</font></a>里，对该案例提问，做到有问必答。本套书籍官方网站为：<a
+            href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></span></td></tr><tr>		<td><font size="2">2：点此<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">从当当预定本书</a>：<a
+            href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">《Matlab神经网络30个案例分析》</a>。</td></tr><tr>	<td><p
+            class="comment"></font><font size="2">3</font><font size="2">：此案例有配套的教学视频，视频下载方式<a href="http://video.ourmatlab.com/vbuy.html">video.ourmatlab.com/vbuy.html</a></font><font
+            size="2">。 </font></p></td>	</tr>			<tr>		<td><span class="comment"><font size="2">		4：此案例为原创案例，转载请注明出处（《Matlab神经网络30个案例分析》）。</font></span></td>	</tr>		<tr>		<td><span
+            class="comment"><font size="2">		5：若此案例碰巧与您的研究有关联，我们欢迎您提意见，要求等，我们考虑后可以加在案例里。</font></span></td>	</tr>		</table> </html>
+         </p>
+         <!--/introduction-->
+         <h2>Contents</h2>
+         <div>
+            <ul>
+               <li><a href="#1">&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;&#12289;&#23450;&#20041;&#20840;&#23616;&#21464;&#37327;</a></li>
+               <li><a href="#2">&#23548;&#20837;&#22478;&#24066;&#20301;&#32622;</a></li>
+               <li><a href="#3">&#35745;&#31639;&#30456;&#20114;&#22478;&#24066;&#38388;&#36317;&#31163;</a></li>
+               <li><a href="#4">&#21021;&#22987;&#21270;&#32593;&#32476;</a></li>
+               <li><a href="#5">&#23547;&#20248;&#36845;&#20195;</a></li>
+               <li><a href="#6">&#21028;&#26029;&#36335;&#24452;&#26377;&#25928;&#24615;</a></li>
+               <li><a href="#7">&#32467;&#26524;&#26174;&#31034;</a></li>
+            </ul>
+         </div>
+         <h2>&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;&#12289;&#23450;&#20041;&#20840;&#23616;&#21464;&#37327;<a name="1"></a></h2><pre class="codeinput">clear <span class="string">all</span>
+clc
+<span class="keyword">global</span> A D
+</pre><h2>&#23548;&#20837;&#22478;&#24066;&#20301;&#32622;<a name="2"></a></h2><pre class="codeinput">load <span class="string">city_location</span>
+</pre><h2>&#35745;&#31639;&#30456;&#20114;&#22478;&#24066;&#38388;&#36317;&#31163;<a name="3"></a></h2><pre class="codeinput">distance = dist(citys,citys');
+</pre><h2>&#21021;&#22987;&#21270;&#32593;&#32476;<a name="4"></a></h2><pre class="codeinput">N = size(citys,1);
+A = 200;
+D = 100;
+U0 = 0.1;
+step = 0.0001;
+delta = 2 * rand(N,N) - 1;
+U = U0 * log(N-1) + delta;
+V = (1 + tansig(U/U0))/2;
+iter_num = 10000;
+E = zeros(1,iter_num);
+</pre><h2>&#23547;&#20248;&#36845;&#20195;<a name="5"></a></h2><pre class="codeinput"><span class="keyword">for</span> k = 1:iter_num
+    <span class="comment">% &#21160;&#24577;&#26041;&#31243;&#35745;&#31639;</span>
+    dU = diff_u(V,distance);
+    <span class="comment">% &#36755;&#20837;&#31070;&#32463;&#20803;&#29366;&#24577;&#26356;&#26032;</span>
+    U = U + dU*step;
+    <span class="comment">% &#36755;&#20986;&#31070;&#32463;&#20803;&#29366;&#24577;&#26356;&#26032;</span>
+    V = (1 + tansig(U/U0))/2;
+    <span class="comment">% &#33021;&#37327;&#20989;&#25968;&#35745;&#31639;</span>
+    e = energy(V,distance);
+    E(k) = e;
+<span class="keyword">end</span>
+</pre><h2>&#21028;&#26029;&#36335;&#24452;&#26377;&#25928;&#24615;<a name="6"></a></h2><pre class="codeinput">[rows,cols] = size(V);
+V1 = zeros(rows,cols);
+[V_max,V_ind] = max(V);
+<span class="keyword">for</span> j = 1:cols
+    V1(V_ind(j),j) = 1;
+<span class="keyword">end</span>
+C = sum(V1,1);
+R = sum(V1,2);
+flag = isequal(C,ones(1,N)) &amp; isequal(R',ones(1,N));
+</pre><h2>&#32467;&#26524;&#26174;&#31034;<a name="7"></a></h2><pre class="codeinput"><span class="keyword">if</span> flag == 1
+   <span class="comment">% &#35745;&#31639;&#21021;&#22987;&#36335;&#24452;&#38271;&#24230;</span>
+   sort_rand = randperm(N);
+   citys_rand = citys(sort_rand,:);
+   Length_init = dist(citys_rand(1,:),citys_rand(end,:)');
+   <span class="keyword">for</span> i = 2:size(citys_rand,1)
+       Length_init = Length_init+dist(citys_rand(i-1,:),citys_rand(i,:)');
+   <span class="keyword">end</span>
+   <span class="comment">% &#32472;&#21046;&#21021;&#22987;&#36335;&#24452;</span>
+   figure(1)
+   plot([citys_rand(:,1);citys_rand(1,1)],[citys_rand(:,2);citys_rand(1,2)],<span class="string">'o-'</span>)
+   <span class="keyword">for</span> i = 1:length(citys)
+       text(citys(i,1),citys(i,2),[<span class="string">'   '</span> num2str(i)])
+   <span class="keyword">end</span>
+   text(citys_rand(1,1),citys_rand(1,2),[<span class="string">'       &#36215;&#28857;'</span> ])
+   text(citys_rand(end,1),citys_rand(end,2),[<span class="string">'       &#32456;&#28857;'</span> ])
+   title([<span class="string">'&#20248;&#21270;&#21069;&#36335;&#24452;(&#38271;&#24230;&#65306;'</span> num2str(Length_init) <span class="string">')'</span>])
+   axis([0 1 0 1])
+   grid <span class="string">on</span>
+   xlabel(<span class="string">'&#22478;&#24066;&#20301;&#32622;&#27178;&#22352;&#26631;'</span>)
+   ylabel(<span class="string">'&#22478;&#24066;&#20301;&#32622;&#32437;&#22352;&#26631;'</span>)
+   <span class="comment">% &#35745;&#31639;&#26368;&#20248;&#36335;&#24452;&#38271;&#24230;</span>
+   [V1_max,V1_ind] = max(V1);
+   citys_end = citys(V1_ind,:);
+   Length_end = dist(citys_end(1,:),citys_end(end,:)');
+   <span class="keyword">for</span> i = 2:size(citys_end,1)
+       Length_end = Length_end+dist(citys_end(i-1,:),citys_end(i,:)');
+   <span class="keyword">end</span>
+   disp(<span class="string">'&#26368;&#20248;&#36335;&#24452;&#30697;&#38453;'</span>);V1
+   <span class="comment">% &#32472;&#21046;&#26368;&#20248;&#36335;&#24452;</span>
+   figure(2)
+   plot([citys_end(:,1);citys_end(1,1)],<span class="keyword">...</span>
+       [citys_end(:,2);citys_end(1,2)],<span class="string">'o-'</span>)
+   <span class="keyword">for</span> i = 1:length(citys)
+       text(citys(i,1),citys(i,2),[<span class="string">'  '</span> num2str(i)])
+   <span class="keyword">end</span>
+   text(citys_end(1,1),citys_end(1,2),[<span class="string">'       &#36215;&#28857;'</span> ])
+   text(citys_end(end,1),citys_end(end,2),[<span class="string">'       &#32456;&#28857;'</span> ])
+   title([<span class="string">'&#20248;&#21270;&#21518;&#36335;&#24452;(&#38271;&#24230;&#65306;'</span> num2str(Length_end) <span class="string">')'</span>])
+   axis([0 1 0 1])
+   grid <span class="string">on</span>
+   xlabel(<span class="string">'&#22478;&#24066;&#20301;&#32622;&#27178;&#22352;&#26631;'</span>)
+   ylabel(<span class="string">'&#22478;&#24066;&#20301;&#32622;&#32437;&#22352;&#26631;'</span>)
+   <span class="comment">% &#32472;&#21046;&#33021;&#37327;&#20989;&#25968;&#21464;&#21270;&#26354;&#32447;</span>
+   figure(3)
+   plot(1:iter_num,E);
+   ylim([0 2000])
+   title([<span class="string">'&#33021;&#37327;&#20989;&#25968;&#21464;&#21270;&#26354;&#32447;(&#26368;&#20248;&#33021;&#37327;&#65306;'</span> num2str(E(end)) <span class="string">')'</span>]);
+   xlabel(<span class="string">'&#36845;&#20195;&#27425;&#25968;'</span>);
+   ylabel(<span class="string">'&#33021;&#37327;&#20989;&#25968;'</span>);
+<span class="keyword">else</span>
+   disp(<span class="string">'&#23547;&#20248;&#36335;&#24452;&#26080;&#25928;'</span>);
+<span class="keyword">end</span>
+
+web <span class="string">browser</span> <span class="string">http://www.matlabsky.com/thread-11156-1-2.html</span>
+</pre><pre class="codeoutput">&#26368;&#20248;&#36335;&#24452;&#30697;&#38453;
+
+V1 =
+
+     0     0     0     0     0     0     1     0     0     0
+     0     0     0     0     0     1     0     0     0     0
+     0     0     0     0     1     0     0     0     0     0
+     1     0     0     0     0     0     0     0     0     0
+     0     0     0     1     0     0     0     0     0     0
+     0     0     1     0     0     0     0     0     0     0
+     0     0     0     0     0     0     0     1     0     0
+     0     0     0     0     0     0     0     0     1     0
+     0     1     0     0     0     0     0     0     0     0
+     0     0     0     0     0     0     0     0     0     1
+
+</pre><img vspace="5" hspace="5" src="main_01.png" alt=""> <img vspace="5" hspace="5" src="main_02.png" alt=""> <img vspace="5" hspace="5" src="main_03.png" alt=""> <p><html> <table width="656" align="left" >	<tr><td align="center"><p><font size="2"><a href="http://video.ourmatlab.com/">Matlab神经网络30个案例分析</a></font></p><p
+            align="left"><font size="2">相关论坛：</font></p><p align="left"><font size="2">《Matlab神经网络30个案例分析》官方网站：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></p><p
+            align="left"><font size="2">Matlab技术论坛：<a href="http://www.matlabsky.com">www.matlabsky.com</a></font></p><p align="left"><font
+            size="2">M</font><font size="2">atlab函数百科：<a href="http://www.mfun.la">www.mfun.la</a></font></p><p align="left"><font size="2">Matlab中文论坛：<a
+            href="http://www.ilovematlab.com">www.ilovematlab.com</a></font></p></td>	</tr></table> </html>
+         </p>
+         <p class="footer"><br>
+            Published with MATLAB&reg; 7.8<br></p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+%% 连续Hopfield神经网络的优化—旅行商问题优化计算
+%
+% <html>
+% <table border="0" width="600px" id="table1">	<tr>		<td><b><font size="2">该案例作者申明：</font></b></td>	</tr>	<tr><td><span class="comment"><font size="2">1：本人长期驻扎在此<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html"><font color="#0000FF">板块</font></a>里，对该案例提问，做到有问必答。本套书籍官方网站为：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></span></td></tr><tr>		<td><font size="2">2：点此<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">从当当预定本书</a>：<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">《Matlab神经网络30个案例分析》</a>。</td></tr><tr>	<td><p class="comment"></font><font size="2">3</font><font size="2">：此案例有配套的教学视频，视频下载方式<a href="http://video.ourmatlab.com/vbuy.html">video.ourmatlab.com/vbuy.html</a></font><font size="2">。 </font></p></td>	</tr>			<tr>		<td><span class="comment"><font size="2">		4：此案例为原创案例，转载请注明出处（《Matlab神经网络30个案例分析》）。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		5：若此案例碰巧与您的研究有关联，我们欢迎您提意见，要求等，我们考虑后可以加在案例里。</font></span></td>	</tr>		</table>
+% </html>
+
+%% 清空环境变量、定义全局变量
+clear all
+clc
+global A D
+
+%% 导入城市位置
+load city_location
+
+%% 计算相互城市间距离
+distance = dist(citys,citys');
+
+%% 初始化网络
+N = size(citys,1);
+A = 200;
+D = 100;
+U0 = 0.1;
+step = 0.0001;
+delta = 2 * rand(N,N) - 1;
+U = U0 * log(N-1) + delta;
+V = (1 + tansig(U/U0))/2;
+iter_num = 10000;
+E = zeros(1,iter_num);
+
+%% 寻优迭代
+for k = 1:iter_num  
+    % 动态方程计算
+    dU = diff_u(V,distance);
+    % 输入神经元状态更新
+    U = U + dU*step;
+    % 输出神经元状态更新
+    V = (1 + tansig(U/U0))/2;
+    % 能量函数计算
+    e = energy(V,distance);
+    E(k) = e;  
+end
+
+ %% 判断路径有效性
+[rows,cols] = size(V);
+V1 = zeros(rows,cols);
+[V_max,V_ind] = max(V);
+for j = 1:cols
+    V1(V_ind(j),j) = 1;
+end
+C = sum(V1,1);
+R = sum(V1,2);
+flag = isequal(C,ones(1,N)) & isequal(R',ones(1,N));
+
+%% 结果显示
+if flag == 1
+   % 计算初始路径长度
+   sort_rand = randperm(N);
+   citys_rand = citys(sort_rand,:);
+   Length_init = dist(citys_rand(1,:),citys_rand(end,:)');
+   for i = 2:size(citys_rand,1)
+       Length_init = Length_init+dist(citys_rand(i-1,:),citys_rand(i,:)');
+   end
+   % 绘制初始路径
+   figure(1)
+   plot([citys_rand(:,1);citys_rand(1,1)],[citys_rand(:,2);citys_rand(1,2)],'o-')
+   for i = 1:length(citys)
+       text(citys(i,1),citys(i,2),['   ' num2str(i)])
+   end
+   text(citys_rand(1,1),citys_rand(1,2),['       起点' ])
+   text(citys_rand(end,1),citys_rand(end,2),['       终点' ])
+   title(['优化前路径(长度：' num2str(Length_init) ')'])
+   axis([0 1 0 1])
+   grid on
+   xlabel('城市位置横坐标')
+   ylabel('城市位置纵坐标')
+   % 计算最优路径长度
+   [V1_max,V1_ind] = max(V1);
+   citys_end = citys(V1_ind,:);
+   Length_end = dist(citys_end(1,:),citys_end(end,:)');
+   for i = 2:size(citys_end,1)
+       Length_end = Length_end+dist(citys_end(i-1,:),citys_end(i,:)');
+   end
+   disp('最优路径矩阵');V1
+   % 绘制最优路径
+   figure(2)
+   plot([citys_end(:,1);citys_end(1,1)],...
+       [citys_end(:,2);citys_end(1,2)],'o-')
+   for i = 1:length(citys)
+       text(citys(i,1),citys(i,2),['  ' num2str(i)])
+   end
+   text(citys_end(1,1),citys_end(1,2),['       起点' ])
+   text(citys_end(end,1),citys_end(end,2),['       终点' ])
+   title(['优化后路径(长度：' num2str(Length_end) ')'])
+   axis([0 1 0 1])
+   grid on
+   xlabel('城市位置横坐标')
+   ylabel('城市位置纵坐标')
+   % 绘制能量函数变化曲线
+   figure(3)
+   plot(1:iter_num,E);
+   ylim([0 2000])
+   title(['能量函数变化曲线(最优能量：' num2str(E(end)) ')']);
+   xlabel('迭代次数');
+   ylabel('能量函数');
+else
+   disp('寻优路径无效');
+end
+
+web browser http://www.matlabsky.com/thread-11156-1-2.html
+
+%%
+% <html>
+% <table width="656" align="left" >	<tr><td align="center"><p><font size="2"><a href="http://video.ourmatlab.com/">Matlab神经网络30个案例分析</a></font></p><p align="left"><font size="2">相关论坛：</font></p><p align="left"><font size="2">《Matlab神经网络30个案例分析》官方网站：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></p><p align="left"><font size="2">Matlab技术论坛：<a href="http://www.matlabsky.com">www.matlabsky.com</a></font></p><p align="left"><font size="2">M</font><font size="2">atlab函数百科：<a href="http://www.mfun.la">www.mfun.la</a></font></p><p align="left"><font size="2">Matlab中文论坛：<a href="http://www.ilovematlab.com">www.ilovematlab.com</a></font></p></td>	</tr></table>
+% </html>
+
+##### SOURCE END #####
+-->
+   </body>
+</html>

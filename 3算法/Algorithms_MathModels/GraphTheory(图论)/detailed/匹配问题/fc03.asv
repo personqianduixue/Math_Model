@@ -1,0 +1,22 @@
+function b = fc03(b,e)
+m = size(b);t = 1;
+p = ones(m(1),1);
+q = zeros(m(1),1);
+inp = e(:,1)~=0;
+p(e(inp,1))=0;
+while t~=0
+    tp = sum(p+q);
+    inp = find(p==1);
+    n = size(inp);
+    for i=1:n(1)
+        inq = b(inp(i),:)==0;
+        q(inq)=1;
+    end
+    inp = find(q==1);
+    n = size(inp);
+    for i = 1:n(1)
+        if all(e(:,2))
+    end
+end
+
+end

@@ -1,0 +1,215 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      --><title>&#26696;&#20363;18: &#22522;&#20110;Elman&#31070;&#32463;&#32593;&#32476;&#30340;&#30005;&#21147;&#36127;&#33655;&#39044;&#27979;&#27169;&#22411;&#30740;&#31350;</title><meta name="generator" content="MATLAB 7.9"><meta name="date" content="2010-11-20"><meta name="m-file" content="chapter18"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><h1>&#26696;&#20363;18: &#22522;&#20110;Elman&#31070;&#32463;&#32593;&#32476;&#30340;&#30005;&#21147;&#36127;&#33655;&#39044;&#27979;&#27169;&#22411;&#30740;&#31350;</h1><!--introduction--><p>
+<table border="0" width="600px" id="table1">	<tr>		<td><b><font size="2">该案例作者申明：</font></b></td>	</tr>	<tr><td><span class="comment"><font size="2">1：本人长期驻扎在此<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html"><font color="#0000FF">板块</font></a>里，对该案例提问，做到有问必答。本套书籍官方网站为：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></span></td></tr><tr>		<td><font size="2">2：点此<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">从当当预定本书</a>：<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">《Matlab神经网络30个案例分析》</a>。</td></tr><tr>	<td><p class="comment"></font><font size="2">3</font><font size="2">：此案例有配套的教学视频，视频下载方式<a href="http://video.ourmatlab.com/vbuy.html">video.ourmatlab.com/vbuy.html</a></font><font size="2">。 </font></p></td>	</tr>			<tr>		<td><span class="comment"><font size="2">		4：此案例为原创案例，转载请注明出处（《Matlab神经网络30个案例分析》）。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		5：若此案例碰巧与您的研究有关联，我们欢迎您提意见，要求等，我们考虑后可以加在案例里。</font></span></td>	</tr>		</table>
+</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;</a></li><li><a href="#2">&#25968;&#25454;&#36733;&#20837;</a></li><li><a href="#3">&#36873;&#21462;&#35757;&#32451;&#25968;&#25454;&#21644;&#27979;&#35797;&#25968;&#25454;</a></li><li><a href="#4">&#32593;&#32476;&#30340;&#24314;&#31435;&#21644;&#35757;&#32451;</a></li><li><a href="#5">&#36890;&#36807;&#20316;&#22270; &#35266;&#23519;&#19981;&#21516;&#38544;&#34255;&#23618;&#31070;&#32463;&#20803;&#20010;&#25968;&#26102;&#65292;&#32593;&#32476;&#30340;&#39044;&#27979;&#25928;&#26524;</a></li></ul></div><h2>&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;<a name="1"></a></h2><pre class="codeinput">clc;
+clear <span class="string">all</span>
+close <span class="string">all</span>
+nntwarn <span class="string">off</span>;
+</pre><h2>&#25968;&#25454;&#36733;&#20837;<a name="2"></a></h2><pre class="codeinput">load <span class="string">data</span>;
+a=data;
+</pre><h2>&#36873;&#21462;&#35757;&#32451;&#25968;&#25454;&#21644;&#27979;&#35797;&#25968;&#25454;<a name="3"></a></h2><pre class="codeinput"><span class="keyword">for</span> i=1:6
+    p(i,:)=[a(i,:),a(i+1,:),a(i+2,:)];
+<span class="keyword">end</span>
+<span class="comment">% &#35757;&#32451;&#25968;&#25454;&#36755;&#20837;</span>
+p_train=p(1:5,:);
+<span class="comment">% &#35757;&#32451;&#25968;&#25454;&#36755;&#20986;</span>
+t_train=a(4:8,:);
+<span class="comment">% &#27979;&#35797;&#25968;&#25454;&#36755;&#20837;</span>
+p_test=p(6,:);
+<span class="comment">% &#27979;&#35797;&#25968;&#25454;&#36755;&#20986;</span>
+t_test=a(9,:);
+
+<span class="comment">% &#20026;&#36866;&#24212;&#32593;&#32476;&#32467;&#26500; &#20570;&#36716;&#32622;</span>
+
+p_train=p_train';
+t_train=t_train';
+p_test=p_test';
+</pre><h2>&#32593;&#32476;&#30340;&#24314;&#31435;&#21644;&#35757;&#32451;<a name="4"></a></h2><p>&#21033;&#29992;&#24490;&#29615;&#65292;&#35774;&#32622;&#19981;&#21516;&#30340;&#38544;&#34255;&#23618;&#31070;&#32463;&#20803;&#20010;&#25968;</p><pre class="codeinput">nn=[7 11 14 18];
+<span class="keyword">for</span> i=1:4
+    threshold=[0 1;0 1;0 1;0 1;0 1;0 1;0 1;0 1;0 1];
+    <span class="comment">% &#24314;&#31435;Elman&#31070;&#32463;&#32593;&#32476; &#38544;&#34255;&#23618;&#20026;nn(i)&#20010;&#31070;&#32463;&#20803;</span>
+    net=newelm(threshold,[nn(i),3],{<span class="string">'tansig'</span>,<span class="string">'purelin'</span>});
+    <span class="comment">% &#35774;&#32622;&#32593;&#32476;&#35757;&#32451;&#21442;&#25968;</span>
+    net.trainparam.epochs=1000;
+    net.trainparam.show=20;
+    <span class="comment">% &#21021;&#22987;&#21270;&#32593;&#32476;</span>
+    net=init(net);
+    <span class="comment">% Elman&#32593;&#32476;&#35757;&#32451;</span>
+    net=train(net,p_train,t_train);
+    <span class="comment">% &#39044;&#27979;&#25968;&#25454;</span>
+    y=sim(net,p_test);
+    <span class="comment">% &#35745;&#31639;&#35823;&#24046;</span>
+    error(i,:)=y'-t_test;
+<span class="keyword">end</span>
+</pre><h2>&#36890;&#36807;&#20316;&#22270; &#35266;&#23519;&#19981;&#21516;&#38544;&#34255;&#23618;&#31070;&#32463;&#20803;&#20010;&#25968;&#26102;&#65292;&#32593;&#32476;&#30340;&#39044;&#27979;&#25928;&#26524;<a name="5"></a></h2><pre class="codeinput">plot(1:1:3,error(1,:),<span class="string">'-ro'</span>,<span class="string">'linewidth'</span>,2);
+hold <span class="string">on</span>;
+plot(1:1:3,error(2,:),<span class="string">'b:x'</span>,<span class="string">'linewidth'</span>,2);
+hold <span class="string">on</span>;
+plot(1:1:3,error(3,:),<span class="string">'k-.s'</span>,<span class="string">'linewidth'</span>,2);
+hold <span class="string">on</span>;
+plot(1:1:3,error(4,:),<span class="string">'c--d'</span>,<span class="string">'linewidth'</span>,2);
+title(<span class="string">'Elman&#39044;&#27979;&#35823;&#24046;&#22270;'</span>)
+set(gca,<span class="string">'Xtick'</span>,[1:3])
+legend(<span class="string">'7'</span>,<span class="string">'11'</span>,<span class="string">'14'</span>,<span class="string">'18'</span>,<span class="string">'location'</span>,<span class="string">'best'</span>)
+xlabel(<span class="string">'&#26102;&#38388;&#28857;'</span>)
+ylabel(<span class="string">'&#35823;&#24046;'</span>)
+hold <span class="string">off</span>;
+
+web <span class="string">browser</span> <span class="string">http://www.matlabsky.com/thread-11163-1-1.html</span>
+</pre><img vspace="5" hspace="5" src="chapter18_01.png" alt=""> <p>
+<table width="656" align="left" >	<tr><td align="center"><p><font size="2"><a href="http://video.ourmatlab.com/">Matlab神经网络30个案例分析</a></font></p><p align="left"><font size="2">相关论坛：</font></p><p align="left"><font size="2">《Matlab神经网络30个案例分析》官方网站：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></p><p align="left"><font size="2">Matlab技术论坛：<a href="http://www.matlabsky.com">www.matlabsky.com</a></font></p><p align="left"><font size="2">M</font><font size="2">atlab函数百科：<a href="http://www.mfun.la">www.mfun.la</a></font></p><p align="left"><font size="2">Matlab中文论坛：<a href="http://www.ilovematlab.com">www.ilovematlab.com</a></font></p></td>	</tr></table>
+</p><p class="footer"><br>
+      Published with MATLAB&reg; 7.9<br></p></div><!--
+##### SOURCE BEGIN #####
+%%  案例18: 基于Elman神经网络的电力负荷预测模型研究
+% 
+% 
+% <html>
+% <table border="0" width="600px" id="table1">	<tr>		<td><b><font size="2">该案例作者申明：</font></b></td>	</tr>	<tr><td><span class="comment"><font size="2">1：本人长期驻扎在此<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html"><font color="#0000FF">板块</font></a>里，对该案例提问，做到有问必答。本套书籍官方网站为：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></span></td></tr><tr>		<td><font size="2">2：点此<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">从当当预定本书</a>：<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">《Matlab神经网络30个案例分析》</a>。</td></tr><tr>	<td><p class="comment"></font><font size="2">3</font><font size="2">：此案例有配套的教学视频，视频下载方式<a href="http://video.ourmatlab.com/vbuy.html">video.ourmatlab.com/vbuy.html</a></font><font size="2">。 </font></p></td>	</tr>			<tr>		<td><span class="comment"><font size="2">		4：此案例为原创案例，转载请注明出处（《Matlab神经网络30个案例分析》）。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		5：若此案例碰巧与您的研究有关联，我们欢迎您提意见，要求等，我们考虑后可以加在案例里。</font></span></td>	</tr>		</table>
+% </html>
+
+
+
+
+%% 清空环境变量
+
+clc;
+clear all
+close all
+nntwarn off;
+
+%% 数据载入
+
+load data;
+a=data;
+
+%% 选取训练数据和测试数据
+
+for i=1:6
+    p(i,:)=[a(i,:),a(i+1,:),a(i+2,:)];
+end
+% 训练数据输入
+p_train=p(1:5,:);
+% 训练数据输出
+t_train=a(4:8,:);
+% 测试数据输入
+p_test=p(6,:);
+% 测试数据输出
+t_test=a(9,:);
+
+% 为适应网络结构 做转置
+
+p_train=p_train';
+t_train=t_train';
+p_test=p_test';
+
+
+%% 网络的建立和训练
+% 利用循环，设置不同的隐藏层神经元个数
+nn=[7 11 14 18];
+for i=1:4
+    threshold=[0 1;0 1;0 1;0 1;0 1;0 1;0 1;0 1;0 1];
+    % 建立Elman神经网络 隐藏层为nn(i)个神经元
+    net=newelm(threshold,[nn(i),3],{'tansig','purelin'});
+    % 设置网络训练参数
+    net.trainparam.epochs=1000;
+    net.trainparam.show=20;
+    % 初始化网络
+    net=init(net);
+    % Elman网络训练
+    net=train(net,p_train,t_train);
+    % 预测数据
+    y=sim(net,p_test);
+    % 计算误差
+    error(i,:)=y'-t_test;
+end
+
+%% 通过作图 观察不同隐藏层神经元个数时，网络的预测效果
+
+plot(1:1:3,error(1,:),'-ro','linewidth',2);
+hold on;
+plot(1:1:3,error(2,:),'b:x','linewidth',2);
+hold on;
+plot(1:1:3,error(3,:),'k-.s','linewidth',2);
+hold on;
+plot(1:1:3,error(4,:),'cREPLACE_WITH_DASH_DASHd','linewidth',2);
+title('Elman预测误差图')
+set(gca,'Xtick',[1:3])
+legend('7','11','14','18','location','best')
+xlabel('时间点')
+ylabel('误差')
+hold off;
+
+web browser http://www.matlabsky.com/thread-11163-1-1.html
+%%
+%
+%%
+% <html>
+% <table width="656" align="left" >	<tr><td align="center"><p><font size="2"><a href="http://video.ourmatlab.com/">Matlab神经网络30个案例分析</a></font></p><p align="left"><font size="2">相关论坛：</font></p><p align="left"><font size="2">《Matlab神经网络30个案例分析》官方网站：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></p><p align="left"><font size="2">Matlab技术论坛：<a href="http://www.matlabsky.com">www.matlabsky.com</a></font></p><p align="left"><font size="2">M</font><font size="2">atlab函数百科：<a href="http://www.mfun.la">www.mfun.la</a></font></p><p align="left"><font size="2">Matlab中文论坛：<a href="http://www.ilovematlab.com">www.ilovematlab.com</a></font></p></td>	</tr></table>
+% </html>
+
+##### SOURCE END #####
+--></body></html>

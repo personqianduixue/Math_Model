@@ -1,0 +1,253 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Chapter_CharacterRecognitionUsingLibsvm</title><meta name="generator" content="MATLAB 7.14"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2013-08-18"><meta name="DC.source" content="Chapter_CharacterRecognitionUsingLibsvm.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;</a></li><li><a href="#3">A Little Clean Work</a></li><li><a href="#4">&#36733;&#20837;&#35757;&#32451;&#25968;&#25454;</a></li><li><a href="#5">&#24314;&#31435;&#25903;&#25345;&#21521;&#37327;&#26426;</a></li><li><a href="#6">&#36733;&#20837;&#27979;&#35797;&#26679;&#26412;</a></li><li><a href="#7">&#23545;&#27979;&#35797;&#26679;&#26412;&#36827;&#34892;&#20998;&#31867;</a></li><li><a href="#8">sub function of pre-processing pic</a></li></ul></div><pre class="codeinput"><span class="keyword">function</span> Chapter_CharacterRecognitionUsingLibsvm
+</pre><h2>Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;<a name="2"></a></h2><pre class="codeinput"><span class="comment">% &#22522;&#20110;SVM&#30340;&#25163;&#20889;&#23383;&#20307;&#35782;&#21035;</span>
+<span class="comment">% by &#26446;&#27915;(faruto)</span>
+<span class="comment">% http://www.matlabsky.com</span>
+<span class="comment">% Email:faruto@163.com</span>
+<span class="comment">% http://weibo.com/faruto</span>
+<span class="comment">% http://blog.sina.com.cn/faruto</span>
+<span class="comment">% 2013.01.01</span>
+</pre><h2>A Little Clean Work<a name="3"></a></h2><pre class="codeinput">close <span class="string">all</span>;
+clear;
+clc;
+format <span class="string">compact</span>;
+</pre><h2>&#36733;&#20837;&#35757;&#32451;&#25968;&#25454;<a name="4"></a></h2><pre class="codeinput"><span class="comment">% &#21033;&#29992;uigetfile&#20989;&#25968;&#20132;&#20114;&#24335;&#36873;&#21462;&#35757;&#32451;&#26679;&#26412;</span>
+[FileName,PathName,FilterIndex] = uigetfile( <span class="keyword">...</span>
+    {<span class="string">'*.jpg'</span>;<span class="string">'*.bmp'</span>},<span class="string">'&#35831;&#23548;&#20837;&#35757;&#32451;&#22270;&#29255;'</span>,<span class="string">'*.jpg'</span>,<span class="string">'MultiSelect'</span>,<span class="string">'on'</span>);
+<span class="keyword">if</span> ~FilterIndex
+    <span class="keyword">return</span>;
+<span class="keyword">end</span>
+num_train = length(FileName);
+TrainData = zeros(num_train,16*16);
+TrainLabel = zeros(num_train,1);
+<span class="keyword">for</span> k = 1:num_train
+    pic = imread([PathName,FileName{k}]);
+    pic = pic_preprocess(pic);
+
+    <span class="comment">% &#23558;&#26631;&#20934;&#21270;&#22270;&#20687;&#25353;&#21015;&#25289;&#25104;&#19968;&#20010;&#21521;&#37327;&#24182;&#36716;&#32622;&#65292;&#29983;&#25104;50*256&#30340;&#35757;&#32451;&#26679;&#26412;&#30697;&#38453;</span>
+    TrainData(k,:) = double(pic(:)');
+    <span class="comment">% &#26679;&#26412;&#26631;&#31614;&#20026;&#26679;&#26412;&#25152;&#23545;&#24212;&#30340;&#25968;&#23383;</span>
+    TrainLabel(k) = str2double(FileName{k}(4));
+<span class="keyword">end</span>
+</pre><h2>&#24314;&#31435;&#25903;&#25345;&#21521;&#37327;&#26426;<a name="5"></a></h2><p>[bestCVaccuracy,bestc,bestg] = ...     SVMcgForClass(TrainLabel,TrainData,-8,8,-8,8,10,0.8,0.8,4.5)</p><pre class="codeinput"><span class="comment">% &#35774;&#32622;GA&#30456;&#20851;&#21442;&#25968;</span>
+    ga_option.maxgen = 100;
+    ga_option.sizepop = 20;
+    ga_option.cbound = [0,100];
+    ga_option.gbound = [0,100];
+    ga_option.v = 10;
+    ga_option.ggap = 0.9;
+    [bestCVaccuracy,bestc,bestg] = <span class="keyword">...</span>
+    gaSVMcgForClass(TrainLabel,TrainData,ga_option)
+
+<span class="comment">% &#35757;&#32451;</span>
+cmd = [<span class="string">'-c '</span>,num2str(bestc),<span class="string">' -g '</span>,num2str(bestg)];
+model = svmtrain(TrainLabel, TrainData, cmd);
+<span class="comment">% &#22312;&#35757;&#32451;&#38598;&#19978;&#26597;&#30475;&#35782;&#21035;&#33021;&#21147;</span>
+preTrainLabel = svmpredict(TrainLabel, TrainData, model);
+</pre><pre class="codeoutput">bestCVaccuracy =
+    98
+bestc =
+    0.6168
+bestg =
+    4.0916
+Accuracy = 100% (50/50) (classification)
+</pre><img vspace="5" hspace="5" src="Chapter_CharacterRecognitionUsingLibsvm_01.png" alt=""> <h2>&#36733;&#20837;&#27979;&#35797;&#26679;&#26412;<a name="6"></a></h2><pre class="codeinput">[FileName,PathName,FilterIndex] = uigetfile( <span class="keyword">...</span>
+    {<span class="string">'*.jpg'</span>;<span class="string">'*.bmp'</span>},<span class="string">'&#35831;&#23548;&#20837;&#27979;&#35797;&#22270;&#29255;'</span>,<span class="string">'*.bmp'</span>,<span class="string">'MultiSelect'</span>,<span class="string">'on'</span>);
+<span class="keyword">if</span> ~FilterIndex
+    <span class="keyword">return</span>;
+<span class="keyword">end</span>
+num_train = length(FileName);
+TestData = zeros(num_train,16*16);
+TestLabel = zeros(num_train,1);
+<span class="keyword">for</span> k = 1:num_train
+    pic = imread([PathName,FileName{k}]);
+    pic = pic_preprocess(pic);
+
+    TestData(k,:) = double(pic(:)');
+    TestLabel(k) = str2double(FileName{k}(4));
+<span class="keyword">end</span>
+</pre><h2>&#23545;&#27979;&#35797;&#26679;&#26412;&#36827;&#34892;&#20998;&#31867;<a name="7"></a></h2><pre class="codeinput">preTestLabel = svmpredict(TestLabel, TestData, model);
+assignin(<span class="string">'base'</span>,<span class="string">'TestLabel'</span>,TestLabel);
+assignin(<span class="string">'base'</span>,<span class="string">'preTestLabel'</span>,preTestLabel);
+TestLabel'
+preTestLabel'
+</pre><pre class="codeoutput">Accuracy = 93.3333% (28/30) (classification)
+ans =
+  Columns 1 through 13
+     0     0     0     1     1     1     2     2     2     3     3     3     4
+  Columns 14 through 26
+     4     4     5     5     5     6     6     6     7     7     7     8     8
+  Columns 27 through 30
+     8     9     9     9
+ans =
+  Columns 1 through 13
+     0     0     0     1     1     7     2     2     2     3     3     3     4
+  Columns 14 through 26
+     4     4     5     5     5     6     6     6     7     7     7     8     8
+  Columns 27 through 30
+     8     7     9     9
+</pre><h2>sub function of pre-processing pic<a name="8"></a></h2><pre class="codeinput"><span class="keyword">function</span> pic_preprocess = pic_preprocess(pic)
+<span class="comment">% &#22270;&#29255;&#39044;&#22788;&#29702;&#23376;&#20989;&#25968;</span>
+<span class="comment">% &#22270;&#20687;&#21453;&#33394;&#22788;&#29702;</span>
+pic = 255-pic;
+<span class="comment">% &#35774;&#23450;&#38408;&#20540;&#65292;&#23558;&#21453;&#33394;&#22270;&#20687;&#36716;&#25104;&#20108;&#20540;&#22270;&#20687;</span>
+pic = im2bw(pic,0.4);
+<span class="comment">% &#26597;&#25214;&#25968;&#23383;&#19978;&#25152;&#26377;&#20687;&#32032;&#28857;&#30340;&#34892;&#26631;y&#21644;&#21015;&#26631;x</span>
+[y,x] = find(pic == 1);
+<span class="comment">% &#25130;&#21462;&#21253;&#21547;&#23436;&#25972;&#25968;&#23383;&#30340;&#26368;&#23567;&#21306;&#22495;</span>
+pic_preprocess = pic(min(y):max(y), min(x):max(x));
+<span class="comment">% &#23558;&#25130;&#21462;&#30340;&#21253;&#21547;&#23436;&#25972;&#25968;&#23383;&#30340;&#26368;&#23567;&#21306;&#22495;&#22270;&#20687;&#36716;&#25104;16*16&#30340;&#26631;&#20934;&#21270;&#22270;&#20687;</span>
+pic_preprocess = imresize(pic_preprocess,[16,16]);
+</pre><p class="footer"><br>
+      Published with MATLAB&reg; 7.14<br></p></div><!--
+##### SOURCE BEGIN #####
+function Chapter_CharacterRecognitionUsingLibsvm
+%% Matlab神经网络43个案例分析
+
+% 基于SVM的手写字体识别
+% by 李洋(faruto)
+% http://www.matlabsky.com
+% Email:faruto@163.com
+% http://weibo.com/faruto 
+% http://blog.sina.com.cn/faruto
+% 2013.01.01
+%% A Little Clean Work
+close all;
+clear;
+clc;
+format compact;
+%% 载入训练数据
+
+% 利用uigetfile函数交互式选取训练样本
+[FileName,PathName,FilterIndex] = uigetfile( ...
+    {'*.jpg';'*.bmp'},'请导入训练图片','*.jpg','MultiSelect','on');
+if ~FilterIndex
+    return;
+end
+num_train = length(FileName);
+TrainData = zeros(num_train,16*16);
+TrainLabel = zeros(num_train,1);
+for k = 1:num_train
+    pic = imread([PathName,FileName{k}]);
+    pic = pic_preprocess(pic);
+    
+    % 将标准化图像按列拉成一个向量并转置，生成50*256的训练样本矩阵
+    TrainData(k,:) = double(pic(:)');
+    % 样本标签为样本所对应的数字
+    TrainLabel(k) = str2double(FileName{k}(4));
+end
+%% 建立支持向量机
+% [bestCVaccuracy,bestc,bestg] = ...
+%     SVMcgForClass(TrainLabel,TrainData,-8,8,-8,8,10,0.8,0.8,4.5)
+
+% 设置GA相关参数
+    ga_option.maxgen = 100;
+    ga_option.sizepop = 20;
+    ga_option.cbound = [0,100];
+    ga_option.gbound = [0,100];
+    ga_option.v = 10;
+    ga_option.ggap = 0.9;
+    [bestCVaccuracy,bestc,bestg] = ...
+    gaSVMcgForClass(TrainLabel,TrainData,ga_option)
+
+% 训练
+cmd = ['-c ',num2str(bestc),' -g ',num2str(bestg)];
+model = svmtrain(TrainLabel, TrainData, cmd);
+% 在训练集上查看识别能力
+preTrainLabel = svmpredict(TrainLabel, TrainData, model);
+%% 载入测试样本
+[FileName,PathName,FilterIndex] = uigetfile( ...
+    {'*.jpg';'*.bmp'},'请导入测试图片','*.bmp','MultiSelect','on');
+if ~FilterIndex
+    return;
+end
+num_train = length(FileName);
+TestData = zeros(num_train,16*16);
+TestLabel = zeros(num_train,1);
+for k = 1:num_train
+    pic = imread([PathName,FileName{k}]);
+    pic = pic_preprocess(pic);
+    
+    TestData(k,:) = double(pic(:)');
+    TestLabel(k) = str2double(FileName{k}(4));
+end
+%% 对测试样本进行分类
+preTestLabel = svmpredict(TestLabel, TestData, model);
+assignin('base','TestLabel',TestLabel);
+assignin('base','preTestLabel',preTestLabel);
+TestLabel'
+preTestLabel'
+%% sub function of pre-processing pic
+function pic_preprocess = pic_preprocess(pic)
+% 图片预处理子函数
+% 图像反色处理
+pic = 255-pic;
+% 设定阈值，将反色图像转成二值图像
+pic = im2bw(pic,0.4);
+% 查找数字上所有像素点的行标y和列标x
+[y,x] = find(pic == 1);
+% 截取包含完整数字的最小区域
+pic_preprocess = pic(min(y):max(y), min(x):max(x));
+% 将截取的包含完整数字的最小区域图像转成16*16的标准化图像
+pic_preprocess = imresize(pic_preprocess,[16,16]);
+
+
+
+##### SOURCE END #####
+--></body></html>

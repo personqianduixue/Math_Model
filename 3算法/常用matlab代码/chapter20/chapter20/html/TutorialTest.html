@@ -1,0 +1,422 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>TutorialTest</title><meta name="generator" content="MATLAB 7.14"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2013-08-18"><meta name="DC.source" content="TutorialTest.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+
+  </style></head><body><div class="content"><h1>TutorialTest</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;</a></li><li><a href="#2">&#33509;&#36716;&#36733;&#35831;&#27880;&#26126;&#65306;</a></li><li><a href="#4">test for scaleForSVM</a></li><li><a href="#5">test for pcaForSVM</a></li><li><a href="#6">test for SVMcgForClass</a></li><li><a href="#7">test for psoSVMcgForClass</a></li><li><a href="#8">test for gaSVMcgForClass</a></li><li><a href="#9">test for svmplot</a></li><li><a href="#10">test for SVC.m</a></li><li><a href="#11">test for SVR.m</a></li><li><a href="#12">test for VF.m</a></li><li><a href="#13">test for ClassResult.m</a></li><li><a href="#14">test for plotSVMroc</a></li></ul></div><h2>Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;<a name="1"></a></h2><pre class="codeinput"><span class="comment">% LIBSVM-FarutoUltimate&#24037;&#20855;&#31665;&#21450;GUI&#29256;&#26412;&#20171;&#32461;&#19982;&#20351;&#29992;</span>
+<span class="comment">% by &#26446;&#27915;(faruto)</span>
+<span class="comment">% http://www.matlabsky.com</span>
+<span class="comment">% Email:faruto@163.com</span>
+<span class="comment">% http://weibo.com/faruto</span>
+<span class="comment">% http://blog.sina.com.cn/faruto</span>
+<span class="comment">% 2013.01.01</span>
+</pre><h2>&#33509;&#36716;&#36733;&#35831;&#27880;&#26126;&#65306;<a name="2"></a></h2><p>faruto and liyang , LIBSVM-farutoUltimateVersion a toolbox with implements for support vector machines based on libsvm, 2011. Software available at <a href="http://www.matlabsky.com">http://www.matlabsky.com</a></p><p>Chih-Chung Chang and Chih-Jen Lin, LIBSVM : a library for support vector machines, 2001. Software available at <a href="http://www.csie.ntu.edu.tw/~cjlin/libsvm">http://www.csie.ntu.edu.tw/~cjlin/libsvm</a></p><pre class="codeinput">tic;
+close <span class="string">all</span>;
+clear;
+clc;
+format <span class="string">compact</span>;
+</pre><h2>test for scaleForSVM<a name="4"></a></h2><pre class="codeinput">train_data = [1 12;3 4;7 8]
+test_data = [9 10;6 2]
+
+[train_scale,test_scale,ps] = scaleForSVM(train_data,test_data,0,1)
+</pre><pre class="codeoutput">train_data =
+     1    12
+     3     4
+     7     8
+test_data =
+     9    10
+     6     2
+train_scale =
+         0    1.0000
+    0.2500    0.2000
+    0.7500    0.6000
+test_scale =
+    1.0000    0.8000
+    0.6250         0
+ps = 
+         name: 'mapminmax'
+        xrows: 2
+         xmax: [2x1 double]
+         xmin: [2x1 double]
+       xrange: [2x1 double]
+        yrows: 2
+         ymax: 1
+         ymin: 0
+       yrange: 1
+    no_change: 0
+</pre><h2>test for pcaForSVM<a name="5"></a></h2><pre class="codeinput">load <span class="string">wine_test</span>
+whos <span class="string">train_data</span>
+[train_scale,test_scale,ps] = scaleForSVM(train_data,test_data,0,1);
+[train_pca,test_pca] = pcaForSVM(train_scale,test_scale,95);
+whos <span class="string">train_pca</span>
+</pre><pre class="codeoutput">  Name             Size            Bytes  Class     Attributes
+
+  train_data      89x13             9256  double              
+
+  Name            Size            Bytes  Class     Attributes
+
+  train_pca      89x10             7120  double              
+
+</pre><img vspace="5" hspace="5" src="TutorialTest_01.png" alt=""> <h2>test for SVMcgForClass<a name="6"></a></h2><pre class="codeinput">load <span class="string">wine_test</span>
+[train_scale,test_scale,ps] = scaleForSVM(train_data,test_data,0,1);
+[bestacc,bestc,bestg]=SVMcgForClass(train_data_labels,train_scale,-10,10,-10,10,5,0.5,0.5,4.5)
+</pre><pre class="codeoutput">bestacc =
+   98.8764
+bestc =
+     2
+bestg =
+    2.8284
+</pre><img vspace="5" hspace="5" src="TutorialTest_02.png" alt=""> <img vspace="5" hspace="5" src="TutorialTest_03.png" alt=""> <h2>test for psoSVMcgForClass<a name="7"></a></h2><pre class="codeinput">load <span class="string">wine_test</span>
+[train_scale,test_scale,ps] = scaleForSVM(train_data,test_data,0,1);
+
+    pso_option.c1 = 1.5;
+    pso_option.c2 = 1.7;
+    pso_option.maxgen = 100;
+    pso_option.sizepop = 20;
+    pso_option.k = 0.6;
+    pso_option.wV = 1;
+    pso_option.wP = 1;
+    pso_option.v = 5;
+    pso_option.popcmax = 100;
+    pso_option.popcmin = 0.1;
+    pso_option.popgmax = 100;
+    pso_option.popgmin = 0.1;
+
+[bestacc,bestc,bestg]=psoSVMcgForClass(train_data_labels,train_scale,pso_option)
+</pre><pre class="codeoutput">bestacc =
+   98.8764
+bestc =
+    5.5965
+bestg =
+    4.4675
+</pre><img vspace="5" hspace="5" src="TutorialTest_04.png" alt=""> <h2>test for gaSVMcgForClass<a name="8"></a></h2><pre class="codeinput">load <span class="string">wine_test</span>
+[train_scale,test_scale,ps] = scaleForSVM(train_data,test_data,0,1);
+    ga_option.maxgen = 100;
+    ga_option.sizepop = 20;
+    ga_option.cbound = [0,100];
+    ga_option.gbound = [0,100];
+    ga_option.v = 10;
+    ga_option.ggap = 0.9;
+[bestacc,bestc,bestg]=gaSVMcgForClass(train_data_labels,train_scale,ga_option)
+</pre><pre class="codeoutput">bestacc =
+   98.8764
+bestc =
+    7.9109
+bestg =
+    3.7207
+</pre><img vspace="5" hspace="5" src="TutorialTest_05.png" alt=""> <h2>test for svmplot<a name="9"></a></h2><pre class="codeinput">load <span class="string">fisheriris</span>;
+data = [meas(:,1), meas(:,2)];
+groups = ismember(species,<span class="string">'setosa'</span>);
+[train, test] = crossvalind(<span class="string">'holdOut'</span>,groups);
+dataset = data(train,:);
+labels = double(groups(train));
+model = svmtrain(labels,dataset,<span class="string">'-c 2 -g 0.1'</span>);
+svmplot(labels,dataset,model);
+</pre><pre class="codeoutput">Mean squared error = 3.15195 (regression)
+Squared correlation coefficient = -1.#IND (regression)
+</pre><img vspace="5" hspace="5" src="TutorialTest_06.png" alt=""> <h2>test for SVC.m<a name="10"></a></h2><pre class="codeinput">load <span class="string">wine_test</span>;
+train_label = train_data_labels;
+train_data = train_data;
+test_label = test_data_labels;
+test_data = test_data;
+
+Method_option.plotOriginal = 0;
+Method_option.scale = 1;
+Method_option.plotScale = 0;
+Method_option.pca = 1;
+Method_option.type = 1;
+
+[predict_label,accuracy] = SVC(train_label,train_data,test_label,test_data,Method_option);
+</pre><pre class="codeoutput">bestCVaccuracy =
+   97.7528
+bestc =
+    1.7411
+bestg =
+    5.2780
+Accuracy = 100% (89/89) (classification)
+Accuracy = 97.7528% (87/89) (classification)
+accuracy =
+  100.0000   97.7528
+</pre><img vspace="5" hspace="5" src="TutorialTest_07.png" alt=""> <img vspace="5" hspace="5" src="TutorialTest_08.png" alt=""> <img vspace="5" hspace="5" src="TutorialTest_09.png" alt=""> <h2>test for SVR.m<a name="11"></a></h2><pre class="codeinput">load <span class="string">x123</span>;
+train_y = x1(1:17);
+train_x = [1:17]';
+test_y = x1(18:end,:);
+test_x = [18:20]';
+
+Method_option.plotOriginal = 0;
+Method_option.xscale = 1;
+Method_option.yscale = 1;
+Method_option.plotScale = 0;
+Method_option.pca = 0;
+Method_option.type = 5;
+
+[predict_Y,mse,r] = SVR(train_y,train_x,test_y,test_x,Method_option);
+</pre><pre class="codeoutput">bestCVmse =
+    0.0326
+bestc =
+    4.4803
+bestg =
+   32.9112
+bestp =
+    0.0216
+Mean squared error = 0.000400906 (regression)
+Squared correlation coefficient = 0.996549 (regression)
+Mean squared error = 0.00171783 (regression)
+Squared correlation coefficient = 0.994947 (regression)
+mse =
+    0.0004    0.0017
+r =
+    0.9965    0.9949
+</pre><img vspace="5" hspace="5" src="TutorialTest_10.png" alt=""> <img vspace="5" hspace="5" src="TutorialTest_11.png" alt=""> <img vspace="5" hspace="5" src="TutorialTest_12.png" alt=""> <h2>test for VF.m<a name="12"></a></h2><pre class="codeinput">load <span class="string">wine_test</span>
+[train_scale,test_scale,ps] = scaleForSVM(train_data,test_data,0,1);
+model = svmtrain(train_data_labels,train_scale,<span class="string">'-c 2 -g 0.1'</span>);
+[pre,acc] = svmpredict(train_data_labels,train_scale,model);
+[score,str] = VF(train_data_labels,pre,1)
+[score,str] = VF(train_data_labels,pre,2)
+[score,str] = VF(train_data_labels,pre,3)
+[score,str] = VF(train_data_labels,pre,4)
+[score,str] = VF(train_data_labels,pre,5)
+</pre><pre class="codeoutput">Accuracy = 96.6292% (86/89) (classification)
+score =
+   96.6292
+str =
+Accuracy = 96.6292% (86/89) [Accuracy = #true / #total]
+score =
+   96.7742
+str =
+Precision = 96.7742% (30/31) [Precision = true_positive / (true_positive + false_positive)]
+score =
+   100
+str =
+Recall = 100% (30/30) [Recall = true_positive / (true_positive + false_negative)]
+score =
+   98.3607
+str =
+F-score = 98.3607% [F-score = 2 * Precision * Recall / (Precision + Recall)]
+score =
+    50
+str =
+BAC = 50% [BAC (Ballanced ACcuracy) = (Sensitivity + Specificity) / 2]
+</pre><h2>test for ClassResult.m<a name="13"></a></h2><pre class="codeinput">load <span class="string">heart_scale.mat</span>;
+data = heart_scale_inst;
+label = heart_scale_label;
+model = svmtrain(label,data);
+type = 1;
+CR = ClassResult(label, data, model, type)
+</pre><pre class="codeoutput">Accuracy = 86.6667% (234/270) (classification)
+===some info of the data set===
+#class is 2
+&#31867;&#21035;&#26631;&#31614;&#20026; 1 -1 
+&#25903;&#25345;&#21521;&#37327;&#25968;&#30446; 132,&#25152;&#21344;&#35757;&#32451;&#38598;&#26679;&#26412;&#25968;&#30446;&#27604;&#20363; 48.8889% &#65288;132/270&#65289;
+===&#21508;&#31181;&#20998;&#31867;&#20934;&#30830;&#29575;===
+&#25972;&#20307;&#20998;&#31867;&#20934;&#30830;&#29575; = 86.6667% (234/270)
+&#31532; 1 &#31867;&#20998;&#31867;&#20934;&#30830;&#29575; = 80.8333% (97/120)
+&#31532; -1 &#31867;&#20998;&#31867;&#20934;&#30830;&#29575; = 91.3333% (137/150)
+CR = 
+      accuracy: [0.8667 0.8083 0.9133]
+    SVlocation: [132x1 double]
+             b: -0.4245
+             w: [132x1 double]
+         alpha: [132x1 double]
+</pre><h2>test for plotSVMroc<a name="14"></a></h2><pre class="codeinput">load <span class="string">wine_test</span>
+[train_data,test_data] = scaleForSVM(train_data,test_data,0,1);
+model = svmtrain(train_data_labels,train_data,<span class="string">'-c 0.01 -g 0.01 -b 1'</span>);
+[pre,acc,dec] = svmpredict(train_data_labels,train_data,model,<span class="string">'-b 1'</span>);
+plotSVMroc(train_data_labels,dec,3)
+</pre><pre class="codeoutput">Accuracy = 95.5056% (85/89) (classification)
+</pre><img vspace="5" hspace="5" src="TutorialTest_13.png" alt=""> <img vspace="5" hspace="5" src="TutorialTest_14.png" alt=""> <pre class="codeinput">toc;
+</pre><pre class="codeoutput">Elapsed time is 41.691651 seconds.
+</pre><p class="footer"><br>
+      Published with MATLAB&reg; 7.14<br></p></div><!--
+##### SOURCE BEGIN #####
+%% TutorialTest
+
+%% Matlab神经网络43个案例分析
+
+% LIBSVM-FarutoUltimate工具箱及GUI版本介绍与使用
+% by 李洋(faruto)
+% http://www.matlabsky.com
+% Email:faruto@163.com
+% http://weibo.com/faruto 
+% http://blog.sina.com.cn/faruto
+% 2013.01.01
+%% 若转载请注明：
+% faruto and liyang , LIBSVM-farutoUltimateVersion 
+% a toolbox with implements for support vector machines based on libsvm, 2011. 
+% Software available at http://www.matlabsky.com
+% 
+% Chih-Chung Chang and Chih-Jen Lin, LIBSVM : a library for
+% support vector machines, 2001. Software available at
+% http://www.csie.ntu.edu.tw/~cjlin/libsvm
+%%
+tic;
+close all;
+clear;
+clc;
+format compact;
+%% test for scaleForSVM
+train_data = [1 12;3 4;7 8]
+test_data = [9 10;6 2]
+
+[train_scale,test_scale,ps] = scaleForSVM(train_data,test_data,0,1)
+
+%% test for pcaForSVM
+load wine_test
+whos train_data
+[train_scale,test_scale,ps] = scaleForSVM(train_data,test_data,0,1);
+[train_pca,test_pca] = pcaForSVM(train_scale,test_scale,95);
+whos train_pca
+
+%% test for SVMcgForClass
+load wine_test
+[train_scale,test_scale,ps] = scaleForSVM(train_data,test_data,0,1);
+[bestacc,bestc,bestg]=SVMcgForClass(train_data_labels,train_scale,-10,10,-10,10,5,0.5,0.5,4.5)
+
+%% test for psoSVMcgForClass
+load wine_test
+[train_scale,test_scale,ps] = scaleForSVM(train_data,test_data,0,1);
+
+    pso_option.c1 = 1.5;
+    pso_option.c2 = 1.7;
+    pso_option.maxgen = 100;
+    pso_option.sizepop = 20;
+    pso_option.k = 0.6;
+    pso_option.wV = 1;
+    pso_option.wP = 1;
+    pso_option.v = 5;
+    pso_option.popcmax = 100;
+    pso_option.popcmin = 0.1;
+    pso_option.popgmax = 100;
+    pso_option.popgmin = 0.1;
+    
+[bestacc,bestc,bestg]=psoSVMcgForClass(train_data_labels,train_scale,pso_option)
+%% test for gaSVMcgForClass
+load wine_test
+[train_scale,test_scale,ps] = scaleForSVM(train_data,test_data,0,1);
+    ga_option.maxgen = 100;
+    ga_option.sizepop = 20;
+    ga_option.cbound = [0,100];
+    ga_option.gbound = [0,100];
+    ga_option.v = 10;
+    ga_option.ggap = 0.9;
+[bestacc,bestc,bestg]=gaSVMcgForClass(train_data_labels,train_scale,ga_option)
+%% test for svmplot
+load fisheriris;
+data = [meas(:,1), meas(:,2)];
+groups = ismember(species,'setosa');
+[train, test] = crossvalind('holdOut',groups);
+dataset = data(train,:);
+labels = double(groups(train));
+model = svmtrain(labels,dataset,'-c 2 -g 0.1');
+svmplot(labels,dataset,model);
+%% test for SVC.m
+load wine_test;
+train_label = train_data_labels;
+train_data = train_data;
+test_label = test_data_labels;
+test_data = test_data;
+
+Method_option.plotOriginal = 0;
+Method_option.scale = 1;
+Method_option.plotScale = 0;
+Method_option.pca = 1;
+Method_option.type = 1;
+
+[predict_label,accuracy] = SVC(train_label,train_data,test_label,test_data,Method_option);
+%% test for SVR.m
+load x123;
+train_y = x1(1:17);
+train_x = [1:17]';
+test_y = x1(18:end,:);
+test_x = [18:20]';
+
+Method_option.plotOriginal = 0;
+Method_option.xscale = 1;
+Method_option.yscale = 1;
+Method_option.plotScale = 0;
+Method_option.pca = 0;
+Method_option.type = 5;
+
+[predict_Y,mse,r] = SVR(train_y,train_x,test_y,test_x,Method_option);
+%% test for VF.m
+load wine_test
+[train_scale,test_scale,ps] = scaleForSVM(train_data,test_data,0,1);
+model = svmtrain(train_data_labels,train_scale,'-c 2 -g 0.1');
+[pre,acc] = svmpredict(train_data_labels,train_scale,model);
+[score,str] = VF(train_data_labels,pre,1)
+[score,str] = VF(train_data_labels,pre,2)
+[score,str] = VF(train_data_labels,pre,3)
+[score,str] = VF(train_data_labels,pre,4)
+[score,str] = VF(train_data_labels,pre,5)
+%% test for ClassResult.m
+load heart_scale.mat;
+data = heart_scale_inst;
+label = heart_scale_label;
+model = svmtrain(label,data);
+type = 1;
+CR = ClassResult(label, data, model, type)
+%% test for plotSVMroc
+load wine_test
+[train_data,test_data] = scaleForSVM(train_data,test_data,0,1); 
+model = svmtrain(train_data_labels,train_data,'-c 0.01 -g 0.01 -b 1');
+[pre,acc,dec] = svmpredict(train_data_labels,train_data,model,'-b 1');
+plotSVMroc(train_data_labels,dec,3)
+%%
+toc;
+
+
+
+##### SOURCE END #####
+--></body></html>

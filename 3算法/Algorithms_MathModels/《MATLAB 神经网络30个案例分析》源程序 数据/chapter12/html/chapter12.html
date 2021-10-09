@@ -1,0 +1,246 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>SVM&#31070;&#32463;&#32593;&#32476;&#30340;&#25968;&#25454;&#20998;&#31867;&#39044;&#27979;----&#24847;&#22823;&#21033;&#33889;&#33796;&#37202;&#31181;&#31867;&#35782;&#21035;</title><meta name="generator" content="MATLAB 7.11"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2010-11-16"><meta name="DC.source" content="chapter12.m"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><h1>SVM&#31070;&#32463;&#32593;&#32476;&#30340;&#25968;&#25454;&#20998;&#31867;&#39044;&#27979;----&#24847;&#22823;&#21033;&#33889;&#33796;&#37202;&#31181;&#31867;&#35782;&#21035;</h1><!--introduction--><p>
+<table border="0" width="600px" id="table1">	<tr>		<td><b><font size="2">该案例作者申明：</font></b></td>	</tr>	<tr><td><span class="comment"><font size="2">1：本人长期驻扎在此<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html"><font color="#0000FF">板块</font></a>里，对该案例提问，做到有问必答。本套书籍官方网站为：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></span></td></tr><tr>		<td><font size="2">2：点此<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">从当当预定本书</a>：<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">《Matlab神经网络30个案例分析》</a>。</td></tr><tr>	<td><p class="comment"></font><font size="2">3</font><font size="2">：此案例有配套的教学视频，视频下载方式<a href="http://video.ourmatlab.com/vbuy.html">video.ourmatlab.com/vbuy.html</a></font><font size="2">。 </font></p></td>	</tr>			<tr>		<td><span class="comment"><font size="2">		4：此案例为原创案例，转载请注明出处（《Matlab神经网络30个案例分析》）。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		5：若此案例碰巧与您的研究有关联，我们欢迎您提意见，要求等，我们考虑后可以加在案例里。</font></span></td>	</tr>		</table>
+</p><p>by liyang[faruto] @ faruto's Studio~ Email:faruto@163.com QQ:516667408 <a href="http://blog.sina.com.cn/faruto">http://blog.sina.com.cn/faruto</a> <a href="http://www.matlabsky.com">http://www.matlabsky.com</a> <a href="http://www.mfun.la">http://www.mfun.la</a> <a href="http://video.ourmatlab.com">http://video.ourmatlab.com</a></p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;</a></li><li><a href="#2">&#25968;&#25454;&#30340;&#25552;&#21462;&#21644;&#39044;&#22788;&#29702;</a></li><li><a href="#3">SVM&#32593;&#32476;&#35757;&#32451;</a></li><li><a href="#4">SVM&#32593;&#32476;&#39044;&#27979;</a></li><li><a href="#5">&#32467;&#26524;&#20998;&#26512;</a></li></ul></div><h2>&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;<a name="1"></a></h2><pre class="codeinput">close <span class="string">all</span>;
+clear;
+clc;
+format <span class="string">compact</span>;
+</pre><h2>&#25968;&#25454;&#30340;&#25552;&#21462;&#21644;&#39044;&#22788;&#29702;<a name="2"></a></h2><pre class="codeinput"><span class="comment">% &#36733;&#20837;&#27979;&#35797;&#25968;&#25454;wine,&#20854;&#20013;&#21253;&#21547;&#30340;&#25968;&#25454;&#20026;classnumber = 3,wine:178*13&#30340;&#30697;&#38453;,wine_labes:178*1&#30340;&#21015;&#21521;&#37327;</span>
+load <span class="string">chapter12_wine.mat</span>;
+
+<span class="comment">% &#30011;&#20986;&#27979;&#35797;&#25968;&#25454;&#30340;&#21487;&#35270;&#21270;&#22270;</span>
+figure
+subplot(3,5,1);
+hold <span class="string">on</span>
+<span class="keyword">for</span> run = 1:178
+    plot(run,wine_labels(run));
+<span class="keyword">end</span>
+title(<span class="string">'class'</span>,<span class="string">'FontSize'</span>,10);
+
+<span class="keyword">for</span> run = 2:14
+    subplot(3,5,run);
+    hold <span class="string">on</span>;
+    str = [<span class="string">'attrib '</span>,num2str(run-1)];
+    <span class="keyword">for</span> i = 1:178
+        plot(i,wine(i,run-1));
+    <span class="keyword">end</span>
+    title(str,<span class="string">'FontSize'</span>,10);
+<span class="keyword">end</span>
+
+<span class="comment">% &#36873;&#23450;&#35757;&#32451;&#38598;&#21644;&#27979;&#35797;&#38598;</span>
+
+<span class="comment">% &#23558;&#31532;&#19968;&#31867;&#30340;1-30,&#31532;&#20108;&#31867;&#30340;60-95,&#31532;&#19977;&#31867;&#30340;131-153&#20570;&#20026;&#35757;&#32451;&#38598;</span>
+train_wine = [wine(1:30,:);wine(60:95,:);wine(131:153,:)];
+<span class="comment">% &#30456;&#24212;&#30340;&#35757;&#32451;&#38598;&#30340;&#26631;&#31614;&#20063;&#35201;&#20998;&#31163;&#20986;&#26469;</span>
+train_wine_labels = [wine_labels(1:30);wine_labels(60:95);wine_labels(131:153)];
+<span class="comment">% &#23558;&#31532;&#19968;&#31867;&#30340;31-59,&#31532;&#20108;&#31867;&#30340;96-130,&#31532;&#19977;&#31867;&#30340;154-178&#20570;&#20026;&#27979;&#35797;&#38598;</span>
+test_wine = [wine(31:59,:);wine(96:130,:);wine(154:178,:)];
+<span class="comment">% &#30456;&#24212;&#30340;&#27979;&#35797;&#38598;&#30340;&#26631;&#31614;&#20063;&#35201;&#20998;&#31163;&#20986;&#26469;</span>
+test_wine_labels = [wine_labels(31:59);wine_labels(96:130);wine_labels(154:178)];
+
+<span class="comment">% &#25968;&#25454;&#39044;&#22788;&#29702;,&#23558;&#35757;&#32451;&#38598;&#21644;&#27979;&#35797;&#38598;&#24402;&#19968;&#21270;&#21040;[0,1]&#21306;&#38388;</span>
+
+<span class="comment">% mapminmax&#20026;matlab&#33258;&#24102;&#30340;&#26144;&#23556;&#20989;&#25968;</span>
+[train_wine,pstrain] = mapminmax(train_wine');
+<span class="comment">% &#23558;&#26144;&#23556;&#20989;&#25968;&#30340;&#33539;&#22260;&#21442;&#25968;&#20998;&#21035;&#32622;&#20026;0&#21644;1</span>
+pstrain.ymin = 0;
+pstrain.ymax = 1;
+<span class="comment">% &#23545;&#35757;&#32451;&#38598;&#36827;&#34892;[0,1]&#24402;&#19968;&#21270;</span>
+[train_wine,pstrain] = mapminmax(train_wine,pstrain);
+
+<span class="comment">% mapminmax&#20026;matlab&#36739;&#26032;&#29256;&#26412;&#33258;&#24102;&#30340;&#26144;&#23556;&#20989;&#25968;</span>
+[test_wine,pstest] = mapminmax(test_wine');
+<span class="comment">% &#23558;&#26144;&#23556;&#20989;&#25968;&#30340;&#33539;&#22260;&#21442;&#25968;&#20998;&#21035;&#32622;&#20026;0&#21644;1</span>
+pstest.ymin = 0;
+pstest.ymax = 1;
+<span class="comment">% &#23545;&#27979;&#35797;&#38598;&#36827;&#34892;[0,1]&#24402;&#19968;&#21270;</span>
+[test_wine,pstest] = mapminmax(test_wine,pstest);
+
+<span class="comment">% &#23545;&#35757;&#32451;&#38598;&#21644;&#27979;&#35797;&#38598;&#36827;&#34892;&#36716;&#32622;,&#20197;&#31526;&#21512;libsvm&#24037;&#20855;&#31665;&#30340;&#25968;&#25454;&#26684;&#24335;&#35201;&#27714;</span>
+train_wine = train_wine';
+test_wine = test_wine';
+</pre><img vspace="5" hspace="5" src="chapter12_01.png" alt=""> <h2>SVM&#32593;&#32476;&#35757;&#32451;<a name="3"></a></h2><pre class="codeinput">model = svmtrain(train_wine_labels, train_wine, <span class="string">'-c 2 -g 0.02'</span>);
+</pre><h2>SVM&#32593;&#32476;&#39044;&#27979;<a name="4"></a></h2><pre class="codeinput">[predict_label, accuracy] = svmpredict(test_wine_labels, test_wine, model);
+</pre><pre class="codeoutput">Accuracy = 96.6292% (86/89) (classification)
+</pre><h2>&#32467;&#26524;&#20998;&#26512;<a name="5"></a></h2><pre class="codeinput"><span class="comment">% &#27979;&#35797;&#38598;&#30340;&#23454;&#38469;&#20998;&#31867;&#21644;&#39044;&#27979;&#20998;&#31867;&#22270;</span>
+<span class="comment">% &#36890;&#36807;&#22270;&#21487;&#20197;&#30475;&#20986;&#21482;&#26377;&#19977;&#20010;&#27979;&#35797;&#26679;&#26412;&#26159;&#34987;&#38169;&#20998;&#30340;</span>
+figure;
+hold <span class="string">on</span>;
+plot(test_wine_labels,<span class="string">'o'</span>);
+plot(predict_label,<span class="string">'r*'</span>);
+legend(<span class="string">'&#23454;&#38469;&#27979;&#35797;&#38598;&#20998;&#31867;'</span>,<span class="string">'&#39044;&#27979;&#27979;&#35797;&#38598;&#20998;&#31867;'</span>);
+title(<span class="string">'&#27979;&#35797;&#38598;&#30340;&#23454;&#38469;&#20998;&#31867;&#21644;&#39044;&#27979;&#20998;&#31867;&#22270;'</span>,<span class="string">'FontSize'</span>,10);
+
+<span class="comment">% web http://www.matlabsky.com/forum-31-1.html</span>
+web <span class="string">http://www.matlabsky.com/forum-31-1.html</span> <span class="string">-new</span>;
+</pre><img vspace="5" hspace="5" src="chapter12_02.png" alt=""> <p>
+<table width="656" align="left" >	<tr><td align="center"><p><font size="2"><a href="http://video.ourmatlab.com/">Matlab神经网络30个案例分析</a></font></p><p align="left"><font size="2">相关论坛：</font></p><p align="left"><font size="2">《Matlab神经网络30个案例分析》官方网站：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></p><p align="left"><font size="2">Matlab技术论坛：<a href="http://www.matlabsky.com">www.matlabsky.com</a></font></p><p align="left"><font size="2">M</font><font size="2">atlab函数百科：<a href="http://www.mfun.la">www.mfun.la</a></font></p><p align="left"><font size="2">Matlab中文论坛：<a href="http://www.ilovematlab.com">www.ilovematlab.com</a></font></p></td>	</tr></table>
+</p><p class="footer"><br>
+      Published with MATLAB&reg; 7.11<br></p></div><!--
+##### SOURCE BEGIN #####
+%% SVM神经网络的数据分类预测REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH意大利葡萄酒种类识别
+% 
+% 
+% <html>
+% <table border="0" width="600px" id="table1">	<tr>		<td><b><font size="2">该案例作者申明：</font></b></td>	</tr>	<tr><td><span class="comment"><font size="2">1：本人长期驻扎在此<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html"><font color="#0000FF">板块</font></a>里，对该案例提问，做到有问必答。本套书籍官方网站为：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></span></td></tr><tr>		<td><font size="2">2：点此<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">从当当预定本书</a>：<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">《Matlab神经网络30个案例分析》</a>。</td></tr><tr>	<td><p class="comment"></font><font size="2">3</font><font size="2">：此案例有配套的教学视频，视频下载方式<a href="http://video.ourmatlab.com/vbuy.html">video.ourmatlab.com/vbuy.html</a></font><font size="2">。 </font></p></td>	</tr>			<tr>		<td><span class="comment"><font size="2">		4：此案例为原创案例，转载请注明出处（《Matlab神经网络30个案例分析》）。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		5：若此案例碰巧与您的研究有关联，我们欢迎您提意见，要求等，我们考虑后可以加在案例里。</font></span></td>	</tr>		</table>
+% </html>
+% 
+% by liyang[faruto] @ faruto's Studio~
+% Email:faruto@163.com
+% QQ:516667408 
+% http://blog.sina.com.cn/faruto
+% http://www.matlabsky.com
+% http://www.mfun.la
+% http://video.ourmatlab.com
+
+%% 清空环境变量
+close all;
+clear;
+clc;
+format compact;
+%% 数据的提取和预处理
+
+% 载入测试数据wine,其中包含的数据为classnumber = 3,wine:178*13的矩阵,wine_labes:178*1的列向量
+load chapter12_wine.mat;
+
+% 画出测试数据的可视化图
+figure
+subplot(3,5,1);
+hold on
+for run = 1:178
+    plot(run,wine_labels(run));
+end
+title('class','FontSize',10);
+
+for run = 2:14
+    subplot(3,5,run);
+    hold on;
+    str = ['attrib ',num2str(run-1)];
+    for i = 1:178  
+        plot(i,wine(i,run-1));
+    end
+    title(str,'FontSize',10);
+end
+
+% 选定训练集和测试集
+
+% 将第一类的1-30,第二类的60-95,第三类的131-153做为训练集
+train_wine = [wine(1:30,:);wine(60:95,:);wine(131:153,:)];
+% 相应的训练集的标签也要分离出来
+train_wine_labels = [wine_labels(1:30);wine_labels(60:95);wine_labels(131:153)];
+% 将第一类的31-59,第二类的96-130,第三类的154-178做为测试集
+test_wine = [wine(31:59,:);wine(96:130,:);wine(154:178,:)];
+% 相应的测试集的标签也要分离出来
+test_wine_labels = [wine_labels(31:59);wine_labels(96:130);wine_labels(154:178)];
+
+% 数据预处理,将训练集和测试集归一化到[0,1]区间
+
+% mapminmax为matlab自带的映射函数
+[train_wine,pstrain] = mapminmax(train_wine');	
+% 将映射函数的范围参数分别置为0和1
+pstrain.ymin = 0;
+pstrain.ymax = 1;
+% 对训练集进行[0,1]归一化
+[train_wine,pstrain] = mapminmax(train_wine,pstrain);
+
+% mapminmax为matlab较新版本自带的映射函数
+[test_wine,pstest] = mapminmax(test_wine');
+% 将映射函数的范围参数分别置为0和1
+pstest.ymin = 0;
+pstest.ymax = 1;
+% 对测试集进行[0,1]归一化
+[test_wine,pstest] = mapminmax(test_wine,pstest);
+
+% 对训练集和测试集进行转置,以符合libsvm工具箱的数据格式要求
+train_wine = train_wine';
+test_wine = test_wine';
+%% SVM网络训练
+model = svmtrain(train_wine_labels, train_wine, '-c 2 -g 0.02');
+%% SVM网络预测
+[predict_label, accuracy] = svmpredict(test_wine_labels, test_wine, model);
+%% 结果分析
+
+% 测试集的实际分类和预测分类图
+% 通过图可以看出只有三个测试样本是被错分的
+figure;
+hold on;
+plot(test_wine_labels,'o');
+plot(predict_label,'r*');
+legend('实际测试集分类','预测测试集分类');
+title('测试集的实际分类和预测分类图','FontSize',10);
+
+% web http://www.matlabsky.com/forum-31-1.html
+web http://www.matlabsky.com/forum-31-1.html -new;
+%%
+% 
+% <html>
+% <table width="656" align="left" >	<tr><td align="center"><p><font size="2"><a href="http://video.ourmatlab.com/">Matlab神经网络30个案例分析</a></font></p><p align="left"><font size="2">相关论坛：</font></p><p align="left"><font size="2">《Matlab神经网络30个案例分析》官方网站：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></p><p align="left"><font size="2">Matlab技术论坛：<a href="http://www.matlabsky.com">www.matlabsky.com</a></font></p><p align="left"><font size="2">M</font><font size="2">atlab函数百科：<a href="http://www.mfun.la">www.mfun.la</a></font></p><p align="left"><font size="2">Matlab中文论坛：<a href="http://www.ilovematlab.com">www.ilovematlab.com</a></font></p></td>	</tr></table>
+% </html>
+% 
+
+
+##### SOURCE END #####
+--></body></html>

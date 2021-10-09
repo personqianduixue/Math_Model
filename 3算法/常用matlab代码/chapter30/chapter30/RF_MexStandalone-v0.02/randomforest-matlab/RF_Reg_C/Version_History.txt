@@ -1,0 +1,9 @@
+CHANGES
+
+svn-v9?
+Added almost 95% of the total options provided by the R-package to classification.
+Added tutorial for regression based RF in tutorial_RegRF.m
+Moving now to version 0.02
+    
+svn-v2
+initial commit - mapped to v0.01preview version

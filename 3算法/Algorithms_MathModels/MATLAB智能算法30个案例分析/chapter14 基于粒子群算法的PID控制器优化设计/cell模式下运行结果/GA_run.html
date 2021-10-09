@@ -1,0 +1,99 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>GA_run</title>
+      <meta name="generator" content="MATLAB 7.8">
+      <meta name="date" content="2010-08-23">
+      <meta name="m-file" content="GA_run"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head>
+   <body>
+      <div class="content"><pre class="codeinput">clear
+clc
+fitnessfcn = @ PSO_PID;    <span class="comment">% &#36866;&#24212;&#24230;&#20989;&#25968;&#21477;&#26564;</span>
+nvars=3;                   <span class="comment">% &#20010;&#20307;&#21464;&#37327;&#25968;&#30446;</span>
+LB = [0 0 0];              <span class="comment">% &#19979;&#38480;</span>
+UB = [300 300 300];        <span class="comment">% &#19978;&#38480;</span>
+options=gaoptimset(<span class="string">'PopulationSize'</span>,100,<span class="string">'PopInitRange'</span>,[LB;UB],<span class="string">'EliteCount'</span>,10,<span class="string">'CrossoverFraction'</span>,0.6,<span class="string">'Generations'</span>,100,<span class="string">'StallGenLimit'</span>,100,<span class="string">'TolFun'</span>,1e-100,<span class="string">'PlotFcns'</span>,{@gaplotbestf,@gaplotbestindiv});   <span class="comment">% &#31639;&#27861;&#21442;&#25968;&#35774;&#32622;</span>
+[x_best,fval]=ga(fitnessfcn,nvars, [],[],[],[],LB,UB,[],options);      <span class="comment">% &#36816;&#34892;&#36951;&#20256;&#31639;&#27861;</span>
+</pre><pre class="codeoutput">Optimization terminated: maximum number of generations exceeded.
+</pre><img vspace="5" hspace="5" src="GA_run_01.png" alt=""> <p class="footer"><br>
+            Published with MATLAB&reg; 7.8<br></p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+clear
+clc
+fitnessfcn = @ PSO_PID;    % 适应度函数句柄
+nvars=3;                   % 个体变量数目
+LB = [0 0 0];              % 下限
+UB = [300 300 300];        % 上限
+options=gaoptimset('PopulationSize',100,'PopInitRange',[LB;UB],'EliteCount',10,'CrossoverFraction',0.6,'Generations',100,'StallGenLimit',100,'TolFun',1e-100,'PlotFcns',{@gaplotbestf,@gaplotbestindiv});   % 算法参数设置
+[x_best,fval]=ga(fitnessfcn,nvars, [],[],[],[],LB,UB,[],options);      % 运行遗传算法
+
+##### SOURCE END #####
+-->
+   </body>
+</html>

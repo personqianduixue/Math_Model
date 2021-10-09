@@ -1,0 +1,204 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>main</title><meta name="generator" content="MATLAB 7.14"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2015-11-10"><meta name="DC.source" content="main.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">I. &#28165;&#31354;&#29615;&#22659;&#21464;&#37327;</a></li><li><a href="#2">II. &#23548;&#20837;&#22478;&#24066;&#20301;&#32622;&#25968;&#25454;</a></li><li><a href="#3">III. &#35745;&#31639;&#36317;&#31163;&#30697;&#38453;</a></li><li><a href="#4">IV. &#21021;&#22987;&#21270;&#21442;&#25968;</a></li><li><a href="#5">V. &#38543;&#26426;&#20135;&#29983;&#19968;&#20010;&#21021;&#22987;&#36335;&#32447;</a></li><li><a href="#6">VI. &#36845;&#20195;&#20248;&#21270;</a></li><li><a href="#12">VII. &#20248;&#21270;&#36807;&#31243;&#36845;&#20195;&#22270;</a></li><li><a href="#13">VIII. &#32472;&#21046;&#26368;&#20248;&#36335;&#24452;&#22270;</a></li><li><a href="#14">IX. &#36755;&#20986;&#26368;&#20248;&#35299;&#30340;&#36335;&#32447;&#21644;&#24635;&#36317;&#31163;</a></li></ul></div><h2>I. &#28165;&#31354;&#29615;&#22659;&#21464;&#37327;<a name="1"></a></h2><pre class="codeinput">clear <span class="string">all</span>
+clc
+</pre><h2>II. &#23548;&#20837;&#22478;&#24066;&#20301;&#32622;&#25968;&#25454;<a name="2"></a></h2><pre class="codeinput">X = [16.4700   96.1000
+     16.4700   94.4400
+     20.0900   92.5400
+     22.3900   93.3700
+     25.2300   97.2400
+     22.0000   96.0500
+     20.4700   97.0200
+     17.2000   96.2900
+     16.3000   97.3800
+     14.0500   98.1200
+     16.5300   97.3800
+     21.5200   95.5900
+     19.4100   97.1300
+     20.0900   92.5500];
+</pre><h2>III. &#35745;&#31639;&#36317;&#31163;&#30697;&#38453;<a name="3"></a></h2><pre class="codeinput">D = Distance(X);  <span class="comment">%&#35745;&#31639;&#36317;&#31163;&#30697;&#38453;</span>
+N = size(D,1);    <span class="comment">%&#22478;&#24066;&#30340;&#20010;&#25968;</span>
+</pre><h2>IV. &#21021;&#22987;&#21270;&#21442;&#25968;<a name="4"></a></h2><pre class="codeinput">T0 = 1e10;   <span class="comment">% &#21021;&#22987;&#28201;&#24230;</span>
+Tend = 1e-30;  <span class="comment">% &#32456;&#27490;&#28201;&#24230;</span>
+L = 2;    <span class="comment">% &#21508;&#28201;&#24230;&#19979;&#30340;&#36845;&#20195;&#27425;&#25968;</span>
+q = 0.9;    <span class="comment">%&#38477;&#28201;&#36895;&#29575;</span>
+Time = ceil(double(solve([num2str(T0) <span class="string">'*(0.9)^x = '</span>,num2str(Tend)])));  <span class="comment">% &#35745;&#31639;&#36845;&#20195;&#30340;&#27425;&#25968;</span>
+<span class="comment">% Time = 132;</span>
+count = 0;        <span class="comment">%&#36845;&#20195;&#35745;&#25968;</span>
+Obj = zeros(Time,1);         <span class="comment">%&#30446;&#26631;&#20540;&#30697;&#38453;&#21021;&#22987;&#21270;</span>
+track = zeros(Time,N);       <span class="comment">%&#27599;&#20195;&#30340;&#26368;&#20248;&#36335;&#32447;&#30697;&#38453;&#21021;&#22987;&#21270;</span>
+</pre><h2>V. &#38543;&#26426;&#20135;&#29983;&#19968;&#20010;&#21021;&#22987;&#36335;&#32447;<a name="5"></a></h2><pre class="codeinput">S1 = randperm(N);
+DrawPath(S1,X)
+disp(<span class="string">'&#21021;&#22987;&#31181;&#32676;&#20013;&#30340;&#19968;&#20010;&#38543;&#26426;&#20540;:'</span>)
+OutputPath(S1);
+Rlength = PathLength(D,S1);
+disp([<span class="string">'&#24635;&#36317;&#31163;&#65306;'</span>,num2str(Rlength)]);
+</pre><pre class="codeoutput">&#21021;&#22987;&#31181;&#32676;&#20013;&#30340;&#19968;&#20010;&#38543;&#26426;&#20540;:
+5&#8212;&gt;14&#8212;&gt;11&#8212;&gt;1&#8212;&gt;2&#8212;&gt;8&#8212;&gt;4&#8212;&gt;13&#8212;&gt;12&#8212;&gt;6&#8212;&gt;9&#8212;&gt;7&#8212;&gt;3&#8212;&gt;10&#8212;&gt;5
+&#24635;&#36317;&#31163;&#65306;65.8907
+</pre><img vspace="5" hspace="5" src="main_01.png" alt=""> <h2>VI. &#36845;&#20195;&#20248;&#21270;<a name="6"></a></h2><pre class="codeinput"><span class="keyword">while</span> T0 &gt; Tend
+</pre><pre class="codeinput">    count = count + 1;     <span class="comment">%&#26356;&#26032;&#36845;&#20195;&#27425;&#25968;</span>
+    temp = zeros(L,N+1);
+</pre><p>1. &#20135;&#29983;&#26032;&#35299;</p><pre class="codeinput">    S2 = NewAnswer(S1);
+</pre><p>2. Metropolis&#27861;&#21017;&#21028;&#26029;&#26159;&#21542;&#25509;&#21463;&#26032;&#35299;</p><pre class="codeinput">    [S1,R] = Metropolis(S1,S2,D,T0);  <span class="comment">%Metropolis &#25277;&#26679;&#31639;&#27861;</span>
+</pre><p>3. &#35760;&#24405;&#27599;&#27425;&#36845;&#20195;&#36807;&#31243;&#30340;&#26368;&#20248;&#36335;&#32447;</p><pre class="codeinput">    <span class="keyword">if</span> count == 1 || R &lt; Obj(count-1)
+        Obj(count) = R;           <span class="comment">%&#22914;&#26524;&#24403;&#21069;&#28201;&#24230;&#19979;&#26368;&#20248;&#36335;&#31243;&#23567;&#20110;&#19978;&#19968;&#36335;&#31243;&#21017;&#35760;&#24405;&#24403;&#21069;&#36335;&#31243;</span>
+    <span class="keyword">else</span>
+        Obj(count) = Obj(count-1);<span class="comment">%&#22914;&#26524;&#24403;&#21069;&#28201;&#24230;&#19979;&#26368;&#20248;&#36335;&#31243;&#22823;&#20110;&#19978;&#19968;&#36335;&#31243;&#21017;&#35760;&#24405;&#19978;&#19968;&#36335;&#31243;</span>
+    <span class="keyword">end</span>
+    track(count,:) = S1;
+    T0 = q * T0;     <span class="comment">%&#38477;&#28201;</span>
+</pre><pre class="codeinput"><span class="keyword">end</span>
+</pre><h2>VII. &#20248;&#21270;&#36807;&#31243;&#36845;&#20195;&#22270;<a name="12"></a></h2><pre class="codeinput">figure
+plot(1:count,Obj)
+xlabel(<span class="string">'&#36845;&#20195;&#27425;&#25968;'</span>)
+ylabel(<span class="string">'&#36317;&#31163;'</span>)
+title(<span class="string">'&#20248;&#21270;&#36807;&#31243;'</span>)
+</pre><img vspace="5" hspace="5" src="main_02.png" alt=""> <h2>VIII. &#32472;&#21046;&#26368;&#20248;&#36335;&#24452;&#22270;<a name="13"></a></h2><pre class="codeinput">DrawPath(track(end,:),X)
+</pre><img vspace="5" hspace="5" src="main_03.png" alt=""> <h2>IX. &#36755;&#20986;&#26368;&#20248;&#35299;&#30340;&#36335;&#32447;&#21644;&#24635;&#36317;&#31163;<a name="14"></a></h2><pre class="codeinput">disp(<span class="string">'&#26368;&#20248;&#35299;:'</span>)
+S = track(end,:);
+p = OutputPath(S);
+disp([<span class="string">'&#24635;&#36317;&#31163;&#65306;'</span>,num2str(PathLength(D,S))]);
+</pre><pre class="codeoutput">&#26368;&#20248;&#35299;:
+8&#8212;&gt;13&#8212;&gt;7&#8212;&gt;12&#8212;&gt;6&#8212;&gt;5&#8212;&gt;4&#8212;&gt;3&#8212;&gt;14&#8212;&gt;2&#8212;&gt;10&#8212;&gt;9&#8212;&gt;11&#8212;&gt;1&#8212;&gt;8
+&#24635;&#36317;&#31163;&#65306;29.6889
+</pre><p class="footer"><br>
+      Published with MATLAB&reg; 7.14<br></p></div><!--
+##### SOURCE BEGIN #####
+ %% I. 清空环境变量
+clear all
+clc
+
+%% II. 导入城市位置数据
+X = [16.4700   96.1000
+     16.4700   94.4400
+     20.0900   92.5400
+     22.3900   93.3700
+     25.2300   97.2400
+     22.0000   96.0500
+     20.4700   97.0200
+     17.2000   96.2900
+     16.3000   97.3800
+     14.0500   98.1200
+     16.5300   97.3800
+     21.5200   95.5900
+     19.4100   97.1300
+     20.0900   92.5500];
+
+%% III. 计算距离矩阵
+D = Distance(X);  %计算距离矩阵
+N = size(D,1);    %城市的个数
+
+%% IV. 初始化参数
+T0 = 1e10;   % 初始温度
+Tend = 1e-30;  % 终止温度
+L = 2;    % 各温度下的迭代次数
+q = 0.9;    %降温速率
+Time = ceil(double(solve([num2str(T0) '*(0.9)^x = ',num2str(Tend)])));  % 计算迭代的次数
+% Time = 132;
+count = 0;        %迭代计数
+Obj = zeros(Time,1);         %目标值矩阵初始化
+track = zeros(Time,N);       %每代的最优路线矩阵初始化
+
+%% V. 随机产生一个初始路线
+S1 = randperm(N);
+DrawPath(S1,X)
+disp('初始种群中的一个随机值:')
+OutputPath(S1);
+Rlength = PathLength(D,S1);
+disp(['总距离：',num2str(Rlength)]);
+
+%% VI. 迭代优化
+while T0 > Tend
+    count = count + 1;     %更新迭代次数
+    temp = zeros(L,N+1);
+    %%
+    % 1. 产生新解
+    S2 = NewAnswer(S1);
+    %%
+    % 2. Metropolis法则判断是否接受新解
+    [S1,R] = Metropolis(S1,S2,D,T0);  %Metropolis 抽样算法
+    %%
+    % 3. 记录每次迭代过程的最优路线
+    if count == 1 || R < Obj(count-1)
+        Obj(count) = R;           %如果当前温度下最优路程小于上一路程则记录当前路程
+    else
+        Obj(count) = Obj(count-1);%如果当前温度下最优路程大于上一路程则记录上一路程
+    end
+    track(count,:) = S1;
+    T0 = q * T0;     %降温
+end
+
+%% VII. 优化过程迭代图
+figure
+plot(1:count,Obj)
+xlabel('迭代次数')
+ylabel('距离')
+title('优化过程')
+
+%% VIII. 绘制最优路径图
+DrawPath(track(end,:),X)
+
+%% IX. 输出最优解的路线和总距离
+disp('最优解:')
+S = track(end,:);
+p = OutputPath(S);
+disp(['总距离：',num2str(PathLength(D,S))]);
+
+##### SOURCE END #####
+--></body></html>

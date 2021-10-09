@@ -1,0 +1,15 @@
+# Note will work only on linux
+# check for various not-visible errors by using valgrind
+# this code checks for memory allocs in the code
+# checked on linux with valgrind and kcachegrind installed
+# Added by Abhishek Jaiantilal ( abhishek.jaiantilal@colorado.edu )
+# run as:    sh Compile_Check_kcachegrind
+rm callgrind.out.*
+
+#if you want to use icc uncomment below
+#icc cokus.cpp reg_RF.cpp diabetes_C_wrapper.cpp -g -pg -funroll-loops -msse3 -fast
+
+g++ cokus.cpp reg_RF.cpp diabetes_C_wrapper.cpp -g -pg -funroll-loops -msse3 
+valgrind  -v --error-limit=no --tool=memcheck --track-origins=yes --leak-check=full ./a.out
+
+

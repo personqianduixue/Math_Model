@@ -1,0 +1,24 @@
+# Note will work only on linux
+# check for various not-visible errors by using valgrind
+# this code just profiles the timings/memory leaks of the code.
+# checked on linux with valgrind and kcachegrind installed
+# Added by Abhishek Jaiantilal ( abhishek.jaiantilal@colorado.edu )
+# run as:    sh Compile_Check
+
+
+rm callgrind.out.*
+#g++ cokus.cpp reg_RF.cpp diabetes_C_wrapper.cpp -g -pg -funroll-loops -msse3
+rm twonorm_test -rf
+make twonorm
+#g++  twonorm_C_wrapper.cpp rfutils.o rfsub.o classRF.o cokus.o -g -pg -funroll-loops -msse3  
+
+#to check timings
+#valgrind  -v --error-limit=no --tool=callgrind --dump-instr=yes ./twonorm_test
+
+#to check mem-usage
+valgrind  -v --error-limit=no --tool=memcheck --track-origins=yes --leak-check=full --show-reachable=yes --num-callers=1000 ./twonorm_test
+
+
+# when using timings, the below tool helps
+# kcachegrind&
+

@@ -1,0 +1,4 @@
+Entropy_Method.m 是熵权法计算权重的函数
+mylog.m  用于替代MATLAB中的log函数，因为计算熵权法时需要判断p=0
+code_Monte_Carlo.m 是PPT中用来蒙特卡洛模拟的函数
+其他的几个函数就是之前第二节讲解的那些函数

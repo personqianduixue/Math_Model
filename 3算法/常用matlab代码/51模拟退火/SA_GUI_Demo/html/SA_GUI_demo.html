@@ -1,0 +1,145 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>SA_GUI_demo</title><meta name="generator" content="MATLAB 7.14"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2015-11-10"><meta name="DC.source" content="SA_GUI_demo.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">I. &#28165;&#31354;&#29615;&#22659;&#21464;&#37327;</a></li><li><a href="#2">II. &#19968;&#20803;&#20989;&#25968;&#20248;&#21270;</a></li><li><a href="#5">III. &#20108;&#20803;&#20989;&#25968;&#20248;&#21270;</a></li></ul></div><h2>I. &#28165;&#31354;&#29615;&#22659;&#21464;&#37327;<a name="1"></a></h2><pre class="codeinput">clear <span class="string">all</span>
+clc
+</pre><h2>II. &#19968;&#20803;&#20989;&#25968;&#20248;&#21270;<a name="2"></a></h2><pre class="codeinput">x = 1:0.01:2;
+y = sin(10*pi*x) ./ x;
+figure
+plot(x,y,<span class="string">'linewidth'</span>,1.5)
+ylim([-1.5, 1.5])
+xlabel(<span class="string">'x'</span>)
+ylabel(<span class="string">'y'</span>)
+title(<span class="string">'y = sin(10*pi*x) / x'</span>)
+hold <span class="string">on</span>
+</pre><img vspace="5" hspace="5" src="SA_GUI_demo_01.png" alt=""> <p>1. &#26631;&#35760;&#20986;&#26368;&#22823;&#20540;&#28857;</p><pre class="codeinput">[maxVal,maxIndex] = max(y);
+plot(x(maxIndex), maxVal, <span class="string">'r*'</span>,<span class="string">'linewidth'</span>,2)
+text(x(maxIndex), maxVal, {[<span class="string">'    X: '</span> num2str(x(maxIndex))];[<span class="string">'    Y: '</span> num2str(maxVal)]})
+hold <span class="string">on</span>
+</pre><img vspace="5" hspace="5" src="SA_GUI_demo_02.png" alt=""> <p>2. &#26631;&#35760;&#20986;&#26368;&#23567;&#20540;&#28857;</p><pre class="codeinput">[minVal,minIndex] = min(y);
+plot(x(minIndex), minVal, <span class="string">'ks'</span>,<span class="string">'linewidth'</span>,2)
+text(x(minIndex), minVal, {[<span class="string">'    X: '</span> num2str(x(minIndex))];[<span class="string">'    Y: '</span> num2str(minVal)]})
+</pre><img vspace="5" hspace="5" src="SA_GUI_demo_03.png" alt=""> <h2>III. &#20108;&#20803;&#20989;&#25968;&#20248;&#21270;<a name="5"></a></h2><pre class="codeinput">[x,y] = meshgrid(-5:0.1:5,-5:0.1:5);
+z = x.^2 + y.^2 - 10*cos(2*pi*x) - 10*cos(2*pi*y) + 20;
+figure
+mesh(x,y,z)
+hold <span class="string">on</span>
+xlabel(<span class="string">'x'</span>)
+ylabel(<span class="string">'y'</span>)
+zlabel(<span class="string">'z'</span>)
+title(<span class="string">'z =  x^2 + y^2 - 10*cos(2*pi*x) - 10*cos(2*pi*y) + 20'</span>)
+</pre><img vspace="5" hspace="5" src="SA_GUI_demo_04.png" alt=""> <p>1. &#26631;&#35760;&#20986;&#26368;&#22823;&#20540;&#28857;</p><pre class="codeinput">maxVal = max(z(:));
+[maxIndexX,maxIndexY] = find(z == maxVal);
+<span class="keyword">for</span> i = 1:length(maxIndexX)
+    plot3(x(maxIndexX(i),maxIndexY(i)),y(maxIndexX(i),maxIndexY(i)), maxVal, <span class="string">'r*'</span>,<span class="string">'linewidth'</span>,2)
+     text(x(maxIndexX(i),maxIndexY(i)),y(maxIndexX(i),maxIndexY(i)), maxVal, {[<span class="string">'    X: '</span> num2str(x(maxIndexX(i),maxIndexY(i)))];[<span class="string">'    Y: '</span> num2str(y(maxIndexX(i),maxIndexY(i)))];[<span class="string">'    Z: '</span> num2str(maxVal)]})
+    hold <span class="string">on</span>
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="SA_GUI_demo_05.png" alt=""> <p class="footer"><br>
+      Published with MATLAB&reg; 7.14<br></p></div><!--
+##### SOURCE BEGIN #####
+%% I. 清空环境变量
+clear all
+clc
+
+%% II. 一元函数优化
+x = 1:0.01:2;
+y = sin(10*pi*x) ./ x;
+figure
+plot(x,y,'linewidth',1.5)
+ylim([-1.5, 1.5])
+xlabel('x')
+ylabel('y')
+title('y = sin(10*pi*x) / x')
+hold on
+
+%%
+% 1. 标记出最大值点
+[maxVal,maxIndex] = max(y);
+plot(x(maxIndex), maxVal, 'r*','linewidth',2)
+text(x(maxIndex), maxVal, {['    X: ' num2str(x(maxIndex))];['    Y: ' num2str(maxVal)]})
+hold on
+
+%%
+% 2. 标记出最小值点
+[minVal,minIndex] = min(y);
+plot(x(minIndex), minVal, 'ks','linewidth',2)
+text(x(minIndex), minVal, {['    X: ' num2str(x(minIndex))];['    Y: ' num2str(minVal)]})
+
+%% III. 二元函数优化
+[x,y] = meshgrid(-5:0.1:5,-5:0.1:5);
+z = x.^2 + y.^2 - 10*cos(2*pi*x) - 10*cos(2*pi*y) + 20;
+figure
+mesh(x,y,z)
+hold on
+xlabel('x')
+ylabel('y')
+zlabel('z')
+title('z =  x^2 + y^2 - 10*cos(2*pi*x) - 10*cos(2*pi*y) + 20')
+
+%%
+% 1. 标记出最大值点
+maxVal = max(z(:));
+[maxIndexX,maxIndexY] = find(z == maxVal);
+for i = 1:length(maxIndexX)
+    plot3(x(maxIndexX(i),maxIndexY(i)),y(maxIndexX(i),maxIndexY(i)), maxVal, 'r*','linewidth',2)
+     text(x(maxIndexX(i),maxIndexY(i)),y(maxIndexX(i),maxIndexY(i)), maxVal, {['    X: ' num2str(x(maxIndexX(i),maxIndexY(i)))];['    Y: ' num2str(y(maxIndexX(i),maxIndexY(i)))];['    Z: ' num2str(maxVal)]})
+    hold on
+end
+
+##### SOURCE END #####
+--></body></html>

@@ -1,0 +1,213 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Chapter_ModelDecryption</title><meta name="generator" content="MATLAB 7.14"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2013-08-18"><meta name="DC.source" content="Chapter_ModelDecryption.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;</a></li><li><a href="#3">A Little Clean Work</a></li><li><a href="#5">&#20998;&#31867;&#27169;&#22411;model&#35299;&#23494;</a></li><li><a href="#7">&#39564;&#35777;&#33258;&#24049;&#36890;&#36807;&#20915;&#31574;&#20989;&#25968;&#39044;&#27979;&#30340;&#26631;&#31614;&#21644;svmpredict&#32473;&#20986;&#30340;&#26631;&#31614;&#30456;&#21516;</a></li><li><a href="#8">DecisionFunction</a></li></ul></div><pre class="codeinput"><span class="keyword">function</span> Chapter_ModelDecryption
+</pre><h2>Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;<a name="2"></a></h2><pre class="codeinput"><span class="comment">% LIBSVM&#21442;&#25968;&#23454;&#20363;&#35814;&#35299;</span>
+<span class="comment">% by &#26446;&#27915;(faruto)</span>
+<span class="comment">% http://www.matlabsky.com</span>
+<span class="comment">% Email:faruto@163.com</span>
+<span class="comment">% http://weibo.com/faruto</span>
+<span class="comment">% http://blog.sina.com.cn/faruto</span>
+<span class="comment">% 2013.01.01</span>
+</pre><h2>A Little Clean Work<a name="3"></a></h2><pre class="codeinput">clear;
+clc;
+close <span class="string">all</span>;
+format <span class="string">compact</span>;
+</pre><p>&#39318;&#20808;&#36733;&#20837;&#25968;&#25454;</p><pre class="codeinput">load <span class="string">heart_scale</span>;
+data = heart_scale_inst;
+label = heart_scale_label;
+<span class="comment">% &#24314;&#31435;&#20998;&#31867;&#27169;&#22411;</span>
+model = svmtrain(label,data,<span class="string">'-s 0 -t 2 -c 1.2 -g 2.8'</span>);
+<span class="comment">% &#21033;&#29992;&#24314;&#31435;&#30340;&#27169;&#22411;&#30475;&#20854;&#22312;&#35757;&#32451;&#38598;&#21512;&#19978;&#30340;&#20998;&#31867;&#25928;&#26524;</span>
+[PredictLabel,accuracy] = svmpredict(label,data,model);
+accuracy
+</pre><pre class="codeoutput">Accuracy = 99.6296% (269/270) (classification)
+accuracy =
+   99.6296
+    0.0148
+    0.9851
+</pre><h2>&#20998;&#31867;&#27169;&#22411;model&#35299;&#23494;<a name="5"></a></h2><pre class="codeinput">model
+Parameters = model.Parameters
+Label = model.Label
+nr_class = model.nr_class
+totalSV = model.totalSV
+nSV = model.nSV
+</pre><pre class="codeoutput">model = 
+    Parameters: [5x1 double]
+      nr_class: 2
+       totalSV: 259
+           rho: 0.0514
+         Label: [2x1 double]
+         ProbA: []
+         ProbB: []
+           nSV: [2x1 double]
+       sv_coef: [259x1 double]
+           SVs: [259x13 double]
+Parameters =
+         0
+    2.0000
+    3.0000
+    2.8000
+         0
+Label =
+     1
+    -1
+nr_class =
+     2
+totalSV =
+   259
+nSV =
+   118
+   141
+</pre><pre class="codeinput">plable = zeros(270,1);
+<span class="keyword">for</span> i = 1:270
+    x = data(i,:);
+    plabel(i,1) = DecisionFunction(x,model);
+<span class="keyword">end</span>
+</pre><h2>&#39564;&#35777;&#33258;&#24049;&#36890;&#36807;&#20915;&#31574;&#20989;&#25968;&#39044;&#27979;&#30340;&#26631;&#31614;&#21644;svmpredict&#32473;&#20986;&#30340;&#26631;&#31614;&#30456;&#21516;<a name="7"></a></h2><pre class="codeinput">flag = sum(plabel == PredictLabel)
+</pre><pre class="codeoutput">flag =
+   270
+</pre><h2>DecisionFunction<a name="8"></a></h2><pre class="codeinput"><span class="keyword">function</span> plabel = DecisionFunction(x,model)
+
+gamma = model.Parameters(4);
+RBF = @(u,v)( exp(-gamma.*sum( (u-v).^2) ) );
+
+len = length(model.sv_coef);
+y = 0;
+
+<span class="keyword">for</span> i = 1:len
+    u = model.SVs(i,:);
+    y = y + model.sv_coef(i)*RBF(u,x);
+<span class="keyword">end</span>
+b = -model.rho;
+y = y + b;
+
+<span class="keyword">if</span> y &gt;= 0
+    plabel = 1;
+<span class="keyword">else</span>
+    plabel = -1;
+<span class="keyword">end</span>
+</pre><p class="footer"><br>
+      Published with MATLAB&reg; 7.14<br></p></div><!--
+##### SOURCE BEGIN #####
+function Chapter_ModelDecryption
+%% Matlab神经网络43个案例分析
+
+% LIBSVM参数实例详解
+% by 李洋(faruto)
+% http://www.matlabsky.com
+% Email:faruto@163.com
+% http://weibo.com/faruto 
+% http://blog.sina.com.cn/faruto
+% 2013.01.01
+%% A Little Clean Work
+clear;
+clc;
+close all;
+format compact;
+%%
+% 首先载入数据
+load heart_scale;
+data = heart_scale_inst;
+label = heart_scale_label;
+% 建立分类模型
+model = svmtrain(label,data,'-s 0 -t 2 -c 1.2 -g 2.8');
+% 利用建立的模型看其在训练集合上的分类效果
+[PredictLabel,accuracy] = svmpredict(label,data,model);
+accuracy
+
+%% 分类模型model解密
+model
+Parameters = model.Parameters
+Label = model.Label
+nr_class = model.nr_class
+totalSV = model.totalSV
+nSV = model.nSV 
+
+%%
+plable = zeros(270,1);
+for i = 1:270
+    x = data(i,:);
+    plabel(i,1) = DecisionFunction(x,model);
+end
+
+%% 验证自己通过决策函数预测的标签和svmpredict给出的标签相同
+flag = sum(plabel == PredictLabel)
+
+%% DecisionFunction
+function plabel = DecisionFunction(x,model)
+
+gamma = model.Parameters(4);
+RBF = @(u,v)( exp(-gamma.*sum( (u-v).^2) ) );
+
+len = length(model.sv_coef);
+y = 0;
+
+for i = 1:len
+    u = model.SVs(i,:);
+    y = y + model.sv_coef(i)*RBF(u,x);
+end
+b = -model.rho;
+y = y + b;
+
+if y >= 0
+    plabel = 1;
+else
+    plabel = -1;
+end
+##### SOURCE END #####
+--></body></html>

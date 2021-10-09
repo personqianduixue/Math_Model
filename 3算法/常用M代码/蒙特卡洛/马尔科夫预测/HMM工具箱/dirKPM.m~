@@ -1,0 +1,35 @@
+function filenames = dirKPM(dirname, ext, prepend)
+% READ_DIR Like the built-in dir command, but returns filenames as a cell array instead of a struct
+%
+% filenames = read_dir(dirname)
+% returns all files
+%
+% filenames = read_dir('images', '*.jpg')
+% filenames{1} = 'foo.jpg', filenames{2} = 'foo2.jpg', etc
+%
+% read_dir(dirname, ext, 1) prepends the directory name to the filenames
+% eg filenames{1} = 'images/foo.jpg', filenames{2} = 'images/foo2.jpg', etc
+%
+% read_dir(dirname, ext, 1, 0) 
+% returns filenames in ascii order (default: numerical order, where possible)
+
+if nargin < 2, ext = ''; end
+if nargin < 3, prepend = 0; end
+if nargin < 4, doSort = 1; end
+
+tmp = dir(fullfile(dirname, ext));
+filenames = {tmp.name};
+filenames = setdiff(filenames, {'.', '..'});
+
+if doSort
+  tmp = asort(filenames, '-s', 'descend');
+  filenames = tmp.anr';
+end
+
+if prepend
+  nfiles = length(filenames);
+  for fi=1:nfiles
+    filenames{fi} = fullfile(dirname, filenames{fi});
+  end
+end
+

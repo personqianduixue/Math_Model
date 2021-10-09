@@ -1,0 +1,31 @@
+CHANGES
+
+svn-v8?
+Added almost 95% of the total options provided by the R-package to classification.
+Added tutorial for classification based RF in tutorial_ClassRF.m
+Moving now to version 0.02
+
+svn-v4
+
+Added a `cruft' conditional compile for win64 (-DWIN64) target which involves exporting (extern)
+fortran and c function names with another _ at the start (there was one at the end already)
+
+CROSS-compiling target for win64 shown in the makefile target for rfsub
+
+Reasons for crosscompiling lies with cygwin not supporting generation of 32 bit binaries.
+
+right now the rfsub.o is directly taken from the precompiled_rfsub directory for
+windows systems, that is the compiled_windows.m directly uses the precompiled
+rfsub.o to generate based on the current windows version (tested on winxp 64 and 32). 
+Its hard to set up the required software (gfortran/g77) on cygwin
+(which also are available only to generate 32 bit binaries). 
+
+for windows based rfsub.o. crosscompiler from mingw64 was used on linux from 
+http://sourceforge.net/project/showfiles.php?group_id=202880&package_id=245516&release_id=546049
+
+for linux, its simpler to set up gfortran and gcc so will depend on recompiling
+everytime mex is recompiled. Checked on 32 and 64 bit linux.
+    
+    
+svn-v2
+initial commit - mapped to v0.01preview version

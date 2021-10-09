@@ -1,0 +1,15 @@
+function [ W ] = BFS(G,start)
+%广度优先搜索
+n = size(G,1);
+W = zeros(1,n);
+Gx = G;
+queue = start;
+count = 0;
+while ~isempty(queue)
+    W(queue) = count;
+    queue = find(Gx(queue)~=)
+end
+
+
+end
+

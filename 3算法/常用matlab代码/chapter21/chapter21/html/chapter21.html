@@ -1,0 +1,277 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>chapter21</title><meta name="generator" content="MATLAB 8.0"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2013-08-21"><meta name="DC.source" content="chapter21.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;</a></li><li><a href="#2">&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;</a></li><li><a href="#3">&#24405;&#20837;&#36755;&#20837;&#25968;&#25454;</a></li><li><a href="#4">&#32593;&#32476;&#24314;&#31435;&#21644;&#35757;&#32451;</a></li><li><a href="#5">&#32593;&#32476;&#30340;&#25928;&#26524;&#39564;&#35777;</a></li><li><a href="#6">&#32593;&#32476;&#20316;&#20998;&#31867;&#30340;&#39044;&#27979;</a></li></ul></div><h2>Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;<a name="1"></a></h2><pre class="codeinput"><span class="comment">% &#21333;&#23618;&#31454;&#20105;&#31070;&#32463;&#32593;&#32476;&#30340;&#25968;&#25454;&#20998;&#31867;&#8212;&#24739;&#32773;&#30284;&#30151;&#21457;&#30149;&#39044;&#27979;</span>
+<span class="comment">% by &#29579;&#23567;&#24029;(@&#29579;&#23567;&#24029;_matlab)</span>
+<span class="comment">% http://www.matlabsky.com</span>
+<span class="comment">% Email:sina363@163.com</span>
+<span class="comment">% http://weibo.com/hgsz2003</span>
+</pre><h2>&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;<a name="2"></a></h2><pre class="codeinput">clc
+clear
+</pre><h2>&#24405;&#20837;&#36755;&#20837;&#25968;&#25454;<a name="3"></a></h2><p>&#36733;&#20837;&#25968;&#25454;&#24182;&#23558;&#25968;&#25454;&#20998;&#25104;&#35757;&#32451;&#21644;&#39044;&#27979;&#20004;&#31867;</p><pre class="codeinput">load <span class="string">gene.mat</span>;
+data=gene;
+P=data(1:40,:);
+T=data(41:60,:);
+
+<span class="comment">% &#36716;&#32622;&#21518;&#31526;&#21512;&#31070;&#32463;&#32593;&#32476;&#30340;&#36755;&#20837;&#26684;&#24335;</span>
+P=P';
+T=T';
+<span class="comment">% &#21462;&#36755;&#20837;&#20803;&#32032;&#30340;&#26368;&#22823;&#20540;&#21644;&#26368;&#23567;&#20540;Q&#65306;</span>
+Q=minmax(P);
+</pre><h2>&#32593;&#32476;&#24314;&#31435;&#21644;&#35757;&#32451;<a name="4"></a></h2><p>&#21033;&#29992;newc( )&#21629;&#20196;&#24314;&#31435;&#31454;&#20105;&#32593;&#32476;&#65306;2&#20195;&#34920;&#31454;&#20105;&#23618;&#30340;&#31070;&#32463;&#20803;&#20010;&#25968;&#65292;&#20063;&#23601;&#26159;&#35201;&#20998;&#31867;&#30340;&#20010;&#25968;&#12290;0.1&#20195;&#34920;&#23398;&#20064;&#36895;&#29575;&#12290;</p><pre class="codeinput">net=newc(Q,2,0.1)
+
+<span class="comment">% &#21021;&#22987;&#21270;&#32593;&#32476;&#21450;&#35774;&#23450;&#32593;&#32476;&#21442;&#25968;&#65306;</span>
+net=init(net);
+net.trainparam.epochs=20;
+<span class="comment">% &#35757;&#32451;&#32593;&#32476;&#65306;</span>
+net=train(net,P);
+</pre><pre class="codeoutput">
+net =
+
+    Neural Network
+ 
+              name: 'Custom Neural Network'
+        efficiency: .cacheDelayedInputs, .flattenTime,
+                    .memoryReduction
+          userdata: (your custom info)
+ 
+    dimensions:
+ 
+         numInputs: 1
+         numLayers: 1
+        numOutputs: 1
+    numInputDelays: 0
+    numLayerDelays: 0
+ numFeedbackDelays: 0
+ numWeightElements: 230
+        sampleTime: 1
+ 
+    connections:
+ 
+       biasConnect: true
+      inputConnect: true
+      layerConnect: false
+     outputConnect: true
+ 
+    subobjects:
+ 
+            inputs: {1x1 cell array of 1 input}
+            layers: {1x1 cell array of 1 layer}
+           outputs: {1x1 cell array of 1 output}
+            biases: {1x1 cell array of 1 bias}
+      inputWeights: {1x1 cell array of 1 weight}
+      layerWeights: {1x1 cell array of 0 weights}
+ 
+    functions:
+ 
+          adaptFcn: 'adaptwb'
+        adaptParam: (none)
+          derivFcn: 'defaultderiv'
+         divideFcn: (none)
+       divideParam: (none)
+        divideMode: 'sample'
+           initFcn: 'initlay'
+        performFcn: 'mse'
+      performParam: .regularization, .normalization
+          plotFcns: {}
+        plotParams: {1x0 cell array of 0 params}
+          trainFcn: 'trainru'
+        trainParam: .showWindow, .showCommandLine, .show, .epochs,
+                    .time
+ 
+    weight and bias values:
+ 
+                IW: {1x1 cell} containing 1 input weight matrix
+                LW: {1x1 cell} containing 0 layer weight matrices
+                 b: {1x1 cell} containing 1 bias vector
+ 
+    methods:
+ 
+             adapt: Learn while in continuous use
+         configure: Configure inputs &amp; outputs
+            gensim: Generate Simulink model
+              init: Initialize weights &amp; biases
+           perform: Calculate performance
+               sim: Evaluate network outputs given inputs
+             train: Train network with examples
+              view: View diagram
+       unconfigure: Unconfigure inputs &amp; outputs
+ 
+</pre><h2>&#32593;&#32476;&#30340;&#25928;&#26524;&#39564;&#35777;<a name="5"></a></h2><pre class="codeinput"><span class="comment">% &#23558;&#21407;&#25968;&#25454;&#22238;&#24102;&#65292;&#27979;&#35797;&#32593;&#32476;&#25928;&#26524;&#65306;</span>
+a=sim(net,P);
+ac=vec2ind(a)
+
+<span class="comment">% &#36825;&#37324;&#20351;&#29992;&#20102;&#21464;&#25442;&#20989;&#25968;vec2ind()&#65292;&#29992;&#20110;&#23558;&#21333;&#20540;&#21521;&#37327;&#32452;&#21464;&#25442;&#25104;&#19979;&#26631;&#21521;&#37327;&#12290;&#20854;&#35843;&#29992;&#30340;&#26684;&#24335;&#20026;&#65306;</span>
+<span class="comment">%  ind=vec2ind(vec)</span>
+<span class="comment">% &#20854;&#20013;&#65292;</span>
+<span class="comment">% vec&#65306;&#20026;m&#34892;n&#21015;&#30340;&#21521;&#37327;&#30697;&#38453;x&#65292;x&#20013;&#30340;&#27599;&#20010;&#21015;&#21521;&#37327;i&#65292;&#38500;&#21253;&#21547;&#19968;&#20010;1&#22806;&#65292;&#20854;&#20313;&#20803;&#32032;&#22343;&#20026;0&#12290;</span>
+<span class="comment">% ind&#65306;&#20026;n&#20010;&#20803;&#32032;&#20540;&#20026;1&#25152;&#22312;&#30340;&#34892;&#19979;&#26631;&#20540;&#26500;&#25104;&#30340;&#19968;&#20010;&#34892;&#21521;&#37327;&#12290;</span>
+</pre><pre class="codeoutput">
+ac =
+
+  Columns 1 through 13
+
+     2     2     2     2     2     2     2     2     2     2     2     2     1
+
+  Columns 14 through 26
+
+     2     2     2     1     2     2     1     1     1     1     1     1     1
+
+  Columns 27 through 39
+
+     1     2     2     1     1     2     2     1     1     1     1     2     1
+
+  Column 40
+
+     2
+
+</pre><h2>&#32593;&#32476;&#20316;&#20998;&#31867;&#30340;&#39044;&#27979;<a name="6"></a></h2><p>&#19979;&#38754;&#23558;&#21518;20&#20010;&#25968;&#25454;&#24102;&#20837;&#31070;&#32463;&#32593;&#32476;&#27169;&#22411;&#20013;&#65292;&#35266;&#23519;&#32593;&#32476;&#36755;&#20986;&#65306; sim( )&#26469;&#20570;&#32593;&#32476;&#20223;&#30495;</p><pre class="codeinput">Y=sim(net,T)
+yc=vec2ind(Y)
+</pre><pre class="codeoutput">
+Y =
+
+  Columns 1 through 13
+
+     1     1     0     0     0     0     0     0     0     0     0     0     0
+     0     0     1     1     1     1     1     1     1     1     1     1     1
+
+  Columns 14 through 20
+
+     0     0     0     1     0     0     0
+     1     1     1     0     1     1     1
+
+
+yc =
+
+  Columns 1 through 13
+
+     1     1     2     2     2     2     2     2     2     2     2     2     2
+
+  Columns 14 through 20
+
+     2     2     2     1     2     2     2
+
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2012b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Matlab神经网络43个案例分析
+
+% 单层竞争神经网络的数据分类—患者癌症发病预测
+% by 王小川(@王小川_matlab)
+% http://www.matlabsky.com
+% Email:sina363@163.com
+% http://weibo.com/hgsz2003
+ 
+%% 清空环境变量
+clc
+clear
+
+%% 录入输入数据
+% 载入数据并将数据分成训练和预测两类
+load gene.mat;
+data=gene;
+P=data(1:40,:);
+T=data(41:60,:);
+
+% 转置后符合神经网络的输入格式
+P=P';
+T=T';
+% 取输入元素的最大值和最小值Q：
+Q=minmax(P);
+
+%% 网络建立和训练
+% 利用newc( )命令建立竞争网络：2代表竞争层的神经元个数，也就是要分类的个数。0.1代表学习速率。
+net=newc(Q,2,0.1)
+
+% 初始化网络及设定网络参数：
+net=init(net);
+net.trainparam.epochs=20;
+% 训练网络：
+net=train(net,P);
+
+
+%% 网络的效果验证
+
+% 将原数据回带，测试网络效果：
+a=sim(net,P);
+ac=vec2ind(a)
+
+% 这里使用了变换函数vec2ind()，用于将单值向量组变换成下标向量。其调用的格式为：
+%  ind=vec2ind(vec)
+% 其中，
+% vec：为m行n列的向量矩阵x，x中的每个列向量i，除包含一个1外，其余元素均为0。
+% ind：为n个元素值为1所在的行下标值构成的一个行向量。
+
+
+
+%% 网络作分类的预测
+% 下面将后20个数据带入神经网络模型中，观察网络输出：
+% sim( )来做网络仿真
+Y=sim(net,T)
+yc=vec2ind(Y)
+
+##### SOURCE END #####
+--></body></html>

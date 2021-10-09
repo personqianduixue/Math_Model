@@ -1,0 +1,374 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      --><title>&#35813;&#20195;&#30721;&#20026;&#22522;&#20110;&#23567;&#27874;&#31070;&#32463;&#32593;&#32476;&#30340;&#20132;&#36890;&#27969;&#39044;&#27979;&#20195;&#30721;</title><meta name="generator" content="MATLAB 7.9"><meta name="date" content="2010-11-28"><meta name="m-file" content="wavenn"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><h1>&#35813;&#20195;&#30721;&#20026;&#22522;&#20110;&#23567;&#27874;&#31070;&#32463;&#32593;&#32476;&#30340;&#20132;&#36890;&#27969;&#39044;&#27979;&#20195;&#30721;</h1><!--introduction--><p>
+<table border="0" width="600px" id="table1">	<tr>		<td><b><font size="2">该案例作者申明：</font></b></td>	</tr>	<tr><td><span class="comment"><font size="2">1：本人长期驻扎在此<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html"><font color="#0000FF">板块</font></a>里，对该案例提问，做到有问必答。本套书籍官方网站为：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></span></td></tr><tr>		<td><font size="2">2：点此<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">从当当预定本书</a>：<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">《Matlab神经网络30个案例分析》</a>。</td></tr><tr>	<td><p class="comment"></font><font size="2">3</font><font size="2">：此案例有配套的教学视频，视频下载方式<a href="http://video.ourmatlab.com/vbuy.html">video.ourmatlab.com/vbuy.html</a></font><font size="2">。 </font></p></td>	</tr>			<tr>		<td><span class="comment"><font size="2">		4：此案例为原创案例，转载请注明出处（《Matlab神经网络30个案例分析》）。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		5：若此案例碰巧与您的研究有关联，我们欢迎您提意见，要求等，我们考虑后可以加在案例里。</font></span></td>	</tr>		</table>
+</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;</a></li><li><a href="#2">&#32593;&#32476;&#21442;&#25968;&#37197;&#32622;</a></li><li><a href="#3">&#36755;&#20837;&#36755;&#20986;&#25968;&#25454;&#24402;&#19968;&#21270;</a></li><li><a href="#4">&#32593;&#32476;&#35757;&#32451;</a></li><li><a href="#5">&#32593;&#32476;&#39044;&#27979;</a></li><li><a href="#6">&#32467;&#26524;&#20998;&#26512;</a></li></ul></div><h2>&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;<a name="1"></a></h2><pre class="codeinput">clc
+clear
+</pre><h2>&#32593;&#32476;&#21442;&#25968;&#37197;&#32622;<a name="2"></a></h2><pre class="codeinput">load <span class="string">traffic_flux</span> <span class="string">input</span> <span class="string">output</span> <span class="string">input_test</span> <span class="string">output_test</span>
+
+M=size(input,2); <span class="comment">%&#36755;&#20837;&#33410;&#28857;&#20010;&#25968;</span>
+N=size(output,2); <span class="comment">%&#36755;&#20986;&#33410;&#28857;&#20010;&#25968;</span>
+
+n=6; <span class="comment">%&#38544;&#24418;&#33410;&#28857;&#20010;&#25968;</span>
+lr1=0.01; <span class="comment">%&#23398;&#20064;&#27010;&#29575;</span>
+lr2=0.001; <span class="comment">%&#23398;&#20064;&#27010;&#29575;</span>
+maxgen=100; <span class="comment">%&#36845;&#20195;&#27425;&#25968;</span>
+
+<span class="comment">%&#26435;&#20540;&#21021;&#22987;&#21270;</span>
+Wjk=randn(n,M);Wjk_1=Wjk;Wjk_2=Wjk_1;
+Wij=randn(N,n);Wij_1=Wij;Wij_2=Wij_1;
+a=randn(1,n);a_1=a;a_2=a_1;
+b=randn(1,n);b_1=b;b_2=b_1;
+
+<span class="comment">%&#33410;&#28857;&#21021;&#22987;&#21270;</span>
+y=zeros(1,N);
+net=zeros(1,n);
+net_ab=zeros(1,n);
+
+<span class="comment">%&#26435;&#20540;&#23398;&#20064;&#22686;&#37327;&#21021;&#22987;&#21270;</span>
+d_Wjk=zeros(n,M);
+d_Wij=zeros(N,n);
+d_a=zeros(1,n);
+d_b=zeros(1,n);
+</pre><h2>&#36755;&#20837;&#36755;&#20986;&#25968;&#25454;&#24402;&#19968;&#21270;<a name="3"></a></h2><pre class="codeinput">[inputn,inputps]=mapminmax(input');
+[outputn,outputps]=mapminmax(output');
+inputn=inputn';
+outputn=outputn';
+</pre><h2>&#32593;&#32476;&#35757;&#32451;<a name="4"></a></h2><pre class="codeinput"><span class="keyword">for</span> i=1:maxgen
+
+    <span class="comment">%&#35823;&#24046;&#32047;&#35745;</span>
+    error(i)=0;
+
+    <span class="comment">% &#24490;&#29615;&#35757;&#32451;</span>
+    <span class="keyword">for</span> kk=1:size(input,1)
+        x=inputn(kk,:);
+        yqw=outputn(kk,:);
+
+        <span class="keyword">for</span> j=1:n
+            <span class="keyword">for</span> k=1:M
+                net(j)=net(j)+Wjk(j,k)*x(k);
+                net_ab(j)=(net(j)-b(j))/a(j);
+            <span class="keyword">end</span>
+            temp=mymorlet(net_ab(j));
+            <span class="keyword">for</span> k=1:N
+                y=y+Wij(k,j)*temp;   <span class="comment">%&#23567;&#27874;&#20989;&#25968;</span>
+            <span class="keyword">end</span>
+        <span class="keyword">end</span>
+
+        <span class="comment">%&#35745;&#31639;&#35823;&#24046;&#21644;</span>
+        error(i)=error(i)+sum(abs(yqw-y));
+
+        <span class="comment">%&#26435;&#20540;&#35843;&#25972;</span>
+        <span class="keyword">for</span> j=1:n
+            <span class="comment">%&#35745;&#31639;d_Wij</span>
+            temp=mymorlet(net_ab(j));
+            <span class="keyword">for</span> k=1:N
+                d_Wij(k,j)=d_Wij(k,j)-(yqw(k)-y(k))*temp;
+            <span class="keyword">end</span>
+            <span class="comment">%&#35745;&#31639;d_Wjk</span>
+            temp=d_mymorlet(net_ab(j));
+            <span class="keyword">for</span> k=1:M
+                <span class="keyword">for</span> l=1:N
+                    d_Wjk(j,k)=d_Wjk(j,k)+(yqw(l)-y(l))*Wij(l,j) ;
+                <span class="keyword">end</span>
+                d_Wjk(j,k)=-d_Wjk(j,k)*temp*x(k)/a(j);
+            <span class="keyword">end</span>
+            <span class="comment">%&#35745;&#31639;d_b</span>
+            <span class="keyword">for</span> k=1:N
+                d_b(j)=d_b(j)+(yqw(k)-y(k))*Wij(k,j);
+            <span class="keyword">end</span>
+            d_b(j)=d_b(j)*temp/a(j);
+            <span class="comment">%&#35745;&#31639;d_a</span>
+            <span class="keyword">for</span> k=1:N
+                d_a(j)=d_a(j)+(yqw(k)-y(k))*Wij(k,j);
+            <span class="keyword">end</span>
+            d_a(j)=d_a(j)*temp*((net(j)-b(j))/b(j))/a(j);
+        <span class="keyword">end</span>
+
+        <span class="comment">%&#26435;&#20540;&#21442;&#25968;&#26356;&#26032;</span>
+        Wij=Wij-lr1*d_Wij;
+        Wjk=Wjk-lr1*d_Wjk;
+        b=b-lr2*d_b;
+        a=a-lr2*d_a;
+
+        d_Wjk=zeros(n,M);
+        d_Wij=zeros(N,n);
+        d_a=zeros(1,n);
+        d_b=zeros(1,n);
+
+        y=zeros(1,N);
+        net=zeros(1,n);
+        net_ab=zeros(1,n);
+
+        Wjk_1=Wjk;Wjk_2=Wjk_1;
+        Wij_1=Wij;Wij_2=Wij_1;
+        a_1=a;a_2=a_1;
+        b_1=b;b_2=b_1;
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre><h2>&#32593;&#32476;&#39044;&#27979;<a name="5"></a></h2><pre class="codeinput"><span class="comment">%&#39044;&#27979;&#36755;&#20837;&#24402;&#19968;&#21270;</span>
+x=mapminmax(<span class="string">'apply'</span>,input_test',inputps);
+x=x';
+
+<span class="comment">%&#32593;&#32476;&#39044;&#27979;</span>
+<span class="keyword">for</span> i=1:92
+    x_test=x(i,:);
+
+    <span class="keyword">for</span> j=1:1:n
+        <span class="keyword">for</span> k=1:1:M
+            net(j)=net(j)+Wjk(j,k)*x_test(k);
+            net_ab(j)=(net(j)-b(j))/a(j);
+        <span class="keyword">end</span>
+        temp=mymorlet(net_ab(j));
+        <span class="keyword">for</span> k=1:N
+            y(k)=y(k)+Wij(k,j)*temp ;
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+
+    yuce(i)=y(k);
+    y=zeros(1,N);
+    net=zeros(1,n);
+    net_ab=zeros(1,n);
+<span class="keyword">end</span>
+<span class="comment">%&#39044;&#27979;&#36755;&#20986;&#21453;&#24402;&#19968;&#21270;</span>
+ynn=mapminmax(<span class="string">'reverse'</span>,yuce,outputps);
+</pre><h2>&#32467;&#26524;&#20998;&#26512;<a name="6"></a></h2><pre class="codeinput">figure(1)
+plot(ynn,<span class="string">'r*:'</span>)
+hold <span class="string">on</span>
+plot(output_test,<span class="string">'bo--'</span>)
+title(<span class="string">'&#39044;&#27979;&#20132;&#36890;&#27969;&#37327;'</span>,<span class="string">'fontsize'</span>,12)
+legend(<span class="string">'&#39044;&#27979;&#20132;&#36890;&#27969;&#37327;'</span>,<span class="string">'&#23454;&#38469;&#20132;&#36890;&#27969;&#37327;'</span>,<span class="string">'fontsize'</span>,12)
+xlabel(<span class="string">'&#26102;&#38388;&#28857;'</span>)
+ylabel(<span class="string">'&#20132;&#36890;&#27969;&#37327;'</span>)
+
+web <span class="string">browser</span> <span class="string">www.matlabsky.com</span>
+</pre><pre class="codeoutput">Warning: Ignoring extra legend entries. 
+</pre><img vspace="5" hspace="5" src="wavenn_01.png" alt=""> <p>
+<table width="656" align="left" >	<tr><td align="center"><p><font size="2"><a href="http://video.ourmatlab.com/">Matlab神经网络30个案例分析</a></font></p><p align="left"><font size="2">相关论坛：</font></p><p align="left"><font size="2">《Matlab神经网络30个案例分析》官方网站：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></p><p align="left"><font size="2">Matlab技术论坛：<a href="http://www.matlabsky.com">www.matlabsky.com</a></font></p><p align="left"><font size="2">M</font><font size="2">atlab函数百科：<a href="http://www.mfun.la">www.mfun.la</a></font></p><p align="left"><font size="2">Matlab中文论坛：<a href="http://www.ilovematlab.com">www.ilovematlab.com</a></font></p></td>	</tr></table>
+</p><p class="footer"><br>
+      Published with MATLAB&reg; 7.9<br></p></div><!--
+##### SOURCE BEGIN #####
+%% 该代码为基于小波神经网络的交通流预测代码
+%
+% <html>
+% <table border="0" width="600px" id="table1">	<tr>		<td><b><font size="2">该案例作者申明：</font></b></td>	</tr>	<tr><td><span class="comment"><font size="2">1：本人长期驻扎在此<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html"><font color="#0000FF">板块</font></a>里，对该案例提问，做到有问必答。本套书籍官方网站为：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></span></td></tr><tr>		<td><font size="2">2：点此<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">从当当预定本书</a>：<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">《Matlab神经网络30个案例分析》</a>。</td></tr><tr>	<td><p class="comment"></font><font size="2">3</font><font size="2">：此案例有配套的教学视频，视频下载方式<a href="http://video.ourmatlab.com/vbuy.html">video.ourmatlab.com/vbuy.html</a></font><font size="2">。 </font></p></td>	</tr>			<tr>		<td><span class="comment"><font size="2">		4：此案例为原创案例，转载请注明出处（《Matlab神经网络30个案例分析》）。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		5：若此案例碰巧与您的研究有关联，我们欢迎您提意见，要求等，我们考虑后可以加在案例里。</font></span></td>	</tr>		</table>
+% </html>
+%% 清空环境变量
+clc
+clear
+
+%% 网络参数配置
+load traffic_flux input output input_test output_test
+
+M=size(input,2); %输入节点个数
+N=size(output,2); %输出节点个数
+
+n=6; %隐形节点个数
+lr1=0.01; %学习概率
+lr2=0.001; %学习概率
+maxgen=100; %迭代次数
+
+%权值初始化
+Wjk=randn(n,M);Wjk_1=Wjk;Wjk_2=Wjk_1;
+Wij=randn(N,n);Wij_1=Wij;Wij_2=Wij_1;
+a=randn(1,n);a_1=a;a_2=a_1;
+b=randn(1,n);b_1=b;b_2=b_1;
+
+%节点初始化
+y=zeros(1,N);
+net=zeros(1,n);
+net_ab=zeros(1,n);
+
+%权值学习增量初始化
+d_Wjk=zeros(n,M);
+d_Wij=zeros(N,n);
+d_a=zeros(1,n);
+d_b=zeros(1,n);
+
+%% 输入输出数据归一化
+[inputn,inputps]=mapminmax(input');
+[outputn,outputps]=mapminmax(output'); 
+inputn=inputn';
+outputn=outputn';
+
+%% 网络训练
+for i=1:maxgen
+    
+    %误差累计
+    error(i)=0;
+    
+    % 循环训练
+    for kk=1:size(input,1)
+        x=inputn(kk,:);
+        yqw=outputn(kk,:);
+   
+        for j=1:n
+            for k=1:M
+                net(j)=net(j)+Wjk(j,k)*x(k);
+                net_ab(j)=(net(j)-b(j))/a(j);
+            end
+            temp=mymorlet(net_ab(j));
+            for k=1:N
+                y=y+Wij(k,j)*temp;   %小波函数
+            end
+        end
+        
+        %计算误差和
+        error(i)=error(i)+sum(abs(yqw-y));
+        
+        %权值调整
+        for j=1:n
+            %计算d_Wij
+            temp=mymorlet(net_ab(j));
+            for k=1:N
+                d_Wij(k,j)=d_Wij(k,j)-(yqw(k)-y(k))*temp;
+            end
+            %计算d_Wjk
+            temp=d_mymorlet(net_ab(j));
+            for k=1:M
+                for l=1:N
+                    d_Wjk(j,k)=d_Wjk(j,k)+(yqw(l)-y(l))*Wij(l,j) ;
+                end
+                d_Wjk(j,k)=-d_Wjk(j,k)*temp*x(k)/a(j);
+            end
+            %计算d_b
+            for k=1:N
+                d_b(j)=d_b(j)+(yqw(k)-y(k))*Wij(k,j);
+            end
+            d_b(j)=d_b(j)*temp/a(j);
+            %计算d_a
+            for k=1:N
+                d_a(j)=d_a(j)+(yqw(k)-y(k))*Wij(k,j);
+            end
+            d_a(j)=d_a(j)*temp*((net(j)-b(j))/b(j))/a(j);
+        end
+        
+        %权值参数更新      
+        Wij=Wij-lr1*d_Wij;
+        Wjk=Wjk-lr1*d_Wjk;
+        b=b-lr2*d_b;
+        a=a-lr2*d_a;
+    
+        d_Wjk=zeros(n,M);
+        d_Wij=zeros(N,n);
+        d_a=zeros(1,n);
+        d_b=zeros(1,n);
+
+        y=zeros(1,N);
+        net=zeros(1,n);
+        net_ab=zeros(1,n);
+        
+        Wjk_1=Wjk;Wjk_2=Wjk_1;
+        Wij_1=Wij;Wij_2=Wij_1;
+        a_1=a;a_2=a_1;
+        b_1=b;b_2=b_1;
+    end
+end
+
+%% 网络预测
+%预测输入归一化
+x=mapminmax('apply',input_test',inputps);
+x=x';
+
+%网络预测
+for i=1:92
+    x_test=x(i,:);
+
+    for j=1:1:n
+        for k=1:1:M
+            net(j)=net(j)+Wjk(j,k)*x_test(k);
+            net_ab(j)=(net(j)-b(j))/a(j);
+        end
+        temp=mymorlet(net_ab(j));
+        for k=1:N
+            y(k)=y(k)+Wij(k,j)*temp ; 
+        end
+    end
+
+    yuce(i)=y(k);
+    y=zeros(1,N);
+    net=zeros(1,n);
+    net_ab=zeros(1,n);
+end
+%预测输出反归一化
+ynn=mapminmax('reverse',yuce,outputps);
+
+%% 结果分析
+figure(1)
+plot(ynn,'r*:')
+hold on
+plot(output_test,'boREPLACE_WITH_DASH_DASH')
+title('预测交通流量','fontsize',12)
+legend('预测交通流量','实际交通流量','fontsize',12)
+xlabel('时间点')
+ylabel('交通流量')
+
+web browser www.matlabsky.com
+%%
+% <html>
+% <table width="656" align="left" >	<tr><td align="center"><p><font size="2"><a href="http://video.ourmatlab.com/">Matlab神经网络30个案例分析</a></font></p><p align="left"><font size="2">相关论坛：</font></p><p align="left"><font size="2">《Matlab神经网络30个案例分析》官方网站：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></p><p align="left"><font size="2">Matlab技术论坛：<a href="http://www.matlabsky.com">www.matlabsky.com</a></font></p><p align="left"><font size="2">M</font><font size="2">atlab函数百科：<a href="http://www.mfun.la">www.mfun.la</a></font></p><p align="left"><font size="2">Matlab中文论坛：<a href="http://www.ilovematlab.com">www.ilovematlab.com</a></font></p></td>	</tr></table>
+% </html>
+##### SOURCE END #####
+--></body></html>

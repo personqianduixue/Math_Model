@@ -1,0 +1,623 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>chapter_PSO</title><meta name="generator" content="MATLAB 7.14"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2013-08-18"><meta name="DC.source" content="chapter_PSO.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;</a></li><li><a href="#2">&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;</a></li><li><a href="#4">&#25968;&#25454;&#25552;&#21462;</a></li><li><a href="#5">&#25968;&#25454;&#39044;&#22788;&#29702;</a></li><li><a href="#6">&#36873;&#25321;&#26368;&#20339;&#30340;SVM&#21442;&#25968;c&amp;g</a></li><li><a href="#7">&#21033;&#29992;&#26368;&#20339;&#30340;&#21442;&#25968;&#36827;&#34892;SVM&#32593;&#32476;&#35757;&#32451;</a></li><li><a href="#8">SVM&#32593;&#32476;&#39044;&#27979;</a></li><li><a href="#9">&#32467;&#26524;&#20998;&#26512;</a></li><li><a href="#10">&#23376;&#20989;&#25968; psoSVMcgForClass.m</a></li></ul></div><h2>Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;<a name="1"></a></h2><pre class="codeinput"><span class="comment">% SVM&#30340;&#21442;&#25968;&#20248;&#21270;&#8212;&#8212;&#22914;&#20309;&#26356;&#22909;&#30340;&#25552;&#21319;&#20998;&#31867;&#22120;&#30340;&#24615;&#33021;</span>
+<span class="comment">% by &#26446;&#27915;(faruto)</span>
+<span class="comment">% http://www.matlabsky.com</span>
+<span class="comment">% Email:faruto@163.com</span>
+<span class="comment">% http://weibo.com/faruto</span>
+<span class="comment">% http://blog.sina.com.cn/faruto</span>
+<span class="comment">% 2013.01.01</span>
+</pre><h2>&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;<a name="2"></a></h2><pre class="codeinput"><span class="keyword">function</span> chapter_PSO
+</pre><pre class="codeinput">close <span class="string">all</span>;
+clear;
+clc;
+format <span class="string">compact</span>;
+</pre><h2>&#25968;&#25454;&#25552;&#21462;<a name="4"></a></h2><pre class="codeinput"><span class="comment">% &#36733;&#20837;&#27979;&#35797;&#25968;&#25454;wine,&#20854;&#20013;&#21253;&#21547;&#30340;&#25968;&#25454;&#20026;classnumber = 3,wine:178*13&#30340;&#30697;&#38453;,wine_labes:178*1&#30340;&#21015;&#21521;&#37327;</span>
+load <span class="string">wine.mat</span>;
+
+<span class="comment">% &#30011;&#20986;&#27979;&#35797;&#25968;&#25454;&#30340;box&#21487;&#35270;&#21270;&#22270;</span>
+figure;
+boxplot(wine,<span class="string">'orientation'</span>,<span class="string">'horizontal'</span>,<span class="string">'labels'</span>,categories);
+title(<span class="string">'wine&#25968;&#25454;&#30340;box&#21487;&#35270;&#21270;&#22270;'</span>,<span class="string">'FontSize'</span>,12);
+xlabel(<span class="string">'&#23646;&#24615;&#20540;'</span>,<span class="string">'FontSize'</span>,12);
+grid <span class="string">on</span>;
+
+<span class="comment">% &#30011;&#20986;&#27979;&#35797;&#25968;&#25454;&#30340;&#20998;&#32500;&#21487;&#35270;&#21270;&#22270;</span>
+figure
+subplot(3,5,1);
+hold <span class="string">on</span>
+<span class="keyword">for</span> run = 1:178
+    plot(run,wine_labels(run),<span class="string">'*'</span>);
+<span class="keyword">end</span>
+xlabel(<span class="string">'&#26679;&#26412;'</span>,<span class="string">'FontSize'</span>,10);
+ylabel(<span class="string">'&#31867;&#21035;&#26631;&#31614;'</span>,<span class="string">'FontSize'</span>,10);
+title(<span class="string">'class'</span>,<span class="string">'FontSize'</span>,10);
+<span class="keyword">for</span> run = 2:14
+    subplot(3,5,run);
+    hold <span class="string">on</span>;
+    str = [<span class="string">'attrib '</span>,num2str(run-1)];
+    <span class="keyword">for</span> i = 1:178
+        plot(i,wine(i,run-1),<span class="string">'*'</span>);
+    <span class="keyword">end</span>
+    xlabel(<span class="string">'&#26679;&#26412;'</span>,<span class="string">'FontSize'</span>,10);
+    ylabel(<span class="string">'&#23646;&#24615;&#20540;'</span>,<span class="string">'FontSize'</span>,10);
+    title(str,<span class="string">'FontSize'</span>,10);
+<span class="keyword">end</span>
+
+<span class="comment">% &#36873;&#23450;&#35757;&#32451;&#38598;&#21644;&#27979;&#35797;&#38598;</span>
+
+<span class="comment">% &#23558;&#31532;&#19968;&#31867;&#30340;1-30,&#31532;&#20108;&#31867;&#30340;60-95,&#31532;&#19977;&#31867;&#30340;131-153&#20570;&#20026;&#35757;&#32451;&#38598;</span>
+train_wine = [wine(1:30,:);wine(60:95,:);wine(131:153,:)];
+<span class="comment">% &#30456;&#24212;&#30340;&#35757;&#32451;&#38598;&#30340;&#26631;&#31614;&#20063;&#35201;&#20998;&#31163;&#20986;&#26469;</span>
+train_wine_labels = [wine_labels(1:30);wine_labels(60:95);wine_labels(131:153)];
+<span class="comment">% &#23558;&#31532;&#19968;&#31867;&#30340;31-59,&#31532;&#20108;&#31867;&#30340;96-130,&#31532;&#19977;&#31867;&#30340;154-178&#20570;&#20026;&#27979;&#35797;&#38598;</span>
+test_wine = [wine(31:59,:);wine(96:130,:);wine(154:178,:)];
+<span class="comment">% &#30456;&#24212;&#30340;&#27979;&#35797;&#38598;&#30340;&#26631;&#31614;&#20063;&#35201;&#20998;&#31163;&#20986;&#26469;</span>
+test_wine_labels = [wine_labels(31:59);wine_labels(96:130);wine_labels(154:178)];
+</pre><img vspace="5" hspace="5" src="chapter_PSO_01.png" alt=""> <img vspace="5" hspace="5" src="chapter_PSO_02.png" alt=""> <h2>&#25968;&#25454;&#39044;&#22788;&#29702;<a name="5"></a></h2><p>&#25968;&#25454;&#39044;&#22788;&#29702;,&#23558;&#35757;&#32451;&#38598;&#21644;&#27979;&#35797;&#38598;&#24402;&#19968;&#21270;&#21040;[0,1]&#21306;&#38388;</p><pre class="codeinput">[mtrain,ntrain] = size(train_wine);
+[mtest,ntest] = size(test_wine);
+
+dataset = [train_wine;test_wine];
+<span class="comment">% mapminmax&#20026;MATLAB&#33258;&#24102;&#30340;&#24402;&#19968;&#21270;&#20989;&#25968;</span>
+[dataset_scale,ps] = mapminmax(dataset',0,1);
+dataset_scale = dataset_scale';
+
+train_wine = dataset_scale(1:mtrain,:);
+test_wine = dataset_scale( (mtrain+1):(mtrain+mtest),: );
+</pre><h2>&#36873;&#25321;&#26368;&#20339;&#30340;SVM&#21442;&#25968;c&amp;g<a name="6"></a></h2><pre class="codeinput">[bestacc,bestc,bestg] = psoSVMcgForClass(train_wine_labels,train_wine);
+
+<span class="comment">% &#25171;&#21360;&#36873;&#25321;&#32467;&#26524;</span>
+disp(<span class="string">'&#25171;&#21360;&#36873;&#25321;&#32467;&#26524;'</span>);
+str = sprintf( <span class="string">'Best Cross Validation Accuracy = %g%% Best c = %g Best g = %g'</span>,bestacc,bestc,bestg);
+disp(str);
+</pre><pre class="codeoutput">&#25171;&#21360;&#36873;&#25321;&#32467;&#26524;
+Best Cross Validation Accuracy = 98.8764% Best c = 33.0915 Best g = 4.10411
+</pre><img vspace="5" hspace="5" src="chapter_PSO_03.png" alt=""> <h2>&#21033;&#29992;&#26368;&#20339;&#30340;&#21442;&#25968;&#36827;&#34892;SVM&#32593;&#32476;&#35757;&#32451;<a name="7"></a></h2><pre class="codeinput">cmd = [<span class="string">'-c '</span>,num2str(bestc),<span class="string">' -g '</span>,num2str(bestg)];
+model = svmtrain(train_wine_labels,train_wine,cmd);
+</pre><h2>SVM&#32593;&#32476;&#39044;&#27979;<a name="8"></a></h2><pre class="codeinput">[predict_label,accuracy] = svmpredict(test_wine_labels,test_wine,model);
+
+<span class="comment">% &#25171;&#21360;&#27979;&#35797;&#38598;&#20998;&#31867;&#20934;&#30830;&#29575;</span>
+total = length(test_wine_labels);
+right = sum(predict_label == test_wine_labels);
+disp(<span class="string">'&#25171;&#21360;&#27979;&#35797;&#38598;&#20998;&#31867;&#20934;&#30830;&#29575;'</span>);
+str = sprintf( <span class="string">'Accuracy = %g%% (%d/%d)'</span>,accuracy(1),right,total);
+disp(str);
+</pre><pre class="codeoutput">Accuracy = 97.7528% (87/89) (classification)
+&#25171;&#21360;&#27979;&#35797;&#38598;&#20998;&#31867;&#20934;&#30830;&#29575;
+Accuracy = 97.7528% (87/89)
+</pre><h2>&#32467;&#26524;&#20998;&#26512;<a name="9"></a></h2><pre class="codeinput"><span class="comment">% &#27979;&#35797;&#38598;&#30340;&#23454;&#38469;&#20998;&#31867;&#21644;&#39044;&#27979;&#20998;&#31867;&#22270;</span>
+<span class="comment">% &#36890;&#36807;&#22270;&#21487;&#20197;&#30475;&#20986;&#21482;&#26377;&#19977;&#20010;&#27979;&#35797;&#26679;&#26412;&#26159;&#34987;&#38169;&#20998;&#30340;</span>
+figure;
+hold <span class="string">on</span>;
+plot(test_wine_labels,<span class="string">'o'</span>);
+plot(predict_label,<span class="string">'r*'</span>);
+xlabel(<span class="string">'&#27979;&#35797;&#38598;&#26679;&#26412;'</span>,<span class="string">'FontSize'</span>,12);
+ylabel(<span class="string">'&#31867;&#21035;&#26631;&#31614;'</span>,<span class="string">'FontSize'</span>,12);
+legend(<span class="string">'&#23454;&#38469;&#27979;&#35797;&#38598;&#20998;&#31867;'</span>,<span class="string">'&#39044;&#27979;&#27979;&#35797;&#38598;&#20998;&#31867;'</span>);
+title(<span class="string">'&#27979;&#35797;&#38598;&#30340;&#23454;&#38469;&#20998;&#31867;&#21644;&#39044;&#27979;&#20998;&#31867;&#22270;'</span>,<span class="string">'FontSize'</span>,12);
+grid <span class="string">on</span>;
+snapnow;
+</pre><img vspace="5" hspace="5" src="chapter_PSO_04.png" alt=""> <h2>&#23376;&#20989;&#25968; psoSVMcgForClass.m<a name="10"></a></h2><pre class="codeinput"><span class="keyword">function</span> [bestCVaccuarcy,bestc,bestg,pso_option] = psoSVMcgForClass(train_label,train,pso_option)
+<span class="comment">% psoSVMcgForClass</span>
+
+<span class="comment">%</span>
+<span class="comment">% by faruto</span>
+<span class="comment">%Email:patrick.lee@foxmail.com QQ:516667408 http://blog.sina.com.cn/faruto BNU</span>
+<span class="comment">%last modified 2010.01.17</span>
+<span class="comment">%Super Moderator @ www.ilovematlab.cn</span>
+
+<span class="comment">% &#33509;&#36716;&#36733;&#35831;&#27880;&#26126;&#65306;</span>
+<span class="comment">% faruto and liyang , LIBSVM-farutoUltimateVersion</span>
+<span class="comment">% a toolbox with implements for support vector machines based on libsvm, 2009.</span>
+<span class="comment">% Software available at http://www.ilovematlab.cn</span>
+<span class="comment">%</span>
+<span class="comment">% Chih-Chung Chang and Chih-Jen Lin, LIBSVM : a library for</span>
+<span class="comment">% support vector machines, 2001. Software available at</span>
+<span class="comment">% http://www.csie.ntu.edu.tw/~cjlin/libsvm</span>
+<span class="comment">% &#21442;&#25968;&#21021;&#22987;&#21270;</span>
+<span class="keyword">if</span> nargin == 2
+    pso_option = struct(<span class="string">'c1'</span>,1.5,<span class="string">'c2'</span>,1.7,<span class="string">'maxgen'</span>,200,<span class="string">'sizepop'</span>,20, <span class="keyword">...</span>
+        <span class="string">'k'</span>,0.6,<span class="string">'wV'</span>,1,<span class="string">'wP'</span>,1,<span class="string">'v'</span>,5, <span class="keyword">...</span>
+        <span class="string">'popcmax'</span>,10^2,<span class="string">'popcmin'</span>,10^(-1),<span class="string">'popgmax'</span>,10^3,<span class="string">'popgmin'</span>,10^(-2));
+<span class="keyword">end</span>
+<span class="comment">% c1:&#21021;&#22987;&#20026;1.5,pso&#21442;&#25968;&#23616;&#37096;&#25628;&#32034;&#33021;&#21147;</span>
+<span class="comment">% c2:&#21021;&#22987;&#20026;1.7,pso&#21442;&#25968;&#20840;&#23616;&#25628;&#32034;&#33021;&#21147;</span>
+<span class="comment">% maxgen:&#21021;&#22987;&#20026;200,&#26368;&#22823;&#36827;&#21270;&#25968;&#37327;</span>
+<span class="comment">% sizepop:&#21021;&#22987;&#20026;20,&#31181;&#32676;&#26368;&#22823;&#25968;&#37327;</span>
+<span class="comment">% k:&#21021;&#22987;&#20026;0.6(k belongs to [0.1,1.0]),&#36895;&#29575;&#21644;x&#30340;&#20851;&#31995;(V = kX)</span>
+<span class="comment">% wV:&#21021;&#22987;&#20026;1(wV best belongs to [0.8,1.2]),&#36895;&#29575;&#26356;&#26032;&#20844;&#24335;&#20013;&#36895;&#24230;&#21069;&#38754;&#30340;&#24377;&#24615;&#31995;&#25968;</span>
+<span class="comment">% wP:&#21021;&#22987;&#20026;1,&#31181;&#32676;&#26356;&#26032;&#20844;&#24335;&#20013;&#36895;&#24230;&#21069;&#38754;&#30340;&#24377;&#24615;&#31995;&#25968;</span>
+<span class="comment">% v:&#21021;&#22987;&#20026;3,SVM Cross Validation&#21442;&#25968;</span>
+<span class="comment">% popcmax:&#21021;&#22987;&#20026;100,SVM &#21442;&#25968;c&#30340;&#21464;&#21270;&#30340;&#26368;&#22823;&#20540;.</span>
+<span class="comment">% popcmin:&#21021;&#22987;&#20026;0.1,SVM &#21442;&#25968;c&#30340;&#21464;&#21270;&#30340;&#26368;&#23567;&#20540;.</span>
+<span class="comment">% popgmax:&#21021;&#22987;&#20026;1000,SVM &#21442;&#25968;g&#30340;&#21464;&#21270;&#30340;&#26368;&#22823;&#20540;.</span>
+<span class="comment">% popgmin:&#21021;&#22987;&#20026;0.01,SVM &#21442;&#25968;c&#30340;&#21464;&#21270;&#30340;&#26368;&#23567;&#20540;.</span>
+
+Vcmax = pso_option.k*pso_option.popcmax;
+Vcmin = -Vcmax ;
+Vgmax = pso_option.k*pso_option.popgmax;
+Vgmin = -Vgmax ;
+
+eps = 10^(-3);
+
+<span class="comment">% &#20135;&#29983;&#21021;&#22987;&#31890;&#23376;&#21644;&#36895;&#24230;</span>
+<span class="keyword">for</span> i=1:pso_option.sizepop
+
+    <span class="comment">% &#38543;&#26426;&#20135;&#29983;&#31181;&#32676;&#21644;&#36895;&#24230;</span>
+    pop(i,1) = (pso_option.popcmax-pso_option.popcmin)*rand+pso_option.popcmin;
+    pop(i,2) = (pso_option.popgmax-pso_option.popgmin)*rand+pso_option.popgmin;
+    V(i,1)=Vcmax*rands(1,1);
+    V(i,2)=Vgmax*rands(1,1);
+
+    <span class="comment">% &#35745;&#31639;&#21021;&#22987;&#36866;&#24212;&#24230;</span>
+    cmd = [<span class="string">'-v '</span>,num2str(pso_option.v),<span class="string">' -c '</span>,num2str( pop(i,1) ),<span class="string">' -g '</span>,num2str( pop(i,2) )];
+    fitness(i) = svmtrain(train_label, train, cmd);
+    fitness(i) = -fitness(i);
+<span class="keyword">end</span>
+
+<span class="comment">% &#25214;&#26497;&#20540;&#21644;&#26497;&#20540;&#28857;</span>
+[global_fitness bestindex]=min(fitness); <span class="comment">% &#20840;&#23616;&#26497;&#20540;</span>
+local_fitness=fitness;   <span class="comment">% &#20010;&#20307;&#26497;&#20540;&#21021;&#22987;&#21270;</span>
+
+global_x=pop(bestindex,:);   <span class="comment">% &#20840;&#23616;&#26497;&#20540;&#28857;</span>
+local_x=pop;    <span class="comment">% &#20010;&#20307;&#26497;&#20540;&#28857;&#21021;&#22987;&#21270;</span>
+
+<span class="comment">% &#27599;&#19968;&#20195;&#31181;&#32676;&#30340;&#24179;&#22343;&#36866;&#24212;&#24230;</span>
+avgfitness_gen = zeros(1,pso_option.maxgen);
+
+<span class="comment">% &#36845;&#20195;&#23547;&#20248;</span>
+<span class="keyword">for</span> i=1:pso_option.maxgen
+
+    <span class="keyword">for</span> j=1:pso_option.sizepop
+
+        <span class="comment">%&#36895;&#24230;&#26356;&#26032;</span>
+        V(j,:) = pso_option.wV*V(j,:) + pso_option.c1*rand*(local_x(j,:) - pop(j,:)) + pso_option.c2*rand*(global_x - pop(j,:));
+        <span class="keyword">if</span> V(j,1) &gt; Vcmax
+            V(j,1) = Vcmax;
+        <span class="keyword">end</span>
+        <span class="keyword">if</span> V(j,1) &lt; Vcmin
+            V(j,1) = Vcmin;
+        <span class="keyword">end</span>
+        <span class="keyword">if</span> V(j,2) &gt; Vgmax
+            V(j,2) = Vgmax;
+        <span class="keyword">end</span>
+        <span class="keyword">if</span> V(j,2) &lt; Vgmin
+            V(j,2) = Vgmin;
+        <span class="keyword">end</span>
+
+        <span class="comment">%&#31181;&#32676;&#26356;&#26032;</span>
+        pop(j,:)=pop(j,:) + pso_option.wP*V(j,:);
+        <span class="keyword">if</span> pop(j,1) &gt; pso_option.popcmax
+            pop(j,1) = pso_option.popcmax;
+        <span class="keyword">end</span>
+        <span class="keyword">if</span> pop(j,1) &lt; pso_option.popcmin
+            pop(j,1) = pso_option.popcmin;
+        <span class="keyword">end</span>
+        <span class="keyword">if</span> pop(j,2) &gt; pso_option.popgmax
+            pop(j,2) = pso_option.popgmax;
+        <span class="keyword">end</span>
+        <span class="keyword">if</span> pop(j,2) &lt; pso_option.popgmin
+            pop(j,2) = pso_option.popgmin;
+        <span class="keyword">end</span>
+
+        <span class="comment">% &#33258;&#36866;&#24212;&#31890;&#23376;&#21464;&#24322;</span>
+        <span class="keyword">if</span> rand&gt;0.5
+            k=ceil(2*rand);
+            <span class="keyword">if</span> k == 1
+                pop(j,k) = (20-1)*rand+1;
+            <span class="keyword">end</span>
+            <span class="keyword">if</span> k == 2
+                pop(j,k) = (pso_option.popgmax-pso_option.popgmin)*rand + pso_option.popgmin;
+            <span class="keyword">end</span>
+        <span class="keyword">end</span>
+
+        <span class="comment">%&#36866;&#24212;&#24230;&#20540;</span>
+        cmd = [<span class="string">'-v '</span>,num2str(pso_option.v),<span class="string">' -c '</span>,num2str( pop(j,1) ),<span class="string">' -g '</span>,num2str( pop(j,2) )];
+        fitness(j) = svmtrain(train_label, train, cmd);
+        fitness(j) = -fitness(j);
+
+        cmd_temp = [<span class="string">'-c '</span>,num2str( pop(j,1) ),<span class="string">' -g '</span>,num2str( pop(j,2) )];
+        model = svmtrain(train_label, train, cmd_temp);
+
+        <span class="keyword">if</span> fitness(j) &gt;= -65
+            <span class="keyword">continue</span>;
+        <span class="keyword">end</span>
+
+        <span class="comment">%&#20010;&#20307;&#26368;&#20248;&#26356;&#26032;</span>
+        <span class="keyword">if</span> fitness(j) &lt; local_fitness(j)
+            local_x(j,:) = pop(j,:);
+            local_fitness(j) = fitness(j);
+        <span class="keyword">end</span>
+
+        <span class="keyword">if</span> abs( fitness(j)-local_fitness(j) )&lt;=eps &amp;&amp; pop(j,1) &lt; local_x(j,1)
+            local_x(j,:) = pop(j,:);
+            local_fitness(j) = fitness(j);
+        <span class="keyword">end</span>
+
+        <span class="comment">%&#32676;&#20307;&#26368;&#20248;&#26356;&#26032;</span>
+        <span class="keyword">if</span> fitness(j) &lt; global_fitness
+            global_x = pop(j,:);
+            global_fitness = fitness(j);
+        <span class="keyword">end</span>
+
+        <span class="keyword">if</span> abs( fitness(j)-global_fitness )&lt;=eps &amp;&amp; pop(j,1) &lt; global_x(1)
+            global_x = pop(j,:);
+            global_fitness = fitness(j);
+        <span class="keyword">end</span>
+
+    <span class="keyword">end</span>
+
+    fit_gen(i) = global_fitness;
+    avgfitness_gen(i) = sum(fitness)/pso_option.sizepop;
+<span class="keyword">end</span>
+
+<span class="comment">% &#32467;&#26524;&#20998;&#26512;</span>
+figure;
+hold <span class="string">on</span>;
+plot(-fit_gen,<span class="string">'r*-'</span>,<span class="string">'LineWidth'</span>,1.5);
+plot(-avgfitness_gen,<span class="string">'o-'</span>,<span class="string">'LineWidth'</span>,1.5);
+legend(<span class="string">'&#26368;&#20339;&#36866;&#24212;&#24230;'</span>,<span class="string">'&#24179;&#22343;&#36866;&#24212;&#24230;'</span>,3);
+xlabel(<span class="string">'&#36827;&#21270;&#20195;&#25968;'</span>,<span class="string">'FontSize'</span>,12);
+ylabel(<span class="string">'&#36866;&#24212;&#24230;'</span>,<span class="string">'FontSize'</span>,12);
+grid <span class="string">on</span>;
+
+bestc = global_x(1);
+bestg = global_x(2);
+bestCVaccuarcy = -fit_gen(pso_option.maxgen);
+
+line1 = <span class="string">'&#36866;&#24212;&#24230;&#26354;&#32447;Accuracy[PSOmethod]'</span>;
+line2 = [<span class="string">'(&#21442;&#25968;c1='</span>,num2str(pso_option.c1), <span class="keyword">...</span>
+    <span class="string">',c2='</span>,num2str(pso_option.c2),<span class="string">',&#32456;&#27490;&#20195;&#25968;='</span>, <span class="keyword">...</span>
+    num2str(pso_option.maxgen),<span class="string">',&#31181;&#32676;&#25968;&#37327;pop='</span>, <span class="keyword">...</span>
+    num2str(pso_option.sizepop),<span class="string">')'</span>];
+line3 = [<span class="string">'Best c='</span>,num2str(bestc),<span class="string">' g='</span>,num2str(bestg), <span class="keyword">...</span>
+    <span class="string">' CVAccuracy='</span>,num2str(bestCVaccuarcy),<span class="string">'%'</span>];
+title({line1;line2;line3},<span class="string">'FontSize'</span>,12);
+</pre><p class="footer"><br>
+      Published with MATLAB&reg; 7.14<br></p></div><!--
+##### SOURCE BEGIN #####
+%% Matlab神经网络43个案例分析
+
+% SVM的参数优化——如何更好的提升分类器的性能
+% by 李洋(faruto)
+% http://www.matlabsky.com
+% Email:faruto@163.com
+% http://weibo.com/faruto 
+% http://blog.sina.com.cn/faruto
+% 2013.01.01
+%% 清空环境变量
+function chapter_PSO
+close all;
+clear;
+clc;
+format compact;
+%% 数据提取
+
+% 载入测试数据wine,其中包含的数据为classnumber = 3,wine:178*13的矩阵,wine_labes:178*1的列向量
+load wine.mat;
+
+% 画出测试数据的box可视化图
+figure;
+boxplot(wine,'orientation','horizontal','labels',categories);
+title('wine数据的box可视化图','FontSize',12);
+xlabel('属性值','FontSize',12);
+grid on;
+
+% 画出测试数据的分维可视化图
+figure
+subplot(3,5,1);
+hold on
+for run = 1:178
+    plot(run,wine_labels(run),'*');
+end
+xlabel('样本','FontSize',10);
+ylabel('类别标签','FontSize',10);
+title('class','FontSize',10);
+for run = 2:14
+    subplot(3,5,run);
+    hold on;
+    str = ['attrib ',num2str(run-1)];
+    for i = 1:178
+        plot(i,wine(i,run-1),'*');
+    end
+    xlabel('样本','FontSize',10);
+    ylabel('属性值','FontSize',10);
+    title(str,'FontSize',10);
+end
+
+% 选定训练集和测试集
+
+% 将第一类的1-30,第二类的60-95,第三类的131-153做为训练集
+train_wine = [wine(1:30,:);wine(60:95,:);wine(131:153,:)];
+% 相应的训练集的标签也要分离出来
+train_wine_labels = [wine_labels(1:30);wine_labels(60:95);wine_labels(131:153)];
+% 将第一类的31-59,第二类的96-130,第三类的154-178做为测试集
+test_wine = [wine(31:59,:);wine(96:130,:);wine(154:178,:)];
+% 相应的测试集的标签也要分离出来
+test_wine_labels = [wine_labels(31:59);wine_labels(96:130);wine_labels(154:178)];
+
+%% 数据预处理
+% 数据预处理,将训练集和测试集归一化到[0,1]区间
+
+[mtrain,ntrain] = size(train_wine);
+[mtest,ntest] = size(test_wine);
+
+dataset = [train_wine;test_wine];
+% mapminmax为MATLAB自带的归一化函数
+[dataset_scale,ps] = mapminmax(dataset',0,1);
+dataset_scale = dataset_scale';
+
+train_wine = dataset_scale(1:mtrain,:);
+test_wine = dataset_scale( (mtrain+1):(mtrain+mtest),: );
+%% 选择最佳的SVM参数c&g
+
+[bestacc,bestc,bestg] = psoSVMcgForClass(train_wine_labels,train_wine);
+
+% 打印选择结果
+disp('打印选择结果');
+str = sprintf( 'Best Cross Validation Accuracy = %g%% Best c = %g Best g = %g',bestacc,bestc,bestg);
+disp(str);
+
+%% 利用最佳的参数进行SVM网络训练
+cmd = ['-c ',num2str(bestc),' -g ',num2str(bestg)];
+model = svmtrain(train_wine_labels,train_wine,cmd);
+
+%% SVM网络预测
+[predict_label,accuracy] = svmpredict(test_wine_labels,test_wine,model);
+
+% 打印测试集分类准确率
+total = length(test_wine_labels);
+right = sum(predict_label == test_wine_labels);
+disp('打印测试集分类准确率');
+str = sprintf( 'Accuracy = %g%% (%d/%d)',accuracy(1),right,total);
+disp(str);
+
+%% 结果分析
+
+% 测试集的实际分类和预测分类图
+% 通过图可以看出只有三个测试样本是被错分的
+figure;
+hold on;
+plot(test_wine_labels,'o');
+plot(predict_label,'r*');
+xlabel('测试集样本','FontSize',12);
+ylabel('类别标签','FontSize',12);
+legend('实际测试集分类','预测测试集分类');
+title('测试集的实际分类和预测分类图','FontSize',12);
+grid on;
+snapnow;
+
+%% 子函数 psoSVMcgForClass.m
+function [bestCVaccuarcy,bestc,bestg,pso_option] = psoSVMcgForClass(train_label,train,pso_option)
+% psoSVMcgForClass
+
+%
+% by faruto
+%Email:patrick.lee@foxmail.com QQ:516667408 http://blog.sina.com.cn/faruto BNU
+%last modified 2010.01.17
+%Super Moderator @ www.ilovematlab.cn
+
+% 若转载请注明：
+% faruto and liyang , LIBSVM-farutoUltimateVersion 
+% a toolbox with implements for support vector machines based on libsvm, 2009. 
+% Software available at http://www.ilovematlab.cn
+% 
+% Chih-Chung Chang and Chih-Jen Lin, LIBSVM : a library for
+% support vector machines, 2001. Software available at
+% http://www.csie.ntu.edu.tw/~cjlin/libsvm
+% 参数初始化
+if nargin == 2
+    pso_option = struct('c1',1.5,'c2',1.7,'maxgen',200,'sizepop',20, ...
+        'k',0.6,'wV',1,'wP',1,'v',5, ...
+        'popcmax',10^2,'popcmin',10^(-1),'popgmax',10^3,'popgmin',10^(-2));
+end
+% c1:初始为1.5,pso参数局部搜索能力
+% c2:初始为1.7,pso参数全局搜索能力
+% maxgen:初始为200,最大进化数量
+% sizepop:初始为20,种群最大数量
+% k:初始为0.6(k belongs to [0.1,1.0]),速率和x的关系(V = kX)
+% wV:初始为1(wV best belongs to [0.8,1.2]),速率更新公式中速度前面的弹性系数
+% wP:初始为1,种群更新公式中速度前面的弹性系数
+% v:初始为3,SVM Cross Validation参数
+% popcmax:初始为100,SVM 参数c的变化的最大值.
+% popcmin:初始为0.1,SVM 参数c的变化的最小值.
+% popgmax:初始为1000,SVM 参数g的变化的最大值.
+% popgmin:初始为0.01,SVM 参数c的变化的最小值.
+
+Vcmax = pso_option.k*pso_option.popcmax;
+Vcmin = -Vcmax ;
+Vgmax = pso_option.k*pso_option.popgmax;
+Vgmin = -Vgmax ;
+
+eps = 10^(-3);
+
+% 产生初始粒子和速度
+for i=1:pso_option.sizepop
+    
+    % 随机产生种群和速度
+    pop(i,1) = (pso_option.popcmax-pso_option.popcmin)*rand+pso_option.popcmin;
+    pop(i,2) = (pso_option.popgmax-pso_option.popgmin)*rand+pso_option.popgmin;
+    V(i,1)=Vcmax*rands(1,1);
+    V(i,2)=Vgmax*rands(1,1);
+    
+    % 计算初始适应度
+    cmd = ['-v ',num2str(pso_option.v),' -c ',num2str( pop(i,1) ),' -g ',num2str( pop(i,2) )];
+    fitness(i) = svmtrain(train_label, train, cmd);
+    fitness(i) = -fitness(i);
+end
+
+% 找极值和极值点
+[global_fitness bestindex]=min(fitness); % 全局极值
+local_fitness=fitness;   % 个体极值初始化
+
+global_x=pop(bestindex,:);   % 全局极值点
+local_x=pop;    % 个体极值点初始化
+
+% 每一代种群的平均适应度
+avgfitness_gen = zeros(1,pso_option.maxgen);
+
+% 迭代寻优
+for i=1:pso_option.maxgen
+    
+    for j=1:pso_option.sizepop
+        
+        %速度更新
+        V(j,:) = pso_option.wV*V(j,:) + pso_option.c1*rand*(local_x(j,:) - pop(j,:)) + pso_option.c2*rand*(global_x - pop(j,:));
+        if V(j,1) > Vcmax
+            V(j,1) = Vcmax;
+        end
+        if V(j,1) < Vcmin
+            V(j,1) = Vcmin;
+        end
+        if V(j,2) > Vgmax
+            V(j,2) = Vgmax;
+        end
+        if V(j,2) < Vgmin
+            V(j,2) = Vgmin;
+        end
+        
+        %种群更新
+        pop(j,:)=pop(j,:) + pso_option.wP*V(j,:);
+        if pop(j,1) > pso_option.popcmax
+            pop(j,1) = pso_option.popcmax;
+        end
+        if pop(j,1) < pso_option.popcmin
+            pop(j,1) = pso_option.popcmin;
+        end
+        if pop(j,2) > pso_option.popgmax
+            pop(j,2) = pso_option.popgmax;
+        end
+        if pop(j,2) < pso_option.popgmin
+            pop(j,2) = pso_option.popgmin;
+        end
+        
+        % 自适应粒子变异
+        if rand>0.5
+            k=ceil(2*rand);
+            if k == 1
+                pop(j,k) = (20-1)*rand+1;
+            end
+            if k == 2
+                pop(j,k) = (pso_option.popgmax-pso_option.popgmin)*rand + pso_option.popgmin;
+            end
+        end
+        
+        %适应度值
+        cmd = ['-v ',num2str(pso_option.v),' -c ',num2str( pop(j,1) ),' -g ',num2str( pop(j,2) )];
+        fitness(j) = svmtrain(train_label, train, cmd);
+        fitness(j) = -fitness(j);
+        
+        cmd_temp = ['-c ',num2str( pop(j,1) ),' -g ',num2str( pop(j,2) )];
+        model = svmtrain(train_label, train, cmd_temp);
+        
+        if fitness(j) >= -65
+            continue;
+        end
+        
+        %个体最优更新
+        if fitness(j) < local_fitness(j)
+            local_x(j,:) = pop(j,:);
+            local_fitness(j) = fitness(j);
+        end
+        
+        if abs( fitness(j)-local_fitness(j) )<=eps && pop(j,1) < local_x(j,1)
+            local_x(j,:) = pop(j,:);
+            local_fitness(j) = fitness(j);
+        end
+        
+        %群体最优更新
+        if fitness(j) < global_fitness
+            global_x = pop(j,:);
+            global_fitness = fitness(j);
+        end
+        
+        if abs( fitness(j)-global_fitness )<=eps && pop(j,1) < global_x(1)
+            global_x = pop(j,:);
+            global_fitness = fitness(j);
+        end
+        
+    end
+    
+    fit_gen(i) = global_fitness;
+    avgfitness_gen(i) = sum(fitness)/pso_option.sizepop;
+end
+
+% 结果分析
+figure;
+hold on;
+plot(-fit_gen,'r*-','LineWidth',1.5);
+plot(-avgfitness_gen,'o-','LineWidth',1.5);
+legend('最佳适应度','平均适应度',3);
+xlabel('进化代数','FontSize',12);
+ylabel('适应度','FontSize',12);
+grid on;
+
+bestc = global_x(1);
+bestg = global_x(2);
+bestCVaccuarcy = -fit_gen(pso_option.maxgen);
+
+line1 = '适应度曲线Accuracy[PSOmethod]';
+line2 = ['(参数c1=',num2str(pso_option.c1), ...
+    ',c2=',num2str(pso_option.c2),',终止代数=', ...
+    num2str(pso_option.maxgen),',种群数量pop=', ...
+    num2str(pso_option.sizepop),')'];
+line3 = ['Best c=',num2str(bestc),' g=',num2str(bestg), ...
+    ' CVAccuracy=',num2str(bestCVaccuarcy),'%'];
+title({line1;line2;line3},'FontSize',12);
+##### SOURCE END #####
+--></body></html>

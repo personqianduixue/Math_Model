@@ -1,0 +1,260 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>chapter24</title><meta name="generator" content="MATLAB 8.0"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2013-08-21"><meta name="DC.source" content="chapter24.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;</a></li><li><a href="#2">&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;</a></li><li><a href="#3">&#25968;&#25454;&#36733;&#20837;</a></li><li><a href="#4">&#36873;&#21462;&#35757;&#32451;&#25968;&#25454;&#21644;&#27979;&#35797;&#25968;&#25454;</a></li><li><a href="#5">&#23558;&#26399;&#26395;&#31867;&#21035;&#36716;&#25442;&#20026;&#21521;&#37327;</a></li><li><a href="#6">&#20351;&#29992;newpnn&#20989;&#25968;&#24314;&#31435;PNN SPREAD&#36873;&#21462;&#20026;1.5</a></li><li><a href="#7">&#35757;&#32451;&#25968;&#25454;&#22238;&#20195; &#26597;&#30475;&#32593;&#32476;&#30340;&#20998;&#31867;&#25928;&#26524;</a></li><li><a href="#8">&#36890;&#36807;&#20316;&#22270; &#35266;&#23519;&#32593;&#32476;&#23545;&#35757;&#32451;&#25968;&#25454;&#20998;&#31867;&#25928;&#26524;</a></li><li><a href="#9">&#32593;&#32476;&#39044;&#27979;&#26410;&#30693;&#25968;&#25454;&#25928;&#26524;</a></li></ul></div><h2>Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;<a name="1"></a></h2><pre class="codeinput"><span class="comment">% &#27010;&#29575;&#31070;&#32463;&#32593;&#32476;&#30340;&#20998;&#31867;&#39044;&#27979;--&#22522;&#20110;PNN&#30340;&#21464;&#21387;&#22120;&#25925;&#38556;&#35786;&#26029;</span>
+<span class="comment">% by &#29579;&#23567;&#24029;(@&#29579;&#23567;&#24029;_matlab)</span>
+<span class="comment">% http://www.matlabsky.com</span>
+<span class="comment">% Email:sina363@163.com</span>
+<span class="comment">% http://weibo.com/hgsz2003</span>
+</pre><h2>&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;<a name="2"></a></h2><pre class="codeinput">clc;
+clear <span class="string">all</span>
+close <span class="string">all</span>
+nntwarn <span class="string">off</span>;
+warning <span class="string">off</span>;
+</pre><h2>&#25968;&#25454;&#36733;&#20837;<a name="3"></a></h2><pre class="codeinput">load <span class="string">data</span>
+</pre><h2>&#36873;&#21462;&#35757;&#32451;&#25968;&#25454;&#21644;&#27979;&#35797;&#25968;&#25454;<a name="4"></a></h2><pre class="codeinput">Train=data(1:23,:);
+Test=data(24:end,:);
+p_train=Train(:,1:3)';
+t_train=Train(:,4)';
+p_test=Test(:,1:3)';
+t_test=Test(:,4)';
+</pre><h2>&#23558;&#26399;&#26395;&#31867;&#21035;&#36716;&#25442;&#20026;&#21521;&#37327;<a name="5"></a></h2><pre class="codeinput">t_train=ind2vec(t_train);
+t_train_temp=Train(:,4)';
+</pre><h2>&#20351;&#29992;newpnn&#20989;&#25968;&#24314;&#31435;PNN SPREAD&#36873;&#21462;&#20026;1.5<a name="6"></a></h2><pre class="codeinput">Spread=1.5;
+net=newpnn(p_train,t_train,Spread)
+</pre><pre class="codeoutput">
+net =
+
+    Neural Network
+ 
+              name: 'Probabilistic Neural Network'
+        efficiency: .cacheDelayedInputs, .flattenTime,
+                    .memoryReduction
+          userdata: (your custom info)
+ 
+    dimensions:
+ 
+         numInputs: 1
+         numLayers: 2
+        numOutputs: 1
+    numInputDelays: 0
+    numLayerDelays: 0
+ numFeedbackDelays: 0
+ numWeightElements: 207
+        sampleTime: 1
+ 
+    connections:
+ 
+       biasConnect: [1; 0]
+      inputConnect: [1; 0]
+      layerConnect: [0 0; 1 0]
+     outputConnect: [0 1]
+ 
+    subobjects:
+ 
+            inputs: {1x1 cell array of 1 input}
+            layers: {2x1 cell array of 2 layers}
+           outputs: {1x2 cell array of 1 output}
+            biases: {2x1 cell array of 1 bias}
+      inputWeights: {2x1 cell array of 1 weight}
+      layerWeights: {2x2 cell array of 1 weight}
+ 
+    functions:
+ 
+          adaptFcn: (none)
+        adaptParam: (none)
+          derivFcn: 'defaultderiv'
+         divideFcn: (none)
+       divideParam: (none)
+        divideMode: 'sample'
+           initFcn: 'initlay'
+        performFcn: 'mse'
+      performParam: .regularization, .normalization
+          plotFcns: {}
+        plotParams: {1x0 cell array of 0 params}
+          trainFcn: (none)
+        trainParam: (none)
+ 
+    weight and bias values:
+ 
+                IW: {2x1 cell} containing 1 input weight matrix
+                LW: {2x2 cell} containing 1 layer weight matrix
+                 b: {2x1 cell} containing 1 bias vector
+ 
+    methods:
+ 
+             adapt: Learn while in continuous use
+         configure: Configure inputs &amp; outputs
+            gensim: Generate Simulink model
+              init: Initialize weights &amp; biases
+           perform: Calculate performance
+               sim: Evaluate network outputs given inputs
+             train: Train network with examples
+              view: View diagram
+       unconfigure: Unconfigure inputs &amp; outputs
+ 
+</pre><h2>&#35757;&#32451;&#25968;&#25454;&#22238;&#20195; &#26597;&#30475;&#32593;&#32476;&#30340;&#20998;&#31867;&#25928;&#26524;<a name="7"></a></h2><pre class="codeinput"><span class="comment">% Sim&#20989;&#25968;&#36827;&#34892;&#32593;&#32476;&#39044;&#27979;</span>
+Y=sim(net,p_train);
+<span class="comment">% &#23558;&#32593;&#32476;&#36755;&#20986;&#21521;&#37327;&#36716;&#25442;&#20026;&#25351;&#38024;</span>
+Yc=vec2ind(Y);
+</pre><h2>&#36890;&#36807;&#20316;&#22270; &#35266;&#23519;&#32593;&#32476;&#23545;&#35757;&#32451;&#25968;&#25454;&#20998;&#31867;&#25928;&#26524;<a name="8"></a></h2><pre class="codeinput">figure(1)
+subplot(1,2,1)
+stem(1:length(Yc),Yc,<span class="string">'bo'</span>)
+hold <span class="string">on</span>
+stem(1:length(Yc),t_train_temp,<span class="string">'r*'</span>)
+title(<span class="string">'PNN &#32593;&#32476;&#35757;&#32451;&#21518;&#30340;&#25928;&#26524;'</span>)
+xlabel(<span class="string">'&#26679;&#26412;&#32534;&#21495;'</span>)
+ylabel(<span class="string">'&#20998;&#31867;&#32467;&#26524;'</span>)
+set(gca,<span class="string">'Ytick'</span>,[1:5])
+subplot(1,2,2)
+H=Yc-t_train_temp;
+stem(H)
+title(<span class="string">'PNN &#32593;&#32476;&#35757;&#32451;&#21518;&#30340;&#35823;&#24046;&#22270;'</span>)
+xlabel(<span class="string">'&#26679;&#26412;&#32534;&#21495;'</span>)
+</pre><img vspace="5" hspace="5" src="chapter24_01.png" alt=""> <h2>&#32593;&#32476;&#39044;&#27979;&#26410;&#30693;&#25968;&#25454;&#25928;&#26524;<a name="9"></a></h2><pre class="codeinput">Y2=sim(net,p_test);
+Y2c=vec2ind(Y2);
+figure(2)
+stem(1:length(Y2c),Y2c,<span class="string">'b^'</span>)
+hold <span class="string">on</span>
+stem(1:length(Y2c),t_test,<span class="string">'r*'</span>)
+title(<span class="string">'PNN &#32593;&#32476;&#30340;&#39044;&#27979;&#25928;&#26524;'</span>)
+xlabel(<span class="string">'&#39044;&#27979;&#26679;&#26412;&#32534;&#21495;'</span>)
+ylabel(<span class="string">'&#20998;&#31867;&#32467;&#26524;'</span>)
+set(gca,<span class="string">'Ytick'</span>,[1:5])
+</pre><img vspace="5" hspace="5" src="chapter24_02.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2012b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Matlab神经网络43个案例分析
+
+% 概率神经网络的分类预测REPLACE_WITH_DASH_DASH基于PNN的变压器故障诊断
+% by 王小川(@王小川_matlab)
+% http://www.matlabsky.com
+% Email:sina363@163.com
+% http://weibo.com/hgsz2003
+
+
+%% 清空环境变量
+clc;
+clear all
+close all
+nntwarn off;
+warning off;
+%% 数据载入
+load data
+%% 选取训练数据和测试数据
+
+Train=data(1:23,:);
+Test=data(24:end,:);
+p_train=Train(:,1:3)';
+t_train=Train(:,4)';
+p_test=Test(:,1:3)';
+t_test=Test(:,4)';
+
+%% 将期望类别转换为向量
+t_train=ind2vec(t_train);
+t_train_temp=Train(:,4)';
+%% 使用newpnn函数建立PNN SPREAD选取为1.5
+Spread=1.5;
+net=newpnn(p_train,t_train,Spread)
+
+%% 训练数据回代 查看网络的分类效果
+
+% Sim函数进行网络预测
+Y=sim(net,p_train);
+% 将网络输出向量转换为指针
+Yc=vec2ind(Y);
+
+%% 通过作图 观察网络对训练数据分类效果
+figure(1)
+subplot(1,2,1)
+stem(1:length(Yc),Yc,'bo')
+hold on
+stem(1:length(Yc),t_train_temp,'r*')
+title('PNN 网络训练后的效果')
+xlabel('样本编号')
+ylabel('分类结果')
+set(gca,'Ytick',[1:5])
+subplot(1,2,2)
+H=Yc-t_train_temp;
+stem(H)
+title('PNN 网络训练后的误差图')
+xlabel('样本编号')
+
+
+%% 网络预测未知数据效果
+Y2=sim(net,p_test);
+Y2c=vec2ind(Y2);
+figure(2)
+stem(1:length(Y2c),Y2c,'b^')
+hold on
+stem(1:length(Y2c),t_test,'r*')
+title('PNN 网络的预测效果')
+xlabel('预测样本编号')
+ylabel('分类结果')
+set(gca,'Ytick',[1:5])
+
+##### SOURCE END #####
+--></body></html>

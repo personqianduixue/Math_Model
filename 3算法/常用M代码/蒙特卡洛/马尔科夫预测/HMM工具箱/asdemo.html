@@ -1,0 +1,690 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns:mwsh="http://www.mathworks.com/namespace/mcode/v1/syntaxhighlight.dtd"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 10">
+<meta name=Originator content="Microsoft Word 10">
+<link rel=File-List href="asdemo_files/filelist.xml">
+<title>asdemo</title>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="time"/>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="date"/>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="place"/>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Caroline Schwarz</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>us</o:LastAuthor>
+  <o:Revision>33</o:Revision>
+  <o:TotalTime>0</o:TotalTime>
+  <o:Created>2005-03-26T16:20:00Z</o:Created>
+  <o:LastSaved>2005-03-30T09:58:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>1062</o:Words>
+  <o:Characters>6055</o:Characters>
+  <o:Company>office</o:Company>
+  <o:Lines>50</o:Lines>
+  <o:Paragraphs>14</o:Paragraphs>
+  <o:CharactersWithSpaces>7103</o:CharactersWithSpaces>
+  <o:Version>10.3501</o:Version>
+ </o:DocumentProperties>
+ <o:OfficeDocumentSettings>
+  <o:RelyOnVML/>
+  <o:AllowPNG/>
+  <o:TargetScreenSize>1280x1024</o:TargetScreenSize>
+ </o:OfficeDocumentSettings>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:SpellingState>Clean</w:SpellingState>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:Compatibility>
+   <w:UseFELayout/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if !mso]><object
+ classid="clsid:38481807-CA0E-42D2-BF39-B33AF135CC4D" id=ieooui></object>
+<style>
+st1\:*{behavior:url(#ieooui) }
+</style>
+<![endif]-->
+<style>
+<!--p
+	{max-width: 600px;
+	width:expression(document.body.clientWidth > 620 ? "600px": "auto" );}
+h1
+	{max-width: 600px;
+	width:expression(document.body.clientWidth > 620 ? "600px": "auto" );}
+h2
+	{max-width: 600px;
+	width:expression(document.body.clientWidth > 620 ? "600px": "auto" );}
+div
+	{max-width: 600px;
+	width:expression(document.body.clientWidth > 620 ? "600px": "auto" );}
+
+ /* Font Definitions */
+ @font-face
+	{font-family:"MS Mincho";
+	panose-1:2 2 6 9 4 2 5 8 3 4;
+	mso-font-alt:"ＭＳ 明朝";
+	mso-font-charset:128;
+	mso-generic-font-family:modern;
+	mso-font-pitch:fixed;
+	mso-font-signature:-1610612033 1757936891 16 0 131231 0;}
+@font-face
+	{font-family:"\@MS Mincho";
+	panose-1:2 2 6 9 4 2 5 8 3 4;
+	mso-font-charset:128;
+	mso-generic-font-family:modern;
+	mso-font-pitch:fixed;
+	mso-font-signature:-1610612033 1757936891 16 0 131231 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-believe-normal-left:yes;}
+h1
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:1;
+	font-size:24.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"MS Mincho";
+	color:#990000;
+	font-weight:bold;}
+h2
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	mso-outline-level:2;
+	font-size:13.5pt;
+	font-family:Arial;
+	mso-fareast-font-family:"MS Mincho";
+	color:#990000;
+	font-weight:bold;}
+p
+	{mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";}
+pre
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt;
+	font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";}
+p.footer, li.footer, div.footer
+	{mso-style-name:footer;
+	mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	text-align:right;
+	mso-pagination:widow-orphan;
+	font-size:7.5pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	color:gray;
+	font-style:italic;}
+span.keyword
+	{mso-style-name:keyword;
+	color:blue;}
+span.comment
+	{mso-style-name:comment;
+	color:forestgreen;}
+span.string
+	{mso-style-name:string;
+	color:#A020F0;}
+span.untermstring
+	{mso-style-name:untermstring;
+	color:#B20000;}
+span.syscmd
+	{mso-style-name:syscmd;
+	color:#B28C00;}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
+span.GramE
+	{mso-style-name:"";
+	mso-gram-e:yes;}
+@page Section1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	mso-header-margin:36.0pt;
+	mso-footer-margin:36.0pt;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";}
+</style>
+<![endif]--><![if mso 9]>
+<style>
+p.MsoNormal
+	{margin-left:7.5pt;}
+</style>
+<![endif]><!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+<meta name=date content=2005-03-26>
+<meta name=m-file content=asdemo>
+<!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="5122"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body bgcolor=white lang=EN-US style='tab-interval:36.0pt;margin-left:7.5pt;
+margin-top:7.5pt;margin-right:7.5pt;margin-bottom:7.5pt'>
+
+<div class=Section1><pre style='margin-left:22.5pt'><span class=comment>% <b
+style='mso-bidi-font-weight:normal'>ASORT</b></span></pre><pre
+style='margin-left:22.5pt'><span class=comment>% a pedestrian <b
+style='mso-bidi-font-weight:normal'>NUMERICAL SORTER</b> of <b
+style='mso-bidi-font-weight:normal'>ALPHANUMERIC</b> data</span></pre><pre
+style='margin-left:22.5pt'><o:p>&nbsp;</o:p></pre><pre style='margin-left:22.5pt'><span
+class=comment>% - create some data</span></pre><pre style='margin-left:22.5pt'><b
+style='mso-bidi-font-weight:normal'><span style='mso-tab-count:2'>          </span>d = {<o:p></o:p></b></pre><pre
+style='margin-left:22.5pt'><span class=comment>%<span style='mso-tab-count:
+2'>         </span>strings with one valid alphanumeric number</span></pre><pre
+style='margin-left:22.5pt'><span class=comment>%<span style='mso-tab-count:
+2'>         </span>sorted <b style='mso-bidi-font-weight:normal'>numerically</b></span></pre><pre
+style='margin-left:22.5pt'><span style='mso-tab-count:3'>                  </span><span
+class=string>'-<span class=SpellE><span class=GramE>inf</span></span>'</span></pre><pre
+style='margin-left:22.5pt'><span style='mso-tab-count:3'>                  </span><span
+class=string>'<span class=GramE>x-3.2e4y</span>'</span></pre><pre
+style='margin-left:22.5pt'><span style='mso-tab-count:3'>                  </span><span
+class=string>'<span class=GramE>f-1.4</span>'</span></pre><pre
+style='margin-left:22.5pt'><span style='mso-tab-count:3'>                  </span><span
+class=string>'-.1'</span></pre><pre style='margin-left:22.5pt'><span
+style='mso-tab-count:3'>                  </span><span class=string>'+ <span
+class=GramE>.1d-2</span>'</span></pre><pre style='margin-left:22.5pt'><span
+style='mso-tab-count:3'>                  </span><span class=string>'.1'</span></pre><pre
+style='margin-left:22.5pt'><span style='mso-tab-count:3'>                  </span><span
+class=string>'f.1'</span></pre><pre style='margin-left:22.5pt'><span
+style='mso-tab-count:3'>                  </span><span class=string>'f -+1.4'</span></pre><pre
+style='margin-left:22.5pt'><span style='mso-tab-count:3'>                  </span><span
+class=string>'f.2'</span></pre><pre style='margin-left:22.5pt'><span
+style='mso-tab-count:3'>                  </span><span class=string>'f.3'</span></pre><pre
+style='margin-left:22.5pt'><span style='mso-tab-count:3'>                  </span><span
+class=string>'f.10'</span></pre><pre style='margin-left:22.5pt'><span
+style='mso-tab-count:3'>                  </span><span class=string>'f.11'</span></pre><pre
+style='margin-left:22.5pt'><span style='mso-tab-count:3'>                  </span><span
+class=string>'+<span class=SpellE>inf</span>'</span></pre><pre
+style='margin-left:22.5pt'><span style='mso-tab-count:3'>                  </span><span
+class=GramE><span class=string>' -</span></span><span class=SpellE><span
+class=string>nan</span></span><span class=string>'</span></pre><pre
+style='margin-left:22.5pt'><span style='mso-tab-count:3'>                  </span><span
+class=string>'+ <span class=SpellE><span class=GramE>nan</span></span>'</span></pre><pre
+style='margin-left:22.5pt'><span style='mso-tab-count:3'>                  </span><span
+class=string>'<span class=SpellE><span class=GramE>nan</span></span>'</span></pre><pre
+style='margin-left:22.5pt'><span class=comment>%<span style='mso-tab-count:
+2'>         </span>strings with many numbers or invalid/ambiguous numbers</span></pre><pre
+style='margin-left:22.5pt'><span class=comment>%<span style='mso-tab-count:
+2'>         </span>sorted in <span class=SpellE><span class=GramE><b
+style='mso-bidi-font-weight:normal'>ascii</b></span></span><b style='mso-bidi-font-weight:
+normal'> dictionary order</b></span></pre><pre style='margin-left:22.5pt'><span
+style='mso-tab-count:3'>                  </span><span class=GramE><span
+class=string>' <span class=SpellE>nan</span></span></span><span class=string> <span
+class=SpellE>nan</span>'</span></pre><pre style='margin-left:22.5pt'><span
+style='mso-tab-count:3'>                  </span><span class=string>'+ .1e-.2'</span></pre><pre
+style='margin-left:22.5pt'><span style='mso-tab-count:3'>                  </span><span
+class=string>'-1 2'</span></pre><pre style='margin-left:22.5pt'><span
+style='mso-tab-count:3'>                  </span><span class=string>'Z12e12ez'</span></pre><pre
+style='margin-left:22.5pt'><span style='mso-tab-count:3'>                  </span><span
+class=string>'<span class=SpellE><span class=GramE>inf</span></span> -<span
+class=SpellE>inf</span>'</span></pre><pre style='margin-left:22.5pt'><span
+style='mso-tab-count:3'>                  </span><span class=string>'s.3TT.4'</span></pre><pre
+style='margin-left:22.5pt'><span style='mso-tab-count:3'>                  </span><span
+class=string>'z12e12ez'</span></pre><pre style='margin-left:22.5pt'><span
+class=comment>%<span style='mso-tab-count:2'>         </span>strings without numbers</span></pre><pre
+style='margin-left:22.5pt'><span class=comment>%<span style='mso-tab-count:
+2'>         </span>sorted in <span class=SpellE><span class=GramE><b
+style='mso-bidi-font-weight:normal'>ascii</b></span></span><b style='mso-bidi-font-weight:
+normal'> dictionary order</b></span></pre><pre style='margin-left:22.5pt'><span
+style='mso-tab-count:3'>                  </span><span class=string>' . .. '</span></pre><pre
+style='margin-left:22.5pt'><span style='mso-tab-count:3'>                  </span><span
+class=string>'.'</span></pre><pre style='margin-left:22.5pt'><span
+style='mso-tab-count:3'>                  </span><span class=string>'...'</span></pre><pre
+style='margin-left:22.5pt'><span style='mso-tab-count:3'>                  </span><span
+class=GramE><span class=string>'.b a.'</span></span></pre><pre
+style='margin-left:22.5pt'><span style='mso-tab-count:3'>                  </span><span
+class=string>'<span class=GramE>a</span> string'</span></pre><pre
+style='margin-left:22.5pt'><span style='mso-tab-count:3'>                  </span><span
+class=string>'a. .b'</span></pre><pre style='margin-left:22.5pt'><b
+style='mso-bidi-font-weight:normal'><span style='mso-tab-count:2'>          </span>};<o:p></o:p></b></pre><pre
+style='margin-left:22.5pt'><span class=comment>%<span style='mso-spacerun:yes'>   </span>... and scramble it...</span></pre><pre
+style='margin-left:22.5pt'><span style='mso-tab-count:2'>          </span><span
+class=GramE>rand(</span><span class=string>'seed'</span>,10);</pre><pre
+style='margin-left:22.5pt'><span style='mso-tab-count:2'>          </span>d=<span
+class=GramE>d(</span><span class=SpellE>randperm</span>(<span class=SpellE>numel</span>(d)));</pre><pre
+style='margin-left:22.5pt'><o:p>&nbsp;</o:p></pre><pre style='margin-left:22.5pt'><span
+class=comment>% - run <b style='mso-bidi-font-weight:normal'>ASORT</b> with<o:p></o:p></span></pre><pre
+style='margin-left:22.5pt'><span class=comment>%<span style='mso-spacerun:yes'>   </span><b
+style='mso-bidi-font-weight:normal'>verbose output</b>:<span style='mso-tab-count:
+2'>              </span>&lt;-v&gt;</span></pre><pre style='margin-left:22.5pt'><span
+class=comment>%<span style='mso-spacerun:yes'>   </span><span class=GramE><b
+style='mso-bidi-font-weight:normal'>keep</b></span><b style='mso-bidi-font-weight:
+normal'> additional results</b>:<span style='mso-tab-count:1'>     </span>&lt;-d&gt;</span></pre><pre
+style='margin-left:22.5pt'><span style='mso-tab-count:2'>          </span>o=<span
+class=SpellE><span class=GramE>asort</span></span><span class=GramE>(</span>d,<span
+class=string>'-v'</span>,<span class=string>'-d'</span>);</pre><pre
+style='margin-left:22.5pt'><span class=comment>% - or</span></pre><pre
+style='margin-left:22.5pt'><span class=comment>%<span style='mso-tab-count:
+2'>         </span>p=<span class=SpellE><span class=GramE>asort</span></span><span
+class=GramE>(</span>char(d),</span><span class=string>'-v'</span>,<span
+class=string>'-d'</span>);</pre><pre style='margin-left:7.5pt'><i><span
+style='color:gray'><o:p>&nbsp;</o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'INPUT'<span style='mso-spacerun:yes'>       </span>'ASCII SORT'<span style='mso-spacerun:yes'>    </span>'NUM SORT'<span style='mso-spacerun:yes'>             </span>'NUM READ'<span style='mso-spacerun:yes'>         </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'...'<span style='mso-spacerun:yes'>         </span><span
+class=SpellE><span class=GramE>'</span></span><span class=GramE> -</span><span
+class=SpellE>nan</span>'<span style='mso-spacerun:yes'>         </span>'--- NUMERICAL'<span style='mso-spacerun:yes'>        </span>'--- NUMBERS'<span style='mso-spacerun:yes'>      </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'+ .1e-.2'<span style='mso-spacerun:yes'>    </span><span
+class=GramE>' .</span> .. '<span style='mso-spacerun:yes'>        </span>'-<span
+class=SpellE><span class=GramE>inf</span></span>'<span style='mso-spacerun:yes'>         </span><span style='mso-spacerun:yes'>        </span>[<span style='mso-spacerun:yes'>             </span>-<span
+class=SpellE>Inf</span>]<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'.1'<span style='mso-spacerun:yes'>          </span>' <span
+class=SpellE>nan</span> <span class=SpellE>nan</span>'<span style='mso-spacerun:yes'>      </span>'x-3.2e4y'<span style='mso-spacerun:yes'>             </span>[<span style='mso-spacerun:yes'>           </span>-32000]<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'.b a.'<span style='mso-spacerun:yes'>       </span>'+ .1d-2'<span style='mso-spacerun:yes'>       </span>'f-1.4'<span style='mso-spacerun:yes'>                </span>[<span style='mso-spacerun:yes'>             </span>-1.4]<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'-<span
+class=SpellE>inf</span>'<span style='mso-spacerun:yes'>        </span>'+ .1e-.2'<span style='mso-spacerun:yes'>      </span>'-.1'<span style='mso-spacerun:yes'>                  </span>[<span style='mso-spacerun:yes'>             </span>-0.1]<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'f.1'<span style='mso-spacerun:yes'>         </span>'+ <span
+class=SpellE><span class=GramE>nan</span></span>'<span style='mso-spacerun:yes'>         </span>'+ .1d-2'<span style='mso-spacerun:yes'>              </span>[<span style='mso-spacerun:yes'>            </span>0.001]<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span><span class=GramE>' -</span><span
+class=SpellE>nan</span>'<span style='mso-spacerun:yes'>       </span>'+<span
+class=SpellE>inf</span>'<span style='mso-spacerun:yes'>          </span>'.1'<span style='mso-spacerun:yes'>                   </span>[<span style='mso-spacerun:yes'>              </span>0.1]<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'-1 2'<span style='mso-spacerun:yes'>        </span>'-.1'<span style='mso-spacerun:yes'>           </span>'f.1'<span style='mso-spacerun:yes'>                  </span>[<span style='mso-spacerun:yes'>                </span>1]<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'<span
+class=SpellE><span class=GramE>nan</span></span>'<span style='mso-spacerun:yes'>         </span>'-1 2'<span style='mso-spacerun:yes'>          </span>'f -+1.4'<span style='mso-spacerun:yes'>              </span>[<span style='mso-spacerun:yes'>              </span>1.4]<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'<span
+class=GramE>a</span> string'<span style='mso-spacerun:yes'>    </span>'-<span
+class=SpellE>inf</span>'<span style='mso-spacerun:yes'>          </span>'f.2'<span style='mso-spacerun:yes'>                  </span>[<span style='mso-spacerun:yes'>                </span>2]<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span><span class=GramE>'f.3'<span style='mso-spacerun:yes'>         </span>'.'</span><span style='mso-spacerun:yes'>             </span>'f.3'<span style='mso-spacerun:yes'>                  </span>[<span style='mso-spacerun:yes'>                </span>3]<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'+ <span
+class=GramE>.1d-2</span>'<span style='mso-spacerun:yes'>     </span>'...'<span style='mso-spacerun:yes'>           </span>'f.10'<span style='mso-spacerun:yes'>   </span><span style='mso-spacerun:yes'>              </span>[<span style='mso-spacerun:yes'>               </span>10]<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'a. .b'<span style='mso-spacerun:yes'>       </span>'.1'<span style='mso-spacerun:yes'>            </span>'f.11'<span style='mso-spacerun:yes'>                 </span>[<span style='mso-spacerun:yes'>     </span><span style='mso-spacerun:yes'>          </span>11]<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'s.3TT.4'<span style='mso-spacerun:yes'>     </span>'.b a.'<span style='mso-spacerun:yes'>     </span><span style='mso-spacerun:yes'> </span><span style='mso-spacerun:yes'>   </span>'+<span
+class=SpellE>inf</span>'<span style='mso-spacerun:yes'>                 </span>[<span style='mso-spacerun:yes'>              </span><span
+class=SpellE><span class=GramE>Inf</span></span>]<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'> <span style='mso-spacerun:yes'>   </span>'+<span
+class=SpellE>inf</span>'<span style='mso-spacerun:yes'>        </span>'Z12e12ez'<span style='mso-spacerun:yes'>      </span>' -<span
+class=SpellE>nan</span>'<span style='mso-spacerun:yes'>                </span>[<span style='mso-spacerun:yes'>          </span><span style='mso-spacerun:yes'>    </span></span></i><st1:place><span
+ class=SpellE><i><span style='color:gray'>NaN</span></i></span></st1:place><i><span
+style='color:gray'>]<o:p></o:p></span></i></pre><pre><i><span style='color:
+gray'> <span style='mso-spacerun:yes'>   </span><span class=GramE>' <span
+class=SpellE>nan</span></span> <span class=SpellE>nan</span>'<span style='mso-spacerun:yes'>    </span>'a string'<span style='mso-spacerun:yes'>      </span>'+ <span
+class=SpellE>nan</span>'<span style='mso-spacerun:yes'>                </span>[<span style='mso-spacerun:yes'>              </span></span></i><st1:place><span
+ class=SpellE><i><span style='color:gray'>NaN</span></i></span></st1:place><i><span
+style='color:gray'>]<o:p></o:p></span></i></pre><pre><i><span style='color:
+gray'><span style='mso-spacerun:yes'>    </span>'<span class=GramE>f-1.4</span>'<span style='mso-spacerun:yes'>       </span>'a. .<span
+class=GramE>b</span>'<span style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'> </span><span style='mso-spacerun:yes'>    </span>'<span
+class=SpellE>nan</span>'<span style='mso-spacerun:yes'>                  </span>[<span style='mso-spacerun:yes'>              </span></span></i><st1:place><span
+ class=SpellE><i><span style='color:gray'>NaN</span></i></span></st1:place><i><span
+style='color:gray'>]<o:p></o:p></span></i></pre><pre><i><span style='color:
+gray'><span style='mso-spacerun:yes'>    </span>'x-3.2e4y'<span style='mso-spacerun:yes'>    </span>'f -+1.4'<span style='mso-spacerun:yes'>     </span><span style='mso-spacerun:yes'>  </span>'--- ASCII NUMBERS'<span style='mso-spacerun:yes'>    </span>'--- ASCII NUMBERS'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'<span
+class=SpellE><span class=GramE>inf</span></span> -<span class=SpellE>inf</span>'<span style='mso-spacerun:yes'>  </span><span style='mso-spacerun:yes'>  </span>'f-1.4'<span style='mso-spacerun:yes'>         </span>' <span
+class=SpellE>nan</span> <span class=SpellE>nan</span>'<span style='mso-spacerun:yes'>             </span>' <span
+class=SpellE>nan</span> <span class=SpellE>nan</span>'<span style='mso-spacerun:yes'>         </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'+ <span
+class=SpellE><span class=GramE>nan</span></span>'<span style='mso-spacerun:yes'>       </span>'f.1'<span style='mso-spacerun:yes'>           </span>'+ .1e-.2'<span style='mso-spacerun:yes'>             </span>'+ .1e-.2'<span style='mso-spacerun:yes'>         </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'f.2'<span style='mso-spacerun:yes'>         </span>'f.10'<span style='mso-spacerun:yes'>          </span>'-1 2'<span style='mso-spacerun:yes'>                 </span>'-1 2'<span style='mso-spacerun:yes'>             </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'f.11'<span style='mso-spacerun:yes'>  </span><span style='mso-spacerun:yes'> </span><span style='mso-spacerun:yes'>     </span><span
+class=SpellE>'f.11'</span><span style='mso-spacerun:yes'>          </span>'Z12e12ez'<span style='mso-spacerun:yes'>             </span><span
+class=SpellE>'Z12e12ez'</span><span style='mso-spacerun:yes'>         </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'Z12e12ez'<span style='mso-spacerun:yes'>    </span>'f.2'<span style='mso-spacerun:yes'>      </span><span style='mso-spacerun:yes'> </span><span style='mso-spacerun:yes'>    </span>'<span
+class=SpellE>inf</span> -<span class=SpellE>inf</span>'<span style='mso-spacerun:yes'>             </span>'<span
+class=SpellE>inf</span> -<span class=SpellE>inf</span>'<span style='mso-spacerun:yes'>         </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'z12e12ez'<span style='mso-spacerun:yes'>    </span>'f.3'<span style='mso-spacerun:yes'>           </span>'s.3TT.4'<span style='mso-spacerun:yes'>              </span><span
+class=SpellE>'s.3TT.4'</span><span style='mso-spacerun:yes'>          </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'f -+1.4'<span style='mso-spacerun:yes'>     </span>'<span
+class=SpellE>inf</span> -<span class=SpellE>inf</span>'<span style='mso-spacerun:yes'>      </span>'z12e12ez'<span style='mso-spacerun:yes'>             </span><span
+class=SpellE>'z12e12ez'</span><span style='mso-spacerun:yes'>         </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>' . .. '<span style='mso-spacerun:yes'>      </span>'<span
+class=SpellE><span class=GramE>nan</span></span>'<span style='mso-spacerun:yes'>           </span>'--- ASCII STRINGS'<span style='mso-spacerun:yes'>    </span>'--- ASCII STRINGS'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'f.10'<span style='mso-spacerun:yes'>        </span>'s.3TT.4'<span style='mso-spacerun:yes'>       </span><span
+class=GramE>' .</span> .. '<span style='mso-spacerun:yes'>         </span><span style='mso-spacerun:yes'> </span><span style='mso-spacerun:yes'>     </span><span
+class=SpellE>'</span> . .. '<span style='mso-spacerun:yes'>           </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'.'<span style='mso-spacerun:yes'>           </span><span
+class=GramE>'x-3.2e4y'<span style='mso-spacerun:yes'>      </span>'.'</span><span style='mso-spacerun:yes'>                    </span><span
+class=SpellE>'.'</span><span style='mso-spacerun:yes'>                </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'-.1'<span style='mso-spacerun:yes'>     </span><span style='mso-spacerun:yes'>    </span>'z12e12ez'<span style='mso-spacerun:yes'>      </span>'...'<span style='mso-spacerun:yes'>                  </span><span
+class=SpellE>'</span>...'<span style='mso-spacerun:yes'>              </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span><span class=GramE>' <span
+class=SpellE>'</span></span><span style='mso-spacerun:yes'>           </span><span
+class=SpellE>'</span> <span class=SpellE>'</span><span style='mso-spacerun:yes'>             </span>'.b a.'<span style='mso-spacerun:yes'>                </span>'.b a.'<span style='mso-spacerun:yes'>            </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'> </span><span style='mso-spacerun:yes'>   </span><span
+class=GramE>' <span class=SpellE>'</span></span><span style='mso-spacerun:yes'>           </span><span
+class=SpellE>'</span> <span class=SpellE>'</span><span style='mso-spacerun:yes'>             </span>'a string'<span style='mso-spacerun:yes'>             </span>'a string'<span style='mso-spacerun:yes'>         </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'> </span><span style='mso-spacerun:yes'>   </span><span
+class=GramE>' <span class=SpellE>'</span></span><span style='mso-spacerun:yes'>           </span><span
+class=SpellE>'</span> <span class=SpellE>'</span><span style='mso-spacerun:yes'>             </span>'a. .b'<span style='mso-spacerun:yes'>                </span>'a. .<span
+class=GramE>b</span>'<span style='mso-spacerun:yes'>            </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><o:p>&nbsp;</o:p></span></i></pre><pre style='margin-left:
+22.5pt'><span class=comment>% - show results</span></pre><pre style='margin-left:
+22.5pt'><span style='mso-tab-count:2'>          </span><span class=GramE>o</span></pre><pre><i><span
+style='color:gray'>o = <o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>          </span><span
+class=GramE>magic</span>: 'ASORT'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>      </span><span style='mso-spacerun:yes'> </span><span style='mso-spacerun:yes'>     </span><span
+class=SpellE><span class=GramE>ver</span></span>: '</span></i><st1:date
+Year="2005" Day="30" Month="3"><i><span style='color:gray'>30-Mar-2005</span></i></st1:date><i><span
+style='color:gray'> </span></i><st1:time Minute="57" Hour="11"><i><span
+ style='color:gray'>11:57:07</span></i></st1:time><i><span style='color:gray'>'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>           </span>time: '30-Mar-2005 11:57:17'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>        </span><span
+class=GramE>runtime</span>: 0.047<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span><span
+class=SpellE>input_class</span>: 'cell'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span><span
+class=SpellE>input_msize</span>: [29 1]<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span><span
+class=SpellE>input_bytes</span>: 2038<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span><span
+class=SpellE>strng_class</span>: 'char'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span><span
+class=SpellE>strng_msize</span>: [29 8]<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span><span
+class=SpellE>strng_bytes</span>: 464<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>            </span><span
+class=SpellE><span class=GramE>anr</span></span>: {16x1 cell}<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>      </span><span style='mso-spacerun:yes'> </span><span style='mso-spacerun:yes'>     </span><span
+class=SpellE><span class=GramE>snr</span></span>: {7x1 cell}<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>      </span><span style='mso-spacerun:yes'> </span><span style='mso-spacerun:yes'>     </span><span
+class=SpellE><span class=GramE>str</span></span>: {6x1 cell}<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>              </span><span
+class=GramE>c</span>: [29x12 char]<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>              </span><span
+class=GramE>t</span>: [29x12 logical]<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>              </span><span
+class=GramE>n</span>: [16x12 char]<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>  </span><span style='mso-spacerun:yes'> </span><span style='mso-spacerun:yes'>           </span><span
+class=GramE>d</span>: [16x1 double]<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><o:p>&nbsp;</o:p></span></i></pre><pre style='margin-left:
+22.5pt'><span style='mso-tab-count:2'>          </span><span class=SpellE>o.anr</span></pre><pre><span
+class=SpellE><span class=GramE><i><span style='color:gray'>ans</span></i></span></span><i><span
+style='color:gray'> = <o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'> </span><span style='mso-spacerun:yes'>   </span>'-<span
+class=SpellE><span class=GramE>inf</span></span>'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'<span
+class=GramE>x-3.2e4y</span>'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'<span
+class=GramE>f-1.4</span>'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'-.1'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'+ <span
+class=GramE>.1d-2</span>'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'.1'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'f.1'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'f -+1.4'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'f.2'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'f.3'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'f.10'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'f.11'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'> <span style='mso-spacerun:yes'>   </span>'+<span
+class=SpellE>inf</span>'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span><span class=GramE>' -</span><span
+class=SpellE>nan</span>'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'> <span style='mso-spacerun:yes'> </span><span style='mso-spacerun:yes'>  </span>'+ <span
+class=SpellE><span class=GramE>nan</span></span>'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'<span
+class=SpellE><span class=GramE>nan</span></span>'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><o:p>&nbsp;</o:p></span></i></pre><pre style='margin-left:
+22.5pt'><span class=comment>% - run <b style='mso-bidi-font-weight:normal'>ASORT</b> with <b
+style='mso-bidi-font-weight:normal'>no-space</b>/<b style='mso-bidi-font-weight:
+normal'>template</b> options</span></pre><pre style='margin-left:22.5pt'><span
+class=comment>%<span style='mso-spacerun:yes'>   </span><span class=GramE>NOTE</span> the impact of -w/-t order!</span></pre><pre
+style='margin-left:22.5pt'><span style='mso-tab-count:2'>          </span>s<span
+class=GramE>={</span><span class=string>'ff - 1'</span>,<span class=string>'ff + 1'</span>,<span
+class=string>'- 12'</span>};</pre><pre><i><span style='color:gray'><o:p>&nbsp;</o:p></span></i></pre><pre
+style='margin-left:22.5pt'><span class=comment>%<span style='mso-spacerun:yes'>   </span>RAW</span></pre><pre
+style='margin-left:22.5pt'><span style='mso-tab-count:2'>          </span>o=<span
+class=SpellE>asort</span>(s,<span class=string>'-v'</span>);</pre><pre><i><span
+style='color:gray'><o:p>&nbsp;</o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'INPUT'<span style='mso-spacerun:yes'>     </span>'ASCII SORT'<span style='mso-spacerun:yes'>    </span>'NUM SORT'<span style='mso-spacerun:yes'>             </span>'NUM READ'<span style='mso-spacerun:yes'>         </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'<span
+class=GramE>ff</span> - 1'<span style='mso-spacerun:yes'>    </span>'- 12'<span style='mso-spacerun:yes'>          </span>'--- NUMERICAL'<span style='mso-spacerun:yes'>        </span>'--- NUMBERS'<span style='mso-spacerun:yes'>      </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'<span
+class=GramE>ff</span> + 1'<span style='mso-spacerun:yes'>    </span>'ff + 1'<span style='mso-spacerun:yes'>        </span>'ff + 1'<span style='mso-spacerun:yes'>               </span>[<span style='mso-spacerun:yes'>                </span>1]<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'- 12'<span style='mso-spacerun:yes'>      </span>'ff - 1'<span style='mso-spacerun:yes'>        </span>'ff - 1'<span style='mso-spacerun:yes'>               </span>[<span style='mso-spacerun:yes'>                </span>1]<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'> <span style='mso-spacerun:yes'>   </span><span class=GramE>' <span
+class=SpellE>'</span></span><span style='mso-spacerun:yes'>         </span><span
+class=SpellE>'</span> <span class=SpellE>'</span><span style='mso-spacerun:yes'>             </span><span
+class=SpellE>'</span>- 12'<span style='mso-spacerun:yes'>                 </span>[<span style='mso-spacerun:yes'>               </span>12]<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'> <span style='mso-spacerun:yes'>   </span><span class=GramE>' <span
+class=SpellE>'</span></span><span style='mso-spacerun:yes'>         </span><span
+class=SpellE>'</span> <span class=SpellE>'</span><span style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'>   </span><span style='mso-spacerun:yes'> </span><span style='mso-spacerun:yes'>     </span><span
+class=SpellE>'</span>--- ASCII NUMBERS'<span style='mso-spacerun:yes'>    </span>'--- ASCII NUMBERS'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'> <span style='mso-spacerun:yes'>   </span><span class=GramE>' <span
+class=SpellE>'</span></span><span style='mso-spacerun:yes'>         </span><span
+class=SpellE>'</span> <span class=SpellE>'</span><span style='mso-spacerun:yes'>             </span><span
+class=SpellE>'</span>--- ASCII STRINGS'<span style='mso-spacerun:yes'>    </span>'--- ASCII STRINGS'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><o:p>&nbsp;</o:p></span></i></pre><pre style='margin-left:
+22.5pt'><span class=comment>%<span style='mso-spacerun:yes'>   </span><span
+class=GramE>remove</span> <span class=SpellE><b style='mso-bidi-font-weight:
+normal'>SPACE</b>s</span></span></pre><pre style='margin-left:22.5pt'><span
+style='mso-tab-count:2'>          </span>o=<span class=SpellE>asort</span>(s,<span
+class=string>'-v'</span>,<span class=string>'-w'</span>);</pre><pre><i><span
+style='color:gray'><o:p>&nbsp;</o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'INPUT'<span style='mso-spacerun:yes'>    </span>'ASCII SORT'<span style='mso-spacerun:yes'>    </span>'NUM SORT'<span style='mso-spacerun:yes'>             </span>'NUM READ'<span style='mso-spacerun:yes'>         </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'ff-1' <span style='mso-spacerun:yes'>    </span>'-12'<span style='mso-spacerun:yes'>           </span>'--- NUMERICAL'<span style='mso-spacerun:yes'>        </span>'--- NUMBERS'<span style='mso-spacerun:yes'>      </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'<span
+class=GramE>ff+</span>1'<span style='mso-spacerun:yes'>     </span><span
+class=SpellE>'ff+1'</span><span style='mso-spacerun:yes'>          </span>'-12'<span style='mso-spacerun:yes'>                  </span>[<span style='mso-spacerun:yes'>              </span>-12]<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'-12'<span style='mso-spacerun:yes'>      </span>'ff-1'<span style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'> </span><span style='mso-spacerun:yes'>     </span><span
+class=SpellE>'ff-1'</span><span style='mso-spacerun:yes'>                 </span>[<span style='mso-spacerun:yes'>               </span>-1]<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'> <span style='mso-spacerun:yes'>   </span><span class=GramE>' <span
+class=SpellE>'</span></span><span style='mso-spacerun:yes'>        </span><span
+class=SpellE>'</span> <span class=SpellE>'</span><span style='mso-spacerun:yes'>             </span>'ff+1'<span style='mso-spacerun:yes'>        </span><span style='mso-spacerun:yes'>         </span>[<span style='mso-spacerun:yes'>                </span>1]<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'> <span style='mso-spacerun:yes'>   </span><span class=GramE>' <span
+class=SpellE>'</span></span><span style='mso-spacerun:yes'>        </span><span
+class=SpellE>'</span> <span class=SpellE>'</span><span style='mso-spacerun:yes'>             </span><span
+class=SpellE>'</span>--- ASCII NUMBERS'<span style='mso-spacerun:yes'>    </span>'--- ASCII NUMBERS'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'> <span style='mso-spacerun:yes'>   </span><span class=GramE>' <span
+class=SpellE>'</span></span><span style='mso-spacerun:yes'>        </span><span
+class=SpellE>'</span> <span class=SpellE>'</span><span style='mso-spacerun:yes'>             </span><span
+class=SpellE>'</span>--- ASCII STRINGS'<span style='mso-spacerun:yes'>    </span>'--- ASCII STRINGS'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><o:p>&nbsp;</o:p></span></i></pre><pre style='margin-left:
+22.5pt'><span class=comment>%<span style='mso-spacerun:yes'>   </span><span
+class=GramE>remove</span> <b style='mso-bidi-font-weight:normal'>TEMPLATE</b>(s)</span></pre><pre
+style='margin-left:22.5pt'><span style='mso-tab-count:2'>          </span>o=<span
+class=SpellE>asort</span>(s,<span class=string>'-v'</span>,<span class=string>'-t'</span><span
+class=GramE>,{</span><span class=string>'ff'</span>,<span class=string>'1'</span>});</pre><pre><i><span
+style='color:gray'><o:p>&nbsp;</o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'INPUT'<span style='mso-spacerun:yes'>    </span>'ASCII SORT'<span style='mso-spacerun:yes'>    </span>'NUM SORT'<span style='mso-spacerun:yes'>             </span>'NUM READ'<span style='mso-spacerun:yes'>         </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span><span class=GramE>' -</span> ' <span style='mso-spacerun:yes'>     </span><span
+class=SpellE>'</span> + '<span style='mso-spacerun:yes'>           </span><span
+class=SpellE>'</span>--- NUMERICAL'<span style='mso-spacerun:yes'>        </span>'--- NUMBERS'<span style='mso-spacerun:yes'>      </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span><span class=GramE>' +</span> ' <span style='mso-spacerun:yes'>     </span><span
+class=SpellE>'</span> - '<span style='mso-spacerun:yes'>           </span><span
+class=SpellE>'</span>- 2'<span style='mso-spacerun:yes'>                  </span>[<span style='mso-spacerun:yes'>                </span>2]<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'- 2'<span style='mso-spacerun:yes'>      </span>'- 2'<span style='mso-spacerun:yes'>           </span>'--- ASCII NUMBERS'<span style='mso-spacerun:yes'>   </span><span style='mso-spacerun:yes'> </span>'--- ASCII NUMBERS'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'> <span style='mso-spacerun:yes'>   </span><span class=GramE>' <span
+class=SpellE>'</span></span><span style='mso-spacerun:yes'>        </span><span
+class=SpellE>'</span> <span class=SpellE>'</span><span style='mso-spacerun:yes'>             </span><span
+class=SpellE>'</span>--- ASCII STRINGS'<span style='mso-spacerun:yes'>    </span>'--- ASCII STRINGS'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'> <span style='mso-spacerun:yes'>   </span>' <span
+class=SpellE>'</span><span style='mso-spacerun:yes'>        </span><span
+class=SpellE>'</span> <span class=SpellE>'</span><span style='mso-spacerun:yes'>             </span><span
+class=SpellE>'</span> + '<span style='mso-spacerun:yes'>                  </span><span
+class=SpellE>'</span> + '<span style='mso-spacerun:yes'>              </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'> </span><span style='mso-spacerun:yes'>   </span>' <span
+class=SpellE>'</span><span style='mso-spacerun:yes'>        </span><span
+class=SpellE>'</span> <span class=SpellE>'</span><span style='mso-spacerun:yes'>             </span><span
+class=SpellE>'</span> - '<span style='mso-spacerun:yes'>                  </span><span
+class=SpellE>'</span> - '<span style='mso-spacerun:yes'>              </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><o:p>&nbsp;</o:p></span></i></pre><pre style='margin-left:
+22.5pt'><span class=comment>%<span style='mso-spacerun:yes'>   </span><span
+class=GramE>remove</span> <b style='mso-bidi-font-weight:normal'>TEMPLATE</b>(s) than <span
+class=SpellE><b style='mso-bidi-font-weight:normal'>SPACE</b>s</span></span></pre><pre
+style='margin-left:22.5pt'><span style='mso-tab-count:2'>          </span>o=<span
+class=SpellE>asort</span>(s,<span class=string>'-v'</span>,<span class=string>'-t'</span>,<span
+class=string>'1'</span>,<span class=string>'-w'</span>);</pre><pre><i><span
+style='color:gray'><o:p>&nbsp;</o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'INPUT'<span style='mso-spacerun:yes'>    </span>'ASCII SORT'<span style='mso-spacerun:yes'>    </span>'NUM SORT'<span style='mso-spacerun:yes'>             </span>'NUM READ'<span style='mso-spacerun:yes'>         </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'ff-'<span style='mso-spacerun:yes'>      </span>'-2'<span style='mso-spacerun:yes'>            </span>'--- NUMERICAL'<span style='mso-spacerun:yes'>        </span>'--- NUMBERS'<span style='mso-spacerun:yes'>      </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'ff+' <span style='mso-spacerun:yes'>     </span><span
+class=SpellE>'ff+'</span><span style='mso-spacerun:yes'>           </span>'-2'<span style='mso-spacerun:yes'>                </span><span style='mso-spacerun:yes'>   </span>[<span style='mso-spacerun:yes'>               </span>-2]<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'-2'<span style='mso-spacerun:yes'>       </span>'ff-'<span style='mso-spacerun:yes'>           </span>'--- ASCII NUMBERS'<span style='mso-spacerun:yes'>    </span>'--- ASCII NUMBERS'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'> <span style='mso-spacerun:yes'>   </span><span class=GramE>' <span
+class=SpellE>'</span></span><span style='mso-spacerun:yes'>        </span><span
+class=SpellE>'</span> <span class=SpellE>'</span><span style='mso-spacerun:yes'>             </span><span
+class=SpellE>'</span>--- ASCII STRINGS'<span style='mso-spacerun:yes'>    </span>'--- ASCII STRINGS'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'> <span style='mso-spacerun:yes'>   </span><span class=GramE>' <span
+class=SpellE>'</span></span><span style='mso-spacerun:yes'>        </span><span
+class=SpellE>'</span> <span class=SpellE>'</span><span style='mso-spacerun:yes'>             </span>'ff+'<span style='mso-spacerun:yes'>                  </span><span
+class=SpellE>'ff+'</span><span style='mso-spacerun:yes'>              </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span><span class=GramE>' <span
+class=SpellE>'</span></span><span style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'>    </span><span
+class=SpellE>'</span> <span class=SpellE>'</span><span style='mso-spacerun:yes'>             </span>'ff-'<span style='mso-spacerun:yes'>                  </span><span
+class=SpellE>'ff-'</span><span style='mso-spacerun:yes'>              </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><o:p>&nbsp;</o:p></span></i></pre><pre style='margin-left:
+22.5pt'><span class=comment>%<span style='mso-spacerun:yes'>   </span><span
+class=GramE>remove</span> <span class=SpellE><b style='mso-bidi-font-weight:
+normal'>SPACE</b>s</span> than <b style='mso-bidi-font-weight:normal'>TEMPLATE</b>(s)</span></pre><pre
+style='margin-left:22.5pt'><span style='mso-tab-count:2'>          </span>o=<span
+class=SpellE>asort</span>(s,<span class=string>'-v'</span>,<span class=string>'-w'</span>,<span
+class=string>'-t'</span>,<span class=string>'1'</span>);</pre><pre><i><span
+style='color:gray'><o:p>&nbsp;</o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'INPUT'<span style='mso-spacerun:yes'>    </span>'ASCII SORT'<span style='mso-spacerun:yes'>    </span>'NUM SORT'<span style='mso-spacerun:yes'>             </span>'NUM READ'<span style='mso-spacerun:yes'>         </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'ff- '<span style='mso-spacerun:yes'>     </span><span
+class=SpellE>'</span>- 2'<span style='mso-spacerun:yes'>           </span>'--- NUMERICAL'<span style='mso-spacerun:yes'>   </span><span style='mso-spacerun:yes'>     </span>'--- NUMBERS'<span style='mso-spacerun:yes'>      </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'ff+ '<span style='mso-spacerun:yes'>     </span>'ff+ '<span style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'> </span><span style='mso-spacerun:yes'>     </span><span
+class=SpellE>'</span>- 2'<span style='mso-spacerun:yes'>                  </span>[<span style='mso-spacerun:yes'>                </span>2]<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'>    </span>'- 2'<span style='mso-spacerun:yes'>      </span>'ff- '<span style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'> </span><span style='mso-spacerun:yes'>     </span><span
+class=SpellE>'</span>--- ASCII NUMBERS'<span style='mso-spacerun:yes'>    </span>'--- ASCII NUMBERS'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'> <span style='mso-spacerun:yes'>   </span><span class=GramE>' <span
+class=SpellE>'</span></span><span style='mso-spacerun:yes'>        </span><span
+class=SpellE>'</span> <span class=SpellE>'</span><span style='mso-spacerun:yes'>             </span><span
+class=SpellE>'</span>--- ASCII STRINGS'<span style='mso-spacerun:yes'>    </span>'--- ASCII STRINGS'<o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'> <span style='mso-spacerun:yes'>   </span><span class=GramE>' <span
+class=SpellE>'</span></span><span style='mso-spacerun:yes'>  </span><span style='mso-spacerun:yes'>      </span><span
+class=SpellE>'</span> <span class=SpellE>'</span><span style='mso-spacerun:yes'>             </span>'ff+ '<span style='mso-spacerun:yes'>                 </span>'ff+ '<span style='mso-spacerun:yes'>             </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><span style='mso-spacerun:yes'> </span><span style='mso-spacerun:yes'>   </span><span
+class=GramE>' <span class=SpellE>'</span></span><span style='mso-spacerun:yes'>        </span><span
+class=SpellE>'</span> <span class=SpellE>'</span><span style='mso-spacerun:yes'>             </span>'ff- '<span style='mso-spacerun:yes'>                 </span>'ff- '<span style='mso-spacerun:yes'>             </span><o:p></o:p></span></i></pre><pre><i><span
+style='color:gray'><o:p>&nbsp;</o:p></span></i></pre>
+
+<p class=footer style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><br>
+Published with MATLAB® 7.0.4<o:p></o:p></p>
+
+</div>
+
+<!--
+##### SOURCE BEGIN #####
+% ASORT
+% a pedestrian NUMERICAL SORTER of ALPHANUMERIC data
+
+% - create some data
+		d = {
+%	strings with one valid alphanumeric number
+%	sorted numerically
+			'-inf'
+			'x-3.2e4y'
+			'f-1.4'
+			'-.1'
+			'+ .1d-2'
+			'.1'
+			'f.1'
+			'f -+1.4'
+			'f.2'
+			'f.3'
+			'f.10'
+			'f.11'
+			'+inf'
+			' -nan'
+			'+ nan'
+			'nan'
+%	strings with many numbers or invalid/ambiguous numbers
+%	sorted in ascii dictionary order
+			' nan nan'
+			'+ .1e-.2'
+			'-1 2'
+			'Z12e12ez'
+			'inf -inf'
+			's.3TT.4'
+			'z12e12ez'
+%	strings without numbers
+%	sorted in ascii dictionary order
+			' . .. '
+			'.'
+			'...'
+			'.b a.'
+			'a string'
+			'a. .b'
+		};
+%   ... and scramble it...
+		rand('seed',10);
+		d=d(randperm(numel(d)));
+
+% - run ASORT with verbose output
+%   and keep additional results
+		o=asort(d,'-v','-d');
+% - or
+%		p=asort(char(d));
+
+% - show results
+		o
+		o.anr
+
+% - run ASORT with no-space/template options
+%   NOTE the impact of -t/-w order!
+		s={'ff - 1','ff + 1','- 12'};
+%   RAW
+		o=asort(s,'-v');
+%   remove SPACEs
+		o=asort(s,'-v','-w');
+%   remove TEMPLATE(s)
+		o=asort(s,'-v','-t',{'ff','1'});
+%   remove TEMPLATE(s) than SPACEs
+		o=asort(s,'-v','-t','1','-w');
+%   remove SPACEs than TEMPLATE(s)
+		o=asort(s,'-v','-w','-t','1');
+
+
+##### SOURCE END #####
+-->
+</body>
+
+</html>

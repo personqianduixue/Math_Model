@@ -1,0 +1,287 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Chapter_ClassifyRegressUsingLibsvm</title><meta name="generator" content="MATLAB 7.14"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2013-08-18"><meta name="DC.source" content="Chapter_ClassifyRegressUsingLibsvm.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;</a></li><li><a href="#2">A Little Clean Work</a></li><li><a href="#3">&#20351;&#29992;Libsvm&#36827;&#34892;&#20998;&#31867;&#30340;&#23567;&#20363;&#23376;</a></li><li><a href="#4">&#20351;&#29992;Libsvm&#36827;&#34892;&#22238;&#24402;&#30340;&#23567;&#20363;&#23376;</a></li><li><a href="#5">Record Time</a></li></ul></div><h2>Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;<a name="1"></a></h2><pre class="codeinput"><span class="comment">% &#21021;&#35782;SVM&#20998;&#31867;&#19982;&#22238;&#24402;</span>
+<span class="comment">% by &#26446;&#27915;(faruto)</span>
+<span class="comment">% http://www.matlabsky.com</span>
+<span class="comment">% Email:faruto@163.com</span>
+<span class="comment">% http://weibo.com/faruto</span>
+<span class="comment">% http://blog.sina.com.cn/faruto</span>
+<span class="comment">% 2013.01.01</span>
+</pre><h2>A Little Clean Work<a name="2"></a></h2><pre class="codeinput">tic;
+clear;
+clc;
+close <span class="string">all</span>;
+format <span class="string">compact</span>;
+</pre><h2>&#20351;&#29992;Libsvm&#36827;&#34892;&#20998;&#31867;&#30340;&#23567;&#20363;&#23376;<a name="3"></a></h2><pre class="codeinput"><span class="comment">%{
+</span><span class="comment">&#19968;&#20010;&#29677;&#32423;&#37324;&#38754;&#26377;&#20004;&#20010;&#30007;&#29983;&#65288;&#30007;&#29983;1&#12289;&#30007;&#29983;2&#65289;&#65292;&#20004;&#20010;&#22899;&#29983;&#65288;&#22899;&#29983;1&#12289;&#22899;&#29983;2&#65289;&#65292;&#20854;&#20013;
+</span><span class="comment">&#30007;&#29983;1 &#36523;&#39640;&#65306;176cm &#20307;&#37325;&#65306;70kg&#65307;
+</span><span class="comment">&#30007;&#29983;2 &#36523;&#39640;&#65306;180cm &#20307;&#37325;&#65306;80kg&#65307;
+</span><span class="comment">
+</span><span class="comment">&#22899;&#29983;1 &#36523;&#39640;&#65306;161cm &#20307;&#37325;&#65306;45kg&#65307;
+</span><span class="comment">&#22899;&#29983;2 &#36523;&#39640;&#65306;163cm &#20307;&#37325;&#65306;47kg&#65307;
+</span><span class="comment">&#22914;&#26524;&#25105;&#20204;&#23558;&#30007;&#29983;&#23450;&#20041;&#20026;1&#65292;&#22899;&#29983;&#23450;&#20041;&#20026;-1&#65292;&#24182;&#23558;&#19978;&#38754;&#30340;&#25968;&#25454;&#25918;&#20837;&#30697;&#38453;data&#20013;,
+</span><span class="comment">&#24182;&#22312;label&#20013;&#23384;&#20837;&#30007;&#22899;&#29983;&#31867;&#21035;&#26631;&#31614;&#65288;1&#12289;-1&#65289;
+</span><span class="comment">%}
+</span>data = [176 70;
+        180 80;
+        161 45;
+        163 47];
+label = [1;1;-1;-1];
+<span class="comment">%{
+</span><span class="comment">&#36825;&#26679;&#19978;&#38754;&#30340;data&#30697;&#38453;&#23601;&#26159;&#19968;&#20010;&#23646;&#24615;&#30697;&#38453;&#65292;&#34892;&#25968;4&#20195;&#34920;&#26377;4&#20010;&#26679;&#26412;&#65292;&#21015;&#25968;2&#34920;&#31034;&#23646;&#24615;&#26377;&#20004;&#20010;&#65292;
+</span><span class="comment">label&#23601;&#26159;&#26631;&#31614;&#65288;1&#12289;-1&#34920;&#31034;&#26377;&#20004;&#20010;&#31867;&#21035;&#65306;&#30007;&#29983;&#12289;&#22899;&#29983;&#65289;&#12290;
+</span><span class="comment">%}
+</span>
+<span class="comment">% &#21033;&#29992;libsvm&#24314;&#31435;&#20998;&#31867;&#27169;&#22411;</span>
+model = svmtrain(label,data);
+
+<span class="comment">%{
+</span><span class="comment">&#27492;&#26102;&#35813;&#29677;&#32423;&#21448;&#36716;&#26469;&#19968;&#20010;&#26032;&#23398;&#29983;&#65292;&#20854;
+</span><span class="comment">&#36523;&#39640;190cm&#65292;&#20307;&#37325;85kg
+</span><span class="comment">&#25105;&#20204;&#24819;&#32473;&#20986;&#20854;&#26631;&#31614;&#65288;&#24819;&#30693;&#36947;&#20854;&#26159;&#30007;[1]&#36824;&#26159;&#22899;[-1]&#65289;
+</span><span class="comment">&#30001;&#20110;&#20854;&#26631;&#31614;&#25105;&#20204;&#19981;&#30693;&#36947;&#65292;&#25105;&#20204;&#20551;&#35774;&#20854;&#26631;&#31614;&#20026;-1&#65288;&#20063;&#21487;&#20197;&#20551;&#35774;&#20026;1&#65289;
+</span><span class="comment">%}
+</span>testdata = [190 85];
+testdatalabel = -1;
+
+[predictlabel,accuracy] = svmpredict(testdatalabel,testdata,model);
+predictlabel
+<span class="keyword">if</span> 1 == predictlabel
+    disp(<span class="string">'==&#35813;&#29983;&#20026;&#30007;&#29983;'</span>);
+<span class="keyword">end</span>
+<span class="keyword">if</span> -1 == predictlabel
+    disp(<span class="string">'==&#35813;&#29983;&#20026;&#22899;&#29983;'</span>);
+<span class="keyword">end</span>
+
+<span class="comment">% % &#19979;&#38754;&#20877;&#20351;&#29992;libsvm&#24037;&#20855;&#31665;&#26412;&#36523;&#24102;&#30340;&#27979;&#35797;&#25968;&#25454;heart_scale&#26469;&#36827;&#34892;&#19968;&#19979;&#27979;&#35797;</span>
+<span class="comment">% &#39318;&#20808;&#36733;&#20837;&#25968;&#25454;</span>
+load <span class="string">heart_scale</span>;
+data = heart_scale_inst;
+label = heart_scale_label;
+
+<span class="comment">% &#36873;&#21462;&#21069;200&#20010;&#25968;&#25454;&#20316;&#20026;&#35757;&#32451;&#38598;&#21512;&#65292;&#21518;70&#20010;&#25968;&#25454;&#20316;&#20026;&#27979;&#35797;&#38598;&#21512;</span>
+ind = 200;
+traindata = data(1:ind,:);
+trainlabel = label(1:ind,:);
+testdata = data(ind+1:end,:);
+testlabel = label(ind+1:end,:);
+
+<span class="comment">% &#21033;&#29992;&#35757;&#32451;&#38598;&#21512;&#24314;&#31435;&#20998;&#31867;&#27169;&#22411;</span>
+model = svmtrain(trainlabel,traindata,<span class="string">'-s 0 -t 2 -c 1.2 -g 2.8'</span>);
+
+<span class="comment">% &#21033;&#29992;&#24314;&#31435;&#30340;&#27169;&#22411;&#30475;&#20854;&#22312;&#35757;&#32451;&#38598;&#21512;&#19978;&#30340;&#20998;&#31867;&#25928;&#26524;</span>
+[ptrain,acctrain] = svmpredict(trainlabel,traindata,model);
+
+<span class="comment">% &#39044;&#27979;&#27979;&#35797;&#38598;&#21512;&#26631;&#31614;</span>
+[ptest,acctest] = svmpredict(testlabel,testdata,model);
+</pre><pre class="codeoutput">Accuracy = 0% (0/1) (classification)
+predictlabel =
+     1
+==&#35813;&#29983;&#20026;&#30007;&#29983;
+Accuracy = 99.5% (199/200) (classification)
+Accuracy = 68.5714% (48/70) (classification)
+</pre><h2>&#20351;&#29992;Libsvm&#36827;&#34892;&#22238;&#24402;&#30340;&#23567;&#20363;&#23376;<a name="4"></a></h2><p>&#29983;&#25104;&#24453;&#22238;&#24402;&#30340;&#25968;&#25454;</p><pre class="codeinput">x = (-1:0.1:1)';
+y = -x.^2;
+
+<span class="comment">% &#24314;&#27169;&#22238;&#24402;&#27169;&#22411;</span>
+model = svmtrain(y,x,<span class="string">'-s 3 -t 2 -c 2.2 -g 2.8 -p 0.01'</span>);
+
+<span class="comment">% &#21033;&#29992;&#24314;&#31435;&#30340;&#27169;&#22411;&#30475;&#20854;&#22312;&#35757;&#32451;&#38598;&#21512;&#19978;&#30340;&#22238;&#24402;&#25928;&#26524;</span>
+[py,mse] = svmpredict(y,x,model);
+
+scrsz = get(0,<span class="string">'ScreenSize'</span>);
+figure(<span class="string">'Position'</span>,[scrsz(3)*1/4 scrsz(4)*1/6  scrsz(3)*4/5 scrsz(4)]*3/4);
+plot(x,y,<span class="string">'o'</span>);
+hold <span class="string">on</span>;
+plot(x,py,<span class="string">'r*'</span>);
+legend(<span class="string">'&#21407;&#22987;&#25968;&#25454;'</span>,<span class="string">'&#22238;&#24402;&#25968;&#25454;'</span>);
+grid <span class="string">on</span>;
+
+<span class="comment">% &#36827;&#34892;&#39044;&#27979;</span>
+testx = 1.1;
+display(<span class="string">'&#30495;&#23454;&#25968;&#25454;'</span>)
+testy = -testx.^2
+
+[ptesty,tmse] = svmpredict(testy,testx,model);
+display(<span class="string">'&#39044;&#27979;&#25968;&#25454;'</span>);
+ptesty
+</pre><pre class="codeoutput">Mean squared error = 9.52768e-05 (regression)
+Squared correlation coefficient = 0.999184 (regression)
+&#30495;&#23454;&#25968;&#25454;
+testy =
+   -1.2100
+Mean squared error = 0.0102555 (regression)
+Squared correlation coefficient = -1.#IND (regression)
+&#39044;&#27979;&#25968;&#25454;
+ptesty =
+   -1.1087
+</pre><img vspace="5" hspace="5" src="Chapter_ClassifyRegressUsingLibsvm_01.png" alt=""> <h2>Record Time<a name="5"></a></h2><pre class="codeinput">toc;
+</pre><pre class="codeoutput">Elapsed time is 0.751164 seconds.
+</pre><p class="footer"><br>
+      Published with MATLAB&reg; 7.14<br></p></div><!--
+##### SOURCE BEGIN #####
+%% Matlab神经网络43个案例分析
+
+% 初识SVM分类与回归
+% by 李洋(faruto)
+% http://www.matlabsky.com
+% Email:faruto@163.com
+% http://weibo.com/faruto 
+% http://blog.sina.com.cn/faruto
+% 2013.01.01
+%% A Little Clean Work
+tic;
+clear;
+clc;
+close all;
+format compact;
+%% 使用Libsvm进行分类的小例子
+%{
+一个班级里面有两个男生（男生1、男生2），两个女生（女生1、女生2），其中
+男生1 身高：176cm 体重：70kg；
+男生2 身高：180cm 体重：80kg；
+
+女生1 身高：161cm 体重：45kg；
+女生2 身高：163cm 体重：47kg；
+如果我们将男生定义为1，女生定义为-1，并将上面的数据放入矩阵data中,
+并在label中存入男女生类别标签（1、-1）
+%}
+data = [176 70;
+        180 80;
+        161 45;
+        163 47];
+label = [1;1;-1;-1];
+%{
+这样上面的data矩阵就是一个属性矩阵，行数4代表有4个样本，列数2表示属性有两个，
+label就是标签（1、-1表示有两个类别：男生、女生）。
+%}
+
+% 利用libsvm建立分类模型
+model = svmtrain(label,data);
+
+%{
+此时该班级又转来一个新学生，其
+身高190cm，体重85kg
+我们想给出其标签（想知道其是男[1]还是女[-1]）
+由于其标签我们不知道，我们假设其标签为-1（也可以假设为1） 
+%}
+testdata = [190 85];
+testdatalabel = -1;
+
+[predictlabel,accuracy] = svmpredict(testdatalabel,testdata,model);
+predictlabel
+if 1 == predictlabel
+    disp('==该生为男生');
+end
+if -1 == predictlabel
+    disp('==该生为女生');
+end
+
+% % 下面再使用libsvm工具箱本身带的测试数据heart_scale来进行一下测试
+% 首先载入数据
+load heart_scale;
+data = heart_scale_inst;
+label = heart_scale_label;
+
+% 选取前200个数据作为训练集合，后70个数据作为测试集合
+ind = 200;
+traindata = data(1:ind,:);
+trainlabel = label(1:ind,:);
+testdata = data(ind+1:end,:);
+testlabel = label(ind+1:end,:);
+
+% 利用训练集合建立分类模型
+model = svmtrain(trainlabel,traindata,'-s 0 -t 2 -c 1.2 -g 2.8');
+
+% 利用建立的模型看其在训练集合上的分类效果
+[ptrain,acctrain] = svmpredict(trainlabel,traindata,model);
+
+% 预测测试集合标签
+[ptest,acctest] = svmpredict(testlabel,testdata,model);
+%% 使用Libsvm进行回归的小例子
+% 生成待回归的数据
+x = (-1:0.1:1)';
+y = -x.^2;
+
+% 建模回归模型
+model = svmtrain(y,x,'-s 3 -t 2 -c 2.2 -g 2.8 -p 0.01');
+
+% 利用建立的模型看其在训练集合上的回归效果
+[py,mse] = svmpredict(y,x,model);
+
+scrsz = get(0,'ScreenSize');
+figure('Position',[scrsz(3)*1/4 scrsz(4)*1/6  scrsz(3)*4/5 scrsz(4)]*3/4);
+plot(x,y,'o');
+hold on;
+plot(x,py,'r*');
+legend('原始数据','回归数据');
+grid on;
+
+% 进行预测
+testx = 1.1;
+display('真实数据')
+testy = -testx.^2
+
+[ptesty,tmse] = svmpredict(testy,testx,model);
+display('预测数据');
+ptesty
+
+%% Record Time
+toc;
+##### SOURCE END #####
+--></body></html>

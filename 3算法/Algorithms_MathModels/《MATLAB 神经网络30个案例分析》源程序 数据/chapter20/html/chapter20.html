@@ -1,0 +1,292 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      --><title>&#26696;&#20363;20:&#31070;&#32463;&#32593;&#32476;&#21464;&#37327;&#31579;&#36873;&#8212;&#22522;&#20110;BP&#30340;&#31070;&#32463;&#32593;&#32476;&#21464;&#37327;&#31579;&#36873;</title><meta name="generator" content="MATLAB 7.9"><meta name="date" content="2010-11-20"><meta name="m-file" content="chapter20"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><h1>&#26696;&#20363;20:&#31070;&#32463;&#32593;&#32476;&#21464;&#37327;&#31579;&#36873;&#8212;&#22522;&#20110;BP&#30340;&#31070;&#32463;&#32593;&#32476;&#21464;&#37327;&#31579;&#36873;</h1><!--introduction--><p>
+<table border="0" width="600px" id="table1">	<tr>		<td><b><font size="2">该案例作者申明：</font></b></td>	</tr>	<tr><td><span class="comment"><font size="2">1：本人长期驻扎在此<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html"><font color="#0000FF">板块</font></a>里，对该案例提问，做到有问必答。本套书籍官方网站为：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></span></td></tr><tr>		<td><font size="2">2：点此<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">从当当预定本书</a>：<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">《Matlab神经网络30个案例分析》</a>。</td></tr><tr>	<td><p class="comment"></font><font size="2">3</font><font size="2">：此案例有配套的教学视频，视频下载方式<a href="http://video.ourmatlab.com/vbuy.html">video.ourmatlab.com/vbuy.html</a></font><font size="2">。 </font></p></td>	</tr>			<tr>		<td><span class="comment"><font size="2">		4：此案例为原创案例，转载请注明出处（《Matlab神经网络30个案例分析》）。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		5：若此案例碰巧与您的研究有关联，我们欢迎您提意见，要求等，我们考虑后可以加在案例里。</font></span></td>	</tr>		</table>
+</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;</a></li><li><a href="#2">&#20135;&#29983;&#36755;&#20837; &#36755;&#20986;&#25968;&#25454;</a></li><li><a href="#3">&#21464;&#37327;&#31579;&#36873; MIV&#31639;&#27861;&#30340;&#21021;&#27493;&#23454;&#29616;&#65288;&#22686;&#21152;&#25110;&#32773;&#20943;&#23569;&#33258;&#21464;&#37327;&#65289;</a></li><li><a href="#4">&#21033;&#29992;&#21407;&#22987;&#25968;&#25454;&#35757;&#32451;&#19968;&#20010;&#27491;&#30830;&#30340;&#31070;&#32463;&#32593;&#32476;</a></li><li><a href="#5">&#21464;&#37327;&#31579;&#36873; MIV&#31639;&#27861;&#30340;&#21518;&#32493;&#23454;&#29616;&#65288;&#24046;&#20540;&#35745;&#31639;&#65289;</a></li><li><a href="#6">MIV&#30340;&#20540;&#20026;&#21508;&#20010;&#39033;&#32593;&#32476;&#36755;&#20986;&#30340;MIV&#20540; MIV&#34987;&#35748;&#20026;&#26159;&#22312;&#31070;&#32463;&#32593;&#32476;&#20013;&#35780;&#20215;&#21464;&#37327;&#30456;&#20851;&#30340;&#26368;&#22909;&#25351;&#26631;&#20043;&#19968;&#65292;&#20854;&#31526;&#21495;&#20195;&#34920;&#30456;&#20851;&#30340;&#26041;&#21521;&#65292;&#32477;&#23545;&#20540;&#22823;&#23567;&#20195;&#34920;&#24433;&#21709;&#30340;&#30456;&#23545;&#37325;&#35201;&#24615;&#12290;</a></li></ul></div><h2>&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;<a name="1"></a></h2><pre class="codeinput">clc
+clear
+</pre><h2>&#20135;&#29983;&#36755;&#20837; &#36755;&#20986;&#25968;&#25454;<a name="2"></a></h2><pre class="codeinput"><span class="comment">% &#35774;&#32622;&#27493;&#38271;</span>
+interval=0.01;
+
+<span class="comment">% &#20135;&#29983;x1 x2</span>
+x1=-1.5:interval:1.5;
+x2=-1.5:interval:1.5;
+
+<span class="comment">% &#20135;&#29983;x3 x4&#65288;&#22122;&#22768;&#65289;</span>
+x=rand(1,301);
+x3=(x-0.5)*1.5*2;
+x4=(x-0.5)*1.5*2;
+
+<span class="comment">% &#25353;&#29031;&#20989;&#25968;&#20808;&#27714;&#24471;&#30456;&#24212;&#30340;&#20989;&#25968;&#20540;&#65292;&#20316;&#20026;&#32593;&#32476;&#30340;&#36755;&#20986;&#12290;</span>
+F =20+x1.^2-10*cos(2*pi*x1)+x2.^2-10*cos(2*pi*x2);
+
+<span class="comment">%&#35774;&#32622;&#32593;&#32476;&#36755;&#20837;&#36755;&#20986;&#20540;</span>
+p=[x1;x2;x3;x4];
+t=F;
+</pre><h2>&#21464;&#37327;&#31579;&#36873; MIV&#31639;&#27861;&#30340;&#21021;&#27493;&#23454;&#29616;&#65288;&#22686;&#21152;&#25110;&#32773;&#20943;&#23569;&#33258;&#21464;&#37327;&#65289;<a name="3"></a></h2><pre class="codeinput">p=p';
+[m,n]=size(p);
+yy_temp=p;
+
+<span class="comment">% p_increase&#20026;&#22686;&#21152;10%&#30340;&#30697;&#38453; p_decrease&#20026;&#20943;&#23569;10%&#30340;&#30697;&#38453;</span>
+<span class="keyword">for</span> i=1:n
+    p=yy_temp;
+    pX=p(:,i);
+    pa=pX*1.1;
+    p(:,i)=pa;
+    aa=[<span class="string">'p_increase'</span>  int2str(i) <span class="string">'=p;'</span>];
+    eval(aa);
+<span class="keyword">end</span>
+
+
+<span class="keyword">for</span> i=1:n
+    p=yy_temp;
+    pX=p(:,i);
+    pa=pX*0.9;
+    p(:,i)=pa;
+    aa=[<span class="string">'p_decrease'</span> int2str(i) <span class="string">'=p;'</span>];
+    eval(aa);
+<span class="keyword">end</span>
+</pre><h2>&#21033;&#29992;&#21407;&#22987;&#25968;&#25454;&#35757;&#32451;&#19968;&#20010;&#27491;&#30830;&#30340;&#31070;&#32463;&#32593;&#32476;<a name="4"></a></h2><pre class="codeinput">nntwarn <span class="string">off</span>;
+
+p=p';
+<span class="comment">% bp&#32593;&#32476;&#24314;&#31435;</span>
+net=newff(minmax(p),[8,1],{<span class="string">'tansig'</span>,<span class="string">'purelin'</span>},<span class="string">'traingdm'</span>);
+<span class="comment">% &#21021;&#22987;&#21270;bp&#32593;&#32476;</span>
+net=init(net);
+<span class="comment">% &#32593;&#32476;&#35757;&#32451;&#21442;&#25968;&#35774;&#32622;</span>
+net.trainParam.show=50;
+net.trainParam.lr=0.05;
+net.trainParam.mc=0.9;
+net.trainParam.epochs=2000;
+
+<span class="comment">% bp&#32593;&#32476;&#35757;&#32451;</span>
+net=train(net,p,t);
+</pre><h2>&#21464;&#37327;&#31579;&#36873; MIV&#31639;&#27861;&#30340;&#21518;&#32493;&#23454;&#29616;&#65288;&#24046;&#20540;&#35745;&#31639;&#65289;<a name="5"></a></h2><pre class="codeinput"><span class="comment">% &#36716;&#32622;&#21518;sim</span>
+
+<span class="keyword">for</span> i=1:n
+    eval([<span class="string">'p_increase'</span>,num2str(i),<span class="string">'=transpose(p_increase'</span>,num2str(i),<span class="string">');'</span>])
+<span class="keyword">end</span>
+
+<span class="keyword">for</span> i=1:n
+    eval([<span class="string">'p_decrease'</span>,num2str(i),<span class="string">'=transpose(p_decrease'</span>,num2str(i),<span class="string">');'</span>])
+<span class="keyword">end</span>
+
+
+<span class="comment">% result_in&#20026;&#22686;&#21152;10%&#21518;&#30340;&#36755;&#20986; result_de&#20026;&#20943;&#23569;10%&#21518;&#30340;&#36755;&#20986;</span>
+<span class="keyword">for</span> i=1:n
+    eval([<span class="string">'result_in'</span>,num2str(i),<span class="string">'=sim(net,'</span>,<span class="string">'p_increase'</span>,num2str(i),<span class="string">');'</span>])
+<span class="keyword">end</span>
+
+<span class="keyword">for</span> i=1:n
+    eval([<span class="string">'result_de'</span>,num2str(i),<span class="string">'=sim(net,'</span>,<span class="string">'p_decrease'</span>,num2str(i),<span class="string">');'</span>])
+<span class="keyword">end</span>
+
+<span class="keyword">for</span> i=1:n
+    eval([<span class="string">'result_in'</span>,num2str(i),<span class="string">'=transpose(result_in'</span>,num2str(i),<span class="string">');'</span>])
+<span class="keyword">end</span>
+
+<span class="keyword">for</span> i=1:n
+    eval([<span class="string">'result_de'</span>,num2str(i),<span class="string">'=transpose(result_de'</span>,num2str(i),<span class="string">');'</span>])
+<span class="keyword">end</span>
+</pre><h2>MIV&#30340;&#20540;&#20026;&#21508;&#20010;&#39033;&#32593;&#32476;&#36755;&#20986;&#30340;MIV&#20540; MIV&#34987;&#35748;&#20026;&#26159;&#22312;&#31070;&#32463;&#32593;&#32476;&#20013;&#35780;&#20215;&#21464;&#37327;&#30456;&#20851;&#30340;&#26368;&#22909;&#25351;&#26631;&#20043;&#19968;&#65292;&#20854;&#31526;&#21495;&#20195;&#34920;&#30456;&#20851;&#30340;&#26041;&#21521;&#65292;&#32477;&#23545;&#20540;&#22823;&#23567;&#20195;&#34920;&#24433;&#21709;&#30340;&#30456;&#23545;&#37325;&#35201;&#24615;&#12290;<a name="6"></a></h2><pre class="codeinput"><span class="keyword">for</span> i=1:n
+    IV= [<span class="string">'result_in'</span>,num2str(i), <span class="string">'-result_de'</span>,num2str(i)];
+    eval([<span class="string">'MIV_'</span>,num2str(i) ,<span class="string">'=mean('</span>,IV,<span class="string">');'</span>])
+
+<span class="keyword">end</span>
+
+
+web <span class="string">browse</span> <span class="string">http://www.matlabsky.com/thread-11165-1-1.html</span>
+</pre><p>
+<table width="656" align="left" >	<tr><td align="center"><p><font size="2"><a href="http://video.ourmatlab.com/">Matlab神经网络30个案例分析</a></font></p><p align="left"><font size="2">相关论坛：</font></p><p align="left"><font size="2">《Matlab神经网络30个案例分析》官方网站：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></p><p align="left"><font size="2">Matlab技术论坛：<a href="http://www.matlabsky.com">www.matlabsky.com</a></font></p><p align="left"><font size="2">M</font><font size="2">atlab函数百科：<a href="http://www.mfun.la">www.mfun.la</a></font></p><p align="left"><font size="2">Matlab中文论坛：<a href="http://www.ilovematlab.com">www.ilovematlab.com</a></font></p></td>	</tr></table>
+</p><p class="footer"><br>
+      Published with MATLAB&reg; 7.9<br></p></div><!--
+##### SOURCE BEGIN #####
+%% 案例20:神经网络变量筛选—基于BP的神经网络变量筛选
+%
+%
+% <html>
+% <table border="0" width="600px" id="table1">	<tr>		<td><b><font size="2">该案例作者申明：</font></b></td>	</tr>	<tr><td><span class="comment"><font size="2">1：本人长期驻扎在此<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html"><font color="#0000FF">板块</font></a>里，对该案例提问，做到有问必答。本套书籍官方网站为：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></span></td></tr><tr>		<td><font size="2">2：点此<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">从当当预定本书</a>：<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">《Matlab神经网络30个案例分析》</a>。</td></tr><tr>	<td><p class="comment"></font><font size="2">3</font><font size="2">：此案例有配套的教学视频，视频下载方式<a href="http://video.ourmatlab.com/vbuy.html">video.ourmatlab.com/vbuy.html</a></font><font size="2">。 </font></p></td>	</tr>			<tr>		<td><span class="comment"><font size="2">		4：此案例为原创案例，转载请注明出处（《Matlab神经网络30个案例分析》）。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		5：若此案例碰巧与您的研究有关联，我们欢迎您提意见，要求等，我们考虑后可以加在案例里。</font></span></td>	</tr>		</table>
+% </html>
+
+%% 清空环境变量
+clc
+clear
+%% 产生输入 输出数据
+
+% 设置步长
+interval=0.01;
+
+% 产生x1 x2
+x1=-1.5:interval:1.5;
+x2=-1.5:interval:1.5;
+
+% 产生x3 x4（噪声）
+x=rand(1,301);
+x3=(x-0.5)*1.5*2;
+x4=(x-0.5)*1.5*2;
+
+% 按照函数先求得相应的函数值，作为网络的输出。
+F =20+x1.^2-10*cos(2*pi*x1)+x2.^2-10*cos(2*pi*x2);
+
+%设置网络输入输出值
+p=[x1;x2;x3;x4];
+t=F;
+
+
+%% 变量筛选 MIV算法的初步实现（增加或者减少自变量）
+
+p=p';
+[m,n]=size(p);
+yy_temp=p;
+
+% p_increase为增加10%的矩阵 p_decrease为减少10%的矩阵
+for i=1:n
+    p=yy_temp;
+    pX=p(:,i);
+    pa=pX*1.1;
+    p(:,i)=pa;
+    aa=['p_increase'  int2str(i) '=p;'];
+    eval(aa);
+end
+
+
+for i=1:n
+    p=yy_temp;
+    pX=p(:,i);
+    pa=pX*0.9;
+    p(:,i)=pa;
+    aa=['p_decrease' int2str(i) '=p;'];
+    eval(aa);
+end
+
+
+%% 利用原始数据训练一个正确的神经网络
+nntwarn off;
+
+p=p';
+% bp网络建立
+net=newff(minmax(p),[8,1],{'tansig','purelin'},'traingdm');
+% 初始化bp网络
+net=init(net);
+% 网络训练参数设置
+net.trainParam.show=50;
+net.trainParam.lr=0.05;
+net.trainParam.mc=0.9;
+net.trainParam.epochs=2000;
+
+% bp网络训练
+net=train(net,p,t);
+
+
+%% 变量筛选 MIV算法的后续实现（差值计算）
+
+% 转置后sim
+
+for i=1:n
+    eval(['p_increase',num2str(i),'=transpose(p_increase',num2str(i),');'])
+end
+
+for i=1:n
+    eval(['p_decrease',num2str(i),'=transpose(p_decrease',num2str(i),');'])
+end
+
+
+% result_in为增加10%后的输出 result_de为减少10%后的输出
+for i=1:n
+    eval(['result_in',num2str(i),'=sim(net,','p_increase',num2str(i),');'])
+end
+
+for i=1:n
+    eval(['result_de',num2str(i),'=sim(net,','p_decrease',num2str(i),');'])
+end
+
+for i=1:n
+    eval(['result_in',num2str(i),'=transpose(result_in',num2str(i),');'])
+end
+
+for i=1:n
+    eval(['result_de',num2str(i),'=transpose(result_de',num2str(i),');'])
+end
+
+%% MIV的值为各个项网络输出的MIV值 MIV被认为是在神经网络中评价变量相关的最好指标之一，其符号代表相关的方向，绝对值大小代表影响的相对重要性。
+
+
+for i=1:n
+    IV= ['result_in',num2str(i), '-result_de',num2str(i)];
+    eval(['MIV_',num2str(i) ,'=mean(',IV,');'])
+    
+end
+
+
+web browse http://www.matlabsky.com/thread-11165-1-1.html
+%%
+%%
+% <html>
+% <table width="656" align="left" >	<tr><td align="center"><p><font size="2"><a href="http://video.ourmatlab.com/">Matlab神经网络30个案例分析</a></font></p><p align="left"><font size="2">相关论坛：</font></p><p align="left"><font size="2">《Matlab神经网络30个案例分析》官方网站：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></p><p align="left"><font size="2">Matlab技术论坛：<a href="http://www.matlabsky.com">www.matlabsky.com</a></font></p><p align="left"><font size="2">M</font><font size="2">atlab函数百科：<a href="http://www.mfun.la">www.mfun.la</a></font></p><p align="left"><font size="2">Matlab中文论坛：<a href="http://www.ilovematlab.com">www.ilovematlab.com</a></font></p></td>	</tr></table>
+% </html>
+
+
+
+##### SOURCE END #####
+--></body></html>

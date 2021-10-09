@@ -1,0 +1,232 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>chapter40</title><meta name="generator" content="MATLAB 8.0"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2013-08-21"><meta name="DC.source" content="chapter40.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;</a></li><li><a href="#2">&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;</a></li><li><a href="#3">&#21152;&#36733;&#25968;&#25454;</a></li><li><a href="#4">&#24314;&#31435;&#38750;&#32447;&#24615;&#33258;&#22238;&#24402;&#27169;&#22411;</a></li><li><a href="#5">&#32593;&#32476;&#25968;&#25454;&#39044;&#22788;&#29702;&#20989;&#25968;&#23450;&#20041;</a></li><li><a href="#6">&#26102;&#38388;&#24207;&#21015;&#25968;&#25454;&#20934;&#22791;&#24037;&#20316;</a></li><li><a href="#7">&#35757;&#32451;&#25968;&#25454;&#12289;&#39564;&#35777;&#25968;&#25454;&#12289;&#27979;&#35797;&#25968;&#25454;&#21010;&#20998;</a></li><li><a href="#8">&#32593;&#32476;&#35757;&#32451;&#20989;&#25968;&#35774;&#23450;</a></li><li><a href="#9">&#35823;&#24046;&#20989;&#25968;&#35774;&#23450;</a></li><li><a href="#10">&#32472;&#22270;&#20989;&#25968;&#35774;&#23450;</a></li><li><a href="#11">&#32593;&#32476;&#35757;&#32451;</a></li><li><a href="#12">&#32593;&#32476;&#27979;&#35797;</a></li><li><a href="#13">&#35745;&#31639;&#35757;&#32451;&#38598;&#12289;&#39564;&#35777;&#38598;&#12289;&#27979;&#35797;&#38598;&#35823;&#24046;</a></li><li><a href="#14">&#32593;&#32476;&#35757;&#32451;&#25928;&#26524;&#21487;&#35270;&#21270;</a></li><li><a href="#15">close loop&#27169;&#24335;&#30340;&#23454;&#29616;</a></li></ul></div><h2>Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;<a name="1"></a></h2><pre class="codeinput"><span class="comment">% &#21160;&#24577;&#31070;&#32463;&#32593;&#32476;&#26102;&#38388;&#24207;&#21015;&#39044;&#27979;&#30740;&#31350;-&#22522;&#20110;MATLAB&#30340;NARX&#23454;&#29616;</span>
+<span class="comment">% by &#29579;&#23567;&#24029;(@&#29579;&#23567;&#24029;_matlab)</span>
+<span class="comment">% http://www.matlabsky.com</span>
+<span class="comment">% Email:sina363@163.com</span>
+<span class="comment">% http://weibo.com/hgsz2003</span>
+</pre><h2>&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;<a name="2"></a></h2><pre class="codeinput">clear
+clc
+</pre><h2>&#21152;&#36733;&#25968;&#25454;<a name="3"></a></h2><pre class="codeinput">load <span class="string">phdata</span>
+inputSeries = phInputs;
+targetSeries = phTargets;
+</pre><h2>&#24314;&#31435;&#38750;&#32447;&#24615;&#33258;&#22238;&#24402;&#27169;&#22411;<a name="4"></a></h2><pre class="codeinput">inputDelays = 1:2;
+feedbackDelays = 1:2;
+hiddenLayerSize = 10;
+net = narxnet(inputDelays,feedbackDelays,hiddenLayerSize);
+</pre><h2>&#32593;&#32476;&#25968;&#25454;&#39044;&#22788;&#29702;&#20989;&#25968;&#23450;&#20041;<a name="5"></a></h2><pre class="codeinput">net.inputs{1}.processFcns = {<span class="string">'removeconstantrows'</span>,<span class="string">'mapminmax'</span>};
+net.inputs{2}.processFcns = {<span class="string">'removeconstantrows'</span>,<span class="string">'mapminmax'</span>};
+</pre><h2>&#26102;&#38388;&#24207;&#21015;&#25968;&#25454;&#20934;&#22791;&#24037;&#20316;<a name="6"></a></h2><pre class="codeinput">[inputs,inputStates,layerStates,targets] = preparets(net,inputSeries,{},targetSeries);
+</pre><h2>&#35757;&#32451;&#25968;&#25454;&#12289;&#39564;&#35777;&#25968;&#25454;&#12289;&#27979;&#35797;&#25968;&#25454;&#21010;&#20998;<a name="7"></a></h2><pre class="codeinput">net.divideFcn = <span class="string">'dividerand'</span>;
+net.divideMode = <span class="string">'value'</span>;
+net.divideParam.trainRatio = 70/100;
+net.divideParam.valRatio = 15/100;
+net.divideParam.testRatio = 15/100;
+</pre><h2>&#32593;&#32476;&#35757;&#32451;&#20989;&#25968;&#35774;&#23450;<a name="8"></a></h2><pre class="codeinput">net.trainFcn = <span class="string">'trainlm'</span>;  <span class="comment">% Levenberg-Marquardt</span>
+</pre><h2>&#35823;&#24046;&#20989;&#25968;&#35774;&#23450;<a name="9"></a></h2><pre class="codeinput">net.performFcn = <span class="string">'mse'</span>;  <span class="comment">% Mean squared error</span>
+</pre><h2>&#32472;&#22270;&#20989;&#25968;&#35774;&#23450;<a name="10"></a></h2><pre class="codeinput">net.plotFcns = {<span class="string">'plotperform'</span>,<span class="string">'plottrainstate'</span>,<span class="string">'plotresponse'</span>, <span class="keyword">...</span>
+  <span class="string">'ploterrcorr'</span>, <span class="string">'plotinerrcorr'</span>};
+</pre><h2>&#32593;&#32476;&#35757;&#32451;<a name="11"></a></h2><pre class="codeinput">[net,tr] = train(net,inputs,targets,inputStates,layerStates);
+</pre><h2>&#32593;&#32476;&#27979;&#35797;<a name="12"></a></h2><pre class="codeinput">outputs = net(inputs,inputStates,layerStates);
+errors = gsubtract(targets,outputs);
+performance = perform(net,targets,outputs)
+</pre><pre class="codeoutput">
+performance =
+
+    0.0091
+
+</pre><h2>&#35745;&#31639;&#35757;&#32451;&#38598;&#12289;&#39564;&#35777;&#38598;&#12289;&#27979;&#35797;&#38598;&#35823;&#24046;<a name="13"></a></h2><pre class="codeinput">trainTargets = gmultiply(targets,tr.trainMask);
+valTargets = gmultiply(targets,tr.valMask);
+testTargets = gmultiply(targets,tr.testMask);
+trainPerformance = perform(net,trainTargets,outputs)
+valPerformance = perform(net,valTargets,outputs)
+testPerformance = perform(net,testTargets,outputs)
+</pre><pre class="codeoutput">
+trainPerformance =
+
+    0.0091
+
+
+valPerformance =
+
+    0.0076
+
+
+testPerformance =
+
+    0.0111
+
+</pre><h2>&#32593;&#32476;&#35757;&#32451;&#25928;&#26524;&#21487;&#35270;&#21270;<a name="14"></a></h2><pre class="codeinput">figure, plotperform(tr)
+figure, plottrainstate(tr)
+figure, plotregression(targets,outputs)
+figure, plotresponse(targets,outputs)
+figure, ploterrcorr(errors)
+figure, plotinerrcorr(inputs,errors)
+</pre><img vspace="5" hspace="5" src="chapter40_01.png" alt=""> <img vspace="5" hspace="5" src="chapter40_02.png" alt=""> <img vspace="5" hspace="5" src="chapter40_03.png" alt=""> <img vspace="5" hspace="5" src="chapter40_04.png" alt=""> <img vspace="5" hspace="5" src="chapter40_05.png" alt=""> <img vspace="5" hspace="5" src="chapter40_06.png" alt=""> <h2>close loop&#27169;&#24335;&#30340;&#23454;&#29616;<a name="15"></a></h2><p>&#26356;&#25913;NARX&#31070;&#32463;&#32593;&#32476;&#27169;&#24335;</p><pre class="codeinput">narx_net_closed = closeloop(net);
+view(net)
+view(narx_net_closed)
+
+<span class="comment">% &#35745;&#31639;1500-2000&#20010;&#28857;&#30340;&#25311;&#21512;&#25928;&#26524;</span>
+phInputs_c=phInputs(1500:2000);
+PhTargets_c=phTargets(1500:2000);
+
+[p1,Pi1,Ai1,t1] = preparets(narx_net_closed,phInputs_c,{},PhTargets_c);
+<span class="comment">% &#32593;&#32476;&#20223;&#30495;</span>
+yp1 = narx_net_closed(p1,Pi1,Ai1);
+plot([cell2mat(yp1)' cell2mat(t1)'])
+</pre><img vspace="5" hspace="5" src="chapter40_07.png" alt=""> <img vspace="5" hspace="5" src="chapter40_08.png" alt=""> <img vspace="5" hspace="5" src="chapter40_09.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2012b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Matlab神经网络43个案例分析
+
+% 动态神经网络时间序列预测研究-基于MATLAB的NARX实现
+% by 王小川(@王小川_matlab)
+% http://www.matlabsky.com
+% Email:sina363@163.com
+% http://weibo.com/hgsz2003
+
+%% 清空环境变量
+clear
+clc
+
+%% 加载数据
+load phdata
+inputSeries = phInputs;
+targetSeries = phTargets;
+
+%% 建立非线性自回归模型
+inputDelays = 1:2;
+feedbackDelays = 1:2;
+hiddenLayerSize = 10;
+net = narxnet(inputDelays,feedbackDelays,hiddenLayerSize);
+
+%% 网络数据预处理函数定义
+net.inputs{1}.processFcns = {'removeconstantrows','mapminmax'};
+net.inputs{2}.processFcns = {'removeconstantrows','mapminmax'};
+
+%% 时间序列数据准备工作
+[inputs,inputStates,layerStates,targets] = preparets(net,inputSeries,{},targetSeries);
+
+%% 训练数据、验证数据、测试数据划分
+net.divideFcn = 'dividerand';  
+net.divideMode = 'value';  
+net.divideParam.trainRatio = 70/100;
+net.divideParam.valRatio = 15/100;
+net.divideParam.testRatio = 15/100;
+
+%% 网络训练函数设定
+net.trainFcn = 'trainlm';  % Levenberg-Marquardt
+
+%% 误差函数设定
+net.performFcn = 'mse';  % Mean squared error
+
+%% 绘图函数设定
+net.plotFcns = {'plotperform','plottrainstate','plotresponse', ...
+  'ploterrcorr', 'plotinerrcorr'};
+
+%% 网络训练
+[net,tr] = train(net,inputs,targets,inputStates,layerStates);
+
+%% 网络测试
+outputs = net(inputs,inputStates,layerStates);
+errors = gsubtract(targets,outputs);
+performance = perform(net,targets,outputs)
+
+%% 计算训练集、验证集、测试集误差
+trainTargets = gmultiply(targets,tr.trainMask);
+valTargets = gmultiply(targets,tr.valMask);
+testTargets = gmultiply(targets,tr.testMask);
+trainPerformance = perform(net,trainTargets,outputs)
+valPerformance = perform(net,valTargets,outputs)
+testPerformance = perform(net,testTargets,outputs)
+
+%% 网络训练效果可视化
+figure, plotperform(tr)
+figure, plottrainstate(tr)
+figure, plotregression(targets,outputs)
+figure, plotresponse(targets,outputs)
+figure, ploterrcorr(errors)
+figure, plotinerrcorr(inputs,errors)
+
+
+%% close loop模式的实现
+% 更改NARX神经网络模式
+narx_net_closed = closeloop(net);
+view(net)
+view(narx_net_closed)
+
+% 计算1500-2000个点的拟合效果
+phInputs_c=phInputs(1500:2000);
+PhTargets_c=phTargets(1500:2000);
+
+[p1,Pi1,Ai1,t1] = preparets(narx_net_closed,phInputs_c,{},PhTargets_c);
+% 网络仿真
+yp1 = narx_net_closed(p1,Pi1,Ai1);
+plot([cell2mat(yp1)' cell2mat(t1)'])
+
+##### SOURCE END #####
+--></body></html>

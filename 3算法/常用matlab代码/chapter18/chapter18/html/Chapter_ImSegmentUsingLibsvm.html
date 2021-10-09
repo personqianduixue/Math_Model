@@ -1,0 +1,315 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Chapter_ImSegmentUsingLibsvm</title><meta name="generator" content="MATLAB 7.14"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2013-08-18"><meta name="DC.source" content="Chapter_ImSegmentUsingLibsvm.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;</a></li><li><a href="#2">A Little Clean Work</a></li><li><a href="#3">&#35835;&#21462;&#22270;&#20687;&#25968;&#25454;</a></li><li><a href="#4">&#30830;&#23450;&#35757;&#32451;&#38598;</a></li><li><a href="#5">&#24314;&#31435;&#25903;&#25345;&#21521;&#37327;&#26426;</a></li><li><a href="#6">&#36827;&#34892;&#39044;&#27979;i.e.&#36827;&#34892;&#22270;&#20687;&#20998;&#21106;</a></li><li><a href="#7">&#23637;&#31034;&#20998;&#21106;&#21518;&#30340;&#22270;&#20687;</a></li></ul></div><h2>Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;<a name="1"></a></h2><pre class="codeinput"><span class="comment">% &#22522;&#20110;SVM&#30340;&#22270;&#20687;&#20998;&#21106;-&#30495;&#24425;&#33394;&#22270;&#20687;&#20998;&#21106;</span>
+<span class="comment">% by &#26446;&#27915;(faruto)</span>
+<span class="comment">% http://www.matlabsky.com</span>
+<span class="comment">% Email:faruto@163.com</span>
+<span class="comment">% http://weibo.com/faruto</span>
+<span class="comment">% http://blog.sina.com.cn/faruto</span>
+<span class="comment">% 2013.01.01</span>
+</pre><h2>A Little Clean Work<a name="2"></a></h2><pre class="codeinput">tic;
+close <span class="string">all</span>;
+clear;
+clc;
+format <span class="string">compact</span>;
+</pre><h2>&#35835;&#21462;&#22270;&#20687;&#25968;&#25454;<a name="3"></a></h2><pre class="codeinput"><span class="comment">% &#35835;&#20837;&#22270;&#20687;&#65292;&#25918;&#22312;&#30697;&#38453;pic</span>
+pic = imread(<span class="string">'littleduck.jpg'</span>);
+<span class="comment">% &#26597;&#30475;&#30697;&#38453;pic&#30340;&#22823;&#23567;&#21644;&#31867;&#22411;</span>
+whos <span class="string">pic</span>;
+
+scrsz = get(0,<span class="string">'ScreenSize'</span>);
+figure(<span class="string">'Position'</span>,[scrsz(3)*1/4 scrsz(4)*1/6  scrsz(3)*4/5 scrsz(4)]*3/4);
+imshow(pic);
+</pre><pre class="codeoutput">  Name        Size                Bytes  Class    Attributes
+
+  pic       439x600x3            790200  uint8              
+
+</pre><img vspace="5" hspace="5" src="Chapter_ImSegmentUsingLibsvm_01.png" alt=""> <h2>&#30830;&#23450;&#35757;&#32451;&#38598;<a name="4"></a></h2><pre class="codeinput">TrainData_background = zeros(20,3,<span class="string">'double'</span>);
+TrainData_foreground = zeros(20,3,<span class="string">'double'</span>);
+
+<span class="comment">% % &#32972;&#26223;&#65288;&#28246;&#27700;&#65289;&#37319;&#26679;</span>
+<span class="comment">% msgbox('Please get 20 background samples&#65288;&#28857;&#20987;OK&#21518;&#20877;&#25353;&#20219;&#24847;&#38190;&#32487;&#32493;&#65289;', ...</span>
+<span class="comment">%     'Background Samples','help');</span>
+<span class="comment">% pause;</span>
+<span class="comment">% for run = 1:20</span>
+<span class="comment">%     [x,y] = ginput(1);</span>
+<span class="comment">%     hold on;</span>
+<span class="comment">%     plot(x,y,'r*');</span>
+<span class="comment">%     x = uint8(x);</span>
+<span class="comment">%     y = uint8(y);</span>
+<span class="comment">%     TrainData_background(run,1) = pic(x,y,1);</span>
+<span class="comment">%     TrainData_background(run,2) = pic(x,y,2);</span>
+<span class="comment">%     TrainData_background(run,3) = pic(x,y,3);</span>
+<span class="comment">% end</span>
+
+<span class="comment">% % &#24453;&#20998;&#21106;&#20986;&#26469;&#30340;&#21069;&#26223;&#65288;&#40493;&#23376;&#65289;&#37319;&#26679;</span>
+<span class="comment">% msgbox('Please get 20 foreground samples which is the part to be segmented&#65288;&#28857;&#20987;OK&#21518;&#20877;&#25353;&#20219;&#24847;&#38190;&#32487;&#32493;&#65289;', ...</span>
+<span class="comment">%     'Foreground Samples','help');</span>
+<span class="comment">% pause;</span>
+<span class="comment">% for run = 1:20</span>
+<span class="comment">%     [x,y] = ginput(1);</span>
+<span class="comment">%     hold on;</span>
+<span class="comment">%     plot(x,y,'ro');</span>
+<span class="comment">%     x = uint8(x);</span>
+<span class="comment">%     y = uint8(y);</span>
+<span class="comment">%     TrainData_foreground(run,1) = pic(x,y,1);</span>
+<span class="comment">%     TrainData_foreground(run,2) = pic(x,y,2);</span>
+<span class="comment">%     TrainData_foreground(run,3) = pic(x,y,3);</span>
+<span class="comment">% end</span>
+
+<span class="comment">% % &#32972;&#26223;&#65288;&#28246;&#27700;&#65289;&#35757;&#32451;&#26679;&#26412; 10*3</span>
+TrainData_background = <span class="keyword">...</span>
+    [52 74 87;
+    76 117 150;
+    19 48 62;
+    35 64 82;
+    46 58 36;
+    50 57 23;
+    110 127 135;
+    156 173 189;
+    246 242 232;
+    166 174 151];
+
+<span class="comment">% % &#21069;&#26223;&#65288;&#40493;&#23376;&#65289;&#35757;&#32451;&#26679;&#26412; 8*3</span>
+TrainData_foreground = <span class="keyword">...</span>
+    [211 192 107;
+    202 193 164;
+    32 25 0;
+    213 201 151;
+    115 75 16;
+    101 70 0;
+    169 131 22;
+    150 133 87];
+</pre><h2>&#24314;&#31435;&#25903;&#25345;&#21521;&#37327;&#26426;<a name="5"></a></h2><pre class="codeinput"><span class="comment">% let background be 0 &amp; foreground 1</span>
+<span class="comment">% &#21363; &#23646;&#20110;&#32972;&#26223;&#65288;&#28246;&#27700;&#65289;&#30340;&#28857;&#20026;0&#65292;&#23646;&#20110;&#21069;&#26223;&#65288;&#40493;&#23376;&#65289;&#30340;&#28857;&#20301;1</span>
+TrainLabel = [zeros(length(TrainData_background),1); <span class="keyword">...</span>
+    ones(length(TrainData_foreground),1)];
+
+TrainData = [TrainData_background;TrainData_foreground];
+
+model = svmtrain(TrainLabel, TrainData, <span class="string">'-t 1 -d 1'</span>);
+</pre><h2>&#36827;&#34892;&#39044;&#27979;i.e.&#36827;&#34892;&#22270;&#20687;&#20998;&#21106;<a name="6"></a></h2><pre class="codeinput">preTrainLabel = svmpredict(TrainLabel, TrainData, model);
+<span class="comment">% &#27714;&#19977;&#32500;&#30697;&#38453;pic&#30340;&#34892;&#25968;m&#65292;&#21015;&#25968;n&#65292;&#39029;&#25968;k</span>
+[m,n,k] = size(pic)
+<span class="comment">% &#23558;&#19977;&#32500;&#30697;&#38453;pic&#36716;&#25104;m*n&#34892;&#65292;k&#21015;&#30340;&#21452;&#31934;&#24230;&#20108;&#32500;&#30697;&#38453;</span>
+TestData = double(reshape(pic,m*n,k));
+<span class="comment">% &#26597;&#30475;&#30697;&#38453;TestData&#30340;&#22823;&#23567;&#21644;&#31867;&#22411;</span>
+whos <span class="string">TestData</span>;
+<span class="comment">% &#39044;&#27979;&#21069;&#26223;&#65288;&#40493;&#23376;&#65289;&#21644;&#32972;&#26223;&#65288;&#28246;&#27700;&#65289;&#30340;&#26631;&#31614;</span>
+TestLabal = svmpredict(zeros(length(TestData),1), TestData, model);
+</pre><pre class="codeoutput">Accuracy = 100% (18/18) (classification)
+m =
+   439
+n =
+   600
+k =
+     3
+  Name               Size              Bytes  Class     Attributes
+
+  TestData      263400x3             6321600  double              
+
+Accuracy = 91.869% (241983/263400) (classification)
+</pre><h2>&#23637;&#31034;&#20998;&#21106;&#21518;&#30340;&#22270;&#20687;<a name="7"></a></h2><pre class="codeinput"><span class="comment">% &#26681;&#25454;&#39044;&#27979;&#24471;&#21040;&#30340;&#21069;&#26223;&#65288;&#40493;&#23376;&#65289;&#21644;&#32972;&#26223;&#65288;&#28246;&#27700;&#65289;&#26631;&#31614;&#23545;&#25972;&#20010;&#22270;&#20687;&#30340;&#20687;&#32032;&#28857;&#36827;&#34892;&#20998;&#31867;&#65292;&#36827;&#32780;&#36798;&#21040;&#22270;&#20687;&#20998;&#21106;&#30446;&#30340;&#12290;</span>
+ind = reshape([TestLabal,TestLabal,TestLabal],m,n,k);
+ind = logical(ind);
+pic_seg = pic;
+pic_seg(~ind) = 0;
+
+<span class="comment">% &#23637;&#31034;&#20998;&#21106;&#21518;&#30340;&#22270;&#20687;</span>
+scrsz = get(0,<span class="string">'ScreenSize'</span>);
+figure(<span class="string">'Position'</span>,[scrsz(3)*1/4 scrsz(4)*1/6  scrsz(3)*4/5 scrsz(4)]*3/4);
+imshow(pic_seg);
+<span class="comment">% &#20998;&#21106;&#21069;&#21644;&#20998;&#21106;&#21518;&#22270;&#20687;&#23545;&#27604;&#26597;&#30475;</span>
+scrsz = get(0,<span class="string">'ScreenSize'</span>);
+figure(<span class="string">'Position'</span>,[scrsz(3)*1/4 scrsz(4)*1/6  scrsz(3)*4/5 scrsz(4)]*3/4);
+subplot(1,2,1);
+imshow(pic);
+subplot(1,2,2);
+imshow(pic_seg);
+</pre><img vspace="5" hspace="5" src="Chapter_ImSegmentUsingLibsvm_02.png" alt=""> <img vspace="5" hspace="5" src="Chapter_ImSegmentUsingLibsvm_03.png" alt=""> <pre class="codeinput">toc;
+</pre><pre class="codeoutput">Elapsed time is 2.640061 seconds.
+</pre><p class="footer"><br>
+      Published with MATLAB&reg; 7.14<br></p></div><!--
+##### SOURCE BEGIN #####
+%% Matlab神经网络43个案例分析
+
+% 基于SVM的图像分割-真彩色图像分割
+% by 李洋(faruto)
+% http://www.matlabsky.com
+% Email:faruto@163.com
+% http://weibo.com/faruto 
+% http://blog.sina.com.cn/faruto
+% 2013.01.01
+%% A Little Clean Work
+tic;
+close all;
+clear;
+clc;
+format compact;
+%% 读取图像数据
+
+% 读入图像，放在矩阵pic
+pic = imread('littleduck.jpg');
+% 查看矩阵pic的大小和类型
+whos pic;
+
+scrsz = get(0,'ScreenSize');
+figure('Position',[scrsz(3)*1/4 scrsz(4)*1/6  scrsz(3)*4/5 scrsz(4)]*3/4);
+imshow(pic);
+%% 确定训练集
+
+TrainData_background = zeros(20,3,'double');
+TrainData_foreground = zeros(20,3,'double');
+
+% % 背景（湖水）采样
+% msgbox('Please get 20 background samples（点击OK后再按任意键继续）', ...
+%     'Background Samples','help');
+% pause;
+% for run = 1:20
+%     [x,y] = ginput(1);
+%     hold on;
+%     plot(x,y,'r*');
+%     x = uint8(x);
+%     y = uint8(y);
+%     TrainData_background(run,1) = pic(x,y,1);
+%     TrainData_background(run,2) = pic(x,y,2);
+%     TrainData_background(run,3) = pic(x,y,3);
+% end 
+
+% % 待分割出来的前景（鸭子）采样
+% msgbox('Please get 20 foreground samples which is the part to be segmented（点击OK后再按任意键继续）', ...
+%     'Foreground Samples','help');
+% pause;
+% for run = 1:20
+%     [x,y] = ginput(1);
+%     hold on;
+%     plot(x,y,'ro');
+%     x = uint8(x);
+%     y = uint8(y);
+%     TrainData_foreground(run,1) = pic(x,y,1);
+%     TrainData_foreground(run,2) = pic(x,y,2);
+%     TrainData_foreground(run,3) = pic(x,y,3);
+% end 
+
+% % 背景（湖水）训练样本 10*3
+TrainData_background = ...
+    [52 74 87;
+    76 117 150;
+    19 48 62;
+    35 64 82;
+    46 58 36;
+    50 57 23;
+    110 127 135;
+    156 173 189;
+    246 242 232;
+    166 174 151];
+
+% % 前景（鸭子）训练样本 8*3
+TrainData_foreground = ...
+    [211 192 107;
+    202 193 164;
+    32 25 0;
+    213 201 151;
+    115 75 16;
+    101 70 0;
+    169 131 22;
+    150 133 87];
+
+%% 建立支持向量机
+
+% let background be 0 & foreground 1
+% 即 属于背景（湖水）的点为0，属于前景（鸭子）的点位1 
+TrainLabel = [zeros(length(TrainData_background),1); ...
+    ones(length(TrainData_foreground),1)];
+
+TrainData = [TrainData_background;TrainData_foreground];
+
+model = svmtrain(TrainLabel, TrainData, '-t 1 -d 1');
+%% 进行预测i.e.进行图像分割
+preTrainLabel = svmpredict(TrainLabel, TrainData, model);
+% 求三维矩阵pic的行数m，列数n，页数k
+[m,n,k] = size(pic)
+% 将三维矩阵pic转成m*n行，k列的双精度二维矩阵
+TestData = double(reshape(pic,m*n,k));
+% 查看矩阵TestData的大小和类型
+whos TestData;
+% 预测前景（鸭子）和背景（湖水）的标签
+TestLabal = svmpredict(zeros(length(TestData),1), TestData, model);
+%% 展示分割后的图像
+
+% 根据预测得到的前景（鸭子）和背景（湖水）标签对整个图像的像素点进行分类，进而达到图像分割目的。
+ind = reshape([TestLabal,TestLabal,TestLabal],m,n,k);
+ind = logical(ind);
+pic_seg = pic;
+pic_seg(~ind) = 0;
+
+% 展示分割后的图像
+scrsz = get(0,'ScreenSize');
+figure('Position',[scrsz(3)*1/4 scrsz(4)*1/6  scrsz(3)*4/5 scrsz(4)]*3/4);
+imshow(pic_seg);
+% 分割前和分割后图像对比查看
+scrsz = get(0,'ScreenSize');
+figure('Position',[scrsz(3)*1/4 scrsz(4)*1/6  scrsz(3)*4/5 scrsz(4)]*3/4);
+subplot(1,2,1);
+imshow(pic);
+subplot(1,2,2);
+imshow(pic_seg);
+%%
+toc;
+##### SOURCE END #####
+--></body></html>

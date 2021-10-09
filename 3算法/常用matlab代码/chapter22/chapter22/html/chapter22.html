@@ -1,0 +1,280 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>chapter22</title><meta name="generator" content="MATLAB 8.0"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2013-08-21"><meta name="DC.source" content="chapter22.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;</a></li><li><a href="#2">&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;</a></li><li><a href="#3">&#24405;&#20837;&#36755;&#20837;&#25968;&#25454;</a></li><li><a href="#4">&#32593;&#32476;&#24314;&#31435;&#21644;&#35757;&#32451;</a></li><li><a href="#5">&#36827;&#34892;&#35757;&#32451;</a></li><li><a href="#6">&#32593;&#32476;&#20316;&#20998;&#31867;&#30340;&#39044;&#27979;</a></li><li><a href="#7">&#32593;&#32476;&#31070;&#32463;&#20803;&#20998;&#24067;&#24773;&#20917;</a></li></ul></div><h2>Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;<a name="1"></a></h2><pre class="codeinput"><span class="comment">% &#21333;&#23618;&#31454;&#20105;&#31070;&#32463;&#32593;&#32476;&#30340;&#25968;&#25454;&#20998;&#31867;&#8212;&#24739;&#32773;&#30284;&#30151;&#21457;&#30149;&#39044;&#27979;</span>
+<span class="comment">% by &#29579;&#23567;&#24029;(@&#29579;&#23567;&#24029;_matlab)</span>
+<span class="comment">% http://www.matlabsky.com</span>
+<span class="comment">% Email:sina363@163.com</span>
+<span class="comment">% http://weibo.com/hgsz2003</span>
+</pre><h2>&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;<a name="2"></a></h2><pre class="codeinput">clc
+clear
+</pre><h2>&#24405;&#20837;&#36755;&#20837;&#25968;&#25454;<a name="3"></a></h2><p>&#36733;&#20837;&#25968;&#25454;</p><pre class="codeinput">load <span class="string">p</span>;
+
+<span class="comment">%&#36716;&#32622;&#21518;&#31526;&#21512;&#31070;&#32463;&#32593;&#32476;&#30340;&#36755;&#20837;&#26684;&#24335;</span>
+P=P';
+</pre><h2>&#32593;&#32476;&#24314;&#31435;&#21644;&#35757;&#32451;<a name="4"></a></h2><p>newsom&#24314;&#31435;SOM&#32593;&#32476;&#12290;minmax&#65288;P&#65289;&#21462;&#36755;&#20837;&#30340;&#26368;&#22823;&#26368;&#23567;&#20540;&#12290;&#31454;&#20105;&#23618;&#20026;6*6=36&#20010;&#31070;&#32463;&#20803;</p><pre class="codeinput">net=newsom(minmax(P),[6 6]);
+plotsom(net.layers{1}.positions)
+<span class="comment">% 5&#27425;&#35757;&#32451;&#30340;&#27493;&#25968;</span>
+a=[10 30 50 100 200 500 1000];
+<span class="comment">% &#38543;&#26426;&#21021;&#22987;&#21270;&#19968;&#20010;1*10&#21521;&#37327;&#12290;</span>
+yc=rands(7,8);
+</pre><img vspace="5" hspace="5" src="chapter22_01.png" alt=""> <h2>&#36827;&#34892;&#35757;&#32451;<a name="5"></a></h2><p>&#35757;&#32451;&#27425;&#25968;&#20026;10&#27425;</p><pre class="codeinput">net.trainparam.epochs=a(1);
+<span class="comment">% &#35757;&#32451;&#32593;&#32476;&#21644;&#26597;&#30475;&#20998;&#31867;</span>
+net=train(net,P);
+y=sim(net,P);
+yc(1,:)=vec2ind(y);
+plotsom(net.IW{1,1},net.layers{1}.distances)
+
+<span class="comment">% &#35757;&#32451;&#27425;&#25968;&#20026;30&#27425;</span>
+net.trainparam.epochs=a(2);
+<span class="comment">% &#35757;&#32451;&#32593;&#32476;&#21644;&#26597;&#30475;&#20998;&#31867;</span>
+net=train(net,P);
+y=sim(net,P);
+yc(2,:)=vec2ind(y);
+plotsom(net.IW{1,1},net.layers{1}.distances)
+
+<span class="comment">% &#35757;&#32451;&#27425;&#25968;&#20026;50&#27425;</span>
+net.trainparam.epochs=a(3);
+<span class="comment">% &#35757;&#32451;&#32593;&#32476;&#21644;&#26597;&#30475;&#20998;&#31867;</span>
+net=train(net,P);
+y=sim(net,P);
+yc(3,:)=vec2ind(y);
+plotsom(net.IW{1,1},net.layers{1}.distances)
+
+
+<span class="comment">% &#35757;&#32451;&#27425;&#25968;&#20026;100&#27425;</span>
+net.trainparam.epochs=a(4);
+<span class="comment">% &#35757;&#32451;&#32593;&#32476;&#21644;&#26597;&#30475;&#20998;&#31867;</span>
+net=train(net,P);
+y=sim(net,P);
+yc(4,:)=vec2ind(y);
+plotsom(net.IW{1,1},net.layers{1}.distances)
+
+
+<span class="comment">% &#35757;&#32451;&#27425;&#25968;&#20026;200&#27425;</span>
+net.trainparam.epochs=a(5);
+<span class="comment">% &#35757;&#32451;&#32593;&#32476;&#21644;&#26597;&#30475;&#20998;&#31867;</span>
+net=train(net,P);
+y=sim(net,P);
+yc(5,:)=vec2ind(y);
+plotsom(net.IW{1,1},net.layers{1}.distances)
+
+<span class="comment">% &#35757;&#32451;&#27425;&#25968;&#20026;500&#27425;</span>
+net.trainparam.epochs=a(6);
+<span class="comment">% &#35757;&#32451;&#32593;&#32476;&#21644;&#26597;&#30475;&#20998;&#31867;</span>
+net=train(net,P);
+y=sim(net,P);
+yc(6,:)=vec2ind(y);
+plotsom(net.IW{1,1},net.layers{1}.distances)
+
+<span class="comment">% &#35757;&#32451;&#27425;&#25968;&#20026;1000&#27425;</span>
+net.trainparam.epochs=a(7);
+<span class="comment">% &#35757;&#32451;&#32593;&#32476;&#21644;&#26597;&#30475;&#20998;&#31867;</span>
+net=train(net,P);
+y=sim(net,P);
+yc(7,:)=vec2ind(y);
+plotsom(net.IW{1,1},net.layers{1}.distances)
+yc
+</pre><pre class="codeoutput">Warning - PLOTSOM only shows first three dimensions.
+Warning - PLOTSOM only shows first three dimensions.
+Warning - PLOTSOM only shows first three dimensions.
+Warning - PLOTSOM only shows first three dimensions.
+Warning - PLOTSOM only shows first three dimensions.
+Warning - PLOTSOM only shows first three dimensions.
+Warning - PLOTSOM only shows first three dimensions.
+
+yc =
+
+     1     3     1    36     4    36     1     5
+     1    24     1    36     6    30    25    25
+     1    24     1    36    31    36    19     4
+     1     6    13    35    21    36     9    31
+     1     6     2    34    21    24     9    31
+    31    36    19    10    15     6    28     1
+     1    12     2    33    15    36     4    25
+
+</pre><img vspace="5" hspace="5" src="chapter22_02.png" alt=""> <h2>&#32593;&#32476;&#20316;&#20998;&#31867;&#30340;&#39044;&#27979;<a name="6"></a></h2><p>&#27979;&#35797;&#26679;&#26412;&#36755;&#20837;</p><pre class="codeinput">t=[0.9512 1.0000 0.9458 -0.4215 0.4218 0.9511 0.9645 0.8941]';
+<span class="comment">% sim( )&#26469;&#20570;&#32593;&#32476;&#20223;&#30495;</span>
+r=sim(net,t);
+<span class="comment">% &#21464;&#25442;&#20989;&#25968; &#23558;&#21333;&#20540;&#21521;&#37327;&#36716;&#21464;&#25104;&#19979;&#26631;&#21521;&#37327;&#12290;</span>
+rr=vec2ind(r)
+</pre><pre class="codeoutput">
+rr =
+
+     1
+
+</pre><h2>&#32593;&#32476;&#31070;&#32463;&#20803;&#20998;&#24067;&#24773;&#20917;<a name="7"></a></h2><p>&#26597;&#30475;&#32593;&#32476;&#25299;&#25169;&#23398;&#32467;&#26500;</p><pre class="codeinput">plotsomtop(net)
+<span class="comment">% &#26597;&#30475;&#20020;&#36817;&#31070;&#32463;&#20803;&#30452;&#25509;&#30340;&#36317;&#31163;&#24773;&#20917;</span>
+plotsomnd(net)
+<span class="comment">% &#26597;&#30475;&#27599;&#20010;&#31070;&#32463;&#20803;&#30340;&#20998;&#31867;&#24773;&#20917;</span>
+plotsomhits(net,P)
+</pre><img vspace="5" hspace="5" src="chapter22_03.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2012b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Matlab神经网络43个案例分析
+
+% 单层竞争神经网络的数据分类—患者癌症发病预测
+% by 王小川(@王小川_matlab)
+% http://www.matlabsky.com
+% Email:sina363@163.com
+% http://weibo.com/hgsz2003
+
+%% 清空环境变量
+clc
+clear
+
+%% 录入输入数据
+% 载入数据
+load p;
+
+%转置后符合神经网络的输入格式
+P=P';
+
+%% 网络建立和训练
+% newsom建立SOM网络。minmax（P）取输入的最大最小值。竞争层为6*6=36个神经元
+net=newsom(minmax(P),[6 6]);
+plotsom(net.layers{1}.positions)
+% 5次训练的步数
+a=[10 30 50 100 200 500 1000];
+% 随机初始化一个1*10向量。
+yc=rands(7,8);
+%% 进行训练
+% 训练次数为10次
+net.trainparam.epochs=a(1);
+% 训练网络和查看分类
+net=train(net,P);
+y=sim(net,P);
+yc(1,:)=vec2ind(y);
+plotsom(net.IW{1,1},net.layers{1}.distances)
+
+% 训练次数为30次
+net.trainparam.epochs=a(2);
+% 训练网络和查看分类
+net=train(net,P);
+y=sim(net,P);
+yc(2,:)=vec2ind(y);
+plotsom(net.IW{1,1},net.layers{1}.distances)
+
+% 训练次数为50次
+net.trainparam.epochs=a(3);
+% 训练网络和查看分类
+net=train(net,P);
+y=sim(net,P);
+yc(3,:)=vec2ind(y);
+plotsom(net.IW{1,1},net.layers{1}.distances)
+
+
+% 训练次数为100次
+net.trainparam.epochs=a(4);
+% 训练网络和查看分类
+net=train(net,P);
+y=sim(net,P);
+yc(4,:)=vec2ind(y);
+plotsom(net.IW{1,1},net.layers{1}.distances)
+
+
+% 训练次数为200次
+net.trainparam.epochs=a(5);
+% 训练网络和查看分类
+net=train(net,P);
+y=sim(net,P);
+yc(5,:)=vec2ind(y);
+plotsom(net.IW{1,1},net.layers{1}.distances)
+
+% 训练次数为500次
+net.trainparam.epochs=a(6);
+% 训练网络和查看分类
+net=train(net,P);
+y=sim(net,P);
+yc(6,:)=vec2ind(y);
+plotsom(net.IW{1,1},net.layers{1}.distances)
+
+% 训练次数为1000次
+net.trainparam.epochs=a(7);
+% 训练网络和查看分类
+net=train(net,P);
+y=sim(net,P);
+yc(7,:)=vec2ind(y);
+plotsom(net.IW{1,1},net.layers{1}.distances)
+yc
+%% 网络作分类的预测
+% 测试样本输入
+t=[0.9512 1.0000 0.9458 -0.4215 0.4218 0.9511 0.9645 0.8941]';
+% sim( )来做网络仿真
+r=sim(net,t);
+% 变换函数 将单值向量转变成下标向量。
+rr=vec2ind(r)
+
+%% 网络神经元分布情况
+% 查看网络拓扑学结构
+plotsomtop(net)
+% 查看临近神经元直接的距离情况
+plotsomnd(net)
+% 查看每个神经元的分类情况
+plotsomhits(net,P)
+
+##### SOURCE END #####
+--></body></html>

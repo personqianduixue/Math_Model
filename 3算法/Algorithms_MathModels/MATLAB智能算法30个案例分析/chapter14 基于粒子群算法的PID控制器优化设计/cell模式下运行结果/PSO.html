@@ -1,0 +1,264 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>PSO</title>
+      <meta name="generator" content="MATLAB 7.8">
+      <meta name="date" content="2010-08-22">
+      <meta name="m-file" content="PSO"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head>
+   <body>
+      <div class="content">
+         <h2>Contents</h2>
+         <div>
+            <ul>
+               <li><a href="#1">&#28165;&#31354;&#29615;&#22659;</a></li>
+               <li><a href="#2">&#21442;&#25968;&#35774;&#32622;</a></li>
+               <li><a href="#3">&#31890;&#23376;&#32676;&#21021;&#22987;&#21270;</a></li>
+               <li><a href="#4">&#20010;&#20307;&#26497;&#20540;&#21644;&#32676;&#20307;&#26497;&#20540;</a></li>
+               <li><a href="#5">&#36845;&#20195;&#23547;&#20248;</a></li>
+               <li><a href="#6">&#32472;&#22270;&#36755;&#20986;</a></li>
+            </ul>
+         </div>
+         <h2>&#28165;&#31354;&#29615;&#22659;<a name="1"></a></h2><pre class="codeinput">clear
+clc
+</pre><h2>&#21442;&#25968;&#35774;&#32622;<a name="2"></a></h2><pre class="codeinput">w = 0.6;      <span class="comment">% &#24815;&#24615;&#22240;&#23376;</span>
+c1 = 2;       <span class="comment">% &#21152;&#36895;&#24120;&#25968;</span>
+c2 = 2;       <span class="comment">% &#21152;&#36895;&#24120;&#25968;</span>
+
+Dim = 3;            <span class="comment">% &#32500;&#25968;</span>
+SwarmSize = 100;    <span class="comment">% &#31890;&#23376;&#32676;&#35268;&#27169;</span>
+ObjFun = @PSO_PID;  <span class="comment">% &#24453;&#20248;&#21270;&#20989;&#25968;&#21477;&#26564;</span>
+
+MaxIter = 100;      <span class="comment">% &#26368;&#22823;&#36845;&#20195;&#27425;&#25968;</span>
+MinFit = 0.1;       <span class="comment">% &#26368;&#23567;&#36866;&#24212;&#20540;</span>
+
+Vmax = 1;
+Vmin = -1;
+Ub = [300 300 300];
+Lb = [0 0 0];
+</pre><h2>&#31890;&#23376;&#32676;&#21021;&#22987;&#21270;<a name="3"></a></h2><pre class="codeinput">    Range = ones(SwarmSize,1)*(Ub-Lb);
+    Swarm = rand(SwarmSize,Dim).*Range + ones(SwarmSize,1)*Lb;      <span class="comment">% &#21021;&#22987;&#21270;&#31890;&#23376;&#32676;</span>
+    VStep = rand(SwarmSize,Dim)*(Vmax-Vmin) + Vmin;                 <span class="comment">% &#21021;&#22987;&#21270;&#36895;&#24230;</span>
+    fSwarm = zeros(SwarmSize,1);
+<span class="keyword">for</span> i=1:SwarmSize
+    fSwarm(i,:) = feval(ObjFun,Swarm(i,:));                         <span class="comment">% &#31890;&#23376;&#32676;&#30340;&#36866;&#24212;&#20540;</span>
+<span class="keyword">end</span>
+</pre><h2>&#20010;&#20307;&#26497;&#20540;&#21644;&#32676;&#20307;&#26497;&#20540;<a name="4"></a></h2><pre class="codeinput">[bestf bestindex]=min(fSwarm);
+zbest=Swarm(bestindex,:);   <span class="comment">% &#20840;&#23616;&#26368;&#20339;</span>
+gbest=Swarm;                <span class="comment">% &#20010;&#20307;&#26368;&#20339;</span>
+fgbest=fSwarm;              <span class="comment">% &#20010;&#20307;&#26368;&#20339;&#36866;&#24212;&#20540;</span>
+fzbest=bestf;               <span class="comment">% &#20840;&#23616;&#26368;&#20339;&#36866;&#24212;&#20540;</span>
+</pre><h2>&#36845;&#20195;&#23547;&#20248;<a name="5"></a></h2><pre class="codeinput">iter = 0;
+y_fitness = zeros(1,MaxIter);   <span class="comment">% &#39044;&#20808;&#20135;&#29983;4&#20010;&#31354;&#30697;&#38453;</span>
+K_p = zeros(1,MaxIter);
+K_i = zeros(1,MaxIter);
+K_d = zeros(1,MaxIter);
+<span class="keyword">while</span>( (iter &lt; MaxIter) &amp;&amp; (fzbest &gt; MinFit) )
+    <span class="keyword">for</span> j=1:SwarmSize
+        <span class="comment">% &#36895;&#24230;&#26356;&#26032;</span>
+        VStep(j,:) = w*VStep(j,:) + c1*rand*(gbest(j,:) - Swarm(j,:)) + c2*rand*(zbest - Swarm(j,:));
+        <span class="keyword">if</span> VStep(j,:)&gt;Vmax, VStep(j,:)=Vmax; <span class="keyword">end</span>
+        <span class="keyword">if</span> VStep(j,:)&lt;Vmin, VStep(j,:)=Vmin; <span class="keyword">end</span>
+        <span class="comment">% &#20301;&#32622;&#26356;&#26032;</span>
+        Swarm(j,:)=Swarm(j,:)+VStep(j,:);
+        <span class="keyword">for</span> k=1:Dim
+            <span class="keyword">if</span> Swarm(j,k)&gt;Ub(k), Swarm(j,k)=Ub(k); <span class="keyword">end</span>
+            <span class="keyword">if</span> Swarm(j,k)&lt;Lb(k), Swarm(j,k)=Lb(k); <span class="keyword">end</span>
+        <span class="keyword">end</span>
+        <span class="comment">% &#36866;&#24212;&#20540;</span>
+        fSwarm(j,:) = feval(ObjFun,Swarm(j,:));
+        <span class="comment">% &#20010;&#20307;&#26368;&#20248;&#26356;&#26032;</span>
+        <span class="keyword">if</span> fSwarm(j) &lt; fgbest(j)
+            gbest(j,:) = Swarm(j,:);
+            fgbest(j) = fSwarm(j);
+        <span class="keyword">end</span>
+        <span class="comment">% &#32676;&#20307;&#26368;&#20248;&#26356;&#26032;</span>
+        <span class="keyword">if</span> fSwarm(j) &lt; fzbest
+            zbest = Swarm(j,:);
+            fzbest = fSwarm(j);
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+    iter = iter+1;                      <span class="comment">% &#36845;&#20195;&#27425;&#25968;&#26356;&#26032;</span>
+    y_fitness(1,iter) = fzbest;         <span class="comment">% &#20026;&#32472;&#22270;&#20570;&#20934;&#22791;</span>
+    K_p(1,iter) = zbest(1);
+    K_i(1,iter) = zbest(2);
+    K_d(1,iter) = zbest(3);
+<span class="keyword">end</span>
+</pre><h2>&#32472;&#22270;&#36755;&#20986;<a name="6"></a></h2><pre class="codeinput">figure(1)      <span class="comment">% &#32472;&#21046;&#24615;&#33021;&#25351;&#26631;ITAE&#30340;&#21464;&#21270;&#26354;&#32447;</span>
+plot(y_fitness,<span class="string">'LineWidth'</span>,2)
+title(<span class="string">'&#26368;&#20248;&#20010;&#20307;&#36866;&#24212;&#20540;'</span>,<span class="string">'fontsize'</span>,18);
+xlabel(<span class="string">'&#36845;&#20195;&#27425;&#25968;'</span>,<span class="string">'fontsize'</span>,18);ylabel(<span class="string">'&#36866;&#24212;&#20540;'</span>,<span class="string">'fontsize'</span>,18);
+set(gca,<span class="string">'Fontsize'</span>,18);
+
+figure(2)      <span class="comment">% &#32472;&#21046;PID&#25511;&#21046;&#22120;&#21442;&#25968;&#21464;&#21270;&#26354;&#32447;</span>
+plot(K_p)
+hold <span class="string">on</span>
+plot(K_i,<span class="string">'k'</span>,<span class="string">'LineWidth'</span>,3)
+plot(K_d,<span class="string">'--r'</span>)
+title(<span class="string">'Kp&#12289;Ki&#12289;Kd &#20248;&#21270;&#26354;&#32447;'</span>,<span class="string">'fontsize'</span>,18);
+xlabel(<span class="string">'&#36845;&#20195;&#27425;&#25968;'</span>,<span class="string">'fontsize'</span>,18);ylabel(<span class="string">'&#21442;&#25968;&#20540;'</span>,<span class="string">'fontsize'</span>,18);
+set(gca,<span class="string">'Fontsize'</span>,18);
+legend(<span class="string">'Kp'</span>,<span class="string">'Ki'</span>,<span class="string">'Kd'</span>,1);
+</pre><img vspace="5" hspace="5" src="PSO_01.png" alt=""> <img vspace="5" hspace="5" src="PSO_02.png" alt=""> <p class="footer"><br>
+            Published with MATLAB&reg; 7.8<br></p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+%% 清空环境
+clear
+clc
+
+%% 参数设置
+w = 0.6;      % 惯性因子 
+c1 = 2;       % 加速常数
+c2 = 2;       % 加速常数
+
+Dim = 3;            % 维数
+SwarmSize = 100;    % 粒子群规模
+ObjFun = @PSO_PID;  % 待优化函数句柄
+
+MaxIter = 100;      % 最大迭代次数  
+MinFit = 0.1;       % 最小适应值 
+
+Vmax = 1;
+Vmin = -1;
+Ub = [300 300 300];
+Lb = [0 0 0];
+
+%% 粒子群初始化
+    Range = ones(SwarmSize,1)*(Ub-Lb);
+    Swarm = rand(SwarmSize,Dim).*Range + ones(SwarmSize,1)*Lb;      % 初始化粒子群
+    VStep = rand(SwarmSize,Dim)*(Vmax-Vmin) + Vmin;                 % 初始化速度
+    fSwarm = zeros(SwarmSize,1);
+for i=1:SwarmSize
+    fSwarm(i,:) = feval(ObjFun,Swarm(i,:));                         % 粒子群的适应值
+end
+
+%% 个体极值和群体极值
+[bestf bestindex]=min(fSwarm);
+zbest=Swarm(bestindex,:);   % 全局最佳
+gbest=Swarm;                % 个体最佳
+fgbest=fSwarm;              % 个体最佳适应值
+fzbest=bestf;               % 全局最佳适应值
+
+%% 迭代寻优
+iter = 0;
+y_fitness = zeros(1,MaxIter);   % 预先产生4个空矩阵
+K_p = zeros(1,MaxIter);         
+K_i = zeros(1,MaxIter);
+K_d = zeros(1,MaxIter);
+while( (iter < MaxIter) && (fzbest > MinFit) )
+    for j=1:SwarmSize
+        % 速度更新
+        VStep(j,:) = w*VStep(j,:) + c1*rand*(gbest(j,:) - Swarm(j,:)) + c2*rand*(zbest - Swarm(j,:));
+        if VStep(j,:)>Vmax, VStep(j,:)=Vmax; end
+        if VStep(j,:)<Vmin, VStep(j,:)=Vmin; end
+        % 位置更新
+        Swarm(j,:)=Swarm(j,:)+VStep(j,:);
+        for k=1:Dim
+            if Swarm(j,k)>Ub(k), Swarm(j,k)=Ub(k); end
+            if Swarm(j,k)<Lb(k), Swarm(j,k)=Lb(k); end
+        end
+        % 适应值
+        fSwarm(j,:) = feval(ObjFun,Swarm(j,:));
+        % 个体最优更新     
+        if fSwarm(j) < fgbest(j)
+            gbest(j,:) = Swarm(j,:);
+            fgbest(j) = fSwarm(j);
+        end
+        % 群体最优更新
+        if fSwarm(j) < fzbest
+            zbest = Swarm(j,:);
+            fzbest = fSwarm(j);
+        end
+    end 
+    iter = iter+1;                      % 迭代次数更新
+    y_fitness(1,iter) = fzbest;         % 为绘图做准备
+    K_p(1,iter) = zbest(1);
+    K_i(1,iter) = zbest(2);
+    K_d(1,iter) = zbest(3);
+end
+%% 绘图输出
+figure(1)      % 绘制性能指标ITAE的变化曲线
+plot(y_fitness,'LineWidth',2)
+title('最优个体适应值','fontsize',18);
+xlabel('迭代次数','fontsize',18);ylabel('适应值','fontsize',18);
+set(gca,'Fontsize',18);
+
+figure(2)      % 绘制PID控制器参数变化曲线
+plot(K_p)
+hold on
+plot(K_i,'k','LineWidth',3)
+plot(K_d,'REPLACE_WITH_DASH_DASHr')
+title('Kp、Ki、Kd 优化曲线','fontsize',18);
+xlabel('迭代次数','fontsize',18);ylabel('参数值','fontsize',18);
+set(gca,'Fontsize',18);
+legend('Kp','Ki','Kd',1);
+
+##### SOURCE END #####
+-->
+   </body>
+</html>

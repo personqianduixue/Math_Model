@@ -1,0 +1,207 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>chapter23</title><meta name="generator" content="MATLAB 8.0"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2013-08-21"><meta name="DC.source" content="chapter23.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;</a></li><li><a href="#2">&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;</a></li><li><a href="#3">&#25968;&#25454;&#36733;&#20837;</a></li><li><a href="#4">&#36873;&#21462;&#35757;&#32451;&#25968;&#25454;&#21644;&#27979;&#35797;&#25968;&#25454;</a></li><li><a href="#5">&#32593;&#32476;&#30340;&#24314;&#31435;&#21644;&#35757;&#32451;</a></li><li><a href="#6">&#36890;&#36807;&#20316;&#22270; &#35266;&#23519;&#19981;&#21516;&#38544;&#34255;&#23618;&#31070;&#32463;&#20803;&#20010;&#25968;&#26102;&#65292;&#32593;&#32476;&#30340;&#39044;&#27979;&#25928;&#26524;</a></li></ul></div><h2>Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;<a name="1"></a></h2><pre class="codeinput"><span class="comment">% &#22522;&#20110;Elman&#31070;&#32463;&#32593;&#32476;&#30340;&#30005;&#21147;&#36127;&#33655;&#39044;&#27979;&#27169;&#22411;&#30740;&#31350;</span>
+<span class="comment">% by &#29579;&#23567;&#24029;(@&#29579;&#23567;&#24029;_matlab)</span>
+<span class="comment">% http://www.matlabsky.com</span>
+<span class="comment">% Email:sina363@163.com</span>
+<span class="comment">% http://weibo.com/hgsz2003</span>
+</pre><h2>&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;<a name="2"></a></h2><pre class="codeinput">clc;
+clear <span class="string">all</span>
+close <span class="string">all</span>
+nntwarn <span class="string">off</span>;
+</pre><h2>&#25968;&#25454;&#36733;&#20837;<a name="3"></a></h2><pre class="codeinput">load <span class="string">data</span>;
+a=data;
+</pre><h2>&#36873;&#21462;&#35757;&#32451;&#25968;&#25454;&#21644;&#27979;&#35797;&#25968;&#25454;<a name="4"></a></h2><pre class="codeinput"><span class="keyword">for</span> i=1:6
+    p(i,:)=[a(i,:),a(i+1,:),a(i+2,:)];
+<span class="keyword">end</span>
+<span class="comment">% &#35757;&#32451;&#25968;&#25454;&#36755;&#20837;</span>
+p_train=p(1:5,:);
+<span class="comment">% &#35757;&#32451;&#25968;&#25454;&#36755;&#20986;</span>
+t_train=a(4:8,:);
+<span class="comment">% &#27979;&#35797;&#25968;&#25454;&#36755;&#20837;</span>
+p_test=p(6,:);
+<span class="comment">% &#27979;&#35797;&#25968;&#25454;&#36755;&#20986;</span>
+t_test=a(9,:);
+
+<span class="comment">% &#20026;&#36866;&#24212;&#32593;&#32476;&#32467;&#26500; &#20570;&#36716;&#32622;</span>
+
+p_train=p_train';
+t_train=t_train';
+p_test=p_test';
+</pre><h2>&#32593;&#32476;&#30340;&#24314;&#31435;&#21644;&#35757;&#32451;<a name="5"></a></h2><p>&#21033;&#29992;&#24490;&#29615;&#65292;&#35774;&#32622;&#19981;&#21516;&#30340;&#38544;&#34255;&#23618;&#31070;&#32463;&#20803;&#20010;&#25968;</p><pre class="codeinput">nn=[7 11 14 18];
+<span class="keyword">for</span> i=1:4
+    threshold=[0 1;0 1;0 1;0 1;0 1;0 1;0 1;0 1;0 1];
+    <span class="comment">% &#24314;&#31435;Elman&#31070;&#32463;&#32593;&#32476; &#38544;&#34255;&#23618;&#20026;nn(i)&#20010;&#31070;&#32463;&#20803;</span>
+    net=newelm(threshold,[nn(i),3],{<span class="string">'tansig'</span>,<span class="string">'purelin'</span>});
+    <span class="comment">% &#35774;&#32622;&#32593;&#32476;&#35757;&#32451;&#21442;&#25968;</span>
+    net.trainparam.epochs=1000;
+    net.trainparam.show=20;
+    <span class="comment">% &#21021;&#22987;&#21270;&#32593;&#32476;</span>
+    net=init(net);
+    <span class="comment">% Elman&#32593;&#32476;&#35757;&#32451;</span>
+    net=train(net,p_train,t_train);
+    <span class="comment">% &#39044;&#27979;&#25968;&#25454;</span>
+    y=sim(net,p_test);
+    <span class="comment">% &#35745;&#31639;&#35823;&#24046;</span>
+    error(i,:)=y'-t_test;
+<span class="keyword">end</span>
+</pre><h2>&#36890;&#36807;&#20316;&#22270; &#35266;&#23519;&#19981;&#21516;&#38544;&#34255;&#23618;&#31070;&#32463;&#20803;&#20010;&#25968;&#26102;&#65292;&#32593;&#32476;&#30340;&#39044;&#27979;&#25928;&#26524;<a name="6"></a></h2><pre class="codeinput">plot(1:1:3,error(1,:),<span class="string">'-ro'</span>,<span class="string">'linewidth'</span>,2);
+hold <span class="string">on</span>;
+plot(1:1:3,error(2,:),<span class="string">'b:x'</span>,<span class="string">'linewidth'</span>,2);
+hold <span class="string">on</span>;
+plot(1:1:3,error(3,:),<span class="string">'k-.s'</span>,<span class="string">'linewidth'</span>,2);
+hold <span class="string">on</span>;
+plot(1:1:3,error(4,:),<span class="string">'c--d'</span>,<span class="string">'linewidth'</span>,2);
+title(<span class="string">'Elman&#39044;&#27979;&#35823;&#24046;&#22270;'</span>)
+set(gca,<span class="string">'Xtick'</span>,[1:3])
+legend(<span class="string">'7'</span>,<span class="string">'11'</span>,<span class="string">'14'</span>,<span class="string">'18'</span>,<span class="string">'location'</span>,<span class="string">'best'</span>)
+xlabel(<span class="string">'&#26102;&#38388;&#28857;'</span>)
+ylabel(<span class="string">'&#35823;&#24046;'</span>)
+hold <span class="string">off</span>;
+</pre><img vspace="5" hspace="5" src="chapter23_01.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2012b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Matlab神经网络43个案例分析
+
+% 基于Elman神经网络的电力负荷预测模型研究
+% by 王小川(@王小川_matlab)
+% http://www.matlabsky.com
+% Email:sina363@163.com
+% http://weibo.com/hgsz2003
+
+
+%% 清空环境变量
+
+clc;
+clear all
+close all
+nntwarn off;
+
+%% 数据载入
+
+load data;
+a=data;
+
+%% 选取训练数据和测试数据
+
+for i=1:6
+    p(i,:)=[a(i,:),a(i+1,:),a(i+2,:)];
+end
+% 训练数据输入
+p_train=p(1:5,:);
+% 训练数据输出
+t_train=a(4:8,:);
+% 测试数据输入
+p_test=p(6,:);
+% 测试数据输出
+t_test=a(9,:);
+
+% 为适应网络结构 做转置
+
+p_train=p_train';
+t_train=t_train';
+p_test=p_test';
+
+
+%% 网络的建立和训练
+% 利用循环，设置不同的隐藏层神经元个数
+nn=[7 11 14 18];
+for i=1:4
+    threshold=[0 1;0 1;0 1;0 1;0 1;0 1;0 1;0 1;0 1];
+    % 建立Elman神经网络 隐藏层为nn(i)个神经元
+    net=newelm(threshold,[nn(i),3],{'tansig','purelin'});
+    % 设置网络训练参数
+    net.trainparam.epochs=1000;
+    net.trainparam.show=20;
+    % 初始化网络
+    net=init(net);
+    % Elman网络训练
+    net=train(net,p_train,t_train);
+    % 预测数据
+    y=sim(net,p_test);
+    % 计算误差
+    error(i,:)=y'-t_test;
+end
+
+%% 通过作图 观察不同隐藏层神经元个数时，网络的预测效果
+
+plot(1:1:3,error(1,:),'-ro','linewidth',2);
+hold on;
+plot(1:1:3,error(2,:),'b:x','linewidth',2);
+hold on;
+plot(1:1:3,error(3,:),'k-.s','linewidth',2);
+hold on;
+plot(1:1:3,error(4,:),'cREPLACE_WITH_DASH_DASHd','linewidth',2);
+title('Elman预测误差图')
+set(gca,'Xtick',[1:3])
+legend('7','11','14','18','location','best')
+xlabel('时间点')
+ylabel('误差')
+hold off;
+
+##### SOURCE END #####
+--></body></html>

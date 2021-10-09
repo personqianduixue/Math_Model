@@ -1,0 +1,303 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>chapter25</title><meta name="generator" content="MATLAB 8.0"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2013-08-21"><meta name="DC.source" content="chapter25.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;</a></li><li><a href="#2">&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;</a></li><li><a href="#3">&#20135;&#29983;&#36755;&#20837; &#36755;&#20986;&#25968;&#25454;</a></li><li><a href="#4">&#21464;&#37327;&#31579;&#36873; MIV&#31639;&#27861;&#30340;&#21021;&#27493;&#23454;&#29616;&#65288;&#22686;&#21152;&#25110;&#32773;&#20943;&#23569;&#33258;&#21464;&#37327;&#65289;</a></li><li><a href="#5">&#21033;&#29992;&#21407;&#22987;&#25968;&#25454;&#35757;&#32451;&#19968;&#20010;&#27491;&#30830;&#30340;&#31070;&#32463;&#32593;&#32476;</a></li><li><a href="#6">&#21464;&#37327;&#31579;&#36873; MIV&#31639;&#27861;&#30340;&#21518;&#32493;&#23454;&#29616;&#65288;&#24046;&#20540;&#35745;&#31639;&#65289;</a></li><li><a href="#7">MIV&#30340;&#20540;&#20026;&#21508;&#20010;&#39033;&#32593;&#32476;&#36755;&#20986;&#30340;MIV&#20540; MIV&#34987;&#35748;&#20026;&#26159;&#22312;&#31070;&#32463;&#32593;&#32476;&#20013;&#35780;&#20215;&#21464;&#37327;&#30456;&#20851;&#30340;&#26368;&#22909;&#25351;&#26631;&#20043;&#19968;&#65292;&#20854;&#31526;&#21495;&#20195;&#34920;&#30456;&#20851;&#30340;&#26041;&#21521;&#65292;&#32477;&#23545;&#20540;&#22823;&#23567;&#20195;&#34920;&#24433;&#21709;&#30340;&#30456;&#23545;&#37325;&#35201;&#24615;&#12290;</a></li></ul></div><h2>Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;<a name="1"></a></h2><pre class="codeinput"><span class="comment">% &#31070;&#32463;&#32593;&#32476;&#21464;&#37327;&#31579;&#36873;&#8212;&#22522;&#20110;MIV&#30340;&#31070;&#32463;&#32593;&#32476;&#21464;&#37327;&#31579;&#36873;</span>
+<span class="comment">% by &#29579;&#23567;&#24029;(@&#29579;&#23567;&#24029;_matlab)</span>
+<span class="comment">% http://www.matlabsky.com</span>
+<span class="comment">% Email:sina363@163.com</span>
+<span class="comment">% http://weibo.com/hgsz2003</span>
+</pre><h2>&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;<a name="2"></a></h2><pre class="codeinput">clc
+clear
+</pre><h2>&#20135;&#29983;&#36755;&#20837; &#36755;&#20986;&#25968;&#25454;<a name="3"></a></h2><pre class="codeinput"><span class="comment">% &#35774;&#32622;&#27493;&#38271;</span>
+interval=0.01;
+
+<span class="comment">% &#20135;&#29983;x1 x2</span>
+x1=-1.5:interval:1.5;
+x2=-1.5:interval:1.5;
+
+<span class="comment">% &#20135;&#29983;x3 x4&#65288;&#22122;&#22768;&#65289;</span>
+x=rand(1,301);
+x3=(x-0.5)*1.5*2;
+x4=(x-0.5)*1.5*2;
+
+<span class="comment">% &#25353;&#29031;&#20989;&#25968;&#20808;&#27714;&#24471;&#30456;&#24212;&#30340;&#20989;&#25968;&#20540;&#65292;&#20316;&#20026;&#32593;&#32476;&#30340;&#36755;&#20986;&#12290;</span>
+F =20+x1.^2-10*cos(2*pi*x1)+x2.^2-10*cos(2*pi*x2);
+
+<span class="comment">%&#35774;&#32622;&#32593;&#32476;&#36755;&#20837;&#36755;&#20986;&#20540;</span>
+p=[x1;x2;x3;x4];
+t=F;
+</pre><h2>&#21464;&#37327;&#31579;&#36873; MIV&#31639;&#27861;&#30340;&#21021;&#27493;&#23454;&#29616;&#65288;&#22686;&#21152;&#25110;&#32773;&#20943;&#23569;&#33258;&#21464;&#37327;&#65289;<a name="4"></a></h2><pre class="codeinput">p=p';
+[m,n]=size(p);
+yy_temp=p;
+
+<span class="comment">% p_increase&#20026;&#22686;&#21152;10%&#30340;&#30697;&#38453; p_decrease&#20026;&#20943;&#23569;10%&#30340;&#30697;&#38453;</span>
+<span class="keyword">for</span> i=1:n
+    p=yy_temp;
+    pX=p(:,i);
+    pa=pX*1.1;
+    p(:,i)=pa;
+    aa=[<span class="string">'p_increase'</span>  int2str(i) <span class="string">'=p;'</span>];
+    eval(aa);
+<span class="keyword">end</span>
+
+
+<span class="keyword">for</span> i=1:n
+    p=yy_temp;
+    pX=p(:,i);
+    pa=pX*0.9;
+    p(:,i)=pa;
+    aa=[<span class="string">'p_decrease'</span> int2str(i) <span class="string">'=p;'</span>];
+    eval(aa);
+<span class="keyword">end</span>
+</pre><h2>&#21033;&#29992;&#21407;&#22987;&#25968;&#25454;&#35757;&#32451;&#19968;&#20010;&#27491;&#30830;&#30340;&#31070;&#32463;&#32593;&#32476;<a name="5"></a></h2><pre class="codeinput">nntwarn <span class="string">off</span>;
+p=yy_temp;
+p=p';
+<span class="comment">% bp&#32593;&#32476;&#24314;&#31435;</span>
+net=newff(minmax(p),[8,1],{<span class="string">'tansig'</span>,<span class="string">'purelin'</span>},<span class="string">'traingdm'</span>);
+<span class="comment">% &#21021;&#22987;&#21270;bp&#32593;&#32476;</span>
+net=init(net);
+<span class="comment">% &#32593;&#32476;&#35757;&#32451;&#21442;&#25968;&#35774;&#32622;</span>
+net.trainParam.show=50;
+net.trainParam.lr=0.05;
+net.trainParam.mc=0.9;
+net.trainParam.epochs=2000;
+
+<span class="comment">% bp&#32593;&#32476;&#35757;&#32451;</span>
+net=train(net,p,t);
+</pre><h2>&#21464;&#37327;&#31579;&#36873; MIV&#31639;&#27861;&#30340;&#21518;&#32493;&#23454;&#29616;&#65288;&#24046;&#20540;&#35745;&#31639;&#65289;<a name="6"></a></h2><pre class="codeinput"><span class="comment">% &#36716;&#32622;&#21518;sim</span>
+
+<span class="keyword">for</span> i=1:n
+    eval([<span class="string">'p_increase'</span>,num2str(i),<span class="string">'=transpose(p_increase'</span>,num2str(i),<span class="string">');'</span>])
+<span class="keyword">end</span>
+
+<span class="keyword">for</span> i=1:n
+    eval([<span class="string">'p_decrease'</span>,num2str(i),<span class="string">'=transpose(p_decrease'</span>,num2str(i),<span class="string">');'</span>])
+<span class="keyword">end</span>
+
+
+<span class="comment">% result_in&#20026;&#22686;&#21152;10%&#21518;&#30340;&#36755;&#20986; result_de&#20026;&#20943;&#23569;10%&#21518;&#30340;&#36755;&#20986;</span>
+<span class="keyword">for</span> i=1:n
+    eval([<span class="string">'result_in'</span>,num2str(i),<span class="string">'=sim(net,'</span>,<span class="string">'p_increase'</span>,num2str(i),<span class="string">');'</span>])
+<span class="keyword">end</span>
+
+<span class="keyword">for</span> i=1:n
+    eval([<span class="string">'result_de'</span>,num2str(i),<span class="string">'=sim(net,'</span>,<span class="string">'p_decrease'</span>,num2str(i),<span class="string">');'</span>])
+<span class="keyword">end</span>
+
+<span class="keyword">for</span> i=1:n
+    eval([<span class="string">'result_in'</span>,num2str(i),<span class="string">'=transpose(result_in'</span>,num2str(i),<span class="string">');'</span>])
+<span class="keyword">end</span>
+
+<span class="keyword">for</span> i=1:n
+    eval([<span class="string">'result_de'</span>,num2str(i),<span class="string">'=transpose(result_de'</span>,num2str(i),<span class="string">');'</span>])
+<span class="keyword">end</span>
+</pre><h2>MIV&#30340;&#20540;&#20026;&#21508;&#20010;&#39033;&#32593;&#32476;&#36755;&#20986;&#30340;MIV&#20540; MIV&#34987;&#35748;&#20026;&#26159;&#22312;&#31070;&#32463;&#32593;&#32476;&#20013;&#35780;&#20215;&#21464;&#37327;&#30456;&#20851;&#30340;&#26368;&#22909;&#25351;&#26631;&#20043;&#19968;&#65292;&#20854;&#31526;&#21495;&#20195;&#34920;&#30456;&#20851;&#30340;&#26041;&#21521;&#65292;&#32477;&#23545;&#20540;&#22823;&#23567;&#20195;&#34920;&#24433;&#21709;&#30340;&#30456;&#23545;&#37325;&#35201;&#24615;&#12290;<a name="7"></a></h2><pre class="codeinput"><span class="keyword">for</span> i=1:n
+    IV= [<span class="string">'result_in'</span>,num2str(i), <span class="string">'-result_de'</span>,num2str(i)];
+    eval([<span class="string">'MIV_'</span>,num2str(i) ,<span class="string">'=mean('</span>,IV,<span class="string">')'</span>])
+
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">
+MIV_1 =
+
+    1.4661
+
+
+MIV_2 =
+
+    0.8138
+
+
+MIV_3 =
+
+   -0.4953
+
+
+MIV_4 =
+
+    0.1710
+
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2012b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Matlab神经网络43个案例分析
+
+% 神经网络变量筛选—基于MIV的神经网络变量筛选
+% by 王小川(@王小川_matlab)
+% http://www.matlabsky.com
+% Email:sina363@163.com
+% http://weibo.com/hgsz2003
+
+%% 清空环境变量
+clc
+clear
+%% 产生输入 输出数据
+
+% 设置步长
+interval=0.01;
+
+% 产生x1 x2
+x1=-1.5:interval:1.5;
+x2=-1.5:interval:1.5;
+
+% 产生x3 x4（噪声）
+x=rand(1,301);
+x3=(x-0.5)*1.5*2;
+x4=(x-0.5)*1.5*2;
+
+% 按照函数先求得相应的函数值，作为网络的输出。
+F =20+x1.^2-10*cos(2*pi*x1)+x2.^2-10*cos(2*pi*x2);
+
+%设置网络输入输出值
+p=[x1;x2;x3;x4];
+t=F;
+
+
+%% 变量筛选 MIV算法的初步实现（增加或者减少自变量）
+
+p=p';
+[m,n]=size(p);
+yy_temp=p;
+
+% p_increase为增加10%的矩阵 p_decrease为减少10%的矩阵
+for i=1:n
+    p=yy_temp;
+    pX=p(:,i);
+    pa=pX*1.1;
+    p(:,i)=pa;
+    aa=['p_increase'  int2str(i) '=p;'];
+    eval(aa);
+end
+
+
+for i=1:n
+    p=yy_temp;
+    pX=p(:,i);
+    pa=pX*0.9;
+    p(:,i)=pa;
+    aa=['p_decrease' int2str(i) '=p;'];
+    eval(aa);
+end
+
+
+%% 利用原始数据训练一个正确的神经网络
+nntwarn off;
+p=yy_temp;
+p=p';
+% bp网络建立
+net=newff(minmax(p),[8,1],{'tansig','purelin'},'traingdm');
+% 初始化bp网络
+net=init(net);
+% 网络训练参数设置
+net.trainParam.show=50;
+net.trainParam.lr=0.05;
+net.trainParam.mc=0.9;
+net.trainParam.epochs=2000;
+
+% bp网络训练
+net=train(net,p,t);
+
+
+%% 变量筛选 MIV算法的后续实现（差值计算）
+
+% 转置后sim
+
+for i=1:n
+    eval(['p_increase',num2str(i),'=transpose(p_increase',num2str(i),');'])
+end
+
+for i=1:n
+    eval(['p_decrease',num2str(i),'=transpose(p_decrease',num2str(i),');'])
+end
+
+
+% result_in为增加10%后的输出 result_de为减少10%后的输出
+for i=1:n
+    eval(['result_in',num2str(i),'=sim(net,','p_increase',num2str(i),');'])
+end
+
+for i=1:n
+    eval(['result_de',num2str(i),'=sim(net,','p_decrease',num2str(i),');'])
+end
+
+for i=1:n
+    eval(['result_in',num2str(i),'=transpose(result_in',num2str(i),');'])
+end
+
+for i=1:n
+    eval(['result_de',num2str(i),'=transpose(result_de',num2str(i),');'])
+end
+
+%% MIV的值为各个项网络输出的MIV值 MIV被认为是在神经网络中评价变量相关的最好指标之一，其符号代表相关的方向，绝对值大小代表影响的相对重要性。
+
+
+for i=1:n
+    IV= ['result_in',num2str(i), '-result_de',num2str(i)];
+    eval(['MIV_',num2str(i) ,'=mean(',IV,')'])
+    
+end
+
+##### SOURCE END #####
+--></body></html>

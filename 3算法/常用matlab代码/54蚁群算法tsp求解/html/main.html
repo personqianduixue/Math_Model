@@ -1,0 +1,313 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>main</title><meta name="generator" content="MATLAB 7.14"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2015-11-08"><meta name="DC.source" content="main.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">I. &#28165;&#31354;&#29615;&#22659;&#21464;&#37327;</a></li><li><a href="#2">II. &#23548;&#20837;&#25968;&#25454;</a></li><li><a href="#3">III. &#35745;&#31639;&#22478;&#24066;&#38388;&#30456;&#20114;&#36317;&#31163;</a></li><li><a href="#4">IV. &#21021;&#22987;&#21270;&#21442;&#25968;</a></li><li><a href="#5">V. &#36845;&#20195;&#23547;&#25214;&#26368;&#20339;&#36335;&#24452;</a></li><li><a href="#6">VI. &#32467;&#26524;&#26174;&#31034;</a></li><li><a href="#7">VII. &#32472;&#22270;</a></li></ul></div><h2>I. &#28165;&#31354;&#29615;&#22659;&#21464;&#37327;<a name="1"></a></h2><pre class="codeinput">clear <span class="string">all</span>
+clc
+</pre><h2>II. &#23548;&#20837;&#25968;&#25454;<a name="2"></a></h2><pre class="codeinput">load <span class="string">citys_data.mat</span>
+</pre><h2>III. &#35745;&#31639;&#22478;&#24066;&#38388;&#30456;&#20114;&#36317;&#31163;<a name="3"></a></h2><pre class="codeinput">n = size(citys,1);
+D = zeros(n,n);
+<span class="keyword">for</span> i = 1:n
+    <span class="keyword">for</span> j = 1:n
+        <span class="keyword">if</span> i ~= j
+            D(i,j) = sqrt(sum((citys(i,:) - citys(j,:)).^2));
+        <span class="keyword">else</span>
+            D(i,j) = 1e-4;
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre><h2>IV. &#21021;&#22987;&#21270;&#21442;&#25968;<a name="4"></a></h2><pre class="codeinput">m = 50;                              <span class="comment">% &#34434;&#34433;&#25968;&#37327;</span>
+alpha = 1;                           <span class="comment">% &#20449;&#24687;&#32032;&#37325;&#35201;&#31243;&#24230;&#22240;&#23376;</span>
+beta = 5;                            <span class="comment">% &#21551;&#21457;&#20989;&#25968;&#37325;&#35201;&#31243;&#24230;&#22240;&#23376;</span>
+rho = 0.1;                           <span class="comment">% &#20449;&#24687;&#32032;&#25381;&#21457;&#22240;&#23376;</span>
+Q = 1;                               <span class="comment">% &#24120;&#31995;&#25968;</span>
+Eta = 1./D;                          <span class="comment">% &#21551;&#21457;&#20989;&#25968;</span>
+Tau = ones(n,n);                     <span class="comment">% &#20449;&#24687;&#32032;&#30697;&#38453;</span>
+Table = zeros(m,n);                  <span class="comment">% &#36335;&#24452;&#35760;&#24405;&#34920;</span>
+iter = 1;                            <span class="comment">% &#36845;&#20195;&#27425;&#25968;&#21021;&#20540;</span>
+iter_max = 200;                      <span class="comment">% &#26368;&#22823;&#36845;&#20195;&#27425;&#25968;</span>
+Route_best = zeros(iter_max,n);      <span class="comment">% &#21508;&#20195;&#26368;&#20339;&#36335;&#24452;</span>
+Length_best = zeros(iter_max,1);     <span class="comment">% &#21508;&#20195;&#26368;&#20339;&#36335;&#24452;&#30340;&#38271;&#24230;</span>
+Length_ave = zeros(iter_max,1);      <span class="comment">% &#21508;&#20195;&#36335;&#24452;&#30340;&#24179;&#22343;&#38271;&#24230;</span>
+</pre><h2>V. &#36845;&#20195;&#23547;&#25214;&#26368;&#20339;&#36335;&#24452;<a name="5"></a></h2><pre class="codeinput"><span class="keyword">while</span> iter &lt;= iter_max
+     <span class="comment">% &#38543;&#26426;&#20135;&#29983;&#21508;&#20010;&#34434;&#34433;&#30340;&#36215;&#28857;&#22478;&#24066;</span>
+      start = zeros(m,1);
+      <span class="keyword">for</span> i = 1:m
+          temp = randperm(n);
+          start(i) = temp(1);
+      <span class="keyword">end</span>
+      Table(:,1) = start;
+      citys_index = 1:n;
+      <span class="comment">% &#36880;&#20010;&#34434;&#34433;&#36335;&#24452;&#36873;&#25321;</span>
+      <span class="keyword">for</span> i = 1:m
+          <span class="comment">% &#36880;&#20010;&#22478;&#24066;&#36335;&#24452;&#36873;&#25321;</span>
+         <span class="keyword">for</span> j = 2:n
+             tabu = Table(i,1:(j - 1));           <span class="comment">% &#24050;&#35775;&#38382;&#30340;&#22478;&#24066;&#38598;&#21512;(&#31105;&#24524;&#34920;)</span>
+             allow_index = ~ismember(citys_index,tabu);
+             allow = citys_index(allow_index);  <span class="comment">% &#24453;&#35775;&#38382;&#30340;&#22478;&#24066;&#38598;&#21512;</span>
+             P = allow;
+             <span class="comment">% &#35745;&#31639;&#22478;&#24066;&#38388;&#36716;&#31227;&#27010;&#29575;</span>
+             <span class="keyword">for</span> k = 1:length(allow)
+                 P(k) = Tau(tabu(end),allow(k))^alpha * Eta(tabu(end),allow(k))^beta;
+             <span class="keyword">end</span>
+             P = P/sum(P);
+             <span class="comment">% &#36718;&#30424;&#36172;&#27861;&#36873;&#25321;&#19979;&#19968;&#20010;&#35775;&#38382;&#22478;&#24066;</span>
+             Pc = cumsum(P);
+            target_index = find(Pc &gt;= rand);
+            target = allow(target_index(1));
+            Table(i,j) = target;
+         <span class="keyword">end</span>
+      <span class="keyword">end</span>
+      <span class="comment">% &#35745;&#31639;&#21508;&#20010;&#34434;&#34433;&#30340;&#36335;&#24452;&#36317;&#31163;</span>
+      Length = zeros(m,1);
+      <span class="keyword">for</span> i = 1:m
+          Route = Table(i,:);
+          <span class="keyword">for</span> j = 1:(n - 1)
+              Length(i) = Length(i) + D(Route(j),Route(j + 1));
+          <span class="keyword">end</span>
+          Length(i) = Length(i) + D(Route(n),Route(1));
+      <span class="keyword">end</span>
+      <span class="comment">% &#35745;&#31639;&#26368;&#30701;&#36335;&#24452;&#36317;&#31163;&#21450;&#24179;&#22343;&#36317;&#31163;</span>
+      <span class="keyword">if</span> iter == 1
+          [min_Length,min_index] = min(Length);
+          Length_best(iter) = min_Length;
+          Length_ave(iter) = mean(Length);
+          Route_best(iter,:) = Table(min_index,:);
+      <span class="keyword">else</span>
+          [min_Length,min_index] = min(Length);
+          Length_best(iter) = min(Length_best(iter - 1),min_Length);
+          Length_ave(iter) = mean(Length);
+          <span class="keyword">if</span> Length_best(iter) == min_Length
+              Route_best(iter,:) = Table(min_index,:);
+          <span class="keyword">else</span>
+              Route_best(iter,:) = Route_best((iter-1),:);
+          <span class="keyword">end</span>
+      <span class="keyword">end</span>
+      <span class="comment">% &#26356;&#26032;&#20449;&#24687;&#32032;</span>
+      Delta_Tau = zeros(n,n);
+      <span class="comment">% &#36880;&#20010;&#34434;&#34433;&#35745;&#31639;</span>
+      <span class="keyword">for</span> i = 1:m
+          <span class="comment">% &#36880;&#20010;&#22478;&#24066;&#35745;&#31639;</span>
+          <span class="keyword">for</span> j = 1:(n - 1)
+              Delta_Tau(Table(i,j),Table(i,j+1)) = Delta_Tau(Table(i,j),Table(i,j+1)) + Q/Length(i);
+          <span class="keyword">end</span>
+          Delta_Tau(Table(i,n),Table(i,1)) = Delta_Tau(Table(i,n),Table(i,1)) + Q/Length(i);
+      <span class="keyword">end</span>
+      Tau = (1-rho) * Tau + Delta_Tau;
+    <span class="comment">% &#36845;&#20195;&#27425;&#25968;&#21152;1&#65292;&#28165;&#31354;&#36335;&#24452;&#35760;&#24405;&#34920;</span>
+    iter = iter + 1;
+    Table = zeros(m,n);
+<span class="keyword">end</span>
+</pre><h2>VI. &#32467;&#26524;&#26174;&#31034;<a name="6"></a></h2><pre class="codeinput">[Shortest_Length,index] = min(Length_best);
+Shortest_Route = Route_best(index,:);
+disp([<span class="string">'&#26368;&#30701;&#36317;&#31163;:'</span> num2str(Shortest_Length)]);
+disp([<span class="string">'&#26368;&#30701;&#36335;&#24452;:'</span> num2str([Shortest_Route Shortest_Route(1)])]);
+</pre><pre class="codeoutput">&#26368;&#30701;&#36317;&#31163;:15601.9195
+&#26368;&#30701;&#36335;&#24452;:14  12  13  11  23  16   5   6   7   2   4   8   9  10   3  18  17  19  24  25  20  21  22  26  28  27  30  31  29   1  15  14
+</pre><h2>VII. &#32472;&#22270;<a name="7"></a></h2><pre class="codeinput">figure(1)
+plot([citys(Shortest_Route,1);citys(Shortest_Route(1),1)],<span class="keyword">...</span>
+     [citys(Shortest_Route,2);citys(Shortest_Route(1),2)],<span class="string">'o-'</span>);
+grid <span class="string">on</span>
+<span class="keyword">for</span> i = 1:size(citys,1)
+    text(citys(i,1),citys(i,2),[<span class="string">'   '</span> num2str(i)]);
+<span class="keyword">end</span>
+text(citys(Shortest_Route(1),1),citys(Shortest_Route(1),2),<span class="string">'       &#36215;&#28857;'</span>);
+text(citys(Shortest_Route(end),1),citys(Shortest_Route(end),2),<span class="string">'       &#32456;&#28857;'</span>);
+xlabel(<span class="string">'&#22478;&#24066;&#20301;&#32622;&#27178;&#22352;&#26631;'</span>)
+ylabel(<span class="string">'&#22478;&#24066;&#20301;&#32622;&#32437;&#22352;&#26631;'</span>)
+title([<span class="string">'&#34433;&#32676;&#31639;&#27861;&#20248;&#21270;&#36335;&#24452;(&#26368;&#30701;&#36317;&#31163;:'</span> num2str(Shortest_Length) <span class="string">')'</span>])
+figure(2)
+plot(1:iter_max,Length_best,<span class="string">'b'</span>,1:iter_max,Length_ave,<span class="string">'r:'</span>)
+legend(<span class="string">'&#26368;&#30701;&#36317;&#31163;'</span>,<span class="string">'&#24179;&#22343;&#36317;&#31163;'</span>)
+xlabel(<span class="string">'&#36845;&#20195;&#27425;&#25968;'</span>)
+ylabel(<span class="string">'&#36317;&#31163;'</span>)
+title(<span class="string">'&#21508;&#20195;&#26368;&#30701;&#36317;&#31163;&#19982;&#24179;&#22343;&#36317;&#31163;&#23545;&#27604;'</span>)
+</pre><img vspace="5" hspace="5" src="main_01.png" alt=""> <img vspace="5" hspace="5" src="main_02.png" alt=""> <p class="footer"><br>
+      Published with MATLAB&reg; 7.14<br></p></div><!--
+##### SOURCE BEGIN #####
+%% I. 清空环境变量
+clear all
+clc
+
+%% II. 导入数据
+load citys_data.mat
+
+%% III. 计算城市间相互距离
+n = size(citys,1);
+D = zeros(n,n);
+for i = 1:n
+    for j = 1:n
+        if i ~= j
+            D(i,j) = sqrt(sum((citys(i,:) - citys(j,:)).^2));
+        else
+            D(i,j) = 1e-4;      
+        end
+    end    
+end
+
+%% IV. 初始化参数
+m = 50;                              % 蚂蚁数量
+alpha = 1;                           % 信息素重要程度因子
+beta = 5;                            % 启发函数重要程度因子
+rho = 0.1;                           % 信息素挥发因子
+Q = 1;                               % 常系数
+Eta = 1./D;                          % 启发函数
+Tau = ones(n,n);                     % 信息素矩阵
+Table = zeros(m,n);                  % 路径记录表
+iter = 1;                            % 迭代次数初值
+iter_max = 200;                      % 最大迭代次数 
+Route_best = zeros(iter_max,n);      % 各代最佳路径       
+Length_best = zeros(iter_max,1);     % 各代最佳路径的长度  
+Length_ave = zeros(iter_max,1);      % 各代路径的平均长度  
+
+%% V. 迭代寻找最佳路径
+while iter <= iter_max
+     % 随机产生各个蚂蚁的起点城市
+      start = zeros(m,1);
+      for i = 1:m
+          temp = randperm(n);
+          start(i) = temp(1);
+      end
+      Table(:,1) = start; 
+      citys_index = 1:n;
+      % 逐个蚂蚁路径选择
+      for i = 1:m
+          % 逐个城市路径选择
+         for j = 2:n
+             tabu = Table(i,1:(j - 1));           % 已访问的城市集合(禁忌表)
+             allow_index = ~ismember(citys_index,tabu);
+             allow = citys_index(allow_index);  % 待访问的城市集合
+             P = allow;
+             % 计算城市间转移概率
+             for k = 1:length(allow)
+                 P(k) = Tau(tabu(end),allow(k))^alpha * Eta(tabu(end),allow(k))^beta;
+             end
+             P = P/sum(P);
+             % 轮盘赌法选择下一个访问城市
+             Pc = cumsum(P);     
+            target_index = find(Pc >= rand); 
+            target = allow(target_index(1));
+            Table(i,j) = target;
+         end
+      end
+      % 计算各个蚂蚁的路径距离
+      Length = zeros(m,1);
+      for i = 1:m
+          Route = Table(i,:);
+          for j = 1:(n - 1)
+              Length(i) = Length(i) + D(Route(j),Route(j + 1));
+          end
+          Length(i) = Length(i) + D(Route(n),Route(1));
+      end
+      % 计算最短路径距离及平均距离
+      if iter == 1
+          [min_Length,min_index] = min(Length);
+          Length_best(iter) = min_Length;  
+          Length_ave(iter) = mean(Length);
+          Route_best(iter,:) = Table(min_index,:);
+      else
+          [min_Length,min_index] = min(Length);
+          Length_best(iter) = min(Length_best(iter - 1),min_Length);
+          Length_ave(iter) = mean(Length);
+          if Length_best(iter) == min_Length
+              Route_best(iter,:) = Table(min_index,:);
+          else
+              Route_best(iter,:) = Route_best((iter-1),:);
+          end
+      end
+      % 更新信息素
+      Delta_Tau = zeros(n,n);
+      % 逐个蚂蚁计算
+      for i = 1:m
+          % 逐个城市计算
+          for j = 1:(n - 1)
+              Delta_Tau(Table(i,j),Table(i,j+1)) = Delta_Tau(Table(i,j),Table(i,j+1)) + Q/Length(i);
+          end
+          Delta_Tau(Table(i,n),Table(i,1)) = Delta_Tau(Table(i,n),Table(i,1)) + Q/Length(i);
+      end
+      Tau = (1-rho) * Tau + Delta_Tau;
+    % 迭代次数加1，清空路径记录表
+    iter = iter + 1;
+    Table = zeros(m,n);
+end
+
+%% VI. 结果显示
+[Shortest_Length,index] = min(Length_best);
+Shortest_Route = Route_best(index,:);
+disp(['最短距离:' num2str(Shortest_Length)]);
+disp(['最短路径:' num2str([Shortest_Route Shortest_Route(1)])]);
+
+%% VII. 绘图
+figure(1)
+plot([citys(Shortest_Route,1);citys(Shortest_Route(1),1)],...
+     [citys(Shortest_Route,2);citys(Shortest_Route(1),2)],'o-');
+grid on
+for i = 1:size(citys,1)
+    text(citys(i,1),citys(i,2),['   ' num2str(i)]);
+end
+text(citys(Shortest_Route(1),1),citys(Shortest_Route(1),2),'       起点');
+text(citys(Shortest_Route(end),1),citys(Shortest_Route(end),2),'       终点');
+xlabel('城市位置横坐标')
+ylabel('城市位置纵坐标')
+title(['蚁群算法优化路径(最短距离:' num2str(Shortest_Length) ')'])
+figure(2)
+plot(1:iter_max,Length_best,'b',1:iter_max,Length_ave,'r:')
+legend('最短距离','平均距离')
+xlabel('迭代次数')
+ylabel('距离')
+title('各代最短距离与平均距离对比')
+##### SOURCE END #####
+--></body></html>

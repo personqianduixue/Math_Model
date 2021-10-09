@@ -1,0 +1,19 @@
+function [W] = Huffman(A)
+%求Huffman树
+% arg:A表示已知的叶子顶点的权重向量
+%     W表示Huffman树
+
+k = 1;
+Y = sort(A);
+n = length(A);
+B = Y(1) + Y(2);
+Y1 = Y;
+m = 0;
+while m == 0
+    k = k + 1;
+    B1 = [B Y1]
+end
+
+
+end
+

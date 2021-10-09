@@ -1,0 +1,429 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>chapter8_1</title><meta name="generator" content="MATLAB 8.0"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2013-08-21"><meta name="DC.source" content="chapter8_1.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;</a></li><li><a href="#2">&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;</a></li><li><a href="#3">&#36733;&#20837;&#25968;&#25454;</a></li><li><a href="#4">&#20132;&#21449;&#39564;&#35777;</a></li><li><a href="#5">&#37319;&#29992;&#26368;&#20339;&#26041;&#27861;&#24314;&#31435;GRNN&#32593;&#32476;</a></li></ul></div><h2>Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;<a name="1"></a></h2><pre class="codeinput"><span class="comment">% GRNN&#30340;&#25968;&#25454;&#39044;&#27979;&#8212;&#22522;&#20110;&#24191;&#20041;&#22238;&#24402;&#31070;&#32463;&#32593;&#32476;&#30340;&#36135;&#36816;&#37327;&#39044;&#27979;</span>
+<span class="comment">% by &#29579;&#23567;&#24029;(@&#29579;&#23567;&#24029;_matlab)</span>
+<span class="comment">% http://www.matlabsky.com</span>
+<span class="comment">% Email:sina363@163.com</span>
+<span class="comment">% http://weibo.com/hgsz2003</span>
+</pre><h2>&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;<a name="2"></a></h2><pre class="codeinput">clc;
+clear <span class="string">all</span>
+close <span class="string">all</span>
+nntwarn <span class="string">off</span>;
+</pre><h2>&#36733;&#20837;&#25968;&#25454;<a name="3"></a></h2><pre class="codeinput">load <span class="string">data</span>;
+<span class="comment">% &#36733;&#20837;&#25968;&#25454;&#24182;&#23558;&#25968;&#25454;&#20998;&#25104;&#35757;&#32451;&#21644;&#39044;&#27979;&#20004;&#31867;</span>
+p_train=p(1:12,:);
+t_train=t(1:12,:);
+p_test=p(13,:);
+t_test=t(13,:);
+</pre><h2>&#20132;&#21449;&#39564;&#35777;<a name="4"></a></h2><pre class="codeinput">desired_spread=[];
+mse_max=10e20;
+desired_input=[];
+desired_output=[];
+result_perfp=[];
+indices = crossvalind(<span class="string">'Kfold'</span>,length(p_train),4);
+h=waitbar(0,<span class="string">'&#27491;&#22312;&#23547;&#25214;&#26368;&#20248;&#21270;&#21442;&#25968;....'</span>);
+k=1;
+<span class="keyword">for</span> i = 1:4
+    perfp=[];
+    disp([<span class="string">'&#20197;&#19979;&#20026;&#31532;'</span>,num2str(i),<span class="string">'&#27425;&#20132;&#21449;&#39564;&#35777;&#32467;&#26524;'</span>])
+    test = (indices == i); train = ~test;
+    p_cv_train=p_train(train,:);
+    t_cv_train=t_train(train,:);
+    p_cv_test=p_train(test,:);
+    t_cv_test=t_train(test,:);
+    p_cv_train=p_cv_train';
+    t_cv_train=t_cv_train';
+    p_cv_test= p_cv_test';
+    t_cv_test= t_cv_test';
+    [p_cv_train,minp,maxp,t_cv_train,mint,maxt]=premnmx(p_cv_train,t_cv_train);
+    p_cv_test=tramnmx(p_cv_test,minp,maxp);
+    <span class="keyword">for</span> spread=0.1:0.1:2;
+        net=newgrnn(p_cv_train,t_cv_train,spread);
+        waitbar(k/80,h);
+        disp([<span class="string">'&#24403;&#21069;spread&#20540;&#20026;'</span>, num2str(spread)]);
+        test_Out=sim(net,p_cv_test);
+        test_Out=postmnmx(test_Out,mint,maxt);
+        error=t_cv_test-test_Out;
+        disp([<span class="string">'&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;'</span>,num2str(mse(error))])
+        perfp=[perfp mse(error)];
+        <span class="keyword">if</span> mse(error)&lt;mse_max
+            mse_max=mse(error);
+            desired_spread=spread;
+            desired_input=p_cv_train;
+            desired_output=t_cv_train;
+        <span class="keyword">end</span>
+        k=k+1;
+    <span class="keyword">end</span>
+    result_perfp(i,:)=perfp;
+<span class="keyword">end</span>;
+close(h)
+disp([<span class="string">'&#26368;&#20339;spread&#20540;&#20026;'</span>,num2str(desired_spread)])
+disp([<span class="string">'&#27492;&#26102;&#26368;&#20339;&#36755;&#20837;&#20540;&#20026;'</span>])
+desired_input
+disp([<span class="string">'&#27492;&#26102;&#26368;&#20339;&#36755;&#20986;&#20540;&#20026;'</span>])
+desired_output
+</pre><pre class="codeoutput">&#20197;&#19979;&#20026;&#31532;1&#27425;&#20132;&#21449;&#39564;&#35777;&#32467;&#26524;
+&#24403;&#21069;spread&#20540;&#20026;0.1
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;168102714.7778
+&#24403;&#21069;spread&#20540;&#20026;0.2
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;168091990.0268
+&#24403;&#21069;spread&#20540;&#20026;0.3
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;164945820.5627
+&#24403;&#21069;spread&#20540;&#20026;0.4
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;140601500.0384
+&#24403;&#21069;spread&#20540;&#20026;0.5
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;95022888.7014
+&#24403;&#21069;spread&#20540;&#20026;0.6
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;56407197.1141
+&#24403;&#21069;spread&#20540;&#20026;0.7
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;37096067.4492
+&#24403;&#21069;spread&#20540;&#20026;0.8
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;31825493.799
+&#24403;&#21069;spread&#20540;&#20026;0.9
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;32462872.242
+&#24403;&#21069;spread&#20540;&#20026;1
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;33652511.6532
+&#24403;&#21069;spread&#20540;&#20026;1.1
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;32966217.7425
+&#24403;&#21069;spread&#20540;&#20026;1.2
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;29890389.335
+&#24403;&#21069;spread&#20540;&#20026;1.3
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;24995917.0594
+&#24403;&#21069;spread&#20540;&#20026;1.4
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;19370217.682
+&#24403;&#21069;spread&#20540;&#20026;1.5
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;14208720.1822
+&#24403;&#21069;spread&#20540;&#20026;1.6
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;10537775.1454
+&#24403;&#21069;spread&#20540;&#20026;1.7
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;9068984.4988
+&#24403;&#21069;spread&#20540;&#20026;1.8
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;10166272.5783
+&#24403;&#21069;spread&#20540;&#20026;1.9
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;13888509.6607
+&#24403;&#21069;spread&#20540;&#20026;2
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;20068185.6074
+&#20197;&#19979;&#20026;&#31532;2&#27425;&#20132;&#21449;&#39564;&#35777;&#32467;&#26524;
+&#24403;&#21069;spread&#20540;&#20026;0.1
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;470044911.7778
+&#24403;&#21069;spread&#20540;&#20026;0.2
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;470044912.1181
+&#24403;&#21069;spread&#20540;&#20026;0.3
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;470066830.1367
+&#24403;&#21069;spread&#20540;&#20026;0.4
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;470940334.7725
+&#24403;&#21069;spread&#20540;&#20026;0.5
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;473738776.7205
+&#24403;&#21069;spread&#20540;&#20026;0.6
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;476909935.8136
+&#24403;&#21069;spread&#20540;&#20026;0.7
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;483333587.1483
+&#24403;&#21069;spread&#20540;&#20026;0.8
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;497618821.8609
+&#24403;&#21069;spread&#20540;&#20026;0.9
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;520938453.2013
+&#24403;&#21069;spread&#20540;&#20026;1
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;552476201.7562
+&#24403;&#21069;spread&#20540;&#20026;1.1
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;591187778.9418
+&#24403;&#21069;spread&#20540;&#20026;1.2
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;636262961.2596
+&#24403;&#21069;spread&#20540;&#20026;1.3
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;687068970.0957
+&#24403;&#21069;spread&#20540;&#20026;1.4
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;743015571.4416
+&#24403;&#21069;spread&#20540;&#20026;1.5
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;803468244.8987
+&#24403;&#21069;spread&#20540;&#20026;1.6
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;867733104.4823
+&#24403;&#21069;spread&#20540;&#20026;1.7
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;935099586.4928
+&#24403;&#21069;spread&#20540;&#20026;1.8
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;1004907405.462
+&#24403;&#21069;spread&#20540;&#20026;1.9
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;1076602542.7849
+&#24403;&#21069;spread&#20540;&#20026;2
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;1149761313.6296
+&#20197;&#19979;&#20026;&#31532;3&#27425;&#20132;&#21449;&#39564;&#35777;&#32467;&#26524;
+&#24403;&#21069;spread&#20540;&#20026;0.1
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;95118433.5453
+&#24403;&#21069;spread&#20540;&#20026;0.2
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;78688846.7422
+&#24403;&#21069;spread&#20540;&#20026;0.3
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;46137143.2301
+&#24403;&#21069;spread&#20540;&#20026;0.4
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;34402975.1191
+&#24403;&#21069;spread&#20540;&#20026;0.5
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;31192371.876
+&#24403;&#21069;spread&#20540;&#20026;0.6
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;30797779.4989
+&#24403;&#21069;spread&#20540;&#20026;0.7
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;31315540.9043
+&#24403;&#21069;spread&#20540;&#20026;0.8
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;32476912.4093
+&#24403;&#21069;spread&#20540;&#20026;0.9
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;34936520.8315
+&#24403;&#21069;spread&#20540;&#20026;1
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;39696330.8664
+&#24403;&#21069;spread&#20540;&#20026;1.1
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;47771222.848
+&#24403;&#21069;spread&#20540;&#20026;1.2
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;60015679.7403
+&#24403;&#21069;spread&#20540;&#20026;1.3
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;77003449.6833
+&#24403;&#21069;spread&#20540;&#20026;1.4
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;98958937.5589
+&#24403;&#21069;spread&#20540;&#20026;1.5
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;125768502.9191
+&#24403;&#21069;spread&#20540;&#20026;1.6
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;157062950.6474
+&#24403;&#21069;spread&#20540;&#20026;1.7
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;192330183.2787
+&#24403;&#21069;spread&#20540;&#20026;1.8
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;231015742.4694
+&#24403;&#21069;spread&#20540;&#20026;1.9
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;272588391.5951
+&#24403;&#21069;spread&#20540;&#20026;2
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;316569162.2917
+&#20197;&#19979;&#20026;&#31532;4&#27425;&#20132;&#21449;&#39564;&#35777;&#32467;&#26524;
+&#24403;&#21069;spread&#20540;&#20026;0.1
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;132907387.8951
+&#24403;&#21069;spread&#20540;&#20026;0.2
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;99502383.701
+&#24403;&#21069;spread&#20540;&#20026;0.3
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;63425965.0726
+&#24403;&#21069;spread&#20540;&#20026;0.4
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;35816957.0482
+&#24403;&#21069;spread&#20540;&#20026;0.5
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;22880442.0395
+&#24403;&#21069;spread&#20540;&#20026;0.6
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;17269638.3685
+&#24403;&#21069;spread&#20540;&#20026;0.7
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;15209288.0592
+&#24403;&#21069;spread&#20540;&#20026;0.8
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;14910313.4997
+&#24403;&#21069;spread&#20540;&#20026;0.9
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;15511079.5183
+&#24403;&#21069;spread&#20540;&#20026;1
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;16691939.5748
+&#24403;&#21069;spread&#20540;&#20026;1.1
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;18397056.476
+&#24403;&#21069;spread&#20540;&#20026;1.2
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;20690407.5315
+&#24403;&#21069;spread&#20540;&#20026;1.3
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;23707370.8238
+&#24403;&#21069;spread&#20540;&#20026;1.4
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;27634558.7919
+&#24403;&#21069;spread&#20540;&#20026;1.5
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;32686552.5012
+&#24403;&#21069;spread&#20540;&#20026;1.6
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;39078299.1158
+&#24403;&#21069;spread&#20540;&#20026;1.7
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;47001474.5111
+&#24403;&#21069;spread&#20540;&#20026;1.8
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;56609948.0822
+&#24403;&#21069;spread&#20540;&#20026;1.9
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;68013700.8147
+&#24403;&#21069;spread&#20540;&#20026;2
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;81277539.992
+&#26368;&#20339;spread&#20540;&#20026;1.7
+&#27492;&#26102;&#26368;&#20339;&#36755;&#20837;&#20540;&#20026;
+
+desired_input =
+
+  Columns 1 through 7
+
+   -1.0000   -0.9578   -0.8593   -0.7570   -0.4706   -0.0351    0.6723
+   -0.9550   -0.9998   -1.0000   -0.1291   -0.0072    0.3417    0.7838
+   -1.0000   -1.0000   -0.8616   -0.4969   -0.4969    0.3333    0.6604
+   -1.0000   -1.0000   -0.5385   -0.0769    0.5385    0.3846    0.6923
+   -1.0000   -0.9749   -0.9185   -0.8934   -0.7555   -0.3103    0.5674
+   -1.0000   -0.7391   -0.7391   -0.7391   -0.3043   -0.0435    0.5652
+    0.0114    0.0141   -1.0000    0.0187    0.0187    0.3682    0.7735
+   -1.0000   -0.7677   -0.6979   -0.6639   -0.7291   -0.4229    0.3674
+
+  Columns 8 through 9
+
+    0.8793    1.0000
+    0.9372    1.0000
+    1.0000    1.0000
+    1.0000    1.0000
+    0.7367    1.0000
+    0.8261    1.0000
+    0.8635    1.0000
+    0.6368    1.0000
+
+&#27492;&#26102;&#26368;&#20339;&#36755;&#20986;&#20540;&#20026;
+
+desired_output =
+
+  Columns 1 through 7
+
+   -1.0000   -0.9931   -0.9771   -0.9770   -0.7068   -0.2420    0.5410
+   -1.0000   -0.9401   -0.8469   -0.8046   -0.5911   -0.1924    0.4292
+   -1.0000   -0.9512   -0.7580   -0.7602   -0.5070   -0.0244    0.4823
+
+  Columns 8 through 9
+
+    0.7795    1.0000
+    0.7311    1.0000
+    0.8349    1.0000
+
+</pre><h2>&#37319;&#29992;&#26368;&#20339;&#26041;&#27861;&#24314;&#31435;GRNN&#32593;&#32476;<a name="5"></a></h2><pre class="codeinput">net=newgrnn(desired_input,desired_output,desired_spread);
+p_test=p_test';
+p_test=tramnmx(p_test,minp,maxp);
+grnn_prediction_result=sim(net,p_test);
+grnn_prediction_result=postmnmx(grnn_prediction_result,mint,maxt);
+grnn_error=t_test-grnn_prediction_result';
+disp([<span class="string">'GRNN&#31070;&#32463;&#32593;&#32476;&#19977;&#39033;&#27969;&#37327;&#39044;&#27979;&#30340;&#35823;&#24046;&#20026;'</span>,num2str(abs(grnn_error))])
+save <span class="string">best</span> <span class="string">desired_input</span> <span class="string">desired_output</span> <span class="string">p_test</span> <span class="string">t_test</span> <span class="string">grnn_error</span> <span class="string">mint</span> <span class="string">maxt</span>
+</pre><pre class="codeoutput">GRNN&#31070;&#32463;&#32593;&#32476;&#19977;&#39033;&#27969;&#37327;&#39044;&#27979;&#30340;&#35823;&#24046;&#20026;30620.3688      16302.5073      24637.9722
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2012b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Matlab神经网络43个案例分析
+
+% GRNN的数据预测—基于广义回归神经网络的货运量预测
+% by 王小川(@王小川_matlab)
+% http://www.matlabsky.com
+% Email:sina363@163.com
+% http://weibo.com/hgsz2003
+ 
+%% 清空环境变量
+clc;
+clear all
+close all
+nntwarn off;
+
+%% 载入数据
+load data;
+% 载入数据并将数据分成训练和预测两类
+p_train=p(1:12,:);
+t_train=t(1:12,:);
+p_test=p(13,:);
+t_test=t(13,:);
+%% 交叉验证
+desired_spread=[];
+mse_max=10e20;
+desired_input=[];
+desired_output=[];
+result_perfp=[];
+indices = crossvalind('Kfold',length(p_train),4);
+h=waitbar(0,'正在寻找最优化参数....');
+k=1;
+for i = 1:4
+    perfp=[];
+    disp(['以下为第',num2str(i),'次交叉验证结果'])
+    test = (indices == i); train = ~test;
+    p_cv_train=p_train(train,:);
+    t_cv_train=t_train(train,:);
+    p_cv_test=p_train(test,:);
+    t_cv_test=t_train(test,:);
+    p_cv_train=p_cv_train';
+    t_cv_train=t_cv_train';
+    p_cv_test= p_cv_test';
+    t_cv_test= t_cv_test';
+    [p_cv_train,minp,maxp,t_cv_train,mint,maxt]=premnmx(p_cv_train,t_cv_train);
+    p_cv_test=tramnmx(p_cv_test,minp,maxp);
+    for spread=0.1:0.1:2;
+        net=newgrnn(p_cv_train,t_cv_train,spread);
+        waitbar(k/80,h);
+        disp(['当前spread值为', num2str(spread)]);
+        test_Out=sim(net,p_cv_test);
+        test_Out=postmnmx(test_Out,mint,maxt);
+        error=t_cv_test-test_Out;
+        disp(['当前网络的mse为',num2str(mse(error))])
+        perfp=[perfp mse(error)];
+        if mse(error)<mse_max
+            mse_max=mse(error);
+            desired_spread=spread;
+            desired_input=p_cv_train;
+            desired_output=t_cv_train;
+        end
+        k=k+1;
+    end
+    result_perfp(i,:)=perfp;
+end;
+close(h)
+disp(['最佳spread值为',num2str(desired_spread)])
+disp(['此时最佳输入值为'])
+desired_input
+disp(['此时最佳输出值为'])
+desired_output
+%% 采用最佳方法建立GRNN网络
+net=newgrnn(desired_input,desired_output,desired_spread);
+p_test=p_test';
+p_test=tramnmx(p_test,minp,maxp);
+grnn_prediction_result=sim(net,p_test);
+grnn_prediction_result=postmnmx(grnn_prediction_result,mint,maxt);
+grnn_error=t_test-grnn_prediction_result';
+disp(['GRNN神经网络三项流量预测的误差为',num2str(abs(grnn_error))])
+save best desired_input desired_output p_test t_test grnn_error mint maxt
+
+
+##### SOURCE END #####
+--></body></html>

@@ -1,0 +1,12 @@
+function [ W k f ] = DFS1(G,v)
+
+n = length(G);
+visited = zeros(1,n);
+W = G;
+while sum(visited == 0)~=0
+    a = find(G(v,:)==1);
+    
+end
+
+end
+

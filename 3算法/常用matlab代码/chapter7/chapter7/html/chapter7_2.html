@@ -1,0 +1,602 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>chapter7_2</title><meta name="generator" content="MATLAB 8.0"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2013-08-21"><meta name="DC.source" content="chapter7_2.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;</a></li><li><a href="#2">&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;</a></li><li><a href="#3">&#20135;&#29983;&#35757;&#32451;&#26679;&#26412;&#65288;&#35757;&#32451;&#36755;&#20837;&#65292;&#35757;&#32451;&#36755;&#20986;&#65289;</a></li><li><a href="#4">&#24314;&#31435;RBF&#31070;&#32463;&#32593;&#32476;</a></li><li><a href="#5">&#24314;&#31435;&#27979;&#35797;&#26679;&#26412;</a></li><li><a href="#6">&#20351;&#29992;&#24314;&#31435;&#30340;RBF&#32593;&#32476;&#36827;&#34892;&#27169;&#25311;&#65292;&#24471;&#20986;&#32593;&#32476;&#36755;&#20986;</a></li><li><a href="#7">&#20351;&#29992;&#22270;&#20687;&#65292;&#30011;&#20986;3&#32500;&#22270;</a></li></ul></div><h2>Matlab&#31070;&#32463;&#32593;&#32476;43&#20010;&#26696;&#20363;&#20998;&#26512;<a name="1"></a></h2><pre class="codeinput"><span class="comment">% RBF&#32593;&#32476;&#30340;&#22238;&#24402;--&#38750;&#32447;&#24615;&#20989;&#25968;&#22238;&#24402;&#30340;&#23454;&#29616;</span>
+<span class="comment">% by &#29579;&#23567;&#24029;(@&#29579;&#23567;&#24029;_matlab)</span>
+<span class="comment">% http://www.matlabsky.com</span>
+<span class="comment">% Email:sina363@163.com</span>
+<span class="comment">% http://weibo.com/hgsz2003</span>
+</pre><h2>&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;<a name="2"></a></h2><pre class="codeinput">clc
+clear
+</pre><h2>&#20135;&#29983;&#35757;&#32451;&#26679;&#26412;&#65288;&#35757;&#32451;&#36755;&#20837;&#65292;&#35757;&#32451;&#36755;&#20986;&#65289;<a name="3"></a></h2><p>ld&#20026;&#26679;&#26412;&#20363;&#25968;</p><pre class="codeinput">ld=400;
+
+<span class="comment">% &#20135;&#29983;2*ld&#30340;&#30697;&#38453;</span>
+x=rand(2,ld);
+
+<span class="comment">% &#23558;x&#36716;&#25442;&#21040;[-1.5 1.5]&#20043;&#38388;</span>
+x=(x-0.5)*1.5*2;
+
+<span class="comment">% x&#30340;&#31532;&#19968;&#34892;&#20026;x1&#65292;&#31532;&#20108;&#34892;&#20026;x2.</span>
+x1=x(1,:);
+x2=x(2,:);
+
+<span class="comment">% &#35745;&#31639;&#32593;&#32476;&#36755;&#20986;F&#20540;</span>
+F=20+x1.^2-10*cos(2*pi*x1)+x2.^2-10*cos(2*pi*x2);
+</pre><h2>&#24314;&#31435;RBF&#31070;&#32463;&#32593;&#32476;<a name="4"></a></h2><p>&#37319;&#29992;approximate RBF&#31070;&#32463;&#32593;&#32476;&#12290;spread&#20026;&#40664;&#35748;&#20540;</p><pre class="codeinput">net=newrb(x,F);
+</pre><pre class="codeoutput">NEWRB, neurons = 0, MSE = 87.4512
+NEWRB, neurons = 2, MSE = 87.3556
+NEWRB, neurons = 3, MSE = 86.9183
+NEWRB, neurons = 4, MSE = 86.2348
+NEWRB, neurons = 5, MSE = 84.4804
+NEWRB, neurons = 6, MSE = 84.4152
+NEWRB, neurons = 7, MSE = 84.1308
+NEWRB, neurons = 8, MSE = 83.927
+NEWRB, neurons = 9, MSE = 82.6456
+NEWRB, neurons = 10, MSE = 82.4723
+NEWRB, neurons = 11, MSE = 82.1102
+NEWRB, neurons = 12, MSE = 79.7014
+NEWRB, neurons = 13, MSE = 79.4574
+NEWRB, neurons = 14, MSE = 78.6366
+NEWRB, neurons = 15, MSE = 73.9657
+NEWRB, neurons = 16, MSE = 72.5368
+NEWRB, neurons = 17, MSE = 71.2007
+NEWRB, neurons = 18, MSE = 67.7274
+NEWRB, neurons = 19, MSE = 66.9183
+NEWRB, neurons = 20, MSE = 63.838
+NEWRB, neurons = 21, MSE = 63.7377
+NEWRB, neurons = 22, MSE = 59.4609
+NEWRB, neurons = 23, MSE = 58.2715
+NEWRB, neurons = 24, MSE = 52.6804
+NEWRB, neurons = 25, MSE = 50.0347
+NEWRB, neurons = 26, MSE = 48.3154
+NEWRB, neurons = 27, MSE = 44.1978
+NEWRB, neurons = 28, MSE = 44.1047
+NEWRB, neurons = 29, MSE = 40.2175
+NEWRB, neurons = 30, MSE = 38.0585
+NEWRB, neurons = 31, MSE = 34.5013
+NEWRB, neurons = 32, MSE = 32.6155
+NEWRB, neurons = 33, MSE = 31.7637
+NEWRB, neurons = 34, MSE = 26.3027
+NEWRB, neurons = 35, MSE = 23.1903
+NEWRB, neurons = 36, MSE = 19.8918
+NEWRB, neurons = 37, MSE = 18.9264
+NEWRB, neurons = 38, MSE = 17.297
+NEWRB, neurons = 39, MSE = 16.1322
+NEWRB, neurons = 40, MSE = 14.7187
+NEWRB, neurons = 41, MSE = 13.5741
+NEWRB, neurons = 42, MSE = 10.5892
+NEWRB, neurons = 43, MSE = 9.61787
+NEWRB, neurons = 44, MSE = 8.38638
+NEWRB, neurons = 45, MSE = 6.98779
+NEWRB, neurons = 46, MSE = 5.64389
+NEWRB, neurons = 47, MSE = 4.97755
+NEWRB, neurons = 48, MSE = 4.06896
+NEWRB, neurons = 49, MSE = 3.76309
+NEWRB, neurons = 50, MSE = 3.02892
+NEWRB, neurons = 51, MSE = 2.70897
+NEWRB, neurons = 52, MSE = 2.56222
+NEWRB, neurons = 53, MSE = 2.28016
+NEWRB, neurons = 54, MSE = 2.24259
+NEWRB, neurons = 55, MSE = 1.92405
+NEWRB, neurons = 56, MSE = 1.87636
+NEWRB, neurons = 57, MSE = 1.81379
+NEWRB, neurons = 58, MSE = 1.69393
+NEWRB, neurons = 59, MSE = 1.46347
+NEWRB, neurons = 60, MSE = 1.33539
+NEWRB, neurons = 61, MSE = 1.02747
+NEWRB, neurons = 62, MSE = 0.959784
+NEWRB, neurons = 63, MSE = 0.849802
+NEWRB, neurons = 64, MSE = 0.726059
+NEWRB, neurons = 65, MSE = 0.663565
+NEWRB, neurons = 66, MSE = 0.567368
+NEWRB, neurons = 67, MSE = 0.503424
+NEWRB, neurons = 68, MSE = 0.42876
+NEWRB, neurons = 69, MSE = 0.35885
+NEWRB, neurons = 70, MSE = 0.259026
+NEWRB, neurons = 71, MSE = 0.217019
+NEWRB, neurons = 72, MSE = 0.201631
+NEWRB, neurons = 73, MSE = 0.17784
+NEWRB, neurons = 74, MSE = 0.15327
+NEWRB, neurons = 75, MSE = 0.149319
+NEWRB, neurons = 76, MSE = 0.130172
+NEWRB, neurons = 77, MSE = 0.119523
+NEWRB, neurons = 78, MSE = 0.0976877
+NEWRB, neurons = 79, MSE = 0.0746121
+NEWRB, neurons = 80, MSE = 0.0444177
+NEWRB, neurons = 81, MSE = 0.0409195
+NEWRB, neurons = 82, MSE = 0.0329369
+NEWRB, neurons = 83, MSE = 0.0248449
+NEWRB, neurons = 84, MSE = 0.01839
+NEWRB, neurons = 85, MSE = 0.0163591
+NEWRB, neurons = 86, MSE = 0.00970051
+NEWRB, neurons = 87, MSE = 0.00711017
+NEWRB, neurons = 88, MSE = 0.00612447
+NEWRB, neurons = 89, MSE = 0.00520235
+NEWRB, neurons = 90, MSE = 0.00363774
+NEWRB, neurons = 91, MSE = 0.00279935
+NEWRB, neurons = 92, MSE = 0.00259562
+NEWRB, neurons = 93, MSE = 0.00235011
+NEWRB, neurons = 94, MSE = 0.00157352
+NEWRB, neurons = 95, MSE = 0.00155691
+NEWRB, neurons = 96, MSE = 0.00144552
+NEWRB, neurons = 97, MSE = 0.00123448
+NEWRB, neurons = 98, MSE = 0.0010343
+NEWRB, neurons = 99, MSE = 0.000975124
+NEWRB, neurons = 100, MSE = 0.000746045
+NEWRB, neurons = 101, MSE = 0.000745163
+NEWRB, neurons = 102, MSE = 0.000708373
+NEWRB, neurons = 103, MSE = 0.000705721
+NEWRB, neurons = 104, MSE = 0.00070517
+NEWRB, neurons = 105, MSE = 0.000655107
+NEWRB, neurons = 106, MSE = 0.000651185
+NEWRB, neurons = 107, MSE = 0.00064131
+NEWRB, neurons = 108, MSE = 0.000622528
+NEWRB, neurons = 109, MSE = 0.000449065
+NEWRB, neurons = 110, MSE = 0.000447873
+NEWRB, neurons = 111, MSE = 0.00036658
+NEWRB, neurons = 112, MSE = 0.000240551
+NEWRB, neurons = 113, MSE = 0.000181543
+NEWRB, neurons = 114, MSE = 0.000181548
+NEWRB, neurons = 115, MSE = 0.000174418
+NEWRB, neurons = 116, MSE = 0.000165823
+NEWRB, neurons = 117, MSE = 0.000130324
+NEWRB, neurons = 118, MSE = 0.000127601
+NEWRB, neurons = 119, MSE = 0.000124143
+NEWRB, neurons = 120, MSE = 0.000123021
+NEWRB, neurons = 121, MSE = 0.000122144
+NEWRB, neurons = 122, MSE = 0.000110141
+NEWRB, neurons = 123, MSE = 0.000101388
+NEWRB, neurons = 124, MSE = 8.62236e-05
+NEWRB, neurons = 125, MSE = 8.1875e-05
+NEWRB, neurons = 126, MSE = 8.48434e-05
+NEWRB, neurons = 127, MSE = 7.96335e-05
+NEWRB, neurons = 128, MSE = 4.99799e-05
+NEWRB, neurons = 129, MSE = 4.3147e-05
+NEWRB, neurons = 130, MSE = 4.25199e-05
+NEWRB, neurons = 131, MSE = 3.38212e-05
+NEWRB, neurons = 132, MSE = 3.13019e-05
+NEWRB, neurons = 133, MSE = 3.23619e-05
+NEWRB, neurons = 134, MSE = 3.19585e-05
+NEWRB, neurons = 135, MSE = 2.35359e-05
+NEWRB, neurons = 136, MSE = 2.06471e-05
+NEWRB, neurons = 137, MSE = 2.05995e-05
+NEWRB, neurons = 138, MSE = 2.09229e-05
+NEWRB, neurons = 139, MSE = 1.71296e-05
+NEWRB, neurons = 140, MSE = 1.74064e-05
+NEWRB, neurons = 141, MSE = 1.8788e-05
+NEWRB, neurons = 142, MSE = 1.85726e-05
+NEWRB, neurons = 143, MSE = 1.33669e-05
+NEWRB, neurons = 144, MSE = 1.58205e-05
+NEWRB, neurons = 145, MSE = 1.34109e-05
+NEWRB, neurons = 146, MSE = 1.35093e-05
+NEWRB, neurons = 147, MSE = 1.33414e-05
+NEWRB, neurons = 148, MSE = 1.01268e-05
+NEWRB, neurons = 149, MSE = 1.08842e-05
+NEWRB, neurons = 150, MSE = 1.07213e-05
+NEWRB, neurons = 151, MSE = 1.11426e-05
+NEWRB, neurons = 152, MSE = 1.15711e-05
+NEWRB, neurons = 153, MSE = 1.09409e-05
+NEWRB, neurons = 154, MSE = 9.5083e-06
+NEWRB, neurons = 155, MSE = 9.286e-06
+NEWRB, neurons = 156, MSE = 8.21948e-06
+NEWRB, neurons = 157, MSE = 9.30919e-06
+NEWRB, neurons = 158, MSE = 8.99195e-06
+NEWRB, neurons = 159, MSE = 9.47907e-06
+NEWRB, neurons = 160, MSE = 8.99902e-06
+NEWRB, neurons = 161, MSE = 8.85624e-06
+NEWRB, neurons = 162, MSE = 7.34328e-06
+NEWRB, neurons = 163, MSE = 7.3415e-06
+NEWRB, neurons = 164, MSE = 7.50793e-06
+NEWRB, neurons = 165, MSE = 7.42649e-06
+NEWRB, neurons = 166, MSE = 6.30219e-06
+NEWRB, neurons = 167, MSE = 6.25319e-06
+NEWRB, neurons = 168, MSE = 6.24773e-06
+NEWRB, neurons = 169, MSE = 4.82701e-06
+NEWRB, neurons = 170, MSE = 4.63062e-06
+NEWRB, neurons = 171, MSE = 4.38371e-06
+NEWRB, neurons = 172, MSE = 3.66099e-06
+NEWRB, neurons = 173, MSE = 3.14118e-06
+NEWRB, neurons = 174, MSE = 3.2705e-06
+NEWRB, neurons = 175, MSE = 3.2986e-06
+NEWRB, neurons = 176, MSE = 2.66077e-06
+NEWRB, neurons = 177, MSE = 2.59476e-06
+NEWRB, neurons = 178, MSE = 2.38697e-06
+NEWRB, neurons = 179, MSE = 2.43015e-06
+NEWRB, neurons = 180, MSE = 2.16218e-06
+NEWRB, neurons = 181, MSE = 2.16871e-06
+NEWRB, neurons = 182, MSE = 2.1261e-06
+NEWRB, neurons = 183, MSE = 2.12578e-06
+NEWRB, neurons = 184, MSE = 2.1276e-06
+NEWRB, neurons = 185, MSE = 1.91985e-06
+NEWRB, neurons = 186, MSE = 2.04142e-06
+NEWRB, neurons = 187, MSE = 1.95453e-06
+NEWRB, neurons = 188, MSE = 1.57436e-06
+NEWRB, neurons = 189, MSE = 2.21684e-06
+NEWRB, neurons = 190, MSE = 2.21667e-06
+NEWRB, neurons = 191, MSE = 2.02476e-06
+NEWRB, neurons = 192, MSE = 1.78755e-06
+NEWRB, neurons = 193, MSE = 1.88404e-06
+NEWRB, neurons = 194, MSE = 1.75537e-06
+NEWRB, neurons = 195, MSE = 1.2494e-06
+NEWRB, neurons = 196, MSE = 8.21717e-07
+NEWRB, neurons = 197, MSE = 9.042e-07
+NEWRB, neurons = 198, MSE = 9.09474e-07
+NEWRB, neurons = 199, MSE = 8.92473e-07
+NEWRB, neurons = 200, MSE = 8.89099e-07
+NEWRB, neurons = 201, MSE = 1.18914e-06
+NEWRB, neurons = 202, MSE = 1.22441e-06
+NEWRB, neurons = 203, MSE = 9.8921e-07
+NEWRB, neurons = 204, MSE = 7.42498e-07
+NEWRB, neurons = 205, MSE = 7.07323e-07
+NEWRB, neurons = 206, MSE = 8.22768e-07
+NEWRB, neurons = 207, MSE = 6.40158e-07
+NEWRB, neurons = 208, MSE = 6.54063e-07
+NEWRB, neurons = 209, MSE = 6.61733e-07
+NEWRB, neurons = 210, MSE = 6.89218e-07
+NEWRB, neurons = 211, MSE = 7.1245e-07
+NEWRB, neurons = 212, MSE = 7.08005e-07
+NEWRB, neurons = 213, MSE = 7.01863e-07
+NEWRB, neurons = 214, MSE = 7.54569e-07
+NEWRB, neurons = 215, MSE = 1.03336e-06
+NEWRB, neurons = 216, MSE = 5.76601e-07
+NEWRB, neurons = 217, MSE = 6.6819e-07
+NEWRB, neurons = 218, MSE = 6.6979e-07
+NEWRB, neurons = 219, MSE = 5.88706e-07
+NEWRB, neurons = 220, MSE = 7.41274e-07
+NEWRB, neurons = 221, MSE = 7.48478e-07
+NEWRB, neurons = 222, MSE = 6.09767e-07
+NEWRB, neurons = 223, MSE = 7.13223e-07
+NEWRB, neurons = 224, MSE = 7.72952e-07
+NEWRB, neurons = 225, MSE = 7.45859e-07
+NEWRB, neurons = 226, MSE = 7.47359e-07
+NEWRB, neurons = 227, MSE = 6.79352e-07
+NEWRB, neurons = 228, MSE = 6.24246e-07
+NEWRB, neurons = 229, MSE = 6.29911e-07
+NEWRB, neurons = 230, MSE = 5.70858e-07
+NEWRB, neurons = 231, MSE = 5.4011e-07
+NEWRB, neurons = 232, MSE = 5.39507e-07
+NEWRB, neurons = 233, MSE = 7.44835e-07
+NEWRB, neurons = 234, MSE = 4.6372e-07
+NEWRB, neurons = 235, MSE = 6.24025e-07
+NEWRB, neurons = 236, MSE = 6.53575e-07
+NEWRB, neurons = 237, MSE = 6.23045e-07
+NEWRB, neurons = 238, MSE = 7.28877e-07
+NEWRB, neurons = 239, MSE = 8.22967e-07
+NEWRB, neurons = 240, MSE = 7.07877e-07
+NEWRB, neurons = 241, MSE = 7.48902e-07
+NEWRB, neurons = 242, MSE = 8.50686e-07
+NEWRB, neurons = 243, MSE = 6.8069e-07
+NEWRB, neurons = 244, MSE = 6.82638e-07
+NEWRB, neurons = 245, MSE = 6.60906e-07
+NEWRB, neurons = 246, MSE = 8.35759e-07
+NEWRB, neurons = 247, MSE = 7.4725e-07
+NEWRB, neurons = 248, MSE = 7.47257e-07
+NEWRB, neurons = 249, MSE = 7.45457e-07
+NEWRB, neurons = 250, MSE = 7.47471e-07
+NEWRB, neurons = 251, MSE = 5.30324e-07
+NEWRB, neurons = 252, MSE = 4.89378e-07
+NEWRB, neurons = 253, MSE = 6.58807e-07
+NEWRB, neurons = 254, MSE = 6.56767e-07
+NEWRB, neurons = 255, MSE = 7.37274e-07
+NEWRB, neurons = 256, MSE = 7.35307e-07
+NEWRB, neurons = 257, MSE = 7.26219e-07
+NEWRB, neurons = 258, MSE = 7.82797e-07
+NEWRB, neurons = 259, MSE = 3.4726e-07
+NEWRB, neurons = 260, MSE = 3.52713e-07
+NEWRB, neurons = 261, MSE = 6.55192e-07
+NEWRB, neurons = 262, MSE = 6.19866e-07
+NEWRB, neurons = 263, MSE = 4.62206e-07
+NEWRB, neurons = 264, MSE = 2.91004e-07
+NEWRB, neurons = 265, MSE = 1.83553e-07
+NEWRB, neurons = 266, MSE = 2.76831e-07
+NEWRB, neurons = 267, MSE = 2.78149e-07
+NEWRB, neurons = 268, MSE = 1.26535e-07
+NEWRB, neurons = 269, MSE = 1.27676e-07
+NEWRB, neurons = 270, MSE = 2.05481e-07
+NEWRB, neurons = 271, MSE = 4.92051e-08
+NEWRB, neurons = 272, MSE = 3.35026e-08
+NEWRB, neurons = 273, MSE = 5.17595e-08
+NEWRB, neurons = 274, MSE = 5.7981e-08
+NEWRB, neurons = 275, MSE = 3.11304e-08
+NEWRB, neurons = 276, MSE = 3.35783e-08
+NEWRB, neurons = 277, MSE = 3.40092e-08
+NEWRB, neurons = 278, MSE = 3.06323e-08
+NEWRB, neurons = 279, MSE = 3.32122e-08
+NEWRB, neurons = 280, MSE = 3.11545e-08
+NEWRB, neurons = 281, MSE = 3.46113e-08
+NEWRB, neurons = 282, MSE = 4.51124e-08
+NEWRB, neurons = 283, MSE = 3.85513e-08
+NEWRB, neurons = 284, MSE = 4.8858e-08
+NEWRB, neurons = 285, MSE = 5.53924e-08
+NEWRB, neurons = 286, MSE = 4.30513e-08
+NEWRB, neurons = 287, MSE = 4.35186e-08
+NEWRB, neurons = 288, MSE = 3.29919e-08
+NEWRB, neurons = 289, MSE = 5.63397e-08
+NEWRB, neurons = 290, MSE = 4.17048e-08
+NEWRB, neurons = 291, MSE = 2.61797e-08
+NEWRB, neurons = 292, MSE = 2.24551e-08
+NEWRB, neurons = 293, MSE = 2.38507e-08
+NEWRB, neurons = 294, MSE = 2.41414e-08
+NEWRB, neurons = 295, MSE = 2.41624e-08
+NEWRB, neurons = 296, MSE = 2.79702e-08
+NEWRB, neurons = 297, MSE = 1.69782e-08
+NEWRB, neurons = 298, MSE = 2.93745e-08
+NEWRB, neurons = 299, MSE = 2.38382e-08
+NEWRB, neurons = 300, MSE = 2.09374e-08
+NEWRB, neurons = 301, MSE = 1.76524e-08
+NEWRB, neurons = 302, MSE = 1.93487e-08
+NEWRB, neurons = 303, MSE = 1.99277e-08
+NEWRB, neurons = 304, MSE = 1.93998e-08
+NEWRB, neurons = 305, MSE = 1.94251e-08
+NEWRB, neurons = 306, MSE = 1.93779e-08
+NEWRB, neurons = 307, MSE = 1.4403e-08
+NEWRB, neurons = 308, MSE = 1.49293e-08
+NEWRB, neurons = 309, MSE = 1.49933e-08
+NEWRB, neurons = 310, MSE = 1.47172e-08
+NEWRB, neurons = 311, MSE = 1.4772e-08
+NEWRB, neurons = 312, MSE = 2.29692e-08
+NEWRB, neurons = 313, MSE = 2.4385e-08
+NEWRB, neurons = 314, MSE = 2.44844e-08
+NEWRB, neurons = 315, MSE = 2.46633e-08
+NEWRB, neurons = 316, MSE = 2.41321e-08
+NEWRB, neurons = 317, MSE = 3.203e-08
+NEWRB, neurons = 318, MSE = 1.26969e-08
+NEWRB, neurons = 319, MSE = 1.2612e-08
+NEWRB, neurons = 320, MSE = 1.2697e-08
+NEWRB, neurons = 321, MSE = 1.66405e-08
+NEWRB, neurons = 322, MSE = 1.118e-08
+NEWRB, neurons = 323, MSE = 9.82249e-09
+NEWRB, neurons = 324, MSE = 1.80113e-08
+NEWRB, neurons = 325, MSE = 1.57653e-08
+NEWRB, neurons = 326, MSE = 1.47305e-08
+NEWRB, neurons = 327, MSE = 1.50795e-08
+NEWRB, neurons = 328, MSE = 3.08169e-08
+NEWRB, neurons = 329, MSE = 3.06235e-08
+NEWRB, neurons = 330, MSE = 1.25263e-08
+NEWRB, neurons = 331, MSE = 1.80844e-08
+NEWRB, neurons = 332, MSE = 1.17662e-08
+NEWRB, neurons = 333, MSE = 1.72026e-08
+NEWRB, neurons = 334, MSE = 1.69533e-08
+NEWRB, neurons = 335, MSE = 1.37563e-08
+NEWRB, neurons = 336, MSE = 1.35855e-08
+NEWRB, neurons = 337, MSE = 1.49735e-08
+NEWRB, neurons = 338, MSE = 1.82514e-08
+NEWRB, neurons = 339, MSE = 1.83091e-08
+NEWRB, neurons = 340, MSE = 1.92644e-08
+NEWRB, neurons = 341, MSE = 2.01042e-08
+NEWRB, neurons = 342, MSE = 1.3177e-08
+NEWRB, neurons = 343, MSE = 1.44589e-08
+NEWRB, neurons = 344, MSE = 1.43546e-08
+NEWRB, neurons = 345, MSE = 1.92531e-08
+NEWRB, neurons = 346, MSE = 1.90359e-08
+NEWRB, neurons = 347, MSE = 1.68304e-08
+NEWRB, neurons = 348, MSE = 1.67558e-08
+NEWRB, neurons = 349, MSE = 1.77649e-08
+NEWRB, neurons = 350, MSE = 1.21805e-08
+NEWRB, neurons = 351, MSE = 1.17637e-08
+NEWRB, neurons = 352, MSE = 1.86373e-08
+NEWRB, neurons = 353, MSE = 1.8675e-08
+NEWRB, neurons = 354, MSE = 1.86832e-08
+NEWRB, neurons = 355, MSE = 1.76313e-08
+NEWRB, neurons = 356, MSE = 1.75251e-08
+NEWRB, neurons = 357, MSE = 1.75271e-08
+NEWRB, neurons = 358, MSE = 1.75154e-08
+NEWRB, neurons = 359, MSE = 1.95458e-08
+NEWRB, neurons = 360, MSE = 1.95547e-08
+NEWRB, neurons = 361, MSE = 1.95151e-08
+NEWRB, neurons = 362, MSE = 7.34191e-09
+NEWRB, neurons = 363, MSE = 7.31271e-09
+NEWRB, neurons = 364, MSE = 9.66375e-09
+NEWRB, neurons = 365, MSE = 9.50354e-09
+NEWRB, neurons = 366, MSE = 1.02456e-08
+NEWRB, neurons = 367, MSE = 1.06943e-08
+NEWRB, neurons = 368, MSE = 1.06727e-08
+NEWRB, neurons = 369, MSE = 1.06085e-08
+NEWRB, neurons = 370, MSE = 1.06753e-08
+NEWRB, neurons = 371, MSE = 1.08449e-08
+NEWRB, neurons = 372, MSE = 8.69306e-09
+NEWRB, neurons = 373, MSE = 8.30358e-09
+NEWRB, neurons = 374, MSE = 9.80272e-09
+NEWRB, neurons = 375, MSE = 9.06545e-09
+NEWRB, neurons = 376, MSE = 9.03242e-09
+NEWRB, neurons = 377, MSE = 9.16777e-09
+NEWRB, neurons = 378, MSE = 9.1878e-09
+NEWRB, neurons = 379, MSE = 9.1815e-09
+NEWRB, neurons = 380, MSE = 9.18153e-09
+NEWRB, neurons = 381, MSE = 9.20799e-09
+NEWRB, neurons = 382, MSE = 9.18849e-09
+NEWRB, neurons = 383, MSE = 1.17057e-08
+NEWRB, neurons = 384, MSE = 1.16673e-08
+NEWRB, neurons = 385, MSE = 8.08934e-09
+NEWRB, neurons = 386, MSE = 9.33078e-09
+NEWRB, neurons = 387, MSE = 9.42341e-09
+NEWRB, neurons = 388, MSE = 9.40301e-09
+NEWRB, neurons = 389, MSE = 8.63794e-09
+NEWRB, neurons = 390, MSE = 8.60617e-09
+NEWRB, neurons = 391, MSE = 8.62988e-09
+NEWRB, neurons = 392, MSE = 8.95447e-09
+NEWRB, neurons = 393, MSE = 8.99009e-09
+NEWRB, neurons = 394, MSE = 8.97765e-09
+NEWRB, neurons = 395, MSE = 8.95417e-09
+NEWRB, neurons = 396, MSE = 8.17623e-09
+NEWRB, neurons = 397, MSE = 7.76568e-09
+NEWRB, neurons = 398, MSE = 7.82456e-09
+NEWRB, neurons = 399, MSE = 4.90884e-07
+NEWRB, neurons = 400, MSE = 8.01773e-09
+</pre><img vspace="5" hspace="5" src="chapter7_2_01.png" alt=""> <h2>&#24314;&#31435;&#27979;&#35797;&#26679;&#26412;<a name="5"></a></h2><pre class="codeinput"><span class="comment">% generate the testing data</span>
+interval=0.1;
+[i, j]=meshgrid(-1.5:interval:1.5);
+row=size(i);
+tx1=i(:);
+tx1=tx1';
+tx2=j(:);
+tx2=tx2';
+tx=[tx1;tx2];
+</pre><h2>&#20351;&#29992;&#24314;&#31435;&#30340;RBF&#32593;&#32476;&#36827;&#34892;&#27169;&#25311;&#65292;&#24471;&#20986;&#32593;&#32476;&#36755;&#20986;<a name="6"></a></h2><pre class="codeinput">ty=sim(net,tx);
+</pre><h2>&#20351;&#29992;&#22270;&#20687;&#65292;&#30011;&#20986;3&#32500;&#22270;<a name="7"></a></h2><pre class="codeinput"><span class="comment">% &#30495;&#27491;&#30340;&#20989;&#25968;&#22270;&#20687;</span>
+interval=0.1;
+[x1, x2]=meshgrid(-1.5:interval:1.5);
+F = 20+x1.^2-10*cos(2*pi*x1)+x2.^2-10*cos(2*pi*x2);
+subplot(1,3,1)
+mesh(x1,x2,F);
+zlim([0,60])
+title(<span class="string">'&#30495;&#27491;&#30340;&#20989;&#25968;&#22270;&#20687;'</span>)
+
+<span class="comment">% &#32593;&#32476;&#24471;&#20986;&#30340;&#20989;&#25968;&#22270;&#20687;</span>
+v=reshape(ty,row);
+subplot(1,3,2)
+mesh(i,j,v);
+zlim([0,60])
+title(<span class="string">'RBF&#31070;&#32463;&#32593;&#32476;&#32467;&#26524;'</span>)
+
+
+<span class="comment">% &#35823;&#24046;&#22270;&#20687;</span>
+subplot(1,3,3)
+mesh(x1,x2,F-v);
+zlim([0,60])
+title(<span class="string">'&#35823;&#24046;&#22270;&#20687;'</span>)
+
+set(gcf,<span class="string">'position'</span>,[300 ,250,900,400])
+</pre><img vspace="5" hspace="5" src="chapter7_2_02.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2012b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Matlab神经网络43个案例分析
+
+% RBF网络的回归REPLACE_WITH_DASH_DASH非线性函数回归的实现
+% by 王小川(@王小川_matlab)
+% http://www.matlabsky.com
+% Email:sina363@163.com
+% http://weibo.com/hgsz2003
+ 
+%% 清空环境变量
+clc
+clear
+%% 产生训练样本（训练输入，训练输出）
+% ld为样本例数
+ld=400; 
+
+% 产生2*ld的矩阵 
+x=rand(2,ld); 
+
+% 将x转换到[-1.5 1.5]之间
+x=(x-0.5)*1.5*2; 
+
+% x的第一行为x1，第二行为x2.
+x1=x(1,:);
+x2=x(2,:);
+
+% 计算网络输出F值
+F=20+x1.^2-10*cos(2*pi*x1)+x2.^2-10*cos(2*pi*x2);
+
+%% 建立RBF神经网络 
+% 采用approximate RBF神经网络。spread为默认值
+net=newrb(x,F);
+
+%% 建立测试样本
+
+% generate the testing data
+interval=0.1;
+[i, j]=meshgrid(-1.5:interval:1.5);
+row=size(i);
+tx1=i(:);
+tx1=tx1';
+tx2=j(:);
+tx2=tx2';
+tx=[tx1;tx2];
+
+%% 使用建立的RBF网络进行模拟，得出网络输出
+ty=sim(net,tx);
+
+%% 使用图像，画出3维图
+
+% 真正的函数图像
+interval=0.1;
+[x1, x2]=meshgrid(-1.5:interval:1.5);
+F = 20+x1.^2-10*cos(2*pi*x1)+x2.^2-10*cos(2*pi*x2);
+subplot(1,3,1)
+mesh(x1,x2,F);
+zlim([0,60])
+title('真正的函数图像')
+
+% 网络得出的函数图像
+v=reshape(ty,row);
+subplot(1,3,2)
+mesh(i,j,v);
+zlim([0,60])
+title('RBF神经网络结果')
+
+
+% 误差图像
+subplot(1,3,3)
+mesh(x1,x2,F-v);
+zlim([0,60])
+title('误差图像')
+
+set(gcf,'position',[300 ,250,900,400])
+
+
+##### SOURCE END #####
+--></body></html>

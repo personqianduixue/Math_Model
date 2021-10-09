@@ -1,0 +1,31 @@
+function [k C] = colorcodf(W)
+% W表示图的邻接矩阵
+% k表示算法最终得到的染色数
+% C表示顶点染色方案
+
+G = W;
+n = size(G,1);
+k = 1;C = zeros(1,n);
+Z = [1:n];
+while sum(find(C==0))
+    tcol = (C == 0);
+    m = sum(G(tcol,:),2);
+    minm = min(m);
+    k1 = min(find(m==minm));
+    c = G(tcol(k1),:);
+    C(tcol(k1))=k;
+    Sn = find(c~=0);
+    flag = 1;
+    while flag
+        tc = setdiff(Z,Sn);
+        if isempty(tc)
+            flag = 0;
+            k = k+1;
+        else
+            
+        end
+    end
+end
+
+end
+

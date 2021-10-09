@@ -1,0 +1,56 @@
+English:
+options:
+-s svm_type : set type of SVM (default 0)
+	0 -- C-SVC
+	1 -- nu-SVC
+	2 -- one-class SVM
+	3 -- epsilon-SVR
+	4 -- nu-SVR
+-t kernel_type : set type of kernel function (default 2)
+	0 -- linear: u'*v
+	1 -- polynomial: (gamma*u'*v + coef0)^degree
+	2 -- radial basis function: exp(-gamma*|u-v|^2)
+	3 -- sigmoid: tanh(gamma*u'*v + coef0)
+	4 -- precomputed kernel (kernel values in training_instance_matrix)
+-d degree : set degree in kernel function (default 3)
+-g gamma : set gamma in kernel function (default 1/num_features)
+-r coef0 : set coef0 in kernel function (default 0)
+-c cost : set the parameter C of C-SVC, epsilon-SVR, and nu-SVR (default 1)
+-n nu : set the parameter nu of nu-SVC, one-class SVM, and nu-SVR (default 0.5)
+-p epsilon : set the epsilon in loss function of epsilon-SVR (default 0.1)
+-m cachesize : set cache memory size in MB (default 100)
+-e epsilon : set tolerance of termination criterion (default 0.001)
+-h shrinking: whether to use the shrinking heuristics, 0 or 1 (default 1)
+-b probability_estimates: whether to train a SVC or SVR model for probability estimates, 0 or 1 (default 0)
+-wi weight: set the parameter C of class i to weight*C, for C-SVC (default 1)
+-v n: n-fold cross validation mode
+    参数 -v 随机地将数据剖分为n部分并计算交互检验准确度和均方根误差。
+    以上这些参数设置可以按照SVM的类型和核函数所支持的参数进行任意组合，如果设置的参数在函数或SVM类型中没有也不会产生影响，程序不会接受该参数；如果应有的参数设置不正确，参数将采用默认值。
+==========================================================
+Chinese:
+Options：
+-s svm类型：设置SVM模型类型(默认0)
+	0 -- C-SVC
+	1 -- nu-SVC
+	2 -- one-class SVM
+	3 -- epsilon-SVR
+	4 -- nu-SVR
+-t 核函数类型：核函数设置类型(默认2)
+	0 -- 线性核函数: u'*v
+	1 -- 多项式核函数: (gamma*u'*v + coef0)^degree
+	2 -- RBF核函数: exp(-gamma*|u-v|^2)
+	3 -- sigmoid核函数: tanh(gamma*u'*v + coef0)
+	4 -- 预定义核函数（指定核矩阵）
+-d degree：核函数中的degree设置(针对多项式核函数)(默认3)
+-g gama：核函数中的gamma函数设置(针对多项式/rbf/sigmoid核函数)(默认1/num_features,即属性数目的倒数)
+-r coef0：核函数中的coef0设置(针对多项式/sigmoid核函数)(默认0)
+-c cost：设置C-SVC，epsilon-SVR和nu-SVC的参数(损失函数)(默认1)
+-n nu：设置nu-SVC，one-class SVM和nu-SVR的参数(默认0.5)
+-p epsilon：设置epsilon-SVR中损失函数epsilon的值(默认0.1)
+-m cachesize：设置cache内存大小，以MB为单位(默认100)
+-e eps：设置允许的终止判据(默认0.001)
+-h shrinking：是否使用启发式，0或1(默认1)
+-wi weight：设置第几类的参数C为weight*C(C-SVC中的C)(默认1)
+-v n: n-fold交互检验模式，n为fold的个数，必须大于等于2
+    参数 -v 随机地将数据剖分为n部分并计算交互检验准确度和均方根误差。
+    以上这些参数设置可以按照SVM的类型和核函数所支持的参数进行任意组合，如果设置的参数在函数或SVM类型中没有也不会产生影响，程序不会接受该参数；如果应有的参数设置不正确，参数将采用默认值。

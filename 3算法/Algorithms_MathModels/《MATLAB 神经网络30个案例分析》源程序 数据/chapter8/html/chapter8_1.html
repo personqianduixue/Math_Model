@@ -1,0 +1,443 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>&#26696;&#20363;8&#65306;GRNN&#30340;&#25968;&#25454;&#39044;&#27979;&#8212;&#22522;&#20110;&#24191;&#20041;&#22238;&#24402;&#31070;&#32463;&#32593;&#32476;&#30340;&#36135;&#36816;&#37327;&#39044;&#27979;</title><meta name="generator" content="MATLAB 7.11"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2010-11-20"><meta name="DC.source" content="chapter8_1.m"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><h1>&#26696;&#20363;8&#65306;GRNN&#30340;&#25968;&#25454;&#39044;&#27979;&#8212;&#22522;&#20110;&#24191;&#20041;&#22238;&#24402;&#31070;&#32463;&#32593;&#32476;&#30340;&#36135;&#36816;&#37327;&#39044;&#27979;</h1><!--introduction--><p>
+<table border="0" width="600px" id="table1">	<tr>		<td><b><font size="2">该案例作者申明：</font></b></td>	</tr>	<tr><td><span class="comment"><font size="2">1：本人长期驻扎在此<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html"><font color="#0000FF">板块</font></a>里，对该案例提问，做到有问必答。本套书籍官方网站为：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></span></td></tr><tr>		<td><font size="2">2：点此<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">从当当预定本书</a>：<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">《Matlab神经网络30个案例分析》</a>。</td></tr><tr>	<td><p class="comment"></font><font size="2">3</font><font size="2">：此案例有配套的教学视频，视频下载方式<a href="http://video.ourmatlab.com/vbuy.html">video.ourmatlab.com/vbuy.html</a></font><font size="2">。 </font></p></td>	</tr>			<tr>		<td><span class="comment"><font size="2">		4：此案例为原创案例，转载请注明出处（《Matlab神经网络30个案例分析》）。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		5：若此案例碰巧与您的研究有关联，我们欢迎您提意见，要求等，我们考虑后可以加在案例里。</font></span></td>	</tr>		</table>
+</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;</a></li><li><a href="#2">&#36733;&#20837;&#25968;&#25454;</a></li><li><a href="#3">&#20132;&#21449;&#39564;&#35777;</a></li><li><a href="#4">&#37319;&#29992;&#26368;&#20339;&#26041;&#27861;&#24314;&#31435;GRNN&#32593;&#32476;</a></li></ul></div><h2>&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;<a name="1"></a></h2><pre class="codeinput">clc;
+clear <span class="string">all</span>
+close <span class="string">all</span>
+nntwarn <span class="string">off</span>;
+</pre><h2>&#36733;&#20837;&#25968;&#25454;<a name="2"></a></h2><pre class="codeinput">load <span class="string">data</span>;
+<span class="comment">% &#36733;&#20837;&#25968;&#25454;&#24182;&#23558;&#25968;&#25454;&#20998;&#25104;&#35757;&#32451;&#21644;&#39044;&#27979;&#20004;&#31867;</span>
+p_train=p(1:12,:);
+t_train=t(1:12,:);
+p_test=p(13,:);
+t_test=t(13,:);
+</pre><h2>&#20132;&#21449;&#39564;&#35777;<a name="3"></a></h2><pre class="codeinput">desired_spread=[];
+mse_max=10e20;
+desired_input=[];
+desired_output=[];
+result_perfp=[];
+indices = crossvalind(<span class="string">'Kfold'</span>,length(p_train),4);
+h=waitbar(0,<span class="string">'&#27491;&#22312;&#23547;&#25214;&#26368;&#20248;&#21270;&#21442;&#25968;....'</span>)
+k=1;
+<span class="keyword">for</span> i = 1:4
+    perfp=[];
+    disp([<span class="string">'&#20197;&#19979;&#20026;&#31532;'</span>,num2str(i),<span class="string">'&#27425;&#20132;&#21449;&#39564;&#35777;&#32467;&#26524;'</span>])
+    test = (indices == i); train = ~test;
+    p_cv_train=p_train(train,:);
+    t_cv_train=t_train(train,:);
+    p_cv_test=p_train(test,:);
+    t_cv_test=t_train(test,:);
+    p_cv_train=p_cv_train';
+    t_cv_train=t_cv_train';
+    p_cv_test= p_cv_test';
+    t_cv_test= t_cv_test';
+    [p_cv_train,minp,maxp,t_cv_train,mint,maxt]=premnmx(p_cv_train,t_cv_train);
+    p_cv_test=tramnmx(p_cv_test,minp,maxp);
+    <span class="keyword">for</span> spread=0.1:0.1:2;
+        net=newgrnn(p_cv_train,t_cv_train,spread);
+        waitbar(k/80,h);
+        disp([<span class="string">'&#24403;&#21069;spread&#20540;&#20026;'</span>, num2str(spread)]);
+        test_Out=sim(net,p_cv_test);
+        test_Out=postmnmx(test_Out,mint,maxt);
+        error=t_cv_test-test_Out;
+        disp([<span class="string">'&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;'</span>,num2str(mse(error))])
+        perfp=[perfp mse(error)];
+        <span class="keyword">if</span> mse(error)&lt;mse_max
+            mse_max=mse(error);
+            desired_spread=spread;
+            desired_input=p_cv_train;
+            desired_output=t_cv_train;
+        <span class="keyword">end</span>
+        k=k+1;
+    <span class="keyword">end</span>
+    result_perfp(i,:)=perfp;
+<span class="keyword">end</span>;
+close(h)
+disp([<span class="string">'&#26368;&#20339;spread&#20540;&#20026;'</span>,num2str(desired_spread)])
+disp([<span class="string">'&#27492;&#26102;&#26368;&#20339;&#36755;&#20837;&#20540;&#20026;'</span>])
+desired_input
+disp([<span class="string">'&#27492;&#26102;&#26368;&#20339;&#36755;&#20986;&#20540;&#20026;'</span>])
+desired_output
+</pre><pre class="codeoutput">h =
+    0.0029
+&#20197;&#19979;&#20026;&#31532;1&#27425;&#20132;&#21449;&#39564;&#35777;&#32467;&#26524;
+&#24403;&#21069;spread&#20540;&#20026;0.1
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;124571874.8298
+&#24403;&#21069;spread&#20540;&#20026;0.2
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;90645557.678
+&#24403;&#21069;spread&#20540;&#20026;0.3
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;82768831.4497
+&#24403;&#21069;spread&#20540;&#20026;0.4
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;84768223.896
+&#24403;&#21069;spread&#20540;&#20026;0.5
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;84759103.2947
+&#24403;&#21069;spread&#20540;&#20026;0.6
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;76521813.7747
+&#24403;&#21069;spread&#20540;&#20026;0.7
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;66745866.5201
+&#24403;&#21069;spread&#20540;&#20026;0.8
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;59834192.1528
+&#24403;&#21069;spread&#20540;&#20026;0.9
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;55771064.8612
+&#24403;&#21069;spread&#20540;&#20026;1
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;53787391.3477
+&#24403;&#21069;spread&#20540;&#20026;1.1
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;53534727.02
+&#24403;&#21069;spread&#20540;&#20026;1.2
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;54902678.6393
+&#24403;&#21069;spread&#20540;&#20026;1.3
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;57825818.0793
+&#24403;&#21069;spread&#20540;&#20026;1.4
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;62287398.0512
+&#24403;&#21069;spread&#20540;&#20026;1.5
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;68358005.7226
+&#24403;&#21069;spread&#20540;&#20026;1.6
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;76179186.9972
+&#24403;&#21069;spread&#20540;&#20026;1.7
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;85904136.7091
+&#24403;&#21069;spread&#20540;&#20026;1.8
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;97634954.6272
+&#24403;&#21069;spread&#20540;&#20026;1.9
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;111382259.9667
+&#24403;&#21069;spread&#20540;&#20026;2
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;127053634.1123
+&#20197;&#19979;&#20026;&#31532;2&#27425;&#20132;&#21449;&#39564;&#35777;&#32467;&#26524;
+&#24403;&#21069;spread&#20540;&#20026;0.1
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;65161016.3333
+&#24403;&#21069;spread&#20540;&#20026;0.2
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;65159626.1728
+&#24403;&#21069;spread&#20540;&#20026;0.3
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;64113857.4764
+&#24403;&#21069;spread&#20540;&#20026;0.4
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;55270213.0194
+&#24403;&#21069;spread&#20540;&#20026;0.5
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;39682929.7613
+&#24403;&#21069;spread&#20540;&#20026;0.6
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;26027323.9356
+&#24403;&#21069;spread&#20540;&#20026;0.7
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;17081810.2146
+&#24403;&#21069;spread&#20540;&#20026;0.8
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;11831155.7286
+&#24403;&#21069;spread&#20540;&#20026;0.9
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;9147359.3206
+&#24403;&#21069;spread&#20540;&#20026;1
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;8457301.6012
+&#24403;&#21069;spread&#20540;&#20026;1.1
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;9601994.1013
+&#24403;&#21069;spread&#20540;&#20026;1.2
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;12713875.1372
+&#24403;&#21069;spread&#20540;&#20026;1.3
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;18124030.5261
+&#24403;&#21069;spread&#20540;&#20026;1.4
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;26267687.889
+&#24403;&#21069;spread&#20540;&#20026;1.5
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;37598564.2623
+&#24403;&#21069;spread&#20540;&#20026;1.6
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;52525406.9241
+&#24403;&#21069;spread&#20540;&#20026;1.7
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;71372105.9955
+&#24403;&#21069;spread&#20540;&#20026;1.8
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;94354859.3784
+&#24403;&#21069;spread&#20540;&#20026;1.9
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;121569534.121
+&#24403;&#21069;spread&#20540;&#20026;2
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;152985977.0605
+&#20197;&#19979;&#20026;&#31532;3&#27425;&#20132;&#21449;&#39564;&#35777;&#32467;&#26524;
+&#24403;&#21069;spread&#20540;&#20026;0.1
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;206709836.9981
+&#24403;&#21069;spread&#20540;&#20026;0.2
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;172018640.3217
+&#24403;&#21069;spread&#20540;&#20026;0.3
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;139570891.0149
+&#24403;&#21069;spread&#20540;&#20026;0.4
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;119402928.3787
+&#24403;&#21069;spread&#20540;&#20026;0.5
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;89010064.9971
+&#24403;&#21069;spread&#20540;&#20026;0.6
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;59282681.9193
+&#24403;&#21069;spread&#20540;&#20026;0.7
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;41116262.114
+&#24403;&#21069;spread&#20540;&#20026;0.8
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;36563985.3687
+&#24403;&#21069;spread&#20540;&#20026;0.9
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;44069047.0695
+&#24403;&#21069;spread&#20540;&#20026;1
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;61584840.8008
+&#24403;&#21069;spread&#20540;&#20026;1.1
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;87224999.1052
+&#24403;&#21069;spread&#20540;&#20026;1.2
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;119280424.6553
+&#24403;&#21069;spread&#20540;&#20026;1.3
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;156317971.4329
+&#24403;&#21069;spread&#20540;&#20026;1.4
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;197314275.0108
+&#24403;&#21069;spread&#20540;&#20026;1.5
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;241684937.5432
+&#24403;&#21069;spread&#20540;&#20026;1.6
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;289190902.919
+&#24403;&#21069;spread&#20540;&#20026;1.7
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;339780670.5086
+&#24403;&#21069;spread&#20540;&#20026;1.8
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;393434401.448
+&#24403;&#21069;spread&#20540;&#20026;1.9
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;450051311.91
+&#24403;&#21069;spread&#20540;&#20026;2
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;509393393.1664
+&#20197;&#19979;&#20026;&#31532;4&#27425;&#20132;&#21449;&#39564;&#35777;&#32467;&#26524;
+&#24403;&#21069;spread&#20540;&#20026;0.1
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;115641727.7984
+&#24403;&#21069;spread&#20540;&#20026;0.2
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;73601256.982
+&#24403;&#21069;spread&#20540;&#20026;0.3
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;64943184.6692
+&#24403;&#21069;spread&#20540;&#20026;0.4
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;64347947.128
+&#24403;&#21069;spread&#20540;&#20026;0.5
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;67258240.2449
+&#24403;&#21069;spread&#20540;&#20026;0.6
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;74787505.6581
+&#24403;&#21069;spread&#20540;&#20026;0.7
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;86359823.856
+&#24403;&#21069;spread&#20540;&#20026;0.8
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;100758875.3266
+&#24403;&#21069;spread&#20540;&#20026;0.9
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;117002937.8999
+&#24403;&#21069;spread&#20540;&#20026;1
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;134394986.8029
+&#24403;&#21069;spread&#20540;&#20026;1.1
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;152627291.431
+&#24403;&#21069;spread&#20540;&#20026;1.2
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;171826882.2259
+&#24403;&#21069;spread&#20540;&#20026;1.3
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;192440500.4791
+&#24403;&#21069;spread&#20540;&#20026;1.4
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;215058058.6878
+&#24403;&#21069;spread&#20540;&#20026;1.5
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;240270949.22
+&#24403;&#21069;spread&#20540;&#20026;1.6
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;268589258.2634
+&#24403;&#21069;spread&#20540;&#20026;1.7
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;300402681.0205
+&#24403;&#21069;spread&#20540;&#20026;1.8
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;335964884.2766
+&#24403;&#21069;spread&#20540;&#20026;1.9
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;375388471.4138
+&#24403;&#21069;spread&#20540;&#20026;2
+&#24403;&#21069;&#32593;&#32476;&#30340;mse&#20026;418645604.214
+&#26368;&#20339;spread&#20540;&#20026;1
+&#27492;&#26102;&#26368;&#20339;&#36755;&#20837;&#20540;&#20026;
+desired_input =
+  Columns 1 through 3
+   -1.0000   -0.7570   -0.4706
+   -1.0000   -0.1551   -0.0304
+   -1.0000   -0.4969   -0.4969
+   -1.0000   -0.0769    0.5385
+   -1.0000   -0.8934   -0.7555
+   -1.0000   -0.7391   -0.3043
+   -1.0000   -0.9852   -0.9852
+   -1.0000   -0.6639   -0.7291
+  Columns 4 through 6
+   -0.0351    0.1779    0.3968
+    0.3266    0.5025    0.6099
+    0.3333    0.4465    0.6478
+    0.3846    0.3846    0.6923
+   -0.3103   -0.0157    0.2602
+   -0.0435    0.1304    0.3043
+   -0.2781   -0.0228    0.2302
+   -0.4229   -0.1527    0.0881
+  Columns 7 through 9
+    0.6723    0.8793    1.0000
+    0.7788    0.9357    1.0000
+    0.6604    1.0000    1.0000
+    0.6923    1.0000    1.0000
+    0.5674    0.7367    1.0000
+    0.5652    0.8261    1.0000
+    0.5418    0.7240    1.0000
+    0.3674    0.6368    1.0000
+&#27492;&#26102;&#26368;&#20339;&#36755;&#20986;&#20540;&#20026;
+desired_output =
+  Columns 1 through 3
+   -1.0000   -0.9770   -0.7068
+   -1.0000   -0.8046   -0.5911
+   -1.0000   -0.7602   -0.5070
+  Columns 4 through 6
+   -0.2420    0.0160    0.2887
+   -0.1924   -0.0446    0.2360
+   -0.0244    0.0650    0.2688
+  Columns 7 through 9
+    0.5410    0.7795    1.0000
+    0.4292    0.7311    1.0000
+    0.4823    0.8349    1.0000
+</pre><h2>&#37319;&#29992;&#26368;&#20339;&#26041;&#27861;&#24314;&#31435;GRNN&#32593;&#32476;<a name="4"></a></h2><pre class="codeinput">net=newgrnn(desired_input,desired_output,desired_spread);
+p_test=p_test';
+p_test=tramnmx(p_test,minp,maxp);
+grnn_prediction_result=sim(net,p_test);
+grnn_prediction_result=postmnmx(grnn_prediction_result,mint,maxt);
+grnn_error=t_test-grnn_prediction_result';
+disp([<span class="string">'GRNN&#31070;&#32463;&#32593;&#32476;&#19977;&#39033;&#27969;&#37327;&#39044;&#27979;&#30340;&#35823;&#24046;&#20026;'</span>,num2str(abs(grnn_error))])
+save <span class="string">best</span> <span class="string">desired_input</span> <span class="string">desired_output</span> <span class="string">p_test</span> <span class="string">t_test</span> <span class="string">grnn_error</span> <span class="string">mint</span> <span class="string">maxt</span>
+
+web <span class="string">browser</span> <span class="string">http://www.matlabsky.com/thread-11144-1-2.html</span>
+</pre><pre class="codeoutput">GRNN&#31070;&#32463;&#32593;&#32476;&#19977;&#39033;&#27969;&#37327;&#39044;&#27979;&#30340;&#35823;&#24046;&#20026;34695.9413      19828.2821      24663.7481
+</pre><p>
+<table width="656" align="left" >	<tr><td align="center"><p><font size="2"><a href="http://video.ourmatlab.com/">Matlab神经网络30个案例分析</a></font></p><p align="left"><font size="2">相关论坛：</font></p><p align="left"><font size="2">《Matlab神经网络30个案例分析》官方网站：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></p><p align="left"><font size="2">Matlab技术论坛：<a href="http://www.matlabsky.com">www.matlabsky.com</a></font></p><p align="left"><font size="2">M</font><font size="2">atlab函数百科：<a href="http://www.mfun.la">www.mfun.la</a></font></p><p align="left"><font size="2">Matlab中文论坛：<a href="http://www.ilovematlab.com">www.ilovematlab.com</a></font></p></td>	</tr></table>
+</p><p class="footer"><br>
+      Published with MATLAB&reg; 7.11<br></p></div><!--
+##### SOURCE BEGIN #####
+%% 案例8：GRNN的数据预测—基于广义回归神经网络的货运量预测
+%
+%
+% <html>
+% <table border="0" width="600px" id="table1">	<tr>		<td><b><font size="2">该案例作者申明：</font></b></td>	</tr>	<tr><td><span class="comment"><font size="2">1：本人长期驻扎在此<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html"><font color="#0000FF">板块</font></a>里，对该案例提问，做到有问必答。本套书籍官方网站为：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></span></td></tr><tr>		<td><font size="2">2：点此<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">从当当预定本书</a>：<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">《Matlab神经网络30个案例分析》</a>。</td></tr><tr>	<td><p class="comment"></font><font size="2">3</font><font size="2">：此案例有配套的教学视频，视频下载方式<a href="http://video.ourmatlab.com/vbuy.html">video.ourmatlab.com/vbuy.html</a></font><font size="2">。 </font></p></td>	</tr>			<tr>		<td><span class="comment"><font size="2">		4：此案例为原创案例，转载请注明出处（《Matlab神经网络30个案例分析》）。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		5：若此案例碰巧与您的研究有关联，我们欢迎您提意见，要求等，我们考虑后可以加在案例里。</font></span></td>	</tr>		</table>
+% </html>
+%% 清空环境变量
+clc;
+clear all
+close all
+nntwarn off;
+
+%% 载入数据
+load data;
+% 载入数据并将数据分成训练和预测两类
+p_train=p(1:12,:);
+t_train=t(1:12,:);
+p_test=p(13,:);
+t_test=t(13,:);
+%% 交叉验证
+desired_spread=[];
+mse_max=10e20;
+desired_input=[];
+desired_output=[];
+result_perfp=[];
+indices = crossvalind('Kfold',length(p_train),4);
+h=waitbar(0,'正在寻找最优化参数....')
+k=1;
+for i = 1:4
+    perfp=[];
+    disp(['以下为第',num2str(i),'次交叉验证结果'])
+    test = (indices == i); train = ~test;
+    p_cv_train=p_train(train,:);
+    t_cv_train=t_train(train,:);
+    p_cv_test=p_train(test,:);
+    t_cv_test=t_train(test,:);
+    p_cv_train=p_cv_train';
+    t_cv_train=t_cv_train';
+    p_cv_test= p_cv_test';
+    t_cv_test= t_cv_test';
+    [p_cv_train,minp,maxp,t_cv_train,mint,maxt]=premnmx(p_cv_train,t_cv_train);
+    p_cv_test=tramnmx(p_cv_test,minp,maxp);
+    for spread=0.1:0.1:2;
+        net=newgrnn(p_cv_train,t_cv_train,spread);
+        waitbar(k/80,h);
+        disp(['当前spread值为', num2str(spread)]);
+        test_Out=sim(net,p_cv_test);
+        test_Out=postmnmx(test_Out,mint,maxt);
+        error=t_cv_test-test_Out;
+        disp(['当前网络的mse为',num2str(mse(error))])
+        perfp=[perfp mse(error)];
+        if mse(error)<mse_max
+            mse_max=mse(error);
+            desired_spread=spread;
+            desired_input=p_cv_train;
+            desired_output=t_cv_train;
+        end
+        k=k+1;
+    end
+    result_perfp(i,:)=perfp;
+end;
+close(h)
+disp(['最佳spread值为',num2str(desired_spread)])
+disp(['此时最佳输入值为'])
+desired_input
+disp(['此时最佳输出值为'])
+desired_output
+%% 采用最佳方法建立GRNN网络
+net=newgrnn(desired_input,desired_output,desired_spread);
+p_test=p_test';
+p_test=tramnmx(p_test,minp,maxp);
+grnn_prediction_result=sim(net,p_test);
+grnn_prediction_result=postmnmx(grnn_prediction_result,mint,maxt);
+grnn_error=t_test-grnn_prediction_result';
+disp(['GRNN神经网络三项流量预测的误差为',num2str(abs(grnn_error))])
+save best desired_input desired_output p_test t_test grnn_error mint maxt
+
+web browser http://www.matlabsky.com/thread-11144-1-2.html
+%%
+% <html>
+% <table width="656" align="left" >	<tr><td align="center"><p><font size="2"><a href="http://video.ourmatlab.com/">Matlab神经网络30个案例分析</a></font></p><p align="left"><font size="2">相关论坛：</font></p><p align="left"><font size="2">《Matlab神经网络30个案例分析》官方网站：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></p><p align="left"><font size="2">Matlab技术论坛：<a href="http://www.matlabsky.com">www.matlabsky.com</a></font></p><p align="left"><font size="2">M</font><font size="2">atlab函数百科：<a href="http://www.mfun.la">www.mfun.la</a></font></p><p align="left"><font size="2">Matlab中文论坛：<a href="http://www.ilovematlab.com">www.ilovematlab.com</a></font></p></td>	</tr></table>
+% </html>
+
+
+     
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+##### SOURCE END #####
+--></body></html>
