@@ -1,0 +1,1 @@
+ezplot('tan(x)')
