@@ -1,0 +1,1 @@
+[x,y]=fminbnd('fun6',0,5)

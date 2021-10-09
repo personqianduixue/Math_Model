@@ -1,0 +1,1 @@
+b=xlsread('data5.xls','Sheet2','C3:F6')
