@@ -1,0 +1,40 @@
+
+a1=imread('D:\Program Files\matlab\附件4\000.bmp');
+[m,n]=size(a1);
+bb=xlsread('C:\Users\Administrator\Desktop\程序\fujian3data.xlsx');
+[H,N]=size(bb);
+temp=1;%0画行，1画列
+b=shunxu';
+a=zeros(m,n,N);
+
+for i=1:N
+    if b(i)<10
+           imageName=strcat('D:\Program Files\matlab\附件4\','0','0',int2str(b(i)),'.bmp');
+    elseif b(i)<100
+            imageName=strcat('D:\Program Files\matlab\附件4\','0',num2str(b(i)),'.bmp');
+    else
+           imageName=strcat('D:\Program Files\matlab\附件4\',num2str(b(i)),'.bmp');
+    end
+    a(:,:,i) = imread(imageName);%注意一个a还是2个
+end
+%画出拼接图像
+%temp=1;%0纵向，1横向
+%画行
+
+if temp==1
+    tu=zeros(m,n*N);
+    for i=1:N
+        tu(:,(i-1)*n+1:i*n)=a(:,:,i);
+    end
+elseif temp==0
+       tu=zeros(m*N,n);
+       for i=1:N
+       tu((i-1)*m+1:i*m,:)=a(:,:,i);
+       end
+else
+    disp('输入temp=0(画行)或者temp=1(画列)')
+end
+
+double(tu);
+imshow(tu,[]) %输出检查是否匹配
+%imwrite(tu,'C:\Users\Administrator\Desktop\答案\附件4碎片000.bmp') %保存高像素图片

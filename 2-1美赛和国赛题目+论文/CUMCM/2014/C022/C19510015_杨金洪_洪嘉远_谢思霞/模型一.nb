@@ -1,0 +1,80 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 7.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[      1960,         70]
+NotebookOptionsPosition[      1586,         52]
+NotebookOutlinePosition[      1941,         68]
+CellTagsIndexPosition[      1898,         65]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Reduce", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"1800", "*", "x"}], "-", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"x", "*", "1503.6"}], "+", "3300"}], ")"}]}], 
+     "\[GreaterEqual]", "0"}], ",", "x"}], "]"}], "\n"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Reduce", "::", "\<\"ratnz\"\>"}], 
+  RowBox[{
+  ":", " "}], "\<\"\\!\\(\\*StyleBox[\\\"\\\\\\\"Reduce was unable to solve \
+the system with inexact coefficients. The answer was obtained by solving a \
+corresponding exact system and numericizing the result.\\\\\\\"\\\", \\\"MT\\\
+\"]\\) \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/Reduce/ratnz\\\", ButtonNote -> \
+\\\"Reduce::ratnz\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.61972184621875*^9}],
+
+Cell[BoxData[
+ RowBox[{"x", "\[GreaterEqual]", "11.133603238866394`"}]], "Output",
+ CellChangeTimes->{3.61972184621875*^9}]
+}, Open  ]]
+},
+WindowSize->{615, 527},
+WindowMargins->{{55, Automatic}, {52, Automatic}},
+FrontEndVersion->"7.0 for Microsoft Windows (32-bit) (2009\:5e743\:670818\
+\:65e5)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[567, 22, 295, 10, 52, "Input"],
+Cell[865, 34, 579, 11, 62, "Message"],
+Cell[1447, 47, 123, 2, 30, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+

@@ -1,0 +1,84 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 7.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[      2075,         74]
+NotebookOptionsPosition[      1701,         56]
+NotebookOutlinePosition[      2056,         72]
+CellTagsIndexPosition[      2013,         69]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Reduce", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"1800", "*", "x"}], "-", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"x", "*", "1503.6"}], "+", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"1", "+", 
+           RowBox[{"1", "/", "20"}]}], ")"}], "*", "3300"}]}], ")"}]}], 
+     "\[GreaterEqual]", "0"}], ",", "x"}], "]"}], "\n"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Reduce", "::", "\<\"ratnz\"\>"}], 
+  RowBox[{
+  ":", " "}], "\<\"\\!\\(\\*StyleBox[\\\"\\\\\\\"Reduce was unable to solve \
+the system with inexact coefficients. The answer was obtained by solving a \
+corresponding exact system and numericizing the result.\\\\\\\"\\\", \\\"MT\\\
+\"]\\) \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/Reduce/ratnz\\\", ButtonNote -> \
+\\\"Reduce::ratnz\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.6197215675*^9}],
+
+Cell[BoxData[
+ RowBox[{"x", "\[GreaterEqual]", "11.690283400809713`"}]], "Output",
+ CellChangeTimes->{3.6197215675*^9}]
+}, Open  ]]
+},
+WindowSize->{615, 527},
+WindowMargins->{{48, Automatic}, {Automatic, 60}},
+FrontEndVersion->"7.0 for Microsoft Windows (32-bit) (2009\:5e743\:670818\
+\:65e5)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[567, 22, 418, 14, 52, "Input"],
+Cell[988, 38, 575, 11, 62, "Message"],
+Cell[1566, 51, 119, 2, 30, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+

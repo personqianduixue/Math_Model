@@ -1,0 +1,49 @@
+MODEL:
+  SETS:
+  CITY / 1.. 11/: U; ! U( I) = sequence no. of city;
+  LINK( CITY, CITY):
+       DIST,  ! The distance matrix;
+          X;  ! X( I, J) = 1 if we use link I, J;
+ ENDSETS
+ DATA:   !Distance matrix, it need not be symmetric;
+     dist=@OLE('C:\Users\Administrator\Desktop\sec.xlsx','data');
+  
+ENDDATA
+
+ !The model:Ref. Desrochers & Laporte, OR Letters,  Feb. 91;
+
+SUBMODEL SUB_LosT:
+ [OBJ_LosT] MIN = @SUM( LINK: DIST * X);
+ENDSUBMODEL
+
+SUBMODEL SUB_CON:
+  @FOR( CITY( K):
+  !  It must be entered;
+   @SUM( CITY( I)| I #NE# K: X( I, K)) = 1;
+  !  It must be departed;
+   @SUM( CITY( J)| J #NE# K: X( K, J)) = 1;
+  ! Weak form of the subtour breaking constraints;
+  ! These are not very powerful for large problems;
+   @FOR( CITY( J)| J #GT# 1 #AND# J #NE# K:
+       U( J) >= U( K) + X ( K, J) -
+       ( N - 2) * ( 1 - X( K, J)) +
+       ( N - 3) * X( J, K)));
+  ! Make the X's 0/1;
+  @FOR( LINK: @BIN( X));
+  ! For the first and last stop we know...;
+  @FOR( CITY( K)| K #GT# 1:
+   U( K) <= N - 1 - ( N - 2) * X( 1, K);
+   U( K) >= 1  + ( N - 2) * X( K, 1));
+
+ENDSUBMODEL
+
+
+CALC:
+
+N = @SIZE( CITY);
+@solve(SUB_LosT,SUB_CON);
+@text('C:\Users\Administrator\Desktop\³ÌÐò\output.txt')=x;
+
+endcalc
+
+

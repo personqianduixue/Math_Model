@@ -1,0 +1,101 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 7.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[      2619,         91]
+NotebookOptionsPosition[      2243,         73]
+NotebookOutlinePosition[      2598,         89]
+CellTagsIndexPosition[      2555,         86]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Reduce", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"x", "-", 
+         RowBox[{"0.25", " ", 
+          RowBox[{"(", 
+           RowBox[{"1", "+", 
+            RowBox[{"1", "/", "20"}]}], ")"}]}]}], ")"}], "*", "1800"}], "-", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"1", "+", 
+           RowBox[{"1", "/", "20"}]}], ")"}], "*", "3300"}], "+", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"x", "-", 
+           RowBox[{"0.25", " ", 
+            RowBox[{"(", 
+             RowBox[{"1", "+", 
+              RowBox[{"1", "/", "20"}]}], ")"}]}]}], ")"}], "*", "1503.6"}], 
+        "+", 
+        RowBox[{"0.25", "*", 
+         RowBox[{"(", 
+          RowBox[{"1", "+", 
+           RowBox[{"1", "/", "20"}]}], ")"}], "*", "1600"}]}], ")"}]}], 
+     "\[GreaterEqual]", "0"}], ",", "x"}], "]"}], "\n"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Reduce", "::", "\<\"ratnz\"\>"}], 
+  RowBox[{
+  ":", " "}], "\<\"\\!\\(\\*StyleBox[\\\"\\\\\\\"Reduce was unable to solve \
+the system with inexact coefficients. The answer was obtained by solving a \
+corresponding exact system and numericizing the result.\\\\\\\"\\\", \\\"MT\\\
+\"]\\) \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/Reduce/ratnz\\\", ButtonNote -> \
+\\\"Reduce::ratnz\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.619721613*^9}],
+
+Cell[BoxData[
+ RowBox[{"x", "\[GreaterEqual]", "13.369787449392708`"}]], "Output",
+ CellChangeTimes->{3.619721613*^9}]
+}, Open  ]]
+},
+WindowSize->{615, 527},
+WindowMargins->{{72, Automatic}, {34, Automatic}},
+FrontEndVersion->"7.0 for Microsoft Windows (32-bit) (2009\:5e743\:670818\
+\:65e5)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[567, 22, 962, 31, 112, "Input"],
+Cell[1532, 55, 574, 11, 62, "Message"],
+Cell[2109, 68, 118, 2, 30, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+

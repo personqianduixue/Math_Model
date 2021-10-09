@@ -1,0 +1,66 @@
+A = imread('picture1.tif');%将附件中的图片更名为picture1
+[m,n]=size(A);
+count1=1;
+
+for i=1:100:(m-99)
+    for j=1:100:(n-99)
+        B=A(i:i+99,j:j+99);
+        num1=max(max(B));
+        num2=min(min(B));
+        num3=num1-num2;
+        if num3<=12
+            C(1,count1)=i;
+            C(2,count1)=j;
+            count1=count1+1;
+        %%else disp('!');   
+        end
+    end
+end
+C;
+[mm,nn]=size(C);
+for t=1:1:nn
+    hzb=C(1,t);%%横坐标开始
+    zzb=C(2,t);%%纵坐标开始
+    for i=hzb:1:(hzb+99)
+        for j=zzb:1:(zzb+99)
+            A(i,j)=255;
+        end
+    end
+end
+%%subplot A
+imshow(A);
+
+----------------------------------------------------------------------------------------------------------------------
+A = imread('picture2.tif');%将附件中的图片2更名为picture2
+[m,n]=size(A);
+count1=1;
+
+for i=1:70:(m-20-69)
+    for j=1:70:(n-20-69)
+        B=A(i:i+69,j:j+69);
+        num1=max(max(B));
+        num2=min(min(B));
+        num3=num1-num2;
+        if num3<=26
+            C(1,count1)=i;
+            C(2,count1)=j;
+            count1=count1+1;
+        %%else disp('!');   
+        end
+    end
+end
+[mm,nn]=size(C);
+for t=1:1:nn
+    hzb=C(1,t);%%横坐标开始
+    zzb=C(2,t);%%纵坐标开始
+    for i=hzb:1:(hzb+69)
+        for j=zzb:1:(zzb+69)
+            A(i,j)=255;
+        end
+    end
+end
+%%subplot A
+imshow(A);
+
+
+                        
