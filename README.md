@@ -165,10 +165,4 @@
 
 - 安卓软件：kiwi浏览器（能装插件）、ADM pro+（同IDM的下载工具）、全能扫描王、学小易、幕布、有道词典、酷安、连点器、telegram、MX播放器、太极(qn\qx模块)、Zarchiver pro（压缩解压工具）、实用工具箱、一个木函、SD女佣、全局复制、Quickedit、知乎、B站、listen1、v2rayNG
 
-- 浏览器插件：Adblock Plus 广告屏蔽、Autopagerize 自动翻页、Chrono下载管理器 、History Button 历史记录、IDM Integration Module IDM下载、Last Tab 防止关闭最后一个标签页chrome也关闭、Octotree github文件树、Simpleextmanager 插件管理器、The Great Suspender Original 暂时冻结不用的标签页，节省内存、ublacklist 屏蔽垃圾网站、ublock Origin 屏蔽广告、Zotero Connector 搭配zetero软件自动下载文献、暴力猴/油猴：用脚本达到开挂的效果、Listen1:音乐聚合平台、网课小工具：刷超星、大学慕课
-
-- 油猴脚本:百度网盘下载助手、AC-Baidu、csdn去广告自动展开、FastGithub镜像访问、HTML5 video player enhanced script、Super preloaderPlus 、新标签页打开、百度云去广告&倍速、网页解除复制限制、文本选中复制、谷歌翻译绕过代码块、自动展开全文、vip视频解析
-
-- 其他必备软件：上网工具（V2rayN，SSR）、IDM（高速下载工具）、百度网盘高速下载工具、天若OCR（截图OCR识别工具）、QTTabbar（资源管理器标签页）、everything（文件搜索工具）、quicker（快捷启动工具）、quicklook（空格预览文件工具）、memreduct（内存自动清理工具）、TrafficMonitor（在任务栏显示网速）、FileMenu Tools（右键快捷工具）、copy++（复制时去除换行）、菲菲更名宝贝、PowerToys（屏幕取色）、OpenArk64（快捷键占用检测）、Iris Pro（护眼工具）、AutorunOrganizer（开机启动项检查与管理）、Right Click Enhancer Professional（右键菜单管理）、分区显示神器SpaceSniffer、IobitUnlocker（文件占用解锁工具，强制删除）、DefenderControl（一键关闭windows defender）、雷电模拟器4、Hash Calculator（计算文件hash）、Fastcopy(快速复制文件)、todesk（远程控制）、Ditto（剪切板工具）、sandbox（沙盒工具）、EarTrumpet(控制不同软件不同音量)、Deskpins(窗口置顶)
-
-- 安卓软件：kiwi浏览器（能装插件）、ADM pro+（同IDM的下载工具）、全能扫描王、学小易、幕布、有道词典、酷安、连点器、telegram、MX播放器、太极(qn\qx模块)、Zarchiver pro（压缩解压工具）、实用工具箱、一个木函、SD女佣、全局复制、Quickedit、知乎、B站、listen1、v2rayNG
+  
