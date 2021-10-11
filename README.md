@@ -12,6 +12,8 @@
 
 - 文件较大，总共7G+
 
+- 下载文件时搭配 Internet Download Manager （IDM）下载更佳
+
 - 方式一：直接download zip，文件较大，速度较慢【不推荐】
 
   ![2](https://gitee.com/nanchengsingle/picbed/raw/master/img/2.gif)
