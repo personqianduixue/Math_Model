@@ -2,6 +2,38 @@
 
 美国大学生数学建模竞赛、全国大学生数学建模竞赛、数学建模美赛论文，数学建模国赛论文、数学建模LaTeX模板、mathorcup历年论文、研究生数学建模历年论文、电工杯、华中赛、APMCM亚太地区数学建模、深圳杯、中青杯、数学建模书籍、数学建模算法、国赛评阅要点、数学建模word模板、软件模型算法汇总、MATLAB算法、常用Matlab代码、智能算法
 
+## 下载方式
+
+### 整理资料花费了很长时间 ，记得Star
+
+### 可能网上也有很多其他资料，但那些资料杂乱不堪，其实并没有什么用
+
+### 本仓库资料经过了精心分类
+
+- 文件较大，总共7G+
+
+- 方式一：直接download zip，文件较大，速度较慢【不推荐】
+
+  ![2](https://gitee.com/nanchengsingle/picbed/raw/master/img/2.gif)
+
+  
+
+- 方式二：使用github镜像网站，加速下载【推荐】
+
+  https://hub.fastgit.org/personqianduixue/Math_Model
+
+- 方式三：安装Git工具，然后：
+
+  ` git clone https://hub.fastgit.org/personqianduixue/Math_Model.git  【推荐】`
+
+  或者
+
+  `` git clone  https://github.com/personqianduixue/Math_Model.git``
+
+  ### 不想下载整个仓库？单个文件夹下载方式：
+
+  ​	可以使用https://gitzip.org/
+
 ## 本人比赛经历
 
 - 2020.11 校赛二等奖 https://github.com/personqianduixue/Mathematical-modeling-school-competition
@@ -13,6 +45,20 @@
 - 2021.8 真题训练2020A题 https://github.com/personqianduixue/CUMCM2020A
 - 2021.9 全国大学生数学建模国赛A题 正在等待最终结果
 - 2022.2 美赛 筹备中
+
+## 本人数模学习历程
+
+- 大一暑假：学习《数学模型》，简单入门
+
+- 大二学期：学习《数学建模算法与程序》，也就是那本《算法大全》
+
+- 大二打了很多比赛，真正的学习其实是通过比赛学到的
+
+- 大二暑假，准备国赛，把这个仓库里面的论文包括国赛、研究生赛、mathorcup等比赛的论文看了个遍，总结了“历年比赛题目.xlsx”，其中标红的是我认为比较好比较重要的题目，着重看了一遍，这时候我觉得我的模型才学的差不多了，并总结了以下模型，各位可以按照这个大纲学习
+
+  ![image-20211011225223689](https://gitee.com/nanchengsingle/picbed/raw/master/img/image-20211011225223689.png)
+
+
 
 ## 历年各大比赛题目
 
@@ -48,32 +94,15 @@
    - 聚类问题：K均值聚类， DBSCAN聚类，EM算法
   
     
-## 模型汇总
-### https://zhuanlan.zhihu.com/p/394139440
-- 优化问题：线性规划，半定规划、几何规划、非线性规划，整数规划，多目标规划（分层序列法），动态规划，存贮论、代理模型、响应面分析法、列生成算法
-- 预测模型：微分方程，小波分析，回归分析，灰色预测，马尔可夫预测，时间序列分析(AR MA ARMA ARIMA,LSTM神经网络)，混沌模型时间序列预测，支持向量机，神经网络预测（与机器学习部分很多重合）
-- 动态模型：微分方程模型（ODE、SDE、DDE、DAE、PDE），差分方程模型，元胞自动机，排队论，蒙特卡罗随机模拟
-- 图论模型：最短路径，最小生成树，最小费用最大流，指派问题，旅行商问题，VRPTW路径规划，网络流，路径规划算法（Dijkstra，Floyd，A*，D*，RRT*，LPA*，D*lite）
-- 评价模型：层次分析法，熵权法，最优赋权法，主成分分析法，主成分回归评价，因子分析，模糊综合评价，TOPSIS法，数据包络分析，秩和比法，灰色综合评价法，
- 最小二乘主客观一致赋权评价模型，BP神经网络综合评价法
-- 统计分析模型：分布检验，均值T检验，方差分析，协方差分析，相关分析，卡方检验，秩和检验，回归分析，Logistic回归，聚类分析，判别分析，关联分析（Apriori算法）
-- 现代智能算法：（求极值，多目标规划，TSP，车间调度等）模拟退火，遗传算法，粒子群算法，禁忌搜索、免疫算法，鱼群算法，神经网络，蚁群算法
-- 其他算法：二分法、直接搜索法、变范围搜索、单因素优选法0.618 法（黄金分割法）、拉格朗日乘子法、信赖域算法，欧拉法\改进欧拉法，牛顿-拉弗森算法（牛顿迭代法）、拟牛顿法、梯度下降法
-  备注：优先使用传统算法，避免群智能机器学习深度学习
-- 机器学习
-  - 分类问题：KNN，逻辑回归，决策树，随机森林， ADABOOST、GBDT\XGBoost\LightGBM，支持向量机，朴素贝叶斯，神经网络
-  - 回归问题：线性回归， LASSO回归，岭回归，决策树回归，集成学习中回归方法，支持向量回归，高斯混合模型，神经网络
-  - 聚类问题：K均值聚类， DBSCAN聚类，EM算法
 
 ## 软件汇总
 ### https://zhuanlan.zhihu.com/p/417708412
 - 软件下载及安装：
 
     - 第一步：微信搜索“XX软件下载/安装/pj版”，切换到文章栏目，有很多文章教程。常见的软件都有，如果没有，执行第2步
-
-    - 第二步：在特定网站搜索，如国内有http://ghxi.com、http://423down.com，国外有http://downloadly.net、http://lrepacks.net、http://getintopc.com，或者使用我写的聚合搜索，一键搜索多个网站：https://zhuanlan.zhihu.com/p/380060432 。如果没有，执行第3步
-
-    - 第3步：百度/谷歌，进行全面搜索
+- 第二步：在特定网站搜索，如国内有ghxi.com、423down.com，国外有downloadly.net 、  
+    - lrepacks.net、getintopc.com，或者**使用我写的聚合搜索，一键搜索多个网站**：https://zhuanlan.zhihu.com/p/380060432 。如果没有，执行第3步
+- 第3步：百度/谷歌，进行全面搜索
 
 
 - 编程Windows终端、Git、anaconda、CUDA、mingw64、R、mysql、、Mathematica 、Notepad++、IDEA、Pycharm、vscode、 MATLAB、 Vmware
