@@ -100,9 +100,8 @@
 - 软件下载及安装：
 
     - 第一步：微信搜索“XX软件下载/安装/pj版”，切换到文章栏目，有很多文章教程。常见的软件都有，如果没有，执行第2步
-- 第二步：在特定网站搜索，如国内有ghxi.com、423down.com，国外有downloadly.net 、  
-    - lrepacks.net、getintopc.com，或者**使用我写的聚合搜索，一键搜索多个网站**：https://zhuanlan.zhihu.com/p/380060432 。如果没有，执行第3步
-- 第3步：百度/谷歌，进行全面搜索
+    - 第二步：在特定网站搜索，如国内有ghxi.com、423down.com，国外有downloadly.net、lrepacks.net、getintopc.com，或者**使用我写的聚合搜索，一键搜索多个网站**：https://zhuanlan.zhihu.com/p/380060432 。如果没有，执行第3步
+    - 第3步：百度/谷歌，进行全面搜索
 
 
 - 编程Windows终端、Git、anaconda、CUDA、mingw64、R、mysql、、Mathematica 、Notepad++、IDEA、Pycharm、vscode、 MATLAB、 Vmware
