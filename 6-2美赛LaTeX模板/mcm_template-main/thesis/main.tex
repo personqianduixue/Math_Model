@@ -1,0 +1,73 @@
+\documentclass{mcmthesis}
+\mcmsetup{CTeX = false,   % enable Chinese character 使用 CTeX 套装时，设置为 true
+        tcn = 00000000, problem = D,
+        sheet = true, titleinsheet = true, keywordsinsheet = true,
+        titlepage = false, abstract = false}
+\title{}
+\date{\today}
+
+\usepackage{subfiles} % Best loaded last in the preamble
+\begin{document}
+
+\subfile{sections/abstract}
+
+
+
+
+
+% Generate the Table of Contents if it's needed.
+\tableofcontents
+\newpage
+
+
+% Generate the Memorandum, if it's needed.
+% \memoto{\LaTeX{}studio}
+% \memofrom{Liam Huang}
+% \memosubject{Happy \TeX{}ing!}
+% \memodate{\today}
+% \logo{\LARGE I'm pretending to be a LOGO!}
+% \begin{memo}[Memorandum]
+%   ;
+% \end{memo}
+
+
+\section{Introduction}
+  \subfile{sections/introduction}
+
+
+\section{Basic Analysis of the problem}
+  \subfile{sections/basic_analysis}
+
+\section{List Of Symbols}
+  \subfile{sections/symbols}
+
+\section{General Assumptions}
+  \subfile{sections/assumptions}
+
+\section{The Models}
+  \subfile{sections/models}
+
+\section{Conclusions}
+  \subfile{sections/conclusions}
+
+\section{Model Evaluation And Improvement}
+  \subfile{sections/evaluation}
+
+
+\newpage
+
+\bibliographystyle{plain}
+\bibliography{../reference/reference}
+
+% \newpage
+% \begin{appendices}
+	% Here are the programs we used in our model as follow.
+  %
+	% \section{Lingo script of Option 1}
+  %
+  % 	\textbf{Input Lingo source:}
+  % 	\lstinputlisting[language=c]{../src/option_1.ltf}
+
+
+% \end{appendices}
+\end{document}
