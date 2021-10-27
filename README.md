@@ -42,19 +42,19 @@
 
 - 下载文件时搭配 Internet Download Manager （IDM）下载更佳
 
-- 方式一：直接download zip，文件较大，速度较慢【不推荐】
+- 方式一：直接download zip，文件较大
 
-  ![2](https://gitee.com/nanchengsingle/picbed/raw/master/img/2.gif)
+  ![](https://gitee.com/nanchengsingle/picbed/raw/master/img/2.gif)
 
   
 
-- 方式二：使用github镜像网站，加速下载【推荐】
+- 方式二：使用github镜像网站，加速下载
 
-  https://hub.fastgit.org/personqianduixue/Math_Model
+- 方式三：安装油猴插件，搜索github加速脚本
 
-- 方式三：安装Git工具，然后：
+- 方式四：安装Git工具，然后：
 
-  ` git clone https://hub.fastgit.org/personqianduixue/Math_Model.git  【推荐】`
+  ` git clone https://hub.fastgit.org/personqianduixue/Math_Model.git `
 
   或者
 
