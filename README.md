@@ -42,6 +42,12 @@
 
 ## 更新记录
 
+ - 2021.11.6 国赛国奖名单已出
+
+   http://dxs.moe.gov.cn/zx/a/hd_sxjm_gsyw/211106/1735639.shtml
+
+   推国二最终国二，有点遗憾但也满足了，明年美赛再会
+
  - 2021.10.28 添加了《美国大学生数学建模竞赛题解析与研究 第1-7辑》与《正确写作美国大学生数学建模竞赛论文》完整电子版
  - 2021.10.27 添加了认证杯全部历年题目和论文
  - 2021.10.26 添加了2021年国赛优秀论文
@@ -71,7 +77,13 @@
 
 - 方式二：使用github镜像网站，加速下载
 
+  https://hub.fastgit.org/personqianduixue/Math_Model
+
+  https://github.com.cnpmjs.org/personqianduixue/Math_Model
+
 - 方式三：安装油猴插件，搜索github加速脚本
+
+  ![image-20211108233218322](https://gitee.com/nanchengsingle/picbed/raw/master/img/image-20211108233218322.png)
 
 - 方式四：安装Git工具，然后：
 
@@ -100,7 +112,7 @@
 - 2021.5 华中赛二等奖 https://github.com/personqianduixue/2021hzmcm_A_problem
 - 2021.7 数学建模2次选拔赛 https://github.com/personqianduixue/CUMCM_Selection
 - 2021.8 真题训练2020A题 https://github.com/personqianduixue/CUMCM2020A
-- 2021.9 全国大学生数学建模国赛A题 正在等待最终结果
+- 2021.9 全国大学生数学建模国赛A题 国家二等奖 https://github.com/personqianduixue/2021CUMCM_A
 - 2022.2 美赛 筹备中
 
 ## 本人数模学习历程
@@ -161,7 +173,7 @@
     - 第3步：百度/谷歌，进行全面搜索
 
 
-- 编程Windows终端、Git、anaconda、CUDA、mingw64、R、mysql、、Mathematica 、Notepad++、IDEA、Pycharm、vscode、 MATLAB、 Vmware
+- 编程：Windows终端、Git、anaconda、CUDA、mingw64、R、mysql、Mathematica 、Notepad++、IDEA、Pycharm、vscode、 MATLAB、 Vmware
 
 - 网络工具：wampsserver、Charles、Xshell、Xftp、ffmpeg、IPScanner、Postman、TorBrowser(洋葱浏览器)、VNC Viewer、谷歌浏览器
 
