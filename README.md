@@ -76,8 +76,15 @@
 ### 本仓库资料经过了精心分类
 
 - 文件较大，总共10G
+- 下载文件时搭配 Internet Download Manager （IDM）下
 
-- 下载文件时搭配 Internet Download Manager （IDM）下载更佳
+### 不想下载整个仓库？单个文件夹下载方式：
+
+​	可以使用https://gitzip.org/
+
+​	具体方法自行探索载更佳
+
+
 
 - 方式一：直接download zip，文件较大
 
@@ -107,11 +114,7 @@
 
   
 
-## 不想下载整个仓库？单个文件夹下载方式：
 
-​	可以使用https://gitzip.org/
-
-​	具体方法自行探索
 
 ## 本人比赛经历
 
