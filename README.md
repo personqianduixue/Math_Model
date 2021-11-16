@@ -40,6 +40,8 @@
 
 ## 更新记录
 
+ - 2021.11.16 更新百度网盘下载方式及非会员加速下载方法
+
  - 2021.11.10 添加了APMCM 2019 2020的论文
 
  - 2021.11.6 国赛国奖名单已出
@@ -112,11 +114,19 @@
 
   `` git clone  https://github.com/personqianduixue/Math_Model.git``
 
-  
+### 百度网盘下载及非会员加速
 
-  
+这里给出百度网盘下载链接，希望各位可以在本页面点个star，你的支持是我持续更新的动力！
 
+链接: https://pan.baidu.com/s/1KqUHUW07-T0rOayZiZYzeg 提取码: brsc 
 
+注意：因为这是很早之前上传的，而我的github有一些更新，因此这个百度网盘资料可能不全
+
+非会员加速方法，速度比超级会员还快(目前比较稳定2021.11.16)：
+
+- kinhdown在线解析 https://baidu.kinh.cc/?Type=LinkParsing&Link=
+- kinhdown客户端 https://kinhdown.com/
+- 数码小站网页在线解析 https://pan.shuma.ink/
 
 ## 本人比赛经历
 
