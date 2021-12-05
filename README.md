@@ -125,7 +125,13 @@
 非会员加速方法，速度比超级会员还快(目前比较稳定2021.11.16)：
 
 - kinhdown在线解析 https://baidu.kinh.cc/?Type=LinkParsing&Link=
-- kinhdown客户端 https://kinhdown.com/
+
+- kinhdown客户端 
+
+  https://kinhdown.com/?Type=APPS
+
+  https://kinhdown.com/?Type=Web
+
 - 数码小站网页在线解析 https://pan.shuma.ink/
 
 ## 本人比赛经历
