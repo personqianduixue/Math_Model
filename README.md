@@ -79,6 +79,7 @@
 
 - 文件较大，总共10G
 - 下载文件时搭配 Internet Download Manager （IDM）下载更佳
+- ![image-20211206232430578](https://gitee.com/nanchengsingle/picbed/raw/master/img/image-20211206232430578.png)
 
 ### 文件太大，不想下载整个仓库？单个文件夹下载方式：
 
