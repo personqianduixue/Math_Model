@@ -1,8 +1,6 @@
 # Mathmodel
 
-## 先star后fork，资瓷一下互联网精神吼不吼啊
-
-
+## 先star ![](https://img.shields.io/github/stars/personqianduixue/Math_Model?style=plastic) 后fork ![](https://img.shields.io/github/forks/personqianduixue/Math_Model?style=plastic)，资瓷一下互联网精神吼不吼啊
 
 
 数学建模、美赛、美国大学生数学建模竞赛、全国大学生数学建模竞赛、华为杯研究生数学建模、国赛LaTeX模板、美赛LaTeX模板、mathorcup、电工杯、华中赛、APMCM、深圳杯、中青杯、华东杯、数维杯、东三省数学建模、认证杯、数学建模书籍、常用matlab算法、国赛评阅要点、软件模型算法汇总、智能算法、优化算法、现代的算法
@@ -86,7 +84,7 @@
 
 - 文件较大，总共10G
 - 下载文件时搭配 Internet Download Manager （IDM）下载更佳
-- ![image-20211206232430578](https://gitee.com/nanchengsingle/picbed/raw/master/img/image-20211206232430578.png)
+- ![image-20211206232430578](https://raw.githubusercontent.com/personqianduixue/picbed/main/img/20220407130847.png)
 
 ### 文件太大，不想下载整个仓库？单个文件夹下载方式：
 
@@ -100,7 +98,7 @@
 
 - 方式一：直接download zip，文件较大
 
-  ![](https://gitee.com/nanchengsingle/picbed/raw/master/img/2.gif)
+  ![](https://raw.githubusercontent.com/personqianduixue/picbed/main/img/20220407130859.gif)
 
   
 
@@ -112,7 +110,7 @@
 
 - 方式三：安装油猴插件，搜索github加速脚本
 
-  ![image-20211108233218322](https://gitee.com/nanchengsingle/picbed/raw/master/img/image-20211108233218322.png)
+  ![image-20211108233218322](https://raw.githubusercontent.com/personqianduixue/picbed/main/img/20220407130904.png)
 
 - 方式四：安装Git工具，然后：
 
@@ -164,7 +162,7 @@
 
 - 大二暑假，准备国赛，把这个仓库里面的论文包括国赛、研究生赛、mathorcup等比赛的论文看了个遍，总结了“历年比赛题目.xlsx”，其中标红的是我认为比较好比较重要的题目，着重看了一遍，这时候我觉得我的模型才学的差不多了，并总结了以下模型，各位可以按照这个大纲学习
 
-  ![image-20220302200045845](https://gitee.com/nanchengsingle/picbed/raw/master/img/image-20220302200045845.png)
+  ![image-20220302200045845](https://raw.githubusercontent.com/personqianduixue/picbed/main/img/20220407130909.png)
 
 
 
