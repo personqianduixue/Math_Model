@@ -1,6 +1,6 @@
-# Mathmodel
+# Mathmodel ![](https://img.shields.io/github/stars/personqianduixue/Math_Model)![](https://img.shields.io/github/forks/personqianduixue/Math_Model)![](https://img.shields.io/github/watchers/personqianduixue/Math_Model)![Vistors](https://visitor-badge.laobi.icu/badge?page_id=personqianduixue.Math_Model)
 
-## 先star ![](https://img.shields.io/github/stars/personqianduixue/Math_Model?style=for-the-badge) 后fork ![](https://img.shields.io/github/forks/personqianduixue/Math_Model?style=for-the-badge)，资瓷一下互联网精神吼不吼啊
+## 先star 后fork ，资瓷一下互联网精神吼不吼啊
 
 
 数学建模、美赛、美国大学生数学建模竞赛、全国大学生数学建模竞赛、华为杯研究生数学建模、国赛LaTeX模板、美赛LaTeX模板、mathorcup、电工杯、华中赛、APMCM、深圳杯、中青杯、华东杯、数维杯、东三省数学建模、认证杯、数学建模书籍、常用matlab算法、国赛评阅要点、软件模型算法汇总、智能算法、优化算法、现代的算法 etc
