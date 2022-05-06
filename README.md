@@ -39,6 +39,8 @@
 
 ## 更新记录
 
+ - 2022.5.6更新 美赛拿了F
+
  - 2022.4.14 补充mathorcup 2020 、2021年论文
 
  - 2022.2.13 1.更新几篇美赛M奖论文，可以对照O奖论文看。详见：.\2-1美赛和国赛题目+论文\COMAP\数模美赛M奖论文；2.更新美赛和国赛word模板；3.更新美赛历年题目索引，详见“历年比赛题目.xlsx”
@@ -150,7 +152,7 @@
 - 2021.7 数学建模2次选拔赛 https://github.com/personqianduixue/CUMCM_Selection
 - 2021.8 真题训练2020A题 https://github.com/personqianduixue/CUMCM2020A
 - 2021.9 全国大学生数学建模国赛A题 国家二等奖 https://github.com/personqianduixue/2021CUMCM_A
-- 2022.2 美赛 筹备中
+- 2022.2 美赛 F，代码太垃圾了就不放出来了
 
 ## 本人数模学习历程
 
