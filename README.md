@@ -8,8 +8,17 @@
 ## 这是本人收集并整理的所有关于数学建模的资料
 
 - 这是全网最全面的历年比赛题目及论文汇总
-
 - 这是全网最全面的数学建模算法汇总
+
+## 下载方式
+
+本仓库资料经过了精心分类，文件较大，总共10G。下载文件时搭配 Internet Download Manager （IDM）下载更佳
+
+- 方式一：直接download zip，文件较大，需要较好的网络环境
+
+- 方式二：百度网盘下载，链接 https://mianbaoduo.com/o/bread/YpuWlZ5r ，里面提供了本仓库压缩包的百度网盘链接及网盘加速方法。注意这种方法是付费的，资料收集不易，恳请支持。
+
+  
 
 ## 注意：很多比赛没有公布优秀论文，因此只有题目，大家看看就好
 
@@ -39,6 +48,8 @@
 
 ## 更新记录
 
+ - 2022.6.7 更新百度网盘下载方式及非会员加速下载方法（付费）
+
  - 2022.5.12 更新2022美赛O奖论文
 
  - 2022.5.6更新 美赛拿了F
@@ -48,8 +59,6 @@
  - 2022.2.13 1.更新几篇美赛M奖论文，可以对照O奖论文看。详见：.\2-1美赛和国赛题目+论文\COMAP\数模美赛M奖论文；2.更新美赛和国赛word模板；3.更新美赛历年题目索引，详见“历年比赛题目.xlsx”
 
  - 2021.12.9 更新mathorcup大数据竞赛2020年优秀论文
-
- - 2021.11.16 更新百度网盘下载方式及非会员加速下载方法
 
  - 2021.11.10 添加了APMCM 2019 2020的论文
 
@@ -74,75 +83,6 @@
 - 2021.10.21 添加了华东杯、东三省、数维杯（国内赛和国际赛）等比赛的资料
 
 - 2021.10.19 收集了一些美赛OFM的代码，供参考
-
-
-
-
-## 下载方式
-
-### 整理资料花费了很长时间 ，记得Star
-
-### 可能网上也有很多其他资料，但那些资料杂乱不堪，其实并没有什么用
-
-### 本仓库资料经过了精心分类
-
-- 文件较大，总共10G
-- 下载文件时搭配 Internet Download Manager （IDM）下载更佳
-- ![image-20211206232430578](https://raw.githubusercontent.com/personqianduixue/picbed/main/img/20220407130847.png)
-
-### 文件太大，不想下载整个仓库？单个文件夹下载方式：
-
-可以使用https://gitzip.org/
-
-具体方法自行探索
-
-
-
-### 整个仓库下载：
-
-- 方式一：直接download zip，文件较大
-
-  ![](https://raw.githubusercontent.com/personqianduixue/picbed/main/img/20220407130859.gif)
-
-  
-
-- 方式二：使用github镜像网站，加速下载
-
-  https://hub.fastgit.org/personqianduixue/Math_Model
-
-  https://github.com.cnpmjs.org/personqianduixue/Math_Model
-
-- 方式三：安装油猴插件，搜索github加速脚本
-
-  ![image-20211108233218322](https://raw.githubusercontent.com/personqianduixue/picbed/main/img/20220407130904.png)
-
-- 方式四：安装Git工具，然后：
-
-  ` git clone https://hub.fastgit.org/personqianduixue/Math_Model.git `
-
-  或者
-
-  `` git clone  https://github.com/personqianduixue/Math_Model.git``
-
-### 百度网盘下载及非会员加速
-
-~~这里给出百度网盘下载链接，希望各位可以在本页面点个star，你的支持是我持续更新的动力！~~
-
-~~ 链接: https://pan.baidu.com/s/1KqUHUW07-T0rOayZiZYzeg 提取码: brsc ~~ {已删除}
-
-~~注意：因为这是很早之前上传的，而我的github有一些更新，因此这个百度网盘资料可能不全，不全的内容见上文的更新记录~~
-
-非会员加速方法，速度比超级会员还快(目前比较稳定2021.11.16)：
-
-- kinhdown在线解析 https://baidu.kinh.cc/?Type=LinkParsing&Link=
-
-- kinhdown客户端 
-
-  https://kinhdown.com/?Type=APPS
-
-  https://kinhdown.com/?Type=Web
-
-- 数码小站网页在线解析 https://pan.shuma.ink/
 
 ## 本人比赛经历
 
