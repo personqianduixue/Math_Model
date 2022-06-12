@@ -13,6 +13,7 @@
 .*.lb
 ##
 4 书籍/*
+README_bak.md
 .DS_Store
 
 
