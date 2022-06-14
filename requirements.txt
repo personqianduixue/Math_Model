@@ -1,5 +1,0 @@
-requests==2.20.0
-feedparser==6.0.2
-matplotlib
-pandas
-

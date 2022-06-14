@@ -1,1 +1,0 @@
-ezsurf(@(x,y)x*y)

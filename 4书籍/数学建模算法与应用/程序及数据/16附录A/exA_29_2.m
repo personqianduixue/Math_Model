@@ -1,1 +1,0 @@
-a=textread('data2.txt');

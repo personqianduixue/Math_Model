@@ -1,1 +1,0 @@
-[x,y]=fminimax(@fun9,rand(2,1))

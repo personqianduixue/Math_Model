@@ -1,1 +1,0 @@
-[x,y]=fminunc('test3',rand(2,1))

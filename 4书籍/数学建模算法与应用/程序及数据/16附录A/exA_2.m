@@ -1,1 +1,0 @@
-ezplot('tan(x)')

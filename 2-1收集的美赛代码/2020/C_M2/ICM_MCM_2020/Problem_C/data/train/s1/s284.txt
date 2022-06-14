@@ -1,1 +1,0 @@
-Quit heating after 60 days,

@@ -1,1 +1,0 @@
-The light on the clock does not stay lit when micro not in use.  When the door opens and shuts, the liquid in a cup or whatever may spill.  Also when reheating coffee from 7-11 it tips over!

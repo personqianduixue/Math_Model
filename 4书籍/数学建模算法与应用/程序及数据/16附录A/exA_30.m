@@ -1,1 +1,0 @@
-dlmwrite('data3.txt',b)
