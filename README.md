@@ -8,7 +8,7 @@
 
 **以后更新的地址**：[新的地址](https://mianbaoduo.com/o/bread/mbd-YpuYlJ1w) 
 
-新地址的目录结构查看：[新仓库目录结构](https://github.com/personqianduixue/Math_Model/blob/master/tree.txt)
+新地址仓库的目录结构查看：[新仓库目录结构](https://github.com/personqianduixue/Math_Model/blob/master/tree.txt)
 
 需要下载仓库资料请到新地址下载，新的资料库更全面，包含的东西更多
 
