@@ -1,2 +1,0 @@
-# MCMICM2019Problems
-2019 年美国大学生数学建模(MCM/ICM)赛题
