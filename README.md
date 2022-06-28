@@ -14,9 +14,7 @@
 
 新的资料如下:
 
-![image-20220614193908759](https://raw.githubusercontent.com/personqianduixue/picbed/main/img/20220614193908.png)
-
-
+![https://raw.githubusercontent.com/personqianduixue/picbed/main/img/20220628140106.png](https://cdn.staticaly.com/gh/personqianduixue/picbed/main/img/20220628140106.png)
 
 **新仓库的文件包含：**
 
@@ -53,6 +51,10 @@
 37.国赛官方的评阅要点；38.清风数学建模公开课的课件；39.数模经验分享与总结（30+篇）
 
 以下是新地址的更新记录：
+
+ - 2022.6.28 更新3-6算法-模型算法大全
+
+ - 2022.6.26 更新华数杯历年题目和论文
 
  - 2022.6.14 更新按36个模型整理的国赛论文
 
@@ -105,7 +107,7 @@
 
 ## 注意：很多比赛没有公布优秀论文，因此只有题目，大家看看就好
 
-- 国赛、美赛、研究生赛、mathorcup、APMCM历年论文全部有
+- 国赛、美赛、研究生赛、mathorcup、APMCM、华数杯历年论文全部有
 - 五一（苏北赛）、中青杯、数维杯大部分有
 
 无论文的比赛包括：
@@ -120,7 +122,7 @@
 
 - 东三省部分年份采用深圳杯题目，没找到论文
 
-- 华数杯2021是第一届
+  
 
   
 
