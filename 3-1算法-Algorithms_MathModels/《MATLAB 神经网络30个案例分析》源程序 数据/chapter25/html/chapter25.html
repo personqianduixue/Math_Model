@@ -1,0 +1,401 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      --><title>&#35813;&#20195;&#30721;&#20026;&#22522;&#20110;FCM-GRNN&#30340;&#32858;&#31867;&#31639;&#27861;</title><meta name="generator" content="MATLAB 7.9"><meta name="date" content="2010-11-28"><meta name="m-file" content="FCMGRNN"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><h1>&#35813;&#20195;&#30721;&#20026;&#22522;&#20110;FCM-GRNN&#30340;&#32858;&#31867;&#31639;&#27861;</h1><!--introduction--><p>
+<table border="0" width="600px" id="table1">	<tr>		<td><b><font size="2">该案例作者申明：</font></b></td>	</tr>	<tr><td><span class="comment"><font size="2">1：本人长期驻扎在此<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html"><font color="#0000FF">板块</font></a>里，对该案例提问，做到有问必答。本套书籍官方网站为：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></span></td></tr><tr>		<td><font size="2">2：点此<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">从当当预定本书</a>：<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">《Matlab神经网络30个案例分析》</a>。</td></tr><tr>	<td><p class="comment"></font><font size="2">3</font><font size="2">：此案例有配套的教学视频，视频下载方式<a href="http://video.ourmatlab.com/vbuy.html">video.ourmatlab.com/vbuy.html</a></font><font size="2">。 </font></p></td>	</tr>			<tr>		<td><span class="comment"><font size="2">		4：此案例为原创案例，转载请注明出处（《Matlab神经网络30个案例分析》）。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		5：若此案例碰巧与您的研究有关联，我们欢迎您提意见，要求等，我们考虑后可以加在案例里。</font></span></td>	</tr>		</table>
+</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">&#28165;&#31354;&#29615;&#22659;&#25991;&#20214;</a></li><li><a href="#2">&#25552;&#21462;&#25915;&#20987;&#25968;&#25454;</a></li><li><a href="#3">&#27169;&#31946;&#32858;&#31867;</a></li><li><a href="#4">&#27169;&#31946;&#32858;&#31867;&#32467;&#26524;&#20998;&#26512;</a></li><li><a href="#5">&#32593;&#32476;&#35757;&#32451;&#26679;&#26412;&#25552;&#21462;</a></li><li><a href="#6">&#36845;&#20195;&#35745;&#31639;</a></li><li><a href="#8">&#24191;&#20041;&#31070;&#32463;&#32593;&#32476;&#32858;&#31867;</a></li><li><a href="#9">&#32593;&#32476;&#35757;&#32451;&#25968;&#25454;&#20877;&#27425;&#25552;&#21462;</a></li><li><a href="#11">&#32467;&#26524;&#26174;&#31034;</a></li></ul></div><h2>&#28165;&#31354;&#29615;&#22659;&#25991;&#20214;<a name="1"></a></h2><pre class="codeinput">clear <span class="string">all</span>;
+clc;
+</pre><h2>&#25552;&#21462;&#25915;&#20987;&#25968;&#25454;<a name="2"></a></h2><pre class="codeinput"><span class="comment">%&#25915;&#20987;&#26679;&#26412;&#25968;&#25454;</span>
+load <span class="string">netattack</span>;
+P1=netattack;
+T1=P1(:,39)';
+P1(:,39)=[];
+
+<span class="comment">%&#25968;&#25454;&#22823;&#23567;</span>
+[R1,C1]=size(P1);
+csum=20;  <span class="comment">%&#25552;&#21462;&#35757;&#32451;&#25968;&#25454;&#22810;&#23569;</span>
+</pre><h2>&#27169;&#31946;&#32858;&#31867;<a name="3"></a></h2><pre class="codeinput">data=P1;
+[center,U,obj_fcn] = fcm(data,5);
+<span class="keyword">for</span> i=1:R1
+    [value,idx]=max(U(:,i));
+    a1(i)=idx;
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">Iteration count = 1, obj. fcn = 816684391225.362430
+Iteration count = 2, obj. fcn = 615465369164.578490
+Iteration count = 3, obj. fcn = 600908236624.285030
+Iteration count = 4, obj. fcn = 427845347701.986940
+Iteration count = 5, obj. fcn = 10309578557.033461
+Iteration count = 6, obj. fcn = 992987469.165449
+Iteration count = 7, obj. fcn = 917568041.141942
+Iteration count = 8, obj. fcn = 823418929.818642
+Iteration count = 9, obj. fcn = 732812711.405862
+Iteration count = 10, obj. fcn = 676133231.903434
+Iteration count = 11, obj. fcn = 653013251.690190
+Iteration count = 12, obj. fcn = 645527896.996075
+Iteration count = 13, obj. fcn = 643118177.479442
+Iteration count = 14, obj. fcn = 642323044.634751
+Iteration count = 15, obj. fcn = 642056483.253320
+Iteration count = 16, obj. fcn = 641966294.815772
+Iteration count = 17, obj. fcn = 641935616.358264
+Iteration count = 18, obj. fcn = 641925148.251762
+Iteration count = 19, obj. fcn = 641921569.931576
+Iteration count = 20, obj. fcn = 641920345.508539
+Iteration count = 21, obj. fcn = 641919926.297744
+Iteration count = 22, obj. fcn = 641919782.724755
+Iteration count = 23, obj. fcn = 641919733.544505
+Iteration count = 24, obj. fcn = 641919716.696375
+Iteration count = 25, obj. fcn = 641919710.924225
+Iteration count = 26, obj. fcn = 641919708.946640
+Iteration count = 27, obj. fcn = 641919708.269087
+Iteration count = 28, obj. fcn = 641919708.036943
+Iteration count = 29, obj. fcn = 641919707.957413
+Iteration count = 30, obj. fcn = 641919707.930172
+Iteration count = 31, obj. fcn = 641919707.920823
+Iteration count = 32, obj. fcn = 641919707.917630
+Iteration count = 33, obj. fcn = 641919707.916527
+Iteration count = 34, obj. fcn = 641919707.916157
+Iteration count = 35, obj. fcn = 641919707.916023
+Iteration count = 36, obj. fcn = 641919707.915990
+Iteration count = 37, obj. fcn = 641919707.915959
+Iteration count = 38, obj. fcn = 641919707.915960
+</pre><h2>&#27169;&#31946;&#32858;&#31867;&#32467;&#26524;&#20998;&#26512;<a name="4"></a></h2><pre class="codeinput">Confusion_Matrix_FCM=zeros(6,6);
+Confusion_Matrix_FCM(1,:)=[0:5];
+Confusion_Matrix_FCM(:,1)=[0:5]';
+<span class="keyword">for</span> nf=1:5
+    <span class="keyword">for</span> nc=1:5
+        Confusion_Matrix_FCM(nf+1,nc+1)=length(find(a1(find(T1==nf))==nc));
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre><h2>&#32593;&#32476;&#35757;&#32451;&#26679;&#26412;&#25552;&#21462;<a name="5"></a></h2><pre class="codeinput">cent1=P1(find(a1==1),:);cent1=mean(cent1);
+cent2=P1(find(a1==2),:);cent2=mean(cent2);
+cent3=P1(find(a1==3),:);cent3=mean(cent3);
+cent4=P1(find(a1==4),:);cent4=mean(cent4);
+cent5=P1(find(a1==5),:);cent5=mean(cent5);
+
+<span class="comment">%&#25552;&#21462;&#33539;&#25968;&#26368;&#23567;&#20026;&#35757;&#32451;&#26679;&#26412;</span>
+<span class="keyword">for</span> n=1:R1;
+    ecent1(n)=norm(P1(n,:)-cent1);
+    ecent2(n)=norm(P1(n,:)-cent2);
+    ecent3(n)=norm(P1(n,:)-cent3);
+    ecent4(n)=norm(P1(n,:)-cent4);
+    ecent5(n)=norm(P1(n,:)-cent5);
+<span class="keyword">end</span>
+<span class="keyword">for</span> n=1:csum
+    [va me1]=min(ecent1);
+    [va me2]=min(ecent2);
+    [va me3]=min(ecent3);
+    [va me4]=min(ecent4);
+    [va me5]=min(ecent5);
+    ecnt1(n,:)=P1(me1(1),:);ecent1(me1(1))=[];tcl(n)=1;
+    ecnt2(n,:)=P1(me2(1),:);ecent2(me2(1))=[];tc2(n)=2;
+    ecnt3(n,:)=P1(me3(1),:);ecent3(me3(1))=[];tc3(n)=3;
+    ecnt4(n,:)=P1(me4(1),:);ecent4(me4(1))=[];tc4(n)=4;
+    ecnt5(n,:)=P1(me5(1),:);ecent5(me5(1))=[];tc5(n)=5;
+<span class="keyword">end</span>
+P2=[ecnt1;ecnt2;ecnt3;ecnt4;ecnt5];T2=[tcl,tc2,tc3,tc4,tc5];
+k=0;
+</pre><h2>&#36845;&#20195;&#35745;&#31639;<a name="6"></a></h2><pre class="codeinput"><span class="keyword">for</span> nit=1:10<span class="comment">%&#24320;&#22987;&#36845;&#20195;</span>
+</pre><h2>&#24191;&#20041;&#31070;&#32463;&#32593;&#32476;&#32858;&#31867;<a name="8"></a></h2><pre class="codeinput">    net = newgrnn(P2',T2,50);   <span class="comment">%&#35757;&#32451;&#24191;&#20041;&#32593;&#32476;</span>
+
+    a2=sim(net,P1') ;  <span class="comment">%&#39044;&#27979;&#32467;&#26524;</span>
+    <span class="comment">%&#36755;&#20986;&#26631;&#20934;&#21270;&#65288;&#26681;&#25454;&#36755;&#20986;&#26469;&#20998;&#31867;&#65289;</span>
+    a2(find(a2&lt;=1.5))=1;
+    a2(find(a2&gt;1.5&amp;a2&lt;=2.5))=2;
+    a2(find(a2&gt;2.5&amp;a2&lt;=3.5))=3;
+    a2(find(a2&gt;3.5&amp;a2&lt;=4.5))=4;
+    a2(find(a2&gt;4.5))=5;
+</pre><h2>&#32593;&#32476;&#35757;&#32451;&#25968;&#25454;&#20877;&#27425;&#25552;&#21462;<a name="9"></a></h2><pre class="codeinput">    cent1=P1(find(a2==1),:);cent1=mean(cent1);
+    cent2=P1(find(a2==2),:);cent2=mean(cent2);
+    cent3=P1(find(a2==3),:);cent3=mean(cent3);
+    cent4=P1(find(a2==4),:);cent4=mean(cent4);
+    cent5=P1(find(a2==5),:);cent5=mean(cent5);
+
+    <span class="keyword">for</span> n=1:R1<span class="comment">%&#35745;&#31639;&#26679;&#26412;&#21040;&#21508;&#20010;&#20013;&#24515;&#30340;&#36317;&#31163;</span>
+        ecent1(n)=norm(P1(n,:)-cent1);
+        ecent2(n)=norm(P1(n,:)-cent2);
+        ecent3(n)=norm(P1(n,:)-cent3);
+        ecent4(n)=norm(P1(n,:)-cent4);
+        ecent5(n)=norm(P1(n,:)-cent5);
+    <span class="keyword">end</span>
+
+    <span class="comment">%&#36873;&#25321;&#31163;&#27599;&#31867;&#20013;&#24515;&#26368;&#36817;&#30340;csum&#20010;&#26679;&#26412;</span>
+    <span class="keyword">for</span> n=1:csum
+        [va me1]=min(ecent1);
+        [va me2]=min(ecent2);
+        [va me3]=min(ecent3);
+        [va me4]=min(ecent4);
+        [va me5]=min(ecent5);
+        ecnt1(n,:)=P1(me1(1),:);ecent1(me1(1))=[];tc1(n)=1;
+        ecnt2(n,:)=P1(me2(1),:);ecent2(me2(1))=[];tc2(n)=2;
+        ecnt3(n,:)=P1(me3(1),:);ecent3(me3(1))=[];tc3(n)=3;
+        ecnt4(n,:)=P1(me4(1),:);ecent4(me4(1))=[];tc4(n)=4;
+        ecnt5(n,:)=P1(me5(1),:);ecent5(me5(1))=[];tc5(n)=5;
+    <span class="keyword">end</span>
+
+    p2=[ecnt1;ecnt2;ecnt3;ecnt4;ecnt5];T2=[tc1,tc2,tc3,tc4,tc5];
+
+    <span class="comment">%&#32479;&#35745;&#20998;&#31867;&#32467;&#26524;</span>
+    Confusion_Matrix_GRNN=zeros(6,6);
+    Confusion_Matrix_GRNN(1,:)=[0:5];
+    Confusion_Matrix_GRNN(:,1)=[0:5]';
+    <span class="keyword">for</span> nf=1:5
+        <span class="keyword">for</span> nc=1:5
+            Confusion_Matrix_GRNN(nf+1,nc+1)=length(find(a2(find(T1==nf))==nc));
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+
+    pre2=0;
+
+    <span class="keyword">for</span> n=2:6;
+        pre2=pre2+max(Confusion_Matrix_GRNN(n,:));
+    <span class="keyword">end</span>
+
+    pre2=pre2/R1*100;
+</pre><pre class="codeinput"><span class="keyword">end</span>
+</pre><h2>&#32467;&#26524;&#26174;&#31034;<a name="11"></a></h2><pre class="codeinput">Confusion_Matrix_FCM
+
+Confusion_Matrix_GRNN
+
+web <span class="string">browser</span> <span class="string">www.matlabsky.com</span>
+</pre><pre class="codeoutput">Confusion_Matrix_FCM =
+  Columns 1 through 4
+           0           1           2           3
+           1           7           0          13
+           2           0        2097           0
+           3           0          95           0
+           4           0           0           0
+           5           0           0           0
+  Columns 5 through 6
+           4           5
+           0        1543
+           0           0
+          35           0
+         658           0
+          52           0
+Confusion_Matrix_GRNN =
+  Columns 1 through 4
+           0           1           2           3
+           1          32           1        1330
+           2           0        2097           0
+           3          28          90           4
+           4           0           0           3
+           5          51           1           0
+  Columns 5 through 6
+           4           5
+         115          85
+           0           0
+           8           0
+         655           0
+           0           0
+</pre><p>
+<table width="656" align="left" >	<tr><td align="center"><p><font size="2"><a href="http://video.ourmatlab.com/">Matlab神经网络30个案例分析</a></font></p><p align="left"><font size="2">相关论坛：</font></p><p align="left"><font size="2">《Matlab神经网络30个案例分析》官方网站：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></p><p align="left"><font size="2">Matlab技术论坛：<a href="http://www.matlabsky.com">www.matlabsky.com</a></font></p><p align="left"><font size="2">M</font><font size="2">atlab函数百科：<a href="http://www.mfun.la">www.mfun.la</a></font></p><p align="left"><font size="2">Matlab中文论坛：<a href="http://www.ilovematlab.com">www.ilovematlab.com</a></font></p></td>	</tr></table>
+</p><p class="footer"><br>
+      Published with MATLAB&reg; 7.9<br></p></div><!--
+##### SOURCE BEGIN #####
+%% 该代码为基于FCM-GRNN的聚类算法
+%
+% <html>
+% <table border="0" width="600px" id="table1">	<tr>		<td><b><font size="2">该案例作者申明：</font></b></td>	</tr>	<tr><td><span class="comment"><font size="2">1：本人长期驻扎在此<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html"><font color="#0000FF">板块</font></a>里，对该案例提问，做到有问必答。本套书籍官方网站为：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></span></td></tr><tr>		<td><font size="2">2：点此<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">从当当预定本书</a>：<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">《Matlab神经网络30个案例分析》</a>。</td></tr><tr>	<td><p class="comment"></font><font size="2">3</font><font size="2">：此案例有配套的教学视频，视频下载方式<a href="http://video.ourmatlab.com/vbuy.html">video.ourmatlab.com/vbuy.html</a></font><font size="2">。 </font></p></td>	</tr>			<tr>		<td><span class="comment"><font size="2">		4：此案例为原创案例，转载请注明出处（《Matlab神经网络30个案例分析》）。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		5：若此案例碰巧与您的研究有关联，我们欢迎您提意见，要求等，我们考虑后可以加在案例里。</font></span></td>	</tr>		</table>
+% </html>
+%% 清空环境文件
+clear all;
+clc;
+
+%% 提取攻击数据
+
+%攻击样本数据
+load netattack;
+P1=netattack;
+T1=P1(:,39)';
+P1(:,39)=[];
+
+%数据大小
+[R1,C1]=size(P1);
+csum=20;  %提取训练数据多少
+
+%% 模糊聚类
+data=P1;
+[center,U,obj_fcn] = fcm(data,5);    
+for i=1:R1
+    [value,idx]=max(U(:,i));
+    a1(i)=idx;
+end
+
+%% 模糊聚类结果分析
+Confusion_Matrix_FCM=zeros(6,6);
+Confusion_Matrix_FCM(1,:)=[0:5];
+Confusion_Matrix_FCM(:,1)=[0:5]';
+for nf=1:5
+    for nc=1:5
+        Confusion_Matrix_FCM(nf+1,nc+1)=length(find(a1(find(T1==nf))==nc));
+    end
+end
+
+%% 网络训练样本提取
+cent1=P1(find(a1==1),:);cent1=mean(cent1);
+cent2=P1(find(a1==2),:);cent2=mean(cent2);
+cent3=P1(find(a1==3),:);cent3=mean(cent3);
+cent4=P1(find(a1==4),:);cent4=mean(cent4);
+cent5=P1(find(a1==5),:);cent5=mean(cent5);
+
+%提取范数最小为训练样本
+for n=1:R1;
+    ecent1(n)=norm(P1(n,:)-cent1);
+    ecent2(n)=norm(P1(n,:)-cent2);
+    ecent3(n)=norm(P1(n,:)-cent3);
+    ecent4(n)=norm(P1(n,:)-cent4);
+    ecent5(n)=norm(P1(n,:)-cent5);
+end
+for n=1:csum
+    [va me1]=min(ecent1);
+    [va me2]=min(ecent2);
+    [va me3]=min(ecent3);
+    [va me4]=min(ecent4);
+    [va me5]=min(ecent5);
+    ecnt1(n,:)=P1(me1(1),:);ecent1(me1(1))=[];tcl(n)=1;
+    ecnt2(n,:)=P1(me2(1),:);ecent2(me2(1))=[];tc2(n)=2;
+    ecnt3(n,:)=P1(me3(1),:);ecent3(me3(1))=[];tc3(n)=3;
+    ecnt4(n,:)=P1(me4(1),:);ecent4(me4(1))=[];tc4(n)=4;
+    ecnt5(n,:)=P1(me5(1),:);ecent5(me5(1))=[];tc5(n)=5;
+end
+P2=[ecnt1;ecnt2;ecnt3;ecnt4;ecnt5];T2=[tcl,tc2,tc3,tc4,tc5];
+k=0;
+
+%% 迭代计算
+for nit=1:10%开始迭代
+    
+    %% 广义神经网络聚类
+    net = newgrnn(P2',T2,50);   %训练广义网络
+    
+    a2=sim(net,P1') ;  %预测结果
+    %输出标准化（根据输出来分类）
+    a2(find(a2<=1.5))=1;
+    a2(find(a2>1.5&a2<=2.5))=2;
+    a2(find(a2>2.5&a2<=3.5))=3;
+    a2(find(a2>3.5&a2<=4.5))=4;
+    a2(find(a2>4.5))=5;
+    
+    %% 网络训练数据再次提取
+    cent1=P1(find(a2==1),:);cent1=mean(cent1);
+    cent2=P1(find(a2==2),:);cent2=mean(cent2);
+    cent3=P1(find(a2==3),:);cent3=mean(cent3);
+    cent4=P1(find(a2==4),:);cent4=mean(cent4);
+    cent5=P1(find(a2==5),:);cent5=mean(cent5);
+    
+    for n=1:R1%计算样本到各个中心的距离
+        ecent1(n)=norm(P1(n,:)-cent1);
+        ecent2(n)=norm(P1(n,:)-cent2);
+        ecent3(n)=norm(P1(n,:)-cent3);
+        ecent4(n)=norm(P1(n,:)-cent4);
+        ecent5(n)=norm(P1(n,:)-cent5);
+    end
+    
+    %选择离每类中心最近的csum个样本
+    for n=1:csum
+        [va me1]=min(ecent1);
+        [va me2]=min(ecent2);
+        [va me3]=min(ecent3);
+        [va me4]=min(ecent4);
+        [va me5]=min(ecent5);
+        ecnt1(n,:)=P1(me1(1),:);ecent1(me1(1))=[];tc1(n)=1;
+        ecnt2(n,:)=P1(me2(1),:);ecent2(me2(1))=[];tc2(n)=2;
+        ecnt3(n,:)=P1(me3(1),:);ecent3(me3(1))=[];tc3(n)=3;
+        ecnt4(n,:)=P1(me4(1),:);ecent4(me4(1))=[];tc4(n)=4;
+        ecnt5(n,:)=P1(me5(1),:);ecent5(me5(1))=[];tc5(n)=5;
+    end
+    
+    p2=[ecnt1;ecnt2;ecnt3;ecnt4;ecnt5];T2=[tc1,tc2,tc3,tc4,tc5];
+
+    %统计分类结果
+    Confusion_Matrix_GRNN=zeros(6,6);
+    Confusion_Matrix_GRNN(1,:)=[0:5];
+    Confusion_Matrix_GRNN(:,1)=[0:5]';
+    for nf=1:5
+        for nc=1:5
+            Confusion_Matrix_GRNN(nf+1,nc+1)=length(find(a2(find(T1==nf))==nc));
+        end
+    end
+    
+    pre2=0;
+    
+    for n=2:6;
+        pre2=pre2+max(Confusion_Matrix_GRNN(n,:));
+    end
+    
+    pre2=pre2/R1*100;
+
+end
+
+%% 结果显示
+Confusion_Matrix_FCM
+
+Confusion_Matrix_GRNN
+
+web browser www.matlabsky.com
+%%
+% <html>
+% <table width="656" align="left" >	<tr><td align="center"><p><font size="2"><a href="http://video.ourmatlab.com/">Matlab神经网络30个案例分析</a></font></p><p align="left"><font size="2">相关论坛：</font></p><p align="left"><font size="2">《Matlab神经网络30个案例分析》官方网站：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></p><p align="left"><font size="2">Matlab技术论坛：<a href="http://www.matlabsky.com">www.matlabsky.com</a></font></p><p align="left"><font size="2">M</font><font size="2">atlab函数百科：<a href="http://www.mfun.la">www.mfun.la</a></font></p><p align="left"><font size="2">Matlab中文论坛：<a href="http://www.ilovematlab.com">www.ilovematlab.com</a></font></p></td>	</tr></table>
+% </html>
+##### SOURCE END #####
+--></body></html>

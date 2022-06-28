@@ -1,0 +1,768 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      --><title>&#35813;&#20195;&#30721;&#20026;&#22522;&#20110;&#27169;&#31946;&#31070;&#32463;&#32593;&#32476;&#30340;&#27700;&#36136;&#35780;&#20215;&#20195;&#30721;</title><meta name="generator" content="MATLAB 7.9"><meta name="date" content="2010-11-28"><meta name="m-file" content="FuzzyNet"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><h1>&#35813;&#20195;&#30721;&#20026;&#22522;&#20110;&#27169;&#31946;&#31070;&#32463;&#32593;&#32476;&#30340;&#27700;&#36136;&#35780;&#20215;&#20195;&#30721;</h1><!--introduction--><p>
+<table border="0" width="600px" id="table1">	<tr>		<td><b><font size="2">该案例作者申明：</font></b></td>	</tr>	<tr><td><span class="comment"><font size="2">1：本人长期驻扎在此<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html"><font color="#0000FF">板块</font></a>里，对该案例提问，做到有问必答。本套书籍官方网站为：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></span></td></tr><tr>		<td><font size="2">2：点此<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">从当当预定本书</a>：<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">《Matlab神经网络30个案例分析》</a>。</td></tr><tr>	<td><p class="comment"></font><font size="2">3</font><font size="2">：此案例有配套的教学视频，视频下载方式<a href="http://video.ourmatlab.com/vbuy.html">video.ourmatlab.com/vbuy.html</a></font><font size="2">。 </font></p></td>	</tr>			<tr>		<td><span class="comment"><font size="2">		4：此案例为原创案例，转载请注明出处（《Matlab神经网络30个案例分析》）。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		5：若此案例碰巧与您的研究有关联，我们欢迎您提意见，要求等，我们考虑后可以加在案例里。</font></span></td>	</tr>		</table>
+</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;</a></li><li><a href="#2">&#21442;&#25968;&#21021;&#22987;&#21270;</a></li><li><a href="#3">&#32593;&#32476;&#35757;&#32451;</a></li><li><a href="#4">&#32593;&#32476;&#39044;&#27979;</a></li><li><a href="#5">&#22025;&#38517;&#27743;&#23454;&#38469;&#27700;&#36136;&#39044;&#27979;</a></li></ul></div><h2>&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;<a name="1"></a></h2><pre class="codeinput">clc
+clear
+</pre><h2>&#21442;&#25968;&#21021;&#22987;&#21270;<a name="2"></a></h2><pre class="codeinput">xite=0.001;
+alfa=0.05;
+
+<span class="comment">%&#32593;&#32476;&#33410;&#28857;</span>
+I=6;   <span class="comment">%&#36755;&#20837;&#33410;&#28857;&#25968;</span>
+M=12;  <span class="comment">%&#38544;&#21547;&#33410;&#28857;&#25968;</span>
+O=1;   <span class="comment">%&#36755;&#20986;&#33410;&#28857;&#25968;</span>
+
+<span class="comment">%&#31995;&#25968;&#21021;&#22987;&#21270;</span>
+p0=0.3*ones(M,1);p0_1=p0;p0_2=p0_1;
+p1=0.3*ones(M,1);p1_1=p1;p1_2=p1_1;
+p2=0.3*ones(M,1);p2_1=p2;p2_2=p2_1;
+p3=0.3*ones(M,1);p3_1=p3;p3_2=p3_1;
+p4=0.3*ones(M,1);p4_1=p4;p4_2=p4_1;
+p5=0.3*ones(M,1);p5_1=p5;p5_2=p5_1;
+p6=0.3*ones(M,1);p6_1=p6;p6_2=p6_1;
+
+<span class="comment">%&#21442;&#25968;&#21021;&#22987;&#21270;</span>
+c=1+rands(M,I);c_1=c;c_2=c_1;
+b=1+rands(M,I);b_1=b;b_2=b_1;
+
+maxgen=100; <span class="comment">%&#36827;&#21270;&#27425;&#25968;</span>
+
+<span class="comment">%&#32593;&#32476;&#27979;&#35797;&#25968;&#25454;&#65292;&#24182;&#23545;&#25968;&#25454;&#24402;&#19968;&#21270;</span>
+load <span class="string">data1</span> <span class="string">input_train</span> <span class="string">output_train</span> <span class="string">input_test</span> <span class="string">output_test</span>
+
+<span class="comment">%&#36873;&#36830;&#26679;&#26412;&#36755;&#20837;&#36755;&#20986;&#25968;&#25454;&#24402;&#19968;&#21270;</span>
+[inputn,inputps]=mapminmax(input_train);
+[outputn,outputps]=mapminmax(output_train);
+[n,m]=size(input_train);
+</pre><h2>&#32593;&#32476;&#35757;&#32451;<a name="3"></a></h2><pre class="codeinput"><span class="comment">%&#24490;&#29615;&#24320;&#22987;&#65292;&#36827;&#21270;&#32593;&#32476;</span>
+<span class="keyword">for</span> iii=1:maxgen
+    iii;
+    <span class="keyword">for</span> k=1:m
+        x=inputn(:,k);
+
+        <span class="comment">%&#36755;&#20986;&#23618;&#32467;&#31639;</span>
+        <span class="keyword">for</span> i=1:I
+            <span class="keyword">for</span> j=1:M
+                u(i,j)=exp(-(x(i)-c(j,i))^2/b(j,i));
+            <span class="keyword">end</span>
+        <span class="keyword">end</span>
+
+        <span class="comment">%&#27169;&#31946;&#35268;&#21017;&#35745;&#31639;</span>
+        <span class="keyword">for</span> i=1:M
+            w(i)=u(1,i)*u(2,i)*u(3,i)*u(4,i)*u(5,i)*u(6,i);
+        <span class="keyword">end</span>
+        addw=sum(w);
+
+        <span class="keyword">for</span> i=1:M
+            yi(i)=p0_1(i)+p1_1(i)*x(1)+p2_1(i)*x(2)+p3_1(i)*x(3)+p4_1(i)*x(4)+p5_1(i)*x(5)+p6_1(i)*x(6);
+        <span class="keyword">end</span>
+
+        addyw=yi*w';
+        <span class="comment">%&#32593;&#32476;&#39044;&#27979;&#35745;&#31639;</span>
+        yn(k)=addyw/addw;
+        e(k)=outputn(k)-yn(k);
+
+        <span class="comment">%&#35745;&#31639;p&#30340;&#21464;&#21270;&#20540;</span>
+        d_p=zeros(M,1);
+        d_p=xite*e(k)*w./addw;
+        d_p=d_p';
+
+        <span class="comment">%&#35745;&#31639;b&#21464;&#21270;&#20540;</span>
+        d_b=0*b_1;
+        <span class="keyword">for</span> i=1:M
+            <span class="keyword">for</span> j=1:I
+                d_b(i,j)=xite*e(k)*(yi(i)*addw-addyw)*(x(j)-c(i,j))^2*w(i)/(b(i,j)^2*addw^2);
+            <span class="keyword">end</span>
+        <span class="keyword">end</span>
+
+        <span class="comment">%&#26356;&#26032;c&#21464;&#21270;&#20540;</span>
+        <span class="keyword">for</span> i=1:M
+            <span class="keyword">for</span> j=1:I
+                d_c(i,j)=xite*e(k)*(yi(i)*addw-addyw)*2*(x(j)-c(i,j))*w(i)/(b(i,j)*addw^2);
+            <span class="keyword">end</span>
+        <span class="keyword">end</span>
+
+        p0=p0_1+ d_p+alfa*(p0_1-p0_2);
+        p1=p1_1+ d_p*x(1)+alfa*(p1_1-p1_2);
+        p2=p2_1+ d_p*x(2)+alfa*(p2_1-p2_2);
+        p3=p3_1+ d_p*x(3)+alfa*(p3_1-p3_2);
+        p4=p4_1+ d_p*x(4)+alfa*(p4_1-p4_2);
+        p5=p5_1+ d_p*x(5)+alfa*(p5_1-p5_2);
+        p6=p6_1+ d_p*x(6)+alfa*(p6_1-p6_2);
+
+        b=b_1+d_b+alfa*(b_1-b_2);
+        c=c_1+d_c+alfa*(c_1-c_2);
+
+        p0_2=p0_1;p0_1=p0;
+        p1_2=p1_1;p1_1=p1;
+        p2_2=p2_1;p2_1=p2;
+        p3_2=p3_1;p3_1=p3;
+        p4_2=p4_1;p4_1=p4;
+        p5_2=p5_1;p5_1=p5;
+        p6_2=p6_1;p6_1=p6;
+
+        c_2=c_1;c_1=c;
+        b_2=b_1;b_1=b;
+
+    <span class="keyword">end</span>
+    E(iii)=sum(abs(e));
+
+<span class="keyword">end</span>
+
+figure(1);
+plot(outputn,<span class="string">'r'</span>)
+hold <span class="string">on</span>
+plot(yn,<span class="string">'b'</span>)
+hold <span class="string">on</span>
+plot(outputn-yn,<span class="string">'g'</span>);
+legend(<span class="string">'&#23454;&#38469;&#36755;&#20986;'</span>,<span class="string">'&#39044;&#27979;&#36755;&#20986;'</span>,<span class="string">'&#35823;&#24046;'</span>,<span class="string">'fontsize'</span>,12)
+title(<span class="string">'&#35757;&#32451;&#25968;&#25454;&#39044;&#27979;'</span>,<span class="string">'fontsize'</span>,12)
+xlabel(<span class="string">'&#26679;&#26412;&#24207;&#21495;'</span>,<span class="string">'fontsize'</span>,12)
+ylabel(<span class="string">'&#27700;&#36136;&#31561;&#32423;'</span>,<span class="string">'fontsize'</span>,12)
+</pre><pre class="codeoutput">Warning: Ignoring extra legend entries. 
+</pre><img vspace="5" hspace="5" src="FuzzyNet_01.png" alt=""> <h2>&#32593;&#32476;&#39044;&#27979;<a name="4"></a></h2><pre class="codeinput"><span class="comment">%&#25968;&#25454;&#24402;&#19968;&#21270;</span>
+inputn_test=mapminmax(<span class="string">'apply'</span>,input_test,inputps);
+[n,m]=size(inputn_test)
+<span class="keyword">for</span> k=1:m
+    x=inputn_test(:,k);
+
+     <span class="comment">%&#35745;&#31639;&#36755;&#20986;&#20013;&#38388;&#23618;</span>
+     <span class="keyword">for</span> i=1:I
+         <span class="keyword">for</span> j=1:M
+             u(i,j)=exp(-(x(i)-c(j,i))^2/b(j,i));
+         <span class="keyword">end</span>
+     <span class="keyword">end</span>
+
+     <span class="keyword">for</span> i=1:M
+         w(i)=u(1,i)*u(2,i)*u(3,i)*u(4,i)*u(5,i)*u(6,i);
+     <span class="keyword">end</span>
+
+     addw=0;
+     <span class="keyword">for</span> i=1:M
+         addw=addw+w(i);
+     <span class="keyword">end</span>
+
+     <span class="keyword">for</span> i=1:M
+         yi(i)=p0_1(i)+p1_1(i)*x(1)+p2_1(i)*x(2)+p3_1(i)*x(3)+p4_1(i)*x(4)+p5_1(i)*x(5)+p6_1(i)*x(6);
+     <span class="keyword">end</span>
+
+     addyw=0;
+     <span class="keyword">for</span> i=1:M
+         addyw=addyw+yi(i)*w(i);
+     <span class="keyword">end</span>
+
+     <span class="comment">%&#35745;&#31639;&#36755;&#20986;</span>
+     yc(k)=addyw/addw;
+<span class="keyword">end</span>
+
+<span class="comment">%&#39044;&#27979;&#32467;&#26524;&#21453;&#24402;&#19968;&#21270;</span>
+test_simu=mapminmax(<span class="string">'reverse'</span>,yc,outputps);
+<span class="comment">%&#20316;&#22270;</span>
+figure(2)
+plot(output_test,<span class="string">'r'</span>)
+hold <span class="string">on</span>
+plot(test_simu,<span class="string">'b'</span>)
+hold <span class="string">on</span>
+plot(test_simu-output_test,<span class="string">'g'</span>)
+legend(<span class="string">'&#23454;&#38469;&#36755;&#20986;'</span>,<span class="string">'&#39044;&#27979;&#36755;&#20986;'</span>,<span class="string">'&#35823;&#24046;'</span>,<span class="string">'fontsize'</span>,12)
+title(<span class="string">'&#27979;&#35797;&#25968;&#25454;&#39044;&#27979;'</span>,<span class="string">'fontsize'</span>,12)
+xlabel(<span class="string">'&#26679;&#26412;&#24207;&#21495;'</span>,<span class="string">'fontsize'</span>,12)
+ylabel(<span class="string">'&#27700;&#36136;&#31561;&#32423;'</span>,<span class="string">'fontsize'</span>,12)
+</pre><pre class="codeoutput">n =
+     6
+m =
+    50
+Warning: Ignoring extra legend entries. 
+</pre><img vspace="5" hspace="5" src="FuzzyNet_02.png" alt=""> <h2>&#22025;&#38517;&#27743;&#23454;&#38469;&#27700;&#36136;&#39044;&#27979;<a name="5"></a></h2><pre class="codeinput">load  <span class="string">data2</span> <span class="string">hgsc</span> <span class="string">gjhy</span> <span class="string">dxg</span>
+<span class="comment">%-----------------------------------&#32418;&#24037;&#27700;&#21378;-----------------------------------</span>
+zssz=hgsc;
+<span class="comment">%&#25968;&#25454;&#24402;&#19968;&#21270;</span>
+inputn_test =mapminmax(<span class="string">'apply'</span>,zssz,inputps);
+[n,m]=size(zssz);
+
+<span class="keyword">for</span> k=1:1:m
+    x=inputn_test(:,k);
+
+    <span class="comment">%&#35745;&#31639;&#36755;&#20986;&#20013;&#38388;&#23618;</span>
+    <span class="keyword">for</span> i=1:I
+        <span class="keyword">for</span> j=1:M
+            u(i,j)=exp(-(x(i)-c(j,i))^2/b(j,i));
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+
+    <span class="keyword">for</span> i=1:M
+        w(i)=u(1,i)*u(2,i)*u(3,i)*u(4,i)*u(5,i)*u(6,i);
+    <span class="keyword">end</span>
+
+    addw=0;
+
+    <span class="keyword">for</span> i=1:M
+        addw=addw+w(i);
+    <span class="keyword">end</span>
+
+    <span class="keyword">for</span> i=1:M
+        yi(i)=p0_1(i)+p1_1(i)*x(1)+p2_1(i)*x(2)+p3_1(i)*x(3)+p4_1(i)*x(4)+p5_1(i)*x(5)+p6_1(i)*x(6);
+    <span class="keyword">end</span>
+
+    addyw=0;
+    <span class="keyword">for</span> i=1:M
+        addyw=addyw+yi(i)*w(i);
+    <span class="keyword">end</span>
+
+    <span class="comment">%&#35745;&#31639;&#36755;&#20986;</span>
+    szzb(k)=addyw/addw;
+<span class="keyword">end</span>
+szzbz1=mapminmax(<span class="string">'reverse'</span>,szzb,outputps);
+
+<span class="keyword">for</span> i=1:m
+    <span class="keyword">if</span> szzbz1(i)&lt;=1.5
+        szpj1(i)=1;
+    <span class="keyword">elseif</span> szzbz1(i)&gt;1.5&amp;&amp;szzbz1(i)&lt;=2.5
+        szpj1(i)=2;
+    <span class="keyword">elseif</span> szzbz1(i)&gt;2.5&amp;&amp;szzbz1(i)&lt;=3.5
+        szpj1(i)=3;
+    <span class="keyword">elseif</span> szzbz1(i)&gt;3.5&amp;&amp;szzbz1(i)&lt;=4.5
+        szpj1(i)=4;
+    <span class="keyword">else</span>
+        szpj1(i)=5;
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="comment">% %-----------------------------------&#39640;&#23478;&#33457;&#22253;-----------------------------------</span>
+zssz=gjhy;
+inputn_test =mapminmax(<span class="string">'apply'</span>,zssz,inputps);
+[n,m]=size(zssz);
+
+<span class="keyword">for</span> k=1:1:m
+    x=inputn_test(:,k);
+
+    <span class="comment">%&#35745;&#31639;&#36755;&#20986;&#20013;&#38388;&#23618;</span>
+    <span class="keyword">for</span> i=1:I
+        <span class="keyword">for</span> j=1:M
+            u(i,j)=exp(-(x(i)-c(j,i))^2/b(j,i));
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+
+    <span class="keyword">for</span> i=1:M
+        w(i)=u(1,i)*u(2,i)*u(3,i)*u(4,i)*u(5,i)*u(6,i);
+    <span class="keyword">end</span>
+
+    addw=0;
+
+    <span class="keyword">for</span> i=1:M
+        addw=addw+w(i);
+    <span class="keyword">end</span>
+
+    <span class="keyword">for</span> i=1:M
+        yi(i)=p0_1(i)+p1_1(i)*x(1)+p2_1(i)*x(2)+p3_1(i)*x(3)+p4_1(i)*x(4)+p5_1(i)*x(5)+p6_1(i)*x(6);
+    <span class="keyword">end</span>
+
+    addyw=0;
+    <span class="keyword">for</span> i=1:M
+        addyw=addyw+yi(i)*w(i);
+    <span class="keyword">end</span>
+
+    <span class="comment">%&#35745;&#31639;&#36755;&#20986;</span>
+    szzb(k)=addyw/addw;
+<span class="keyword">end</span>
+szzbz2=mapminmax(<span class="string">'reverse'</span>,szzb,outputps);
+
+<span class="keyword">for</span> i=1:m
+    <span class="keyword">if</span> szzbz2(i)&lt;=1.5
+        szpj2(i)=1;
+    <span class="keyword">elseif</span> szzbz2(i)&gt;1.5&amp;&amp;szzbz2(i)&lt;=2.5
+        szpj2(i)=2;
+    <span class="keyword">elseif</span> szzbz2(i)&gt;2.5&amp;&amp;szzbz2(i)&lt;=3.5
+        szpj2(i)=3;
+    <span class="keyword">elseif</span> szzbz2(i)&gt;3.5&amp;&amp;szzbz2(i)&lt;=4.5
+        szpj2(i)=4;
+    <span class="keyword">else</span>
+        szpj2(i)=5;
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="comment">% %-----------------------------------&#22823;&#28330;&#27807;&#27700;&#21378;-----------------------------------</span>
+zssz=dxg;
+inputn_test =mapminmax(<span class="string">'apply'</span>,zssz,inputps);
+[n,m]=size(zssz);
+
+<span class="keyword">for</span> k=1:1:m
+    x=inputn_test(:,k);
+
+    <span class="comment">%&#35745;&#31639;&#36755;&#20986;&#20013;&#38388;&#23618;</span>
+    <span class="keyword">for</span> i=1:I
+        <span class="keyword">for</span> j=1:M
+            u(i,j)=exp(-(x(i)-c(j,i))^2/b(j,i));
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+
+    <span class="keyword">for</span> i=1:M
+        w(i)=u(1,i)*u(2,i)*u(3,i)*u(4,i)*u(5,i)*u(6,i);
+    <span class="keyword">end</span>
+
+    addw=0;
+
+    <span class="keyword">for</span> i=1:M
+        addw=addw+w(i);
+    <span class="keyword">end</span>
+
+    <span class="keyword">for</span> i=1:M
+        yi(i)=p0_1(i)+p1_1(i)*x(1)+p2_1(i)*x(2)+p3_1(i)*x(3)+p4_1(i)*x(4)+p5_1(i)*x(5)+p6_1(i)*x(6);
+    <span class="keyword">end</span>
+
+    addyw=0;
+    <span class="keyword">for</span> i=1:M
+        addyw=addyw+yi(i)*w(i);
+    <span class="keyword">end</span>
+
+    <span class="comment">%&#35745;&#31639;&#36755;&#20986;</span>
+    szzb(k)=addyw/addw;
+<span class="keyword">end</span>
+szzbz3=mapminmax(<span class="string">'reverse'</span>,szzb,outputps);
+
+<span class="keyword">for</span> i=1:m
+    <span class="keyword">if</span> szzbz3(i)&lt;=1.5
+        szpj3(i)=1;
+    <span class="keyword">elseif</span> szzbz3(i)&gt;1.5&amp;&amp;szzbz3(i)&lt;=2.5
+        szpj3(i)=2;
+    <span class="keyword">elseif</span> szzbz3(i)&gt;2.5&amp;&amp;szzbz3(i)&lt;=3.5
+        szpj3(i)=3;
+    <span class="keyword">elseif</span> szzbz3(i)&gt;3.5&amp;&amp;szzbz3(i)&lt;=4.5
+        szpj3(i)=4;
+    <span class="keyword">else</span>
+        szpj3(i)=5;
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+figure(3)
+plot(szzbz1,<span class="string">'o-r'</span>)
+hold <span class="string">on</span>
+plot(szzbz2,<span class="string">'*-g'</span>)
+hold <span class="string">on</span>
+plot(szzbz3,<span class="string">'*:b'</span>)
+xlabel(<span class="string">'&#26102;&#38388;'</span>,<span class="string">'fontsize'</span>,12)
+ylabel(<span class="string">'&#39044;&#27979;&#27700;&#36136;'</span>,<span class="string">'fontsize'</span>,12)
+legend(<span class="string">'&#32418;&#24037;&#27700;&#21378;'</span>,<span class="string">'&#39640;&#23478;&#33457;&#22253;&#27700;&#21378;'</span>,<span class="string">'&#22823;&#28330;&#27807;&#27700;&#21378;'</span>,<span class="string">'fontsize'</span>,12)
+
+web <span class="string">browser</span> <span class="string">www.matlabsky.com</span>
+</pre><pre class="codeoutput">Warning: Ignoring extra legend entries. 
+</pre><img vspace="5" hspace="5" src="FuzzyNet_03.png" alt=""> <p>
+<table width="656" align="left" >	<tr><td align="center"><p><font size="2"><a href="http://video.ourmatlab.com/">Matlab神经网络30个案例分析</a></font></p><p align="left"><font size="2">相关论坛：</font></p><p align="left"><font size="2">《Matlab神经网络30个案例分析》官方网站：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></p><p align="left"><font size="2">Matlab技术论坛：<a href="http://www.matlabsky.com">www.matlabsky.com</a></font></p><p align="left"><font size="2">M</font><font size="2">atlab函数百科：<a href="http://www.mfun.la">www.mfun.la</a></font></p><p align="left"><font size="2">Matlab中文论坛：<a href="http://www.ilovematlab.com">www.ilovematlab.com</a></font></p></td>	</tr></table>
+</p><p class="footer"><br>
+      Published with MATLAB&reg; 7.9<br></p></div><!--
+##### SOURCE BEGIN #####
+%% 该代码为基于模糊神经网络的水质评价代码
+%
+% <html>
+% <table border="0" width="600px" id="table1">	<tr>		<td><b><font size="2">该案例作者申明：</font></b></td>	</tr>	<tr><td><span class="comment"><font size="2">1：本人长期驻扎在此<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html"><font color="#0000FF">板块</font></a>里，对该案例提问，做到有问必答。本套书籍官方网站为：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></span></td></tr><tr>		<td><font size="2">2：点此<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">从当当预定本书</a>：<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">《Matlab神经网络30个案例分析》</a>。</td></tr><tr>	<td><p class="comment"></font><font size="2">3</font><font size="2">：此案例有配套的教学视频，视频下载方式<a href="http://video.ourmatlab.com/vbuy.html">video.ourmatlab.com/vbuy.html</a></font><font size="2">。 </font></p></td>	</tr>			<tr>		<td><span class="comment"><font size="2">		4：此案例为原创案例，转载请注明出处（《Matlab神经网络30个案例分析》）。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		5：若此案例碰巧与您的研究有关联，我们欢迎您提意见，要求等，我们考虑后可以加在案例里。</font></span></td>	</tr>		</table>
+% </html>
+%% 清空环境变量
+clc
+clear
+
+%% 参数初始化
+xite=0.001;
+alfa=0.05;
+
+%网络节点
+I=6;   %输入节点数
+M=12;  %隐含节点数
+O=1;   %输出节点数
+
+%系数初始化
+p0=0.3*ones(M,1);p0_1=p0;p0_2=p0_1;
+p1=0.3*ones(M,1);p1_1=p1;p1_2=p1_1;
+p2=0.3*ones(M,1);p2_1=p2;p2_2=p2_1;
+p3=0.3*ones(M,1);p3_1=p3;p3_2=p3_1;
+p4=0.3*ones(M,1);p4_1=p4;p4_2=p4_1;
+p5=0.3*ones(M,1);p5_1=p5;p5_2=p5_1;
+p6=0.3*ones(M,1);p6_1=p6;p6_2=p6_1;
+
+%参数初始化
+c=1+rands(M,I);c_1=c;c_2=c_1;
+b=1+rands(M,I);b_1=b;b_2=b_1;
+
+maxgen=100; %进化次数
+
+%网络测试数据，并对数据归一化
+load data1 input_train output_train input_test output_test
+
+%选连样本输入输出数据归一化
+[inputn,inputps]=mapminmax(input_train);
+[outputn,outputps]=mapminmax(output_train);
+[n,m]=size(input_train);
+
+%% 网络训练
+%循环开始，进化网络
+for iii=1:maxgen
+    iii;
+    for k=1:m        
+        x=inputn(:,k);
+        
+        %输出层结算
+        for i=1:I
+            for j=1:M
+                u(i,j)=exp(-(x(i)-c(j,i))^2/b(j,i));
+            end
+        end
+        
+        %模糊规则计算
+        for i=1:M
+            w(i)=u(1,i)*u(2,i)*u(3,i)*u(4,i)*u(5,i)*u(6,i);
+        end    
+        addw=sum(w);
+        
+        for i=1:M
+            yi(i)=p0_1(i)+p1_1(i)*x(1)+p2_1(i)*x(2)+p3_1(i)*x(3)+p4_1(i)*x(4)+p5_1(i)*x(5)+p6_1(i)*x(6);
+        end
+        
+        addyw=yi*w';
+        %网络预测计算
+        yn(k)=addyw/addw;
+        e(k)=outputn(k)-yn(k);
+        
+        %计算p的变化值
+        d_p=zeros(M,1);
+        d_p=xite*e(k)*w./addw;
+        d_p=d_p';
+        
+        %计算b变化值
+        d_b=0*b_1;
+        for i=1:M
+            for j=1:I
+                d_b(i,j)=xite*e(k)*(yi(i)*addw-addyw)*(x(j)-c(i,j))^2*w(i)/(b(i,j)^2*addw^2);
+            end
+        end  
+        
+        %更新c变化值
+        for i=1:M
+            for j=1:I
+                d_c(i,j)=xite*e(k)*(yi(i)*addw-addyw)*2*(x(j)-c(i,j))*w(i)/(b(i,j)*addw^2);
+            end
+        end
+        
+        p0=p0_1+ d_p+alfa*(p0_1-p0_2);
+        p1=p1_1+ d_p*x(1)+alfa*(p1_1-p1_2);
+        p2=p2_1+ d_p*x(2)+alfa*(p2_1-p2_2);
+        p3=p3_1+ d_p*x(3)+alfa*(p3_1-p3_2);
+        p4=p4_1+ d_p*x(4)+alfa*(p4_1-p4_2);
+        p5=p5_1+ d_p*x(5)+alfa*(p5_1-p5_2);
+        p6=p6_1+ d_p*x(6)+alfa*(p6_1-p6_2);
+            
+        b=b_1+d_b+alfa*(b_1-b_2);      
+        c=c_1+d_c+alfa*(c_1-c_2);
+   
+        p0_2=p0_1;p0_1=p0;
+        p1_2=p1_1;p1_1=p1;
+        p2_2=p2_1;p2_1=p2;
+        p3_2=p3_1;p3_1=p3;
+        p4_2=p4_1;p4_1=p4;
+        p5_2=p5_1;p5_1=p5;
+        p6_2=p6_1;p6_1=p6;
+
+        c_2=c_1;c_1=c;   
+        b_2=b_1;b_1=b;
+        
+    end   
+    E(iii)=sum(abs(e));
+
+end
+
+figure(1);
+plot(outputn,'r')
+hold on
+plot(yn,'b')
+hold on
+plot(outputn-yn,'g');
+legend('实际输出','预测输出','误差','fontsize',12)
+title('训练数据预测','fontsize',12)
+xlabel('样本序号','fontsize',12)
+ylabel('水质等级','fontsize',12)
+
+%% 网络预测
+%数据归一化
+inputn_test=mapminmax('apply',input_test,inputps);
+[n,m]=size(inputn_test)
+for k=1:m
+    x=inputn_test(:,k);
+         
+     %计算输出中间层
+     for i=1:I
+         for j=1:M
+             u(i,j)=exp(-(x(i)-c(j,i))^2/b(j,i));
+         end
+     end
+     
+     for i=1:M
+         w(i)=u(1,i)*u(2,i)*u(3,i)*u(4,i)*u(5,i)*u(6,i);
+     end
+                 
+     addw=0;
+     for i=1:M  
+         addw=addw+w(i);
+     end
+         
+     for i=1:M  
+         yi(i)=p0_1(i)+p1_1(i)*x(1)+p2_1(i)*x(2)+p3_1(i)*x(3)+p4_1(i)*x(4)+p5_1(i)*x(5)+p6_1(i)*x(6);        
+     end
+         
+     addyw=0;        
+     for i=1:M    
+         addyw=addyw+yi(i)*w(i);        
+     end
+         
+     %计算输出
+     yc(k)=addyw/addw;
+end
+
+%预测结果反归一化
+test_simu=mapminmax('reverse',yc,outputps);
+%作图
+figure(2)
+plot(output_test,'r')
+hold on
+plot(test_simu,'b')
+hold on
+plot(test_simu-output_test,'g')
+legend('实际输出','预测输出','误差','fontsize',12)
+title('测试数据预测','fontsize',12)
+xlabel('样本序号','fontsize',12)
+ylabel('水质等级','fontsize',12)
+
+%% 嘉陵江实际水质预测
+load  data2 hgsc gjhy dxg
+%REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-红工水厂REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-
+zssz=hgsc;
+%数据归一化
+inputn_test =mapminmax('apply',zssz,inputps);
+[n,m]=size(zssz);
+
+for k=1:1:m
+    x=inputn_test(:,k);
+        
+    %计算输出中间层
+    for i=1:I
+        for j=1:M
+            u(i,j)=exp(-(x(i)-c(j,i))^2/b(j,i));
+        end
+    end
+    
+    for i=1:M
+        w(i)=u(1,i)*u(2,i)*u(3,i)*u(4,i)*u(5,i)*u(6,i);
+    end
+                
+    addw=0;
+        
+    for i=1:M   
+        addw=addw+w(i);
+    end
+        
+    for i=1:M   
+        yi(i)=p0_1(i)+p1_1(i)*x(1)+p2_1(i)*x(2)+p3_1(i)*x(3)+p4_1(i)*x(4)+p5_1(i)*x(5)+p6_1(i)*x(6);        
+    end
+        
+    addyw=0;        
+    for i=1:M    
+        addyw=addyw+yi(i)*w(i);        
+    end
+        
+    %计算输出
+    szzb(k)=addyw/addw;
+end
+szzbz1=mapminmax('reverse',szzb,outputps);
+
+for i=1:m
+    if szzbz1(i)<=1.5
+        szpj1(i)=1;
+    elseif szzbz1(i)>1.5&&szzbz1(i)<=2.5
+        szpj1(i)=2;
+    elseif szzbz1(i)>2.5&&szzbz1(i)<=3.5
+        szpj1(i)=3;
+    elseif szzbz1(i)>3.5&&szzbz1(i)<=4.5
+        szpj1(i)=4;
+    else
+        szpj1(i)=5;
+    end
+end
+% %REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-高家花园REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-
+zssz=gjhy;
+inputn_test =mapminmax('apply',zssz,inputps);
+[n,m]=size(zssz);
+
+for k=1:1:m
+    x=inputn_test(:,k);
+        
+    %计算输出中间层
+    for i=1:I
+        for j=1:M
+            u(i,j)=exp(-(x(i)-c(j,i))^2/b(j,i));
+        end
+    end
+    
+    for i=1:M
+        w(i)=u(1,i)*u(2,i)*u(3,i)*u(4,i)*u(5,i)*u(6,i);
+    end
+                
+    addw=0;
+        
+    for i=1:M   
+        addw=addw+w(i);
+    end
+        
+    for i=1:M   
+        yi(i)=p0_1(i)+p1_1(i)*x(1)+p2_1(i)*x(2)+p3_1(i)*x(3)+p4_1(i)*x(4)+p5_1(i)*x(5)+p6_1(i)*x(6);        
+    end
+        
+    addyw=0;        
+    for i=1:M    
+        addyw=addyw+yi(i)*w(i);        
+    end
+        
+    %计算输出
+    szzb(k)=addyw/addw;
+end
+szzbz2=mapminmax('reverse',szzb,outputps);
+
+for i=1:m
+    if szzbz2(i)<=1.5
+        szpj2(i)=1;
+    elseif szzbz2(i)>1.5&&szzbz2(i)<=2.5
+        szpj2(i)=2;
+    elseif szzbz2(i)>2.5&&szzbz2(i)<=3.5
+        szpj2(i)=3;
+    elseif szzbz2(i)>3.5&&szzbz2(i)<=4.5
+        szpj2(i)=4;
+    else
+        szpj2(i)=5;
+    end
+end
+% %REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-大溪沟水厂REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-
+zssz=dxg;
+inputn_test =mapminmax('apply',zssz,inputps);
+[n,m]=size(zssz);
+
+for k=1:1:m
+    x=inputn_test(:,k);
+        
+    %计算输出中间层
+    for i=1:I
+        for j=1:M
+            u(i,j)=exp(-(x(i)-c(j,i))^2/b(j,i));
+        end
+    end
+    
+    for i=1:M
+        w(i)=u(1,i)*u(2,i)*u(3,i)*u(4,i)*u(5,i)*u(6,i);
+    end
+                
+    addw=0;
+        
+    for i=1:M   
+        addw=addw+w(i);
+    end
+        
+    for i=1:M   
+        yi(i)=p0_1(i)+p1_1(i)*x(1)+p2_1(i)*x(2)+p3_1(i)*x(3)+p4_1(i)*x(4)+p5_1(i)*x(5)+p6_1(i)*x(6);        
+    end
+        
+    addyw=0;        
+    for i=1:M    
+        addyw=addyw+yi(i)*w(i);        
+    end
+        
+    %计算输出
+    szzb(k)=addyw/addw;
+end
+szzbz3=mapminmax('reverse',szzb,outputps);
+
+for i=1:m
+    if szzbz3(i)<=1.5
+        szpj3(i)=1;
+    elseif szzbz3(i)>1.5&&szzbz3(i)<=2.5
+        szpj3(i)=2;
+    elseif szzbz3(i)>2.5&&szzbz3(i)<=3.5
+        szpj3(i)=3;
+    elseif szzbz3(i)>3.5&&szzbz3(i)<=4.5
+        szpj3(i)=4;
+    else
+        szpj3(i)=5;
+    end
+end
+
+figure(3)
+plot(szzbz1,'o-r')
+hold on
+plot(szzbz2,'*-g')
+hold on
+plot(szzbz3,'*:b')
+xlabel('时间','fontsize',12)
+ylabel('预测水质','fontsize',12)
+legend('红工水厂','高家花园水厂','大溪沟水厂','fontsize',12)
+
+web browser www.matlabsky.com
+%%
+% <html>
+% <table width="656" align="left" >	<tr><td align="center"><p><font size="2"><a href="http://video.ourmatlab.com/">Matlab神经网络30个案例分析</a></font></p><p align="left"><font size="2">相关论坛：</font></p><p align="left"><font size="2">《Matlab神经网络30个案例分析》官方网站：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></p><p align="left"><font size="2">Matlab技术论坛：<a href="http://www.matlabsky.com">www.matlabsky.com</a></font></p><p align="left"><font size="2">M</font><font size="2">atlab函数百科：<a href="http://www.mfun.la">www.mfun.la</a></font></p><p align="left"><font size="2">Matlab中文论坛：<a href="http://www.ilovematlab.com">www.ilovematlab.com</a></font></p></td>	</tr></table>
+% </html>
+##### SOURCE END #####
+--></body></html>

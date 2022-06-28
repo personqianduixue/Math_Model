@@ -1,0 +1,2 @@
+chapter17.m为SOM神经网络程序
+addon.m为距离函数和拓扑函数示例。

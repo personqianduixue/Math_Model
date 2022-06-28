@@ -1,0 +1,538 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      --><title>SVM&#31070;&#32463;&#32593;&#32476;&#20013;&#30340;&#21442;&#25968;&#20248;&#21270;---&#22914;&#20309;&#26356;&#22909;&#30340;&#25552;&#21319;&#20998;&#31867;&#22120;&#30340;&#24615;&#33021;</title><meta name="generator" content="MATLAB 7.9"><meta name="date" content="2010-01-30"><meta name="m-file" content="chapter13_GA"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><h1>SVM&#31070;&#32463;&#32593;&#32476;&#20013;&#30340;&#21442;&#25968;&#20248;&#21270;---&#22914;&#20309;&#26356;&#22909;&#30340;&#25552;&#21319;&#20998;&#31867;&#22120;&#30340;&#24615;&#33021;</h1><!--introduction--><p>
+<table border="0" width="600px" id="table1">	<tr>		<td><b><font size="2">该案例作者申明：</font></b></td>	</tr>	<tr>		<td><span class="comment"><font size="2">1：本人长期驻扎在此<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html"><font color="#0000FF">板块</font></a>里，对<a target="_blank" href="http://www.ilovematlab.cn/thread-48362-1-1.html"><font color="#0000FF">该案例</font></a>提问，做到有问必答。</font></span></td></tr><tr>	<td><span class="comment"><font size="2">2：此案例有配套的教学视频，配套的完整可运行Matlab程序。</font></span></td>	</tr>	<tr>		<td><span class="comment"><font size="2">		3：以下内容为该案例的部分内容（约占该案例完整内容的1/10）。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		4：此案例为原创案例，转载请注明出处（<a target="_blank" href="http://www.ilovematlab.cn/">Matlab中文论坛</a>，<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html">《Matlab神经网络30个案例分析》</a>）。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		5：若此案例碰巧与您的研究有关联，我们欢迎您提意见，要求等，我们考虑后可以加在案例里。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		6：您看到的以下内容为初稿，书籍的实际内容可能有少许出入，以书籍实际发行内容为准。</font></span></td>	</tr><tr>		<td><span class="comment"><font size="2">		7：此书其他常见问题、预定方式等，<a target="_blank" href="http://www.ilovematlab.cn/thread-47939-1-1.html">请点击这里</a>。</font></span></td>	</tr></table>
+</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;</a></li><li><a href="#3">&#25968;&#25454;&#25552;&#21462;</a></li><li><a href="#4">&#25968;&#25454;&#39044;&#22788;&#29702;</a></li><li><a href="#5">&#36873;&#25321;GA&#26368;&#20339;&#30340;SVM&#21442;&#25968;c&amp;g</a></li><li><a href="#6">&#21033;&#29992;&#26368;&#20339;&#30340;&#21442;&#25968;&#36827;&#34892;SVM&#32593;&#32476;&#35757;&#32451;</a></li><li><a href="#7">SVM&#32593;&#32476;&#39044;&#27979;</a></li><li><a href="#8">&#32467;&#26524;&#20998;&#26512;</a></li><li><a href="#9">&#23376;&#20989;&#25968; gaSVMcgForClass.m</a></li></ul></div><h2>&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;<a name="1"></a></h2><pre class="codeinput"><span class="keyword">function</span> chapter13_GA
+</pre><pre class="codeinput">close <span class="string">all</span>;
+clear;
+clc;
+format <span class="string">compact</span>;
+</pre><h2>&#25968;&#25454;&#25552;&#21462;<a name="3"></a></h2><pre class="codeinput"><span class="comment">% &#36733;&#20837;&#27979;&#35797;&#25968;&#25454;wine,&#20854;&#20013;&#21253;&#21547;&#30340;&#25968;&#25454;&#20026;classnumber = 3,wine:178*13&#30340;&#30697;&#38453;,wine_labes:178*1&#30340;&#21015;&#21521;&#37327;</span>
+load <span class="string">chapter13_wine.mat</span>;
+
+<span class="comment">% &#30011;&#20986;&#27979;&#35797;&#25968;&#25454;&#30340;box&#21487;&#35270;&#21270;&#22270;</span>
+figure;
+boxplot(wine,<span class="string">'orientation'</span>,<span class="string">'horizontal'</span>,<span class="string">'labels'</span>,categories);
+title(<span class="string">'wine&#25968;&#25454;&#30340;box&#21487;&#35270;&#21270;&#22270;'</span>,<span class="string">'FontSize'</span>,12);
+xlabel(<span class="string">'&#23646;&#24615;&#20540;'</span>,<span class="string">'FontSize'</span>,12);
+grid <span class="string">on</span>;
+
+<span class="comment">% &#30011;&#20986;&#27979;&#35797;&#25968;&#25454;&#30340;&#20998;&#32500;&#21487;&#35270;&#21270;&#22270;</span>
+figure
+subplot(3,5,1);
+hold <span class="string">on</span>
+<span class="keyword">for</span> run = 1:178
+    plot(run,wine_labels(run),<span class="string">'*'</span>);
+<span class="keyword">end</span>
+xlabel(<span class="string">'&#26679;&#26412;'</span>,<span class="string">'FontSize'</span>,10);
+ylabel(<span class="string">'&#31867;&#21035;&#26631;&#31614;'</span>,<span class="string">'FontSize'</span>,10);
+title(<span class="string">'class'</span>,<span class="string">'FontSize'</span>,10);
+<span class="keyword">for</span> run = 2:14
+    subplot(3,5,run);
+    hold <span class="string">on</span>;
+    str = [<span class="string">'attrib '</span>,num2str(run-1)];
+    <span class="keyword">for</span> i = 1:178
+        plot(i,wine(i,run-1),<span class="string">'*'</span>);
+    <span class="keyword">end</span>
+    xlabel(<span class="string">'&#26679;&#26412;'</span>,<span class="string">'FontSize'</span>,10);
+    ylabel(<span class="string">'&#23646;&#24615;&#20540;'</span>,<span class="string">'FontSize'</span>,10);
+    title(str,<span class="string">'FontSize'</span>,10);
+<span class="keyword">end</span>
+
+<span class="comment">% &#36873;&#23450;&#35757;&#32451;&#38598;&#21644;&#27979;&#35797;&#38598;</span>
+
+<span class="comment">% &#23558;&#31532;&#19968;&#31867;&#30340;1-30,&#31532;&#20108;&#31867;&#30340;60-95,&#31532;&#19977;&#31867;&#30340;131-153&#20570;&#20026;&#35757;&#32451;&#38598;</span>
+train_wine = [wine(1:30,:);wine(60:95,:);wine(131:153,:)];
+<span class="comment">% &#30456;&#24212;&#30340;&#35757;&#32451;&#38598;&#30340;&#26631;&#31614;&#20063;&#35201;&#20998;&#31163;&#20986;&#26469;</span>
+train_wine_labels = [wine_labels(1:30);wine_labels(60:95);wine_labels(131:153)];
+<span class="comment">% &#23558;&#31532;&#19968;&#31867;&#30340;31-59,&#31532;&#20108;&#31867;&#30340;96-130,&#31532;&#19977;&#31867;&#30340;154-178&#20570;&#20026;&#27979;&#35797;&#38598;</span>
+test_wine = [wine(31:59,:);wine(96:130,:);wine(154:178,:)];
+<span class="comment">% &#30456;&#24212;&#30340;&#27979;&#35797;&#38598;&#30340;&#26631;&#31614;&#20063;&#35201;&#20998;&#31163;&#20986;&#26469;</span>
+test_wine_labels = [wine_labels(31:59);wine_labels(96:130);wine_labels(154:178)];
+</pre><img vspace="5" hspace="5" src="chapter13_GA_01.png" alt=""> <img vspace="5" hspace="5" src="chapter13_GA_02.png" alt=""> <h2>&#25968;&#25454;&#39044;&#22788;&#29702;<a name="4"></a></h2><p>&#25968;&#25454;&#39044;&#22788;&#29702;,&#23558;&#35757;&#32451;&#38598;&#21644;&#27979;&#35797;&#38598;&#24402;&#19968;&#21270;&#21040;[0,1]&#21306;&#38388;</p><pre class="codeinput">[mtrain,ntrain] = size(train_wine);
+[mtest,ntest] = size(test_wine);
+
+dataset = [train_wine;test_wine];
+<span class="comment">% mapminmax&#20026;MATLAB&#33258;&#24102;&#30340;&#24402;&#19968;&#21270;&#20989;&#25968;</span>
+[dataset_scale,ps] = mapminmax(dataset',0,1);
+dataset_scale = dataset_scale';
+
+train_wine = dataset_scale(1:mtrain,:);
+test_wine = dataset_scale( (mtrain+1):(mtrain+mtest),: );
+</pre><h2>&#36873;&#25321;GA&#26368;&#20339;&#30340;SVM&#21442;&#25968;c&amp;g<a name="5"></a></h2><pre class="codeinput"><span class="comment">% GA&#30340;&#21442;&#25968;&#36873;&#39033;&#21021;&#22987;&#21270;</span>
+ga_option.maxgen = 200;
+ga_option.sizepop = 20;
+ga_option.cbound = [0,100];
+ga_option.gbound = [0,100];
+ga_option.v = 5;
+ga_option.ggap = 0.9;
+
+[bestacc,bestc,bestg] = gaSVMcgForClass(train_wine_labels,train_wine,ga_option);
+
+<span class="comment">% &#25171;&#21360;&#36873;&#25321;&#32467;&#26524;</span>
+disp(<span class="string">'&#25171;&#21360;&#36873;&#25321;&#32467;&#26524;'</span>);
+str = sprintf( <span class="string">'Best Cross Validation Accuracy = %g%% Best c = %g Best g = %g'</span>,bestacc,bestc,bestg);
+disp(str);
+</pre><pre class="codeoutput">&#25171;&#21360;&#36873;&#25321;&#32467;&#26524;
+Best Cross Validation Accuracy = 98.8764% Best c = 4.26302 Best g = 3.29771
+</pre><img vspace="5" hspace="5" src="chapter13_GA_03.png" alt=""> <h2>&#21033;&#29992;&#26368;&#20339;&#30340;&#21442;&#25968;&#36827;&#34892;SVM&#32593;&#32476;&#35757;&#32451;<a name="6"></a></h2><pre class="codeinput">cmd = [<span class="string">'-c '</span>,num2str(bestc),<span class="string">' -g '</span>,num2str(bestg)];
+model = svmtrain(train_wine_labels,train_wine,cmd);
+</pre><h2>SVM&#32593;&#32476;&#39044;&#27979;<a name="7"></a></h2><pre class="codeinput">[predict_label,accuracy] = svmpredict(test_wine_labels,test_wine,model);
+
+<span class="comment">% &#25171;&#21360;&#27979;&#35797;&#38598;&#20998;&#31867;&#20934;&#30830;&#29575;</span>
+total = length(test_wine_labels);
+right = sum(predict_label == test_wine_labels);
+disp(<span class="string">'&#25171;&#21360;&#27979;&#35797;&#38598;&#20998;&#31867;&#20934;&#30830;&#29575;'</span>);
+str = sprintf( <span class="string">'Accuracy = %g%% (%d/%d)'</span>,accuracy(1),right,total);
+disp(str);
+</pre><pre class="codeoutput">Accuracy = 98.8764% (88/89) (classification)
+&#25171;&#21360;&#27979;&#35797;&#38598;&#20998;&#31867;&#20934;&#30830;&#29575;
+Accuracy = 98.8764% (88/89)
+</pre><h2>&#32467;&#26524;&#20998;&#26512;<a name="8"></a></h2><pre class="codeinput"><span class="comment">% &#27979;&#35797;&#38598;&#30340;&#23454;&#38469;&#20998;&#31867;&#21644;&#39044;&#27979;&#20998;&#31867;&#22270;</span>
+figure;
+hold <span class="string">on</span>;
+plot(test_wine_labels,<span class="string">'o'</span>);
+plot(predict_label,<span class="string">'r*'</span>);
+xlabel(<span class="string">'&#27979;&#35797;&#38598;&#26679;&#26412;'</span>,<span class="string">'FontSize'</span>,12);
+ylabel(<span class="string">'&#31867;&#21035;&#26631;&#31614;'</span>,<span class="string">'FontSize'</span>,12);
+legend(<span class="string">'&#23454;&#38469;&#27979;&#35797;&#38598;&#20998;&#31867;'</span>,<span class="string">'&#39044;&#27979;&#27979;&#35797;&#38598;&#20998;&#31867;'</span>);
+title(<span class="string">'&#27979;&#35797;&#38598;&#30340;&#23454;&#38469;&#20998;&#31867;&#21644;&#39044;&#27979;&#20998;&#31867;&#22270;'</span>,<span class="string">'FontSize'</span>,12);
+grid <span class="string">on</span>;
+snapnow;
+</pre><img vspace="5" hspace="5" src="chapter13_GA_04.png" alt=""> <h2>&#23376;&#20989;&#25968; gaSVMcgForClass.m<a name="9"></a></h2><pre class="codeinput"><span class="keyword">function</span> [BestCVaccuracy,Bestc,Bestg,ga_option] = gaSVMcgForClass(train_label,train_data,ga_option)
+<span class="comment">% gaSVMcgForClass</span>
+
+<span class="comment">%</span>
+<span class="comment">% by faruto</span>
+<span class="comment">%Email:patrick.lee@foxmail.com QQ:516667408 http://blog.sina.com.cn/faruto BNU</span>
+<span class="comment">%last modified 2010.01.17</span>
+<span class="comment">%Super Moderator @ www.ilovematlab.cn</span>
+
+<span class="comment">% &#33509;&#36716;&#36733;&#35831;&#27880;&#26126;&#65306;</span>
+<span class="comment">% faruto and liyang , LIBSVM-farutoUltimateVersion</span>
+<span class="comment">% a toolbox with implements for support vector machines based on libsvm, 2009.</span>
+<span class="comment">% Software available at http://www.ilovematlab.cn</span>
+<span class="comment">%</span>
+<span class="comment">% Chih-Chung Chang and Chih-Jen Lin, LIBSVM : a library for</span>
+<span class="comment">% support vector machines, 2001. Software available at</span>
+<span class="comment">% http://www.csie.ntu.edu.tw/~cjlin/libsvm</span>
+
+<span class="comment">% &#21442;&#25968;&#21021;&#22987;&#21270;</span>
+<span class="keyword">if</span> nargin == 2
+    ga_option = struct(<span class="string">'maxgen'</span>,200,<span class="string">'sizepop'</span>,20,<span class="string">'ggap'</span>,0.9,<span class="keyword">...</span>
+        <span class="string">'cbound'</span>,[0,100],<span class="string">'gbound'</span>,[0,1000],<span class="string">'v'</span>,5);
+<span class="keyword">end</span>
+<span class="comment">% maxgen:&#26368;&#22823;&#30340;&#36827;&#21270;&#20195;&#25968;,&#40664;&#35748;&#20026;200,&#19968;&#33324;&#21462;&#20540;&#33539;&#22260;&#20026;[100,500]</span>
+<span class="comment">% sizepop:&#31181;&#32676;&#26368;&#22823;&#25968;&#37327;,&#40664;&#35748;&#20026;20,&#19968;&#33324;&#21462;&#20540;&#33539;&#22260;&#20026;[20,100]</span>
+<span class="comment">% cbound = [cmin,cmax],&#21442;&#25968;c&#30340;&#21464;&#21270;&#33539;&#22260;,&#40664;&#35748;&#20026;(0,100]</span>
+<span class="comment">% gbound = [gmin,gmax],&#21442;&#25968;g&#30340;&#21464;&#21270;&#33539;&#22260;,&#40664;&#35748;&#20026;[0,1000]</span>
+<span class="comment">% v:SVM Cross Validation&#21442;&#25968;,&#40664;&#35748;&#20026;5</span>
+
+<span class="comment">%</span>
+MAXGEN = ga_option.maxgen;
+NIND = ga_option.sizepop;
+NVAR = 2;
+PRECI = 20;
+GGAP = ga_option.ggap;
+trace = zeros(MAXGEN,2);
+
+FieldID = <span class="keyword">...</span>
+[rep([PRECI],[1,NVAR]);[ga_option.cbound(1),ga_option.gbound(1);ga_option.cbound(2),ga_option.gbound(2)]; <span class="keyword">...</span>
+ [1,1;0,0;0,1;1,1]];
+
+Chrom = crtbp(NIND,NVAR*PRECI);
+
+gen = 1;
+v = ga_option.v;
+BestCVaccuracy = 0;
+Bestc = 0;
+Bestg = 0;
+<span class="comment">%</span>
+cg = bs2rv(Chrom,FieldID);
+
+<span class="keyword">for</span> nind = 1:NIND
+    cmd = [<span class="string">'-v '</span>,num2str(v),<span class="string">' -c '</span>,num2str(cg(nind,1)),<span class="string">' -g '</span>,num2str(cg(nind,2))];
+    ObjV(nind,1) = svmtrain(train_label,train_data,cmd);
+<span class="keyword">end</span>
+[BestCVaccuracy,I] = max(ObjV);
+Bestc = cg(I,1);
+Bestg = cg(I,2);
+
+<span class="keyword">for</span> gen = 1:MAXGEN
+    FitnV = ranking(-ObjV);
+
+    SelCh = select(<span class="string">'sus'</span>,Chrom,FitnV,GGAP);
+    SelCh = recombin(<span class="string">'xovsp'</span>,SelCh,0.7);
+    SelCh = mut(SelCh);
+
+    cg = bs2rv(SelCh,FieldID);
+    <span class="keyword">for</span> nind = 1:size(SelCh,1)
+        cmd = [<span class="string">'-v '</span>,num2str(v),<span class="string">' -c '</span>,num2str(cg(nind,1)),<span class="string">' -g '</span>,num2str(cg(nind,2))];
+        ObjVSel(nind,1) = svmtrain(train_label,train_data,cmd);
+    <span class="keyword">end</span>
+
+    [Chrom,ObjV] = reins(Chrom,SelCh,1,1,ObjV,ObjVSel);
+
+    <span class="keyword">if</span> max(ObjV) &lt;= 50
+        <span class="keyword">continue</span>;
+    <span class="keyword">end</span>
+
+    [NewBestCVaccuracy,I] = max(ObjV);
+    cg_temp = bs2rv(Chrom,FieldID);
+    temp_NewBestCVaccuracy = NewBestCVaccuracy;
+
+    <span class="keyword">if</span> NewBestCVaccuracy &gt; BestCVaccuracy
+       BestCVaccuracy = NewBestCVaccuracy;
+       Bestc = cg_temp(I,1);
+       Bestg = cg_temp(I,2);
+    <span class="keyword">end</span>
+
+    <span class="keyword">if</span> abs( NewBestCVaccuracy-BestCVaccuracy ) &lt;= 10^(-2) &amp;&amp; <span class="keyword">...</span>
+        cg_temp(I,1) &lt; Bestc
+       BestCVaccuracy = NewBestCVaccuracy;
+       Bestc = cg_temp(I,1);
+       Bestg = cg_temp(I,2);
+    <span class="keyword">end</span>
+
+    trace(gen,1) = max(ObjV);
+    trace(gen,2) = sum(ObjV)/length(ObjV);
+
+<span class="keyword">end</span>
+<span class="comment">%</span>
+figure;
+hold <span class="string">on</span>;
+trace = round(trace*10000)/10000;
+plot(trace(1:gen,1),<span class="string">'r*-'</span>,<span class="string">'LineWidth'</span>,1.5);
+plot(trace(1:gen,2),<span class="string">'o-'</span>,<span class="string">'LineWidth'</span>,1.5);
+legend(<span class="string">'&#26368;&#20339;&#36866;&#24212;&#24230;'</span>,<span class="string">'&#24179;&#22343;&#36866;&#24212;&#24230;'</span>,3);
+xlabel(<span class="string">'&#36827;&#21270;&#20195;&#25968;'</span>,<span class="string">'FontSize'</span>,12);
+ylabel(<span class="string">'&#36866;&#24212;&#24230;'</span>,<span class="string">'FontSize'</span>,12);
+axis([0 gen 0 100]);
+grid <span class="string">on</span>;
+axis <span class="string">auto</span>;
+
+line1 = <span class="string">'&#36866;&#24212;&#24230;&#26354;&#32447;Accuracy[GAmethod]'</span>;
+line2 = [<span class="string">'(&#32456;&#27490;&#20195;&#25968;='</span>, <span class="keyword">...</span>
+    num2str(gen),<span class="string">',&#31181;&#32676;&#25968;&#37327;pop='</span>, <span class="keyword">...</span>
+    num2str(NIND),<span class="string">')'</span>];
+line3 = [<span class="string">'Best c='</span>,num2str(Bestc),<span class="string">' g='</span>,num2str(Bestg), <span class="keyword">...</span>
+    <span class="string">' CVAccuracy='</span>,num2str(BestCVaccuracy),<span class="string">'%'</span>];
+title({line1;line2;line3},<span class="string">'FontSize'</span>,12);
+</pre><p>
+<table align="center" >	<tr>		<td align="center"><font size="2">版权所有：</font><a
+href="http://www.ilovematlab.cn/">Matlab中文论坛</a>&nbsp;&nbsp; <script
+src="http://s3.cnzz.com/stat.php?id=971931&web_id=971931&show=pic" language="JavaScript" ></script>&nbsp;</td>	</tr></table>
+</p><p class="footer"><br>
+      Published with MATLAB&reg; 7.9<br></p></div><!--
+##### SOURCE BEGIN #####
+%% SVM神经网络中的参数优化REPLACE_WITH_DASH_DASH-如何更好的提升分类器的性能 
+%
+% <html>
+% <table border="0" width="600px" id="table1">	<tr>		<td><b><font size="2">该案例作者申明：</font></b></td>	</tr>	<tr>		<td><span class="comment"><font size="2">1：本人长期驻扎在此<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html"><font color="#0000FF">板块</font></a>里，对<a target="_blank" href="http://www.ilovematlab.cn/thread-48362-1-1.html"><font color="#0000FF">该案例</font></a>提问，做到有问必答。</font></span></td></tr><tr>	<td><span class="comment"><font size="2">2：此案例有配套的教学视频，配套的完整可运行Matlab程序。</font></span></td>	</tr>	<tr>		<td><span class="comment"><font size="2">		3：以下内容为该案例的部分内容（约占该案例完整内容的1/10）。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		4：此案例为原创案例，转载请注明出处（<a target="_blank" href="http://www.ilovematlab.cn/">Matlab中文论坛</a>，<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html">《Matlab神经网络30个案例分析》</a>）。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		5：若此案例碰巧与您的研究有关联，我们欢迎您提意见，要求等，我们考虑后可以加在案例里。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		6：您看到的以下内容为初稿，书籍的实际内容可能有少许出入，以书籍实际发行内容为准。</font></span></td>	</tr><tr>		<td><span class="comment"><font size="2">		7：此书其他常见问题、预定方式等，<a target="_blank" href="http://www.ilovematlab.cn/thread-47939-1-1.html">请点击这里</a>。</font></span></td>	</tr></table>
+% </html>
+%
+
+%% 清空环境变量
+function chapter13_GA
+close all;
+clear;
+clc;
+format compact;
+%% 数据提取
+
+% 载入测试数据wine,其中包含的数据为classnumber = 3,wine:178*13的矩阵,wine_labes:178*1的列向量
+load chapter13_wine.mat;
+
+% 画出测试数据的box可视化图
+figure;
+boxplot(wine,'orientation','horizontal','labels',categories);
+title('wine数据的box可视化图','FontSize',12);
+xlabel('属性值','FontSize',12);
+grid on;
+
+% 画出测试数据的分维可视化图
+figure
+subplot(3,5,1);
+hold on
+for run = 1:178
+    plot(run,wine_labels(run),'*');
+end
+xlabel('样本','FontSize',10);
+ylabel('类别标签','FontSize',10);
+title('class','FontSize',10);
+for run = 2:14
+    subplot(3,5,run);
+    hold on;
+    str = ['attrib ',num2str(run-1)];
+    for i = 1:178
+        plot(i,wine(i,run-1),'*');
+    end
+    xlabel('样本','FontSize',10);
+    ylabel('属性值','FontSize',10);
+    title(str,'FontSize',10);
+end
+
+% 选定训练集和测试集
+
+% 将第一类的1-30,第二类的60-95,第三类的131-153做为训练集
+train_wine = [wine(1:30,:);wine(60:95,:);wine(131:153,:)];
+% 相应的训练集的标签也要分离出来
+train_wine_labels = [wine_labels(1:30);wine_labels(60:95);wine_labels(131:153)];
+% 将第一类的31-59,第二类的96-130,第三类的154-178做为测试集
+test_wine = [wine(31:59,:);wine(96:130,:);wine(154:178,:)];
+% 相应的测试集的标签也要分离出来
+test_wine_labels = [wine_labels(31:59);wine_labels(96:130);wine_labels(154:178)];
+
+%% 数据预处理
+% 数据预处理,将训练集和测试集归一化到[0,1]区间
+
+[mtrain,ntrain] = size(train_wine);
+[mtest,ntest] = size(test_wine);
+
+dataset = [train_wine;test_wine];
+% mapminmax为MATLAB自带的归一化函数
+[dataset_scale,ps] = mapminmax(dataset',0,1);
+dataset_scale = dataset_scale';
+
+train_wine = dataset_scale(1:mtrain,:);
+test_wine = dataset_scale( (mtrain+1):(mtrain+mtest),: );
+%% 选择GA最佳的SVM参数c&g
+
+% GA的参数选项初始化
+ga_option.maxgen = 200;
+ga_option.sizepop = 20; 
+ga_option.cbound = [0,100];
+ga_option.gbound = [0,100];
+ga_option.v = 5;
+ga_option.ggap = 0.9;
+
+[bestacc,bestc,bestg] = gaSVMcgForClass(train_wine_labels,train_wine,ga_option);
+
+% 打印选择结果
+disp('打印选择结果');
+str = sprintf( 'Best Cross Validation Accuracy = %g%% Best c = %g Best g = %g',bestacc,bestc,bestg);
+disp(str);
+
+%% 利用最佳的参数进行SVM网络训练
+cmd = ['-c ',num2str(bestc),' -g ',num2str(bestg)];
+model = svmtrain(train_wine_labels,train_wine,cmd);
+
+%% SVM网络预测
+[predict_label,accuracy] = svmpredict(test_wine_labels,test_wine,model);
+
+% 打印测试集分类准确率
+total = length(test_wine_labels);
+right = sum(predict_label == test_wine_labels);
+disp('打印测试集分类准确率');
+str = sprintf( 'Accuracy = %g%% (%d/%d)',accuracy(1),right,total);
+disp(str);
+
+%% 结果分析
+
+% 测试集的实际分类和预测分类图
+figure;
+hold on;
+plot(test_wine_labels,'o');
+plot(predict_label,'r*');
+xlabel('测试集样本','FontSize',12);
+ylabel('类别标签','FontSize',12);
+legend('实际测试集分类','预测测试集分类');
+title('测试集的实际分类和预测分类图','FontSize',12);
+grid on;
+snapnow;
+
+%% 子函数 gaSVMcgForClass.m
+function [BestCVaccuracy,Bestc,Bestg,ga_option] = gaSVMcgForClass(train_label,train_data,ga_option)
+% gaSVMcgForClass
+
+%
+% by faruto
+%Email:patrick.lee@foxmail.com QQ:516667408 http://blog.sina.com.cn/faruto BNU
+%last modified 2010.01.17
+%Super Moderator @ www.ilovematlab.cn
+
+% 若转载请注明：
+% faruto and liyang , LIBSVM-farutoUltimateVersion 
+% a toolbox with implements for support vector machines based on libsvm, 2009. 
+% Software available at http://www.ilovematlab.cn
+% 
+% Chih-Chung Chang and Chih-Jen Lin, LIBSVM : a library for
+% support vector machines, 2001. Software available at
+% http://www.csie.ntu.edu.tw/~cjlin/libsvm
+
+% 参数初始化
+if nargin == 2
+    ga_option = struct('maxgen',200,'sizepop',20,'ggap',0.9,...
+        'cbound',[0,100],'gbound',[0,1000],'v',5);
+end
+% maxgen:最大的进化代数,默认为200,一般取值范围为[100,500]
+% sizepop:种群最大数量,默认为20,一般取值范围为[20,100]
+% cbound = [cmin,cmax],参数c的变化范围,默认为(0,100]
+% gbound = [gmin,gmax],参数g的变化范围,默认为[0,1000]
+% v:SVM Cross Validation参数,默认为5
+
+%
+MAXGEN = ga_option.maxgen;
+NIND = ga_option.sizepop;
+NVAR = 2;
+PRECI = 20;
+GGAP = ga_option.ggap;
+trace = zeros(MAXGEN,2);
+
+FieldID = ...
+[rep([PRECI],[1,NVAR]);[ga_option.cbound(1),ga_option.gbound(1);ga_option.cbound(2),ga_option.gbound(2)]; ...
+ [1,1;0,0;0,1;1,1]];
+
+Chrom = crtbp(NIND,NVAR*PRECI);
+
+gen = 1;
+v = ga_option.v;
+BestCVaccuracy = 0;
+Bestc = 0;
+Bestg = 0;
+%
+cg = bs2rv(Chrom,FieldID);
+
+for nind = 1:NIND
+    cmd = ['-v ',num2str(v),' -c ',num2str(cg(nind,1)),' -g ',num2str(cg(nind,2))];
+    ObjV(nind,1) = svmtrain(train_label,train_data,cmd);
+end
+[BestCVaccuracy,I] = max(ObjV);
+Bestc = cg(I,1);
+Bestg = cg(I,2);
+
+for gen = 1:MAXGEN
+    FitnV = ranking(-ObjV);
+    
+    SelCh = select('sus',Chrom,FitnV,GGAP);
+    SelCh = recombin('xovsp',SelCh,0.7);
+    SelCh = mut(SelCh);
+    
+    cg = bs2rv(SelCh,FieldID);
+    for nind = 1:size(SelCh,1)
+        cmd = ['-v ',num2str(v),' -c ',num2str(cg(nind,1)),' -g ',num2str(cg(nind,2))];
+        ObjVSel(nind,1) = svmtrain(train_label,train_data,cmd);
+    end
+    
+    [Chrom,ObjV] = reins(Chrom,SelCh,1,1,ObjV,ObjVSel);
+    
+    if max(ObjV) <= 50
+        continue;
+    end
+    
+    [NewBestCVaccuracy,I] = max(ObjV);
+    cg_temp = bs2rv(Chrom,FieldID);
+    temp_NewBestCVaccuracy = NewBestCVaccuracy;
+    
+    if NewBestCVaccuracy > BestCVaccuracy
+       BestCVaccuracy = NewBestCVaccuracy;
+       Bestc = cg_temp(I,1);
+       Bestg = cg_temp(I,2);
+    end
+    
+    if abs( NewBestCVaccuracy-BestCVaccuracy ) <= 10^(-2) && ...
+        cg_temp(I,1) < Bestc
+       BestCVaccuracy = NewBestCVaccuracy;
+       Bestc = cg_temp(I,1);
+       Bestg = cg_temp(I,2);
+    end    
+    
+    trace(gen,1) = max(ObjV);
+    trace(gen,2) = sum(ObjV)/length(ObjV);
+  
+end
+%
+figure;
+hold on;
+trace = round(trace*10000)/10000;
+plot(trace(1:gen,1),'r*-','LineWidth',1.5);
+plot(trace(1:gen,2),'o-','LineWidth',1.5);
+legend('最佳适应度','平均适应度',3);
+xlabel('进化代数','FontSize',12);
+ylabel('适应度','FontSize',12);
+axis([0 gen 0 100]);
+grid on;
+axis auto;
+
+line1 = '适应度曲线Accuracy[GAmethod]';
+line2 = ['(终止代数=', ...
+    num2str(gen),',种群数量pop=', ...
+    num2str(NIND),')'];
+line3 = ['Best c=',num2str(Bestc),' g=',num2str(Bestg), ...
+    ' CVAccuracy=',num2str(BestCVaccuracy),'%'];
+title({line1;line2;line3},'FontSize',12);
+
+%%%
+% 
+% <html>
+% <table align="center" >	<tr>		<td align="center"><font size="2">版权所有：</font><a
+% href="http://www.ilovematlab.cn/">Matlab中文论坛</a>&nbsp;&nbsp; <script
+% src="http://s3.cnzz.com/stat.php?id=971931&web_id=971931&show=pic" language="JavaScript" ></script>&nbsp;</td>	</tr></table>
+% </html>
+% 
+
+
+##### SOURCE END #####
+--></body></html>

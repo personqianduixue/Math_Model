@@ -1,0 +1,2 @@
+chapter7.1.m为严格(Exact)径向基网络来实现非线性的函数回归
+chapter7.2.m为RBF网络对同一函数拟合

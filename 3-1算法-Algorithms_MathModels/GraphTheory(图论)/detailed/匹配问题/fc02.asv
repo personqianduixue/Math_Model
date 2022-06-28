@@ -1,0 +1,15 @@
+function [ e,total ] = fc02(d)
+
+total = 0;m = size(d);
+e = zeros(m(1),2);
+t = sum(sum(d)');
+nump = sum(d');
+while t~=0
+    [s inp]=sort(nump);
+    inq = find(s);
+    ep = inp(inq(1));
+    
+end
+
+end
+

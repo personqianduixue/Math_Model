@@ -1,0 +1,329 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      --><title>&#35813;&#20195;&#30721;&#20026;&#22522;&#20110;BP-Adaboost&#30340;&#24378;&#20998;&#31867;&#22120;&#20998;&#31867;</title><meta name="generator" content="MATLAB 7.9"><meta name="date" content="2010-11-28"><meta name="m-file" content="Bp_Ada_Sort"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><h1>&#35813;&#20195;&#30721;&#20026;&#22522;&#20110;BP-Adaboost&#30340;&#24378;&#20998;&#31867;&#22120;&#20998;&#31867;</h1><!--introduction--><p>
+<table border="0" width="600px" id="table1">	<tr>		<td><b><font size="2">该案例作者申明：</font></b></td>	</tr>	<tr><td><span class="comment"><font size="2">1：本人长期驻扎在此<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html"><font color="#0000FF">板块</font></a>里，对该案例提问，做到有问必答。本套书籍官方网站为：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></span></td></tr><tr>		<td><font size="2">2：点此<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">从当当预定本书</a>：<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">《Matlab神经网络30个案例分析》</a>。</td></tr><tr>	<td><p class="comment"></font><font size="2">3</font><font size="2">：此案例有配套的教学视频，视频下载方式<a href="http://video.ourmatlab.com/vbuy.html">video.ourmatlab.com/vbuy.html</a></font><font size="2">。 </font></p></td>	</tr>			<tr>		<td><span class="comment"><font size="2">		4：此案例为原创案例，转载请注明出处（《Matlab神经网络30个案例分析》）。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		5：若此案例碰巧与您的研究有关联，我们欢迎您提意见，要求等，我们考虑后可以加在案例里。</font></span></td>	</tr>		</table>
+</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;</a></li><li><a href="#2">&#19979;&#36733;&#25968;&#25454;</a></li><li><a href="#3">&#26435;&#37325;&#21021;&#22987;&#21270;</a></li><li><a href="#4">&#24369;&#20998;&#31867;&#22120;&#20998;&#31867;</a></li><li><a href="#5">&#24378;&#20998;&#31867;&#22120;&#20998;&#31867;&#32467;&#26524;</a></li><li><a href="#6">&#20998;&#31867;&#32467;&#26524;&#32479;&#35745;</a></li></ul></div><h2>&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;<a name="1"></a></h2><pre class="codeinput">clc
+clear
+</pre><h2>&#19979;&#36733;&#25968;&#25454;<a name="2"></a></h2><pre class="codeinput">load <span class="string">data</span> <span class="string">input_train</span> <span class="string">output_train</span> <span class="string">input_test</span> <span class="string">output_test</span>
+</pre><h2>&#26435;&#37325;&#21021;&#22987;&#21270;<a name="3"></a></h2><pre class="codeinput">[mm,nn]=size(input_train);
+D(1,:)=ones(1,nn)/nn;
+</pre><h2>&#24369;&#20998;&#31867;&#22120;&#20998;&#31867;<a name="4"></a></h2><pre class="codeinput">K=10;
+<span class="keyword">for</span> i=1:K
+
+    <span class="comment">%&#35757;&#32451;&#26679;&#26412;&#24402;&#19968;&#21270;</span>
+    [inputn,inputps]=mapminmax(input_train);
+    [outputn,outputps]=mapminmax(output_train);
+    error(i)=0;
+
+    <span class="comment">%BP&#31070;&#32463;&#32593;&#32476;&#26500;&#24314;</span>
+    net=newff(inputn,outputn,6);
+    net.trainParam.epochs=5;
+    net.trainParam.lr=0.1;
+    net.trainParam.goal=0.00004;
+
+    <span class="comment">%BP&#31070;&#32463;&#32593;&#32476;&#35757;&#32451;</span>
+    net=train(net,inputn,outputn);
+
+    <span class="comment">%&#35757;&#32451;&#25968;&#25454;&#39044;&#27979;</span>
+    an1=sim(net,inputn);
+    test_simu1(i,:)=mapminmax(<span class="string">'reverse'</span>,an1,outputps);
+
+    <span class="comment">%&#27979;&#35797;&#25968;&#25454;&#39044;&#27979;</span>
+    inputn_test =mapminmax(<span class="string">'apply'</span>,input_test,inputps);
+    an=sim(net,inputn_test);
+    test_simu(i,:)=mapminmax(<span class="string">'reverse'</span>,an,outputps);
+
+    <span class="comment">%&#32479;&#35745;&#36755;&#20986;&#25928;&#26524;</span>
+    kk1=find(test_simu1(i,:)&gt;0);
+    kk2=find(test_simu1(i,:)&lt;0);
+
+    aa(kk1)=1;
+    aa(kk2)=-1;
+
+    <span class="comment">%&#32479;&#35745;&#38169;&#35823;&#26679;&#26412;&#25968;</span>
+    <span class="keyword">for</span> j=1:nn
+        <span class="keyword">if</span> aa(j)~=output_train(j);
+            error(i)=error(i)+D(i,j);
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+
+    <span class="comment">%&#24369;&#20998;&#31867;&#22120;i&#26435;&#37325;</span>
+    at(i)=0.5*log((1-error(i))/error(i));
+
+    <span class="comment">%&#26356;&#26032;D&#20540;</span>
+    <span class="keyword">for</span> j=1:nn
+        D(i+1,j)=D(i,j)*exp(-at(i)*aa(j)*test_simu1(i,j));
+    <span class="keyword">end</span>
+
+    <span class="comment">%D&#20540;&#24402;&#19968;&#21270;</span>
+    Dsum=sum(D(i+1,:));
+    D(i+1,:)=D(i+1,:)/Dsum;
+
+<span class="keyword">end</span>
+</pre><h2>&#24378;&#20998;&#31867;&#22120;&#20998;&#31867;&#32467;&#26524;<a name="5"></a></h2><pre class="codeinput">output=sign(at*test_simu);
+</pre><h2>&#20998;&#31867;&#32467;&#26524;&#32479;&#35745;<a name="6"></a></h2><pre class="codeinput"><span class="comment">%&#32479;&#35745;&#24378;&#20998;&#31867;&#22120;&#27599;&#31867;&#20998;&#31867;&#38169;&#35823;&#20010;&#25968;</span>
+kkk1=0;
+kkk2=0;
+<span class="keyword">for</span> j=1:350
+    <span class="keyword">if</span> output(j)==1
+        <span class="keyword">if</span> output(j)~=output_test(j)
+            kkk1=kkk1+1;
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+    <span class="keyword">if</span> output(j)==-1
+        <span class="keyword">if</span> output(j)~=output_test(j)
+            kkk2=kkk2+1;
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+kkk1
+kkk2
+disp(<span class="string">'&#31532;&#19968;&#31867;&#20998;&#31867;&#38169;&#35823;  &#31532;&#20108;&#31867;&#20998;&#31867;&#38169;&#35823;  &#24635;&#38169;&#35823;'</span>);
+<span class="comment">% &#31383;&#21475;&#26174;&#31034;</span>
+disp([kkk1 kkk2 kkk1+kkk2]);
+
+plot(output)
+hold <span class="string">on</span>
+plot(output_test,<span class="string">'g'</span>)
+
+<span class="comment">%&#32479;&#35745;&#24369;&#20998;&#31163;&#22120;&#25928;&#26524;</span>
+<span class="keyword">for</span> i=1:K
+    error1(i)=0;
+    kk1=find(test_simu(i,:)&gt;0);
+    kk2=find(test_simu(i,:)&lt;0);
+
+    aa(kk1)=1;
+    aa(kk2)=-1;
+
+    <span class="keyword">for</span> j=1:350
+        <span class="keyword">if</span> aa(j)~=output_test(j);
+            error1(i)=error1(i)+1;
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+disp(<span class="string">'&#32479;&#35745;&#24369;&#20998;&#31867;&#22120;&#20998;&#31867;&#25928;&#26524;'</span>);
+error1
+
+disp(<span class="string">'&#24378;&#20998;&#31867;&#22120;&#20998;&#31867;&#35823;&#24046;&#29575;'</span>)
+(kkk1+kkk2)/350
+
+disp(<span class="string">'&#24369;&#20998;&#31867;&#22120;&#20998;&#31867;&#35823;&#24046;&#29575;'</span>)
+(sum(error1)/(K*350))
+web <span class="string">browser</span> <span class="string">www.matlabsky.com</span>
+</pre><pre class="codeoutput">kkk1 =
+     1
+kkk2 =
+    15
+&#31532;&#19968;&#31867;&#20998;&#31867;&#38169;&#35823;  &#31532;&#20108;&#31867;&#20998;&#31867;&#38169;&#35823;  &#24635;&#38169;&#35823;
+     1    15    16
+&#32479;&#35745;&#24369;&#20998;&#31867;&#22120;&#20998;&#31867;&#25928;&#26524;
+error1 =
+  Columns 1 through 8
+    46    30    18    22    17    16    25    19
+  Columns 9 through 10
+    40    17
+&#24378;&#20998;&#31867;&#22120;&#20998;&#31867;&#35823;&#24046;&#29575;
+ans =
+    0.0457
+&#24369;&#20998;&#31867;&#22120;&#20998;&#31867;&#35823;&#24046;&#29575;
+ans =
+    0.0714
+</pre><img vspace="5" hspace="5" src="Bp_Ada_Sort_01.png" alt=""> <p>
+<table width="656" align="left" >	<tr><td align="center"><p><font size="2"><a href="http://video.ourmatlab.com/">Matlab神经网络30个案例分析</a></font></p><p align="left"><font size="2">相关论坛：</font></p><p align="left"><font size="2">《Matlab神经网络30个案例分析》官方网站：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></p><p align="left"><font size="2">Matlab技术论坛：<a href="http://www.matlabsky.com">www.matlabsky.com</a></font></p><p align="left"><font size="2">M</font><font size="2">atlab函数百科：<a href="http://www.mfun.la">www.mfun.la</a></font></p><p align="left"><font size="2">Matlab中文论坛：<a href="http://www.ilovematlab.com">www.ilovematlab.com</a></font></p></td>	</tr></table>
+</p><p class="footer"><br>
+      Published with MATLAB&reg; 7.9<br></p></div><!--
+##### SOURCE BEGIN #####
+%% 该代码为基于BP-Adaboost的强分类器分类
+%
+% <html>
+% <table border="0" width="600px" id="table1">	<tr>		<td><b><font size="2">该案例作者申明：</font></b></td>	</tr>	<tr><td><span class="comment"><font size="2">1：本人长期驻扎在此<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html"><font color="#0000FF">板块</font></a>里，对该案例提问，做到有问必答。本套书籍官方网站为：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></span></td></tr><tr>		<td><font size="2">2：点此<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">从当当预定本书</a>：<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">《Matlab神经网络30个案例分析》</a>。</td></tr><tr>	<td><p class="comment"></font><font size="2">3</font><font size="2">：此案例有配套的教学视频，视频下载方式<a href="http://video.ourmatlab.com/vbuy.html">video.ourmatlab.com/vbuy.html</a></font><font size="2">。 </font></p></td>	</tr>			<tr>		<td><span class="comment"><font size="2">		4：此案例为原创案例，转载请注明出处（《Matlab神经网络30个案例分析》）。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		5：若此案例碰巧与您的研究有关联，我们欢迎您提意见，要求等，我们考虑后可以加在案例里。</font></span></td>	</tr>		</table>
+% </html>
+%% 清空环境变量
+clc
+clear
+
+%% 下载数据
+load data input_train output_train input_test output_test
+
+%% 权重初始化
+[mm,nn]=size(input_train);
+D(1,:)=ones(1,nn)/nn;
+
+%% 弱分类器分类
+K=10;
+for i=1:K
+    
+    %训练样本归一化
+    [inputn,inputps]=mapminmax(input_train);
+    [outputn,outputps]=mapminmax(output_train);
+    error(i)=0;
+    
+    %BP神经网络构建
+    net=newff(inputn,outputn,6);
+    net.trainParam.epochs=5;
+    net.trainParam.lr=0.1;
+    net.trainParam.goal=0.00004;
+    
+    %BP神经网络训练
+    net=train(net,inputn,outputn);
+    
+    %训练数据预测
+    an1=sim(net,inputn);
+    test_simu1(i,:)=mapminmax('reverse',an1,outputps);
+    
+    %测试数据预测
+    inputn_test =mapminmax('apply',input_test,inputps);
+    an=sim(net,inputn_test);
+    test_simu(i,:)=mapminmax('reverse',an,outputps);
+    
+    %统计输出效果
+    kk1=find(test_simu1(i,:)>0);
+    kk2=find(test_simu1(i,:)<0);
+    
+    aa(kk1)=1;
+    aa(kk2)=-1;
+    
+    %统计错误样本数
+    for j=1:nn
+        if aa(j)~=output_train(j);
+            error(i)=error(i)+D(i,j);
+        end
+    end
+    
+    %弱分类器i权重
+    at(i)=0.5*log((1-error(i))/error(i));
+    
+    %更新D值
+    for j=1:nn
+        D(i+1,j)=D(i,j)*exp(-at(i)*aa(j)*test_simu1(i,j));
+    end
+    
+    %D值归一化
+    Dsum=sum(D(i+1,:));
+    D(i+1,:)=D(i+1,:)/Dsum;
+    
+end
+
+%% 强分类器分类结果
+output=sign(at*test_simu);
+
+%% 分类结果统计
+%统计强分类器每类分类错误个数
+kkk1=0;
+kkk2=0;
+for j=1:350
+    if output(j)==1
+        if output(j)~=output_test(j)
+            kkk1=kkk1+1;
+        end
+    end
+    if output(j)==-1
+        if output(j)~=output_test(j)
+            kkk2=kkk2+1;
+        end
+    end
+end
+
+kkk1
+kkk2
+disp('第一类分类错误  第二类分类错误  总错误');
+% 窗口显示
+disp([kkk1 kkk2 kkk1+kkk2]);
+
+plot(output)
+hold on
+plot(output_test,'g')
+
+%统计弱分离器效果
+for i=1:K
+    error1(i)=0;
+    kk1=find(test_simu(i,:)>0);
+    kk2=find(test_simu(i,:)<0);
+    
+    aa(kk1)=1;
+    aa(kk2)=-1;
+    
+    for j=1:350
+        if aa(j)~=output_test(j);
+            error1(i)=error1(i)+1;
+        end
+    end
+end
+disp('统计弱分类器分类效果');
+error1
+
+disp('强分类器分类误差率')
+(kkk1+kkk2)/350
+
+disp('弱分类器分类误差率')
+(sum(error1)/(K*350))
+web browser www.matlabsky.com
+%%
+% <html>
+% <table width="656" align="left" >	<tr><td align="center"><p><font size="2"><a href="http://video.ourmatlab.com/">Matlab神经网络30个案例分析</a></font></p><p align="left"><font size="2">相关论坛：</font></p><p align="left"><font size="2">《Matlab神经网络30个案例分析》官方网站：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></p><p align="left"><font size="2">Matlab技术论坛：<a href="http://www.matlabsky.com">www.matlabsky.com</a></font></p><p align="left"><font size="2">M</font><font size="2">atlab函数百科：<a href="http://www.mfun.la">www.mfun.la</a></font></p><p align="left"><font size="2">Matlab中文论坛：<a href="http://www.ilovematlab.com">www.ilovematlab.com</a></font></p></td>	</tr></table>
+% </html>
+##### SOURCE END #####
+--></body></html>

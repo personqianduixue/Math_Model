@@ -1,0 +1,7 @@
+function [ output_args ] = boundnetf( input_args )
+% 容量有上下界的可行流
+% G1表示
+
+
+end
+

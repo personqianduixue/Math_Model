@@ -1,0 +1,245 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>Hopfield&#31070;&#32463;&#32593;&#32476;&#30340;&#32852;&#24819;&#35760;&#24518;&#8212;&#8212;&#25968;&#23383;&#35782;&#21035;</title>
+      <meta name="generator" content="MATLAB 7.8">
+      <meta name="date" content="2010-11-16">
+      <meta name="m-file" content="chapter9"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head>
+   <body>
+      <div class="content">
+         <h1>Hopfield&#31070;&#32463;&#32593;&#32476;&#30340;&#32852;&#24819;&#35760;&#24518;&#8212;&#8212;&#25968;&#23383;&#35782;&#21035;</h1>
+         <!--introduction-->
+         <p><html> <table border="0" width="600px" id="table1">	<tr>		<td><b><font size="2">该案例作者申明：</font></b></td>	</tr>	<tr><td><span
+            class="comment"><font size="2">1：本人长期驻扎在此<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html"><font color="#0000FF">板块</font></a>里，对该案例提问，做到有问必答。本套书籍官方网站为：<a
+            href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></span></td></tr><tr>		<td><font size="2">2：点此<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">从当当预定本书</a>：<a
+            href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">《Matlab神经网络30个案例分析》</a>。</td></tr><tr>	<td><p
+            class="comment"></font><font size="2">3</font><font size="2">：此案例有配套的教学视频，视频下载方式<a href="http://video.ourmatlab.com/vbuy.html">video.ourmatlab.com/vbuy.html</a></font><font
+            size="2">。 </font></p></td>	</tr>			<tr>		<td><span class="comment"><font size="2">		4：此案例为原创案例，转载请注明出处（《Matlab神经网络30个案例分析》）。</font></span></td>	</tr>		<tr>		<td><span
+            class="comment"><font size="2">		5：若此案例碰巧与您的研究有关联，我们欢迎您提意见，要求等，我们考虑后可以加在案例里。</font></span></td>	</tr>		</table> </html>
+         </p>
+         <!--/introduction-->
+         <h2>Contents</h2>
+         <div>
+            <ul>
+               <li><a href="#1">&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;</a></li>
+               <li><a href="#2">&#25968;&#25454;&#23548;&#20837;</a></li>
+               <li><a href="#3">&#35757;&#32451;&#26679;&#26412;&#65288;&#30446;&#26631;&#21521;&#37327;&#65289;</a></li>
+               <li><a href="#4">&#21019;&#24314;&#32593;&#32476;</a></li>
+               <li><a href="#5">&#25968;&#23383;1&#21644;2&#30340;&#24102;&#22122;&#22768;&#25968;&#23383;&#28857;&#38453;&#65288;&#22266;&#23450;&#27861;&#65289;</a></li>
+               <li><a href="#6">&#25968;&#23383;1&#21644;2&#30340;&#24102;&#22122;&#22768;&#25968;&#23383;&#28857;&#38453;&#65288;&#38543;&#26426;&#27861;&#65289;</a></li>
+               <li><a href="#7">&#25968;&#23383;&#35782;&#21035;</a></li>
+               <li><a href="#8">&#32467;&#26524;&#26174;&#31034;</a></li>
+            </ul>
+         </div>
+         <h2>&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;<a name="1"></a></h2><pre class="codeinput">clear <span class="string">all</span>
+clc
+</pre><h2>&#25968;&#25454;&#23548;&#20837;<a name="2"></a></h2><pre class="codeinput">load <span class="string">data1</span> <span class="string">array_one</span>
+load <span class="string">data2</span> <span class="string">array_two</span>
+</pre><h2>&#35757;&#32451;&#26679;&#26412;&#65288;&#30446;&#26631;&#21521;&#37327;&#65289;<a name="3"></a></h2><pre class="codeinput"> T = [array_one;array_two]';
+</pre><h2>&#21019;&#24314;&#32593;&#32476;<a name="4"></a></h2><pre class="codeinput"> net = newhop(T);
+</pre><h2>&#25968;&#23383;1&#21644;2&#30340;&#24102;&#22122;&#22768;&#25968;&#23383;&#28857;&#38453;&#65288;&#22266;&#23450;&#27861;&#65289;<a name="5"></a></h2><pre class="codeinput">load <span class="string">data1_noisy</span> <span class="string">noisy_array_one</span>
+load <span class="string">data2_noisy</span> <span class="string">noisy_array_two</span>
+</pre><h2>&#25968;&#23383;1&#21644;2&#30340;&#24102;&#22122;&#22768;&#25968;&#23383;&#28857;&#38453;&#65288;&#38543;&#26426;&#27861;&#65289;<a name="6"></a></h2><pre class="codeinput"><span class="comment">% noisy_array_one=array_one;</span>
+<span class="comment">% noisy_array_two=array_two;</span>
+<span class="comment">% for i = 1:100</span>
+<span class="comment">%     a = rand;</span>
+<span class="comment">%     if a &lt; 0.3</span>
+<span class="comment">%        noisy_array_one(i) = -array_one(i);</span>
+<span class="comment">%        noisy_array_two(i) = -array_two(i);</span>
+<span class="comment">%     end</span>
+<span class="comment">% end</span>
+</pre><h2>&#25968;&#23383;&#35782;&#21035;<a name="7"></a></h2><pre class="codeinput"><span class="comment">% &#21333;&#27493;&#20223;&#30495;&#8212;&#8212;TS = 1(&#30697;&#38453;&#24418;&#24335;)</span>
+<span class="comment">% identify_one = sim(net,10,[],noisy_array_one');</span>
+<span class="comment">% &#22810;&#27493;&#20223;&#30495;&#8212;&#8212;&#20803;&#32990;&#25968;&#32452;&#24418;&#24335;</span>
+noisy_one = {(noisy_array_one)'};
+identify_one = sim(net,{10,10},{},noisy_one);
+identify_one{10}';
+noisy_two = {(noisy_array_two)'};
+identify_two = sim(net,{10,10},{},noisy_two);
+identify_two{10}';
+</pre><h2>&#32467;&#26524;&#26174;&#31034;<a name="8"></a></h2><pre class="codeinput">Array_one = imresize(array_one,20);
+subplot(3,2,1)
+imshow(Array_one)
+title(<span class="string">'&#26631;&#20934;(&#25968;&#23383;1)'</span>)
+Array_two = imresize(array_two,20);
+subplot(3,2,2)
+imshow(Array_two)
+title(<span class="string">'&#26631;&#20934;(&#25968;&#23383;2)'</span>)
+subplot(3,2,3)
+Noisy_array_one = imresize(noisy_array_one,20);
+imshow(Noisy_array_one)
+title(<span class="string">'&#22122;&#22768;(&#25968;&#23383;1)'</span>)
+subplot(3,2,4)
+Noisy_array_two = imresize(noisy_array_two,20);
+imshow(Noisy_array_two)
+title(<span class="string">'&#22122;&#22768;(&#25968;&#23383;2)'</span>)
+subplot(3,2,5)
+imshow(imresize(identify_one{10}',20))
+title(<span class="string">'&#35782;&#21035;(&#25968;&#23383;1)'</span>)
+subplot(3,2,6)
+imshow(imresize(identify_two{10}',20))
+title(<span class="string">'&#35782;&#21035;(&#25968;&#23383;2)'</span>)
+
+web <span class="string">browser</span> <span class="string">http://www.matlabsky.com/thread-11145-1-2.html</span>
+</pre><img vspace="5" hspace="5" src="chapter9_01.png" alt=""> <p><html> <table width="656" align="left" >	<tr><td align="center"><p><font size="2"><a href="http://video.ourmatlab.com/">Matlab神经网络30个案例分析</a></font></p><p
+            align="left"><font size="2">相关论坛：</font></p><p align="left"><font size="2">《Matlab神经网络30个案例分析》官方网站：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></p><p
+            align="left"><font size="2">Matlab技术论坛：<a href="http://www.matlabsky.com">www.matlabsky.com</a></font></p><p align="left"><font
+            size="2">M</font><font size="2">atlab函数百科：<a href="http://www.mfun.la">www.mfun.la</a></font></p><p align="left"><font size="2">Matlab中文论坛：<a
+            href="http://www.ilovematlab.com">www.ilovematlab.com</a></font></p></td>	</tr></table> </html>
+         </p>
+         <p class="footer"><br>
+            Published with MATLAB&reg; 7.8<br></p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+%% Hopfield神经网络的联想记忆——数字识别
+% 
+% 
+% <html>
+% <table border="0" width="600px" id="table1">	<tr>		<td><b><font size="2">该案例作者申明：</font></b></td>	</tr>	<tr><td><span class="comment"><font size="2">1：本人长期驻扎在此<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html"><font color="#0000FF">板块</font></a>里，对该案例提问，做到有问必答。本套书籍官方网站为：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></span></td></tr><tr>		<td><font size="2">2：点此<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">从当当预定本书</a>：<a href="http://union.dangdang.com/transfer/transfer.aspx?from=P-284318&backurl=http://www.dangdang.com/">《Matlab神经网络30个案例分析》</a>。</td></tr><tr>	<td><p class="comment"></font><font size="2">3</font><font size="2">：此案例有配套的教学视频，视频下载方式<a href="http://video.ourmatlab.com/vbuy.html">video.ourmatlab.com/vbuy.html</a></font><font size="2">。 </font></p></td>	</tr>			<tr>		<td><span class="comment"><font size="2">		4：此案例为原创案例，转载请注明出处（《Matlab神经网络30个案例分析》）。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		5：若此案例碰巧与您的研究有关联，我们欢迎您提意见，要求等，我们考虑后可以加在案例里。</font></span></td>	</tr>		</table>
+% </html>
+% 
+
+%% 清空环境变量
+clear all
+clc
+
+%% 数据导入
+load data1 array_one
+load data2 array_two
+
+%% 训练样本（目标向量）
+ T = [array_one;array_two]';
+ 
+%% 创建网络
+ net = newhop(T);
+ 
+%% 数字1和2的带噪声数字点阵（固定法）
+load data1_noisy noisy_array_one
+load data2_noisy noisy_array_two
+
+%% 数字1和2的带噪声数字点阵（随机法）
+
+% noisy_array_one=array_one;
+% noisy_array_two=array_two;
+% for i = 1:100
+%     a = rand;
+%     if a < 0.3
+%        noisy_array_one(i) = -array_one(i);
+%        noisy_array_two(i) = -array_two(i);
+%     end
+% end
+
+%% 数字识别
+
+% 单步仿真——TS = 1(矩阵形式)
+% identify_one = sim(net,10,[],noisy_array_one');  
+% 多步仿真——元胞数组形式
+noisy_one = {(noisy_array_one)'};                    
+identify_one = sim(net,{10,10},{},noisy_one);
+identify_one{10}';
+noisy_two = {(noisy_array_two)'};
+identify_two = sim(net,{10,10},{},noisy_two);
+identify_two{10}';
+
+%% 结果显示
+Array_one = imresize(array_one,20);
+subplot(3,2,1)
+imshow(Array_one)
+title('标准(数字1)') 
+Array_two = imresize(array_two,20);
+subplot(3,2,2)
+imshow(Array_two)
+title('标准(数字2)') 
+subplot(3,2,3)
+Noisy_array_one = imresize(noisy_array_one,20);
+imshow(Noisy_array_one)
+title('噪声(数字1)') 
+subplot(3,2,4)
+Noisy_array_two = imresize(noisy_array_two,20);
+imshow(Noisy_array_two)
+title('噪声(数字2)')
+subplot(3,2,5)
+imshow(imresize(identify_one{10}',20))
+title('识别(数字1)')
+subplot(3,2,6)
+imshow(imresize(identify_two{10}',20))
+title('识别(数字2)')
+
+web browser http://www.matlabsky.com/thread-11145-1-2.html
+
+%%
+% <html>
+% <table width="656" align="left" >	<tr><td align="center"><p><font size="2"><a href="http://video.ourmatlab.com/">Matlab神经网络30个案例分析</a></font></p><p align="left"><font size="2">相关论坛：</font></p><p align="left"><font size="2">《Matlab神经网络30个案例分析》官方网站：<a href="http://video.ourmatlab.com">video.ourmatlab.com</a></font></p><p align="left"><font size="2">Matlab技术论坛：<a href="http://www.matlabsky.com">www.matlabsky.com</a></font></p><p align="left"><font size="2">M</font><font size="2">atlab函数百科：<a href="http://www.mfun.la">www.mfun.la</a></font></p><p align="left"><font size="2">Matlab中文论坛：<a href="http://www.ilovematlab.com">www.ilovematlab.com</a></font></p></td>	</tr></table>
+% </html>
+
+
+
+##### SOURCE END #####
+-->
+   </body>
+</html>

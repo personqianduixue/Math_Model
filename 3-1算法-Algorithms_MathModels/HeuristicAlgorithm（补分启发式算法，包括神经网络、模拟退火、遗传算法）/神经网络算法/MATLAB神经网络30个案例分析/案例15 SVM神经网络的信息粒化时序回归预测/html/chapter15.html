@@ -1,0 +1,761 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      --><title>SVM&#31070;&#32463;&#32593;&#32476;&#30340;&#20449;&#24687;&#31890;&#21270;&#26102;&#24207;&#22238;&#24402;&#39044;&#27979;----&#19978;&#35777;&#25351;&#25968;&#24320;&#30424;&#25351;&#25968;&#21464;&#21270;&#36235;&#21183;&#21644;&#21464;&#21270;&#31354;&#38388;&#39044;&#27979;</title><meta name="generator" content="MATLAB 7.9"><meta name="date" content="2009-10-03"><meta name="m-file" content="chapter15"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><h1>SVM&#31070;&#32463;&#32593;&#32476;&#30340;&#20449;&#24687;&#31890;&#21270;&#26102;&#24207;&#22238;&#24402;&#39044;&#27979;----&#19978;&#35777;&#25351;&#25968;&#24320;&#30424;&#25351;&#25968;&#21464;&#21270;&#36235;&#21183;&#21644;&#21464;&#21270;&#31354;&#38388;&#39044;&#27979;</h1><!--introduction--><p>
+<table border="0" width="600px" id="table1">	<tr>		<td><b><font size="2">该案例作者申明：</font></b></td>	</tr>	<tr>		<td><span class="comment"><font size="2">1：本人长期驻扎在此<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html"><font color="#0000FF">板块</font></a>里，对<a target="_blank" href="http://www.ilovematlab.cn/thread-48362-1-1.html"><font color="#0000FF">该案例</font></a>提问，做到有问必答。</font></span></td></tr><tr>	<td><span class="comment"><font size="2">2：此案例有配套的教学视频，配套的完整可运行Matlab程序。</font></span></td>	</tr>	<tr>		<td><span class="comment"><font size="2">		3：以下内容为该案例的部分内容（约占该案例完整内容的1/10）。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		4：此案例为原创案例，转载请注明出处（<a target="_blank" href="http://www.ilovematlab.cn/">Matlab中文论坛</a>，<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html">《Matlab神经网络30个案例分析》</a>）。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		5：若此案例碰巧与您的研究有关联，我们欢迎您提意见，要求等，我们考虑后可以加在案例里。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		6：您看到的以下内容为初稿，书籍的实际内容可能有少许出入，以书籍实际发行内容为准。</font></span></td>	</tr><tr>		<td><span class="comment"><font size="2">		7：此书其他常见问题、预定方式等，<a target="_blank" href="http://www.ilovematlab.cn/thread-47939-1-1.html">请点击这里</a>。</font></span></td>	</tr></table>
+</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;</a></li><li><a href="#3">&#21407;&#22987;&#25968;&#25454;&#30340;&#25552;&#21462;</a></li><li><a href="#4">&#23545;&#21407;&#22987;&#25968;&#25454;&#36827;&#34892;&#27169;&#31946;&#20449;&#24687;&#31890;&#21270;</a></li><li><a href="#5">&#21033;&#29992;SVM&#23545;Low&#36827;&#34892;&#22238;&#24402;&#39044;&#27979;</a></li><li><a href="#6">&#23545;&#20110;Low&#30340;&#22238;&#24402;&#39044;&#27979;&#32467;&#26524;&#20998;&#26512;</a></li><li><a href="#7">&#21033;&#29992;SVM&#23545;R&#36827;&#34892;&#22238;&#24402;&#39044;&#27979;</a></li><li><a href="#8">&#23545;&#20110;R&#30340;&#22238;&#24402;&#39044;&#27979;&#32467;&#26524;&#20998;&#26512;</a></li><li><a href="#9">&#21033;&#29992;SVM&#23545;Up&#36827;&#34892;&#22238;&#24402;&#39044;&#27979;</a></li><li><a href="#10">&#23545;&#20110;Up&#30340;&#22238;&#24402;&#39044;&#27979;&#32467;&#26524;&#20998;&#26512;</a></li><li><a href="#11">&#23376;&#20989;&#25968; SVMcgForRegress.m</a></li></ul></div><h2>&#28165;&#31354;&#29615;&#22659;&#21464;&#37327;<a name="1"></a></h2><pre class="codeinput"><span class="keyword">function</span> chapter15
+</pre><pre class="codeinput">tic;
+clear;
+clc;
+</pre><h2>&#21407;&#22987;&#25968;&#25454;&#30340;&#25552;&#21462;<a name="3"></a></h2><pre class="codeinput"><span class="comment">% &#36733;&#20837;&#27979;&#35797;&#25968;&#25454;&#19978;&#35777;&#25351;&#25968;(1990.12.19-2009.08.19)</span>
+<span class="comment">% &#25968;&#25454;&#26159;&#19968;&#20010;4579*6&#30340;double&#22411;&#30340;&#30697;&#38453;,&#27599;&#19968;&#34892;&#34920;&#31034;&#27599;&#19968;&#22825;&#30340;&#19978;&#35777;&#25351;&#25968;</span>
+<span class="comment">% 6&#21015;&#20998;&#21035;&#34920;&#31034;&#24403;&#22825;&#19978;&#35777;&#25351;&#25968;&#30340;&#24320;&#30424;&#25351;&#25968;,&#25351;&#25968;&#26368;&#39640;&#20540;,&#25351;&#25968;&#26368;&#20302;&#20540;,&#25910;&#30424;&#25351;&#25968;,&#24403;&#26085;&#20132;&#26131;&#37327;,&#24403;&#26085;&#20132;&#26131;&#39069;.</span>
+load <span class="string">chapter15_sh.mat</span>;
+
+<span class="comment">% &#25552;&#21462;&#25968;&#25454;</span>
+ts = sh_open;
+time = length(ts);
+
+<span class="comment">% &#30011;&#20986;&#21407;&#22987;&#19978;&#35777;&#25351;&#25968;&#30340;&#27599;&#26085;&#24320;&#30424;&#25968;</span>
+figure;
+plot(ts,<span class="string">'LineWidth'</span>,2);
+title(<span class="string">'&#19978;&#35777;&#25351;&#25968;&#30340;&#27599;&#26085;&#24320;&#30424;&#25968;(1990.12.20-2009.08.19)'</span>,<span class="string">'FontSize'</span>,12);
+grid <span class="string">on</span>;
+snapnow;
+</pre><img vspace="5" hspace="5" src="chapter15_01.png" alt=""> <h2>&#23545;&#21407;&#22987;&#25968;&#25454;&#36827;&#34892;&#27169;&#31946;&#20449;&#24687;&#31890;&#21270;<a name="4"></a></h2><pre class="codeinput">win_num = floor(time/5);
+tsx = 1:win_num;
+tsx = tsx';
+[Low,R,Up]=FIG_D(ts',<span class="string">'triangle'</span>,win_num);
+
+<span class="comment">% &#27169;&#31946;&#20449;&#24687;&#31890;&#21270;&#21487;&#35270;&#21270;&#22270;</span>
+figure;
+hold <span class="string">on</span>;
+plot(Low,<span class="string">'b+'</span>);
+plot(R,<span class="string">'r*'</span>);
+plot(Up,<span class="string">'gx'</span>);
+hold <span class="string">off</span>;
+legend(<span class="string">'Low'</span>,<span class="string">'R'</span>,<span class="string">'Up'</span>,2);
+title(<span class="string">'&#27169;&#31946;&#20449;&#24687;&#31890;&#21270;&#21487;&#35270;&#21270;&#22270;'</span>,<span class="string">'FontSize'</span>,12);
+grid <span class="string">on</span>;
+snapnow;
+</pre><img vspace="5" hspace="5" src="chapter15_02.png" alt=""> <h2>&#21033;&#29992;SVM&#23545;Low&#36827;&#34892;&#22238;&#24402;&#39044;&#27979;<a name="5"></a></h2><pre class="codeinput"><span class="comment">% &#25968;&#25454;&#39044;&#22788;&#29702;,&#23558;Low&#36827;&#34892;&#24402;&#19968;&#21270;&#22788;&#29702;</span>
+<span class="comment">% mapminmax&#20026;matlab&#33258;&#24102;&#30340;&#26144;&#23556;&#20989;&#25968;</span>
+[low,low_ps] = mapminmax(Low);
+low_ps.ymin = 100;
+low_ps.ymax = 500;
+<span class="comment">% &#23545;Low&#36827;&#34892;&#24402;&#19968;&#21270;</span>
+[low,low_ps] = mapminmax(Low,low_ps);
+<span class="comment">% &#30011;&#20986;Low&#24402;&#19968;&#21270;&#21518;&#30340;&#22270;&#20687;</span>
+figure;
+plot(low,<span class="string">'b+'</span>);
+title(<span class="string">'Low&#24402;&#19968;&#21270;&#21518;&#30340;&#22270;&#20687;'</span>,<span class="string">'FontSize'</span>,12);
+grid <span class="string">on</span>;
+<span class="comment">% &#23545;low&#36827;&#34892;&#36716;&#32622;,&#20197;&#31526;&#21512;libsvm&#24037;&#20855;&#31665;&#30340;&#25968;&#25454;&#26684;&#24335;&#35201;&#27714;</span>
+low = low';
+snapnow;
+
+<span class="comment">% &#36873;&#25321;&#22238;&#24402;&#39044;&#27979;&#20998;&#26512;&#20013;&#26368;&#20339;&#30340;SVM&#21442;&#25968;c&amp;g</span>
+<span class="comment">% &#39318;&#20808;&#36827;&#34892;&#31895;&#30053;&#36873;&#25321;</span>
+[bestmse,bestc,bestg] = SVMcgForRegress(low,tsx,-10,10,-10,10,3,1,1,0.1);
+
+<span class="comment">% &#25171;&#21360;&#31895;&#30053;&#36873;&#25321;&#32467;&#26524;</span>
+disp(<span class="string">'&#25171;&#21360;&#31895;&#30053;&#36873;&#25321;&#32467;&#26524;'</span>);
+str = sprintf( <span class="string">'SVM parameters for Low:Best Cross Validation MSE = %g Best c = %g Best g = %g'</span>,bestmse,bestc,bestg);
+disp(str);
+
+<span class="comment">% &#26681;&#25454;&#31895;&#30053;&#36873;&#25321;&#30340;&#32467;&#26524;&#22270;&#20877;&#36827;&#34892;&#31934;&#32454;&#36873;&#25321;</span>
+[bestmse,bestc,bestg] = SVMcgForRegress(low,tsx,-4,8,-10,10,3,0.5,0.5,0.05);
+
+<span class="comment">% &#25171;&#21360;&#31934;&#32454;&#36873;&#25321;&#32467;&#26524;</span>
+disp(<span class="string">'&#25171;&#21360;&#31934;&#32454;&#36873;&#25321;&#32467;&#26524;'</span>);
+str = sprintf( <span class="string">'SVM parameters for Low:Best Cross Validation MSE = %g Best c = %g Best g = %g'</span>,bestmse,bestc,bestg);
+disp(str);
+
+<span class="comment">% &#35757;&#32451;SVM</span>
+cmd = [<span class="string">'-c '</span>, num2str(bestc), <span class="string">' -g '</span>, num2str(bestg) , <span class="string">' -s 3 -p 0.1'</span>];
+low_model = svmtrain(low, tsx, cmd);
+
+<span class="comment">% &#39044;&#27979;</span>
+[low_predict,low_mse] = svmpredict(low,tsx,low_model);
+low_predict = mapminmax(<span class="string">'reverse'</span>,low_predict,low_ps);
+predict_low = svmpredict(1,win_num+1,low_model);
+predict_low = mapminmax(<span class="string">'reverse'</span>,predict_low,low_ps);
+predict_low
+</pre><img vspace="5" hspace="5" src="chapter15_03.png" alt=""> <pre class="codeoutput">&#25171;&#21360;&#31895;&#30053;&#36873;&#25321;&#32467;&#26524;
+SVM parameters for Low:Best Cross Validation MSE = 35.0879 Best c = 256 Best g = 0.03125
+&#25171;&#21360;&#31934;&#32454;&#36873;&#25321;&#32467;&#26524;
+SVM parameters for Low:Best Cross Validation MSE = 35.0177 Best c = 256 Best g = 0.0220971
+Mean squared error = 22.0054 (regression)
+Squared correlation coefficient = 0.995366 (regression)
+Mean squared error = 85135.8 (regression)
+Squared correlation coefficient = -1.#IND (regression)
+
+predict_low =
+
+  2.7968e+003
+
+</pre><img vspace="5" hspace="5" src="chapter15_04.png" alt=""> <img vspace="5" hspace="5" src="chapter15_05.png" alt=""> <h2>&#23545;&#20110;Low&#30340;&#22238;&#24402;&#39044;&#27979;&#32467;&#26524;&#20998;&#26512;<a name="6"></a></h2><pre class="codeinput">figure;
+hold <span class="string">on</span>;
+plot(Low,<span class="string">'b+'</span>);
+plot(low_predict,<span class="string">'r*'</span>);
+legend(<span class="string">'original low'</span>,<span class="string">'predict low'</span>,2);
+title(<span class="string">'original vs predict'</span>,<span class="string">'FontSize'</span>,12);
+grid <span class="string">on</span>;
+figure;
+error = low_predict - Low';
+plot(error,<span class="string">'ro'</span>);
+title(<span class="string">'&#35823;&#24046;(predicted data-original data)'</span>,<span class="string">'FontSize'</span>,12);
+grid <span class="string">on</span>;
+snapnow;
+</pre><img vspace="5" hspace="5" src="chapter15_06.png" alt=""> <img vspace="5" hspace="5" src="chapter15_07.png" alt=""> <h2>&#21033;&#29992;SVM&#23545;R&#36827;&#34892;&#22238;&#24402;&#39044;&#27979;<a name="7"></a></h2><pre class="codeinput"><span class="comment">% &#25968;&#25454;&#39044;&#22788;&#29702;,&#23558;R&#36827;&#34892;&#24402;&#19968;&#21270;&#22788;&#29702;</span>
+<span class="comment">% mapminmax&#20026;matlab&#33258;&#24102;&#30340;&#26144;&#23556;&#20989;&#25968;</span>
+[r,r_ps] = mapminmax(R);
+r_ps.ymin = 100;
+r_ps.ymax = 500;
+<span class="comment">% &#23545;R&#36827;&#34892;&#24402;&#19968;&#21270;</span>
+[r,r_ps] = mapminmax(R,r_ps);
+<span class="comment">% &#30011;&#20986;R&#24402;&#19968;&#21270;&#21518;&#30340;&#22270;&#20687;</span>
+figure;
+plot(r,<span class="string">'r*'</span>);
+title(<span class="string">'r&#24402;&#19968;&#21270;&#21518;&#30340;&#22270;&#20687;'</span>,<span class="string">'FontSize'</span>,12);
+grid <span class="string">on</span>;
+<span class="comment">% &#23545;R&#36827;&#34892;&#36716;&#32622;,&#20197;&#31526;&#21512;libsvm&#24037;&#20855;&#31665;&#30340;&#25968;&#25454;&#26684;&#24335;&#35201;&#27714;</span>
+r = r';
+snapnow;
+
+<span class="comment">% &#36873;&#25321;&#22238;&#24402;&#39044;&#27979;&#20998;&#26512;&#20013;&#26368;&#20339;&#30340;SVM&#21442;&#25968;c&amp;g</span>
+<span class="comment">% &#39318;&#20808;&#36827;&#34892;&#31895;&#30053;&#36873;&#25321;</span>
+[bestmse,bestc,bestg] = SVMcgForRegress(r,tsx,-10,10,-10,10,3,1,1,0.1);
+
+<span class="comment">% &#25171;&#21360;&#31895;&#30053;&#36873;&#25321;&#32467;&#26524;</span>
+disp(<span class="string">'&#25171;&#21360;&#31895;&#30053;&#36873;&#25321;&#32467;&#26524;'</span>);
+str = sprintf( <span class="string">'SVM parameters for R:Best Cross Validation MSE = %g Best c = %g Best g = %g'</span>,bestmse,bestc,bestg);
+disp(str);
+
+<span class="comment">% &#26681;&#25454;&#31895;&#30053;&#36873;&#25321;&#30340;&#32467;&#26524;&#22270;&#20877;&#36827;&#34892;&#31934;&#32454;&#36873;&#25321;</span>
+[bestmse,bestc,bestg] = SVMcgForRegress(r,tsx,-4,8,-10,10,3,0.5,0.5,0.05);
+
+<span class="comment">% &#25171;&#21360;&#31934;&#32454;&#36873;&#25321;&#32467;&#26524;</span>
+disp(<span class="string">'&#25171;&#21360;&#31934;&#32454;&#36873;&#25321;&#32467;&#26524;'</span>);
+str = sprintf( <span class="string">'SVM parameters for R:Best Cross Validation MSE = %g Best c = %g Best g = %g'</span>,bestmse,bestc,bestg);
+disp(str);
+
+<span class="comment">% &#35757;&#32451;SVM</span>
+cmd = [<span class="string">'-c '</span>, num2str(bestc), <span class="string">' -g '</span>, num2str(bestg) , <span class="string">' -s 3 -p 0.1'</span>];
+r_model = svmtrain(r, tsx, cmd);
+
+<span class="comment">% &#39044;&#27979;</span>
+[r_predict,r_mse] = svmpredict(r,tsx,low_model);
+r_predict = mapminmax(<span class="string">'reverse'</span>,r_predict,r_ps);
+predict_r = svmpredict(1,win_num+1,r_model);
+predict_r = mapminmax(<span class="string">'reverse'</span>,predict_r,r_ps);
+predict_r
+</pre><img vspace="5" hspace="5" src="chapter15_08.png" alt=""> <pre class="codeoutput">&#25171;&#21360;&#31895;&#30053;&#36873;&#25321;&#32467;&#26524;
+SVM parameters for R:Best Cross Validation MSE = 22.7823 Best c = 256 Best g = 0.03125
+&#25171;&#21360;&#31934;&#32454;&#36873;&#25321;&#32467;&#26524;
+SVM parameters for R:Best Cross Validation MSE = 22.7823 Best c = 256 Best g = 0.03125
+Mean squared error = 26.2007 (regression)
+Squared correlation coefficient = 0.995898 (regression)
+Mean squared error = 84653.7 (regression)
+Squared correlation coefficient = -1.#IND (regression)
+
+predict_r =
+
+  2.9500e+003
+
+</pre><img vspace="5" hspace="5" src="chapter15_09.png" alt=""> <img vspace="5" hspace="5" src="chapter15_10.png" alt=""> <h2>&#23545;&#20110;R&#30340;&#22238;&#24402;&#39044;&#27979;&#32467;&#26524;&#20998;&#26512;<a name="8"></a></h2><pre class="codeinput">figure;
+hold <span class="string">on</span>;
+plot(R,<span class="string">'b+'</span>);
+plot(r_predict,<span class="string">'r*'</span>);
+legend(<span class="string">'original r'</span>,<span class="string">'predict r'</span>,2);
+title(<span class="string">'original vs predict'</span>,<span class="string">'FontSize'</span>,12);
+grid <span class="string">on</span>;
+figure;
+error = r_predict - R';
+plot(error,<span class="string">'ro'</span>);
+title(<span class="string">'&#35823;&#24046;(predicted data-original data)'</span>,<span class="string">'FontSize'</span>,12);
+grid <span class="string">on</span>;
+snapnow;
+</pre><img vspace="5" hspace="5" src="chapter15_11.png" alt=""> <img vspace="5" hspace="5" src="chapter15_12.png" alt=""> <h2>&#21033;&#29992;SVM&#23545;Up&#36827;&#34892;&#22238;&#24402;&#39044;&#27979;<a name="9"></a></h2><pre class="codeinput"><span class="comment">% &#25968;&#25454;&#39044;&#22788;&#29702;,&#23558;up&#36827;&#34892;&#24402;&#19968;&#21270;&#22788;&#29702;</span>
+<span class="comment">% mapminmax&#20026;matlab&#33258;&#24102;&#30340;&#26144;&#23556;&#20989;&#25968;</span>
+[up,up_ps] = mapminmax(Up);
+up_ps.ymin = 100;
+up_ps.ymax = 500;
+<span class="comment">% &#23545;Up&#36827;&#34892;&#24402;&#19968;&#21270;</span>
+[up,up_ps] = mapminmax(Up,up_ps);
+<span class="comment">% &#30011;&#20986;Up&#24402;&#19968;&#21270;&#21518;&#30340;&#22270;&#20687;</span>
+figure;
+plot(up,<span class="string">'gx'</span>);
+title(<span class="string">'Up&#24402;&#19968;&#21270;&#21518;&#30340;&#22270;&#20687;'</span>,<span class="string">'FontSize'</span>,12);
+grid <span class="string">on</span>;
+<span class="comment">% &#23545;up&#36827;&#34892;&#36716;&#32622;,&#20197;&#31526;&#21512;libsvm&#24037;&#20855;&#31665;&#30340;&#25968;&#25454;&#26684;&#24335;&#35201;&#27714;</span>
+up = up';
+snapnow;
+
+<span class="comment">% &#36873;&#25321;&#22238;&#24402;&#39044;&#27979;&#20998;&#26512;&#20013;&#26368;&#20339;&#30340;SVM&#21442;&#25968;c&amp;g</span>
+<span class="comment">% &#39318;&#20808;&#36827;&#34892;&#31895;&#30053;&#36873;&#25321;</span>
+[bestmse,bestc,bestg] = SVMcgForRegress(up,tsx,-10,10,-10,10,3,1,1,0.5);
+
+<span class="comment">% &#25171;&#21360;&#31895;&#30053;&#36873;&#25321;&#32467;&#26524;</span>
+disp(<span class="string">'&#25171;&#21360;&#31895;&#30053;&#36873;&#25321;&#32467;&#26524;'</span>);
+str = sprintf( <span class="string">'SVM parameters for Up:Best Cross Validation MSE = %g Best c = %g Best g = %g'</span>,bestmse,bestc,bestg);
+disp(str);
+
+<span class="comment">% &#26681;&#25454;&#31895;&#30053;&#36873;&#25321;&#30340;&#32467;&#26524;&#22270;&#20877;&#36827;&#34892;&#31934;&#32454;&#36873;&#25321;</span>
+[bestmse,bestc,bestg] = SVMcgForRegress(up,tsx,-4,8,-10,10,3,0.5,0.5,0.2);
+
+<span class="comment">% &#25171;&#21360;&#31934;&#32454;&#36873;&#25321;&#32467;&#26524;</span>
+disp(<span class="string">'&#25171;&#21360;&#31934;&#32454;&#36873;&#25321;&#32467;&#26524;'</span>);
+str = sprintf( <span class="string">'SVM parameters for Up:Best Cross Validation MSE = %g Best c = %g Best g = %g'</span>,bestmse,bestc,bestg);
+disp(str);
+
+<span class="comment">% &#35757;&#32451;SVM</span>
+cmd = [<span class="string">'-c '</span>, num2str(bestc), <span class="string">' -g '</span>, num2str(bestg) , <span class="string">' -s 3 -p 0.1'</span>];
+up_model = svmtrain(up, tsx, cmd);
+
+<span class="comment">% &#39044;&#27979;</span>
+[up_predict,up_mse] = svmpredict(up,tsx,up_model);
+up_predict = mapminmax(<span class="string">'reverse'</span>,up_predict,up_ps);
+predict_up = svmpredict(1,win_num+1,up_model);
+predict_up = mapminmax(<span class="string">'reverse'</span>,predict_up,up_ps);
+predict_up
+</pre><img vspace="5" hspace="5" src="chapter15_13.png" alt=""> <pre class="codeoutput">&#25171;&#21360;&#31895;&#30053;&#36873;&#25321;&#32467;&#26524;
+SVM parameters for Up:Best Cross Validation MSE = 23.8758 Best c = 512 Best g = 0.0625
+&#25171;&#21360;&#31934;&#32454;&#36873;&#25321;&#32467;&#26524;
+SVM parameters for Up:Best Cross Validation MSE = 23.895 Best c = 256 Best g = 0.0220971
+Mean squared error = 11.108 (regression)
+Squared correlation coefficient = 0.997625 (regression)
+Mean squared error = 96798.9 (regression)
+Squared correlation coefficient = -1.#IND (regression)
+
+predict_up =
+
+  3.2673e+003
+
+</pre><img vspace="5" hspace="5" src="chapter15_14.png" alt=""> <img vspace="5" hspace="5" src="chapter15_15.png" alt=""> <h2>&#23545;&#20110;Up&#30340;&#22238;&#24402;&#39044;&#27979;&#32467;&#26524;&#20998;&#26512;<a name="10"></a></h2><pre class="codeinput">figure;
+hold <span class="string">on</span>;
+plot(Up,<span class="string">'b+'</span>);
+plot(up_predict,<span class="string">'r*'</span>);
+legend(<span class="string">'original up'</span>,<span class="string">'predict up'</span>,2);
+title(<span class="string">'original vs predict'</span>,<span class="string">'FontSize'</span>,12);
+grid <span class="string">on</span>;
+figure;
+error = up_predict - Up';
+plot(error,<span class="string">'ro'</span>);
+title(<span class="string">'&#35823;&#24046;(predicted data-original data)'</span>,<span class="string">'FontSize'</span>,12);
+grid <span class="string">on</span>;
+toc;
+snapnow;
+</pre><pre class="codeoutput">Elapsed time is 1954.186325 seconds.
+</pre><img vspace="5" hspace="5" src="chapter15_16.png" alt=""> <img vspace="5" hspace="5" src="chapter15_17.png" alt=""> <h2>&#23376;&#20989;&#25968; SVMcgForRegress.m<a name="11"></a></h2><pre class="codeinput"><span class="keyword">function</span> [mse,bestc,bestg] = SVMcgForRegress(train_label,train,cmin,cmax,gmin,gmax,v,cstep,gstep,msestep)
+<span class="comment">% SVMcgForClass</span>
+<span class="comment">% &#36755;&#20837;:</span>
+<span class="comment">% train_label:&#35757;&#32451;&#38598;&#26631;&#31614;.&#35201;&#27714;&#19982;libsvm&#24037;&#20855;&#31665;&#20013;&#35201;&#27714;&#19968;&#33268;.</span>
+<span class="comment">% train:&#35757;&#32451;&#38598;.&#35201;&#27714;&#19982;libsvm&#24037;&#20855;&#31665;&#20013;&#35201;&#27714;&#19968;&#33268;.</span>
+<span class="comment">% cmin:&#24809;&#32602;&#21442;&#25968;c&#30340;&#21464;&#21270;&#33539;&#22260;&#30340;&#26368;&#23567;&#20540;(&#21462;&#20197;2&#20026;&#24213;&#30340;&#23545;&#25968;&#21518;),&#21363; c_min = 2^(cmin).&#40664;&#35748;&#20026; -5</span>
+<span class="comment">% cmax:&#24809;&#32602;&#21442;&#25968;c&#30340;&#21464;&#21270;&#33539;&#22260;&#30340;&#26368;&#22823;&#20540;(&#21462;&#20197;2&#20026;&#24213;&#30340;&#23545;&#25968;&#21518;),&#21363; c_max = 2^(cmax).&#40664;&#35748;&#20026; 5</span>
+<span class="comment">% gmin:&#21442;&#25968;g&#30340;&#21464;&#21270;&#33539;&#22260;&#30340;&#26368;&#23567;&#20540;(&#21462;&#20197;2&#20026;&#24213;&#30340;&#23545;&#25968;&#21518;),&#21363; g_min = 2^(gmin).&#40664;&#35748;&#20026; -5</span>
+<span class="comment">% gmax:&#21442;&#25968;g&#30340;&#21464;&#21270;&#33539;&#22260;&#30340;&#26368;&#23567;&#20540;(&#21462;&#20197;2&#20026;&#24213;&#30340;&#23545;&#25968;&#21518;),&#21363; g_min = 2^(gmax).&#40664;&#35748;&#20026; 5</span>
+<span class="comment">% v:cross validation&#30340;&#21442;&#25968;,&#21363;&#32473;&#27979;&#35797;&#38598;&#20998;&#20026;&#20960;&#37096;&#20998;&#36827;&#34892;cross validation.&#40664;&#35748;&#20026; 3</span>
+<span class="comment">% cstep:&#21442;&#25968;c&#27493;&#36827;&#30340;&#22823;&#23567;.&#40664;&#35748;&#20026; 1</span>
+<span class="comment">% gstep:&#21442;&#25968;g&#27493;&#36827;&#30340;&#22823;&#23567;.&#40664;&#35748;&#20026; 1</span>
+<span class="comment">% msestep:&#26368;&#21518;&#26174;&#31034;MSE&#22270;&#26102;&#30340;&#27493;&#36827;&#22823;&#23567;.&#40664;&#35748;&#20026; 20</span>
+<span class="comment">% &#36755;&#20986;:</span>
+<span class="comment">% bestacc:Cross Validation &#36807;&#31243;&#20013;&#30340;&#26368;&#39640;&#20998;&#31867;&#20934;&#30830;&#29575;</span>
+<span class="comment">% bestc:&#26368;&#20339;&#30340;&#21442;&#25968;c</span>
+<span class="comment">% bestg:&#26368;&#20339;&#30340;&#21442;&#25968;g</span>
+
+<span class="comment">% about the parameters of SVMcgForRegress</span>
+<span class="keyword">if</span> nargin &lt; 10
+    msestep = 0.1;
+<span class="keyword">end</span>
+<span class="keyword">if</span> nargin &lt; 7
+    msestep = 0.1;
+    v = 3;
+    cstep = 1;
+    gstep = 1;
+<span class="keyword">end</span>
+<span class="keyword">if</span> nargin &lt; 6
+    msestep = 0.1;
+    v = 3;
+    cstep = 1;
+    gstep = 1;
+    gmax = 5;
+<span class="keyword">end</span>
+<span class="keyword">if</span> nargin &lt; 5
+    msestep = 0.1;
+    v = 3;
+    cstep = 1;
+    gstep = 1;
+    gmax = 5;
+    gmin = -5;
+<span class="keyword">end</span>
+<span class="keyword">if</span> nargin &lt; 4
+    msestep = 0.1;
+    v = 3;
+    cstep = 1;
+    gstep = 1;
+    gmax = 5;
+    gmin = -5;
+    cmax = 5;
+<span class="keyword">end</span>
+<span class="keyword">if</span> nargin &lt; 3
+    msestep = 0.1;
+    v = 3;
+    cstep = 1;
+    gstep = 1;
+    gmax = 5;
+    gmin = -5;
+    cmax = 5;
+    cmin = -5;
+<span class="keyword">end</span>
+<span class="comment">% X:c Y:g cg:mse</span>
+[X,Y] = meshgrid(cmin:cstep:cmax,gmin:gstep:gmax);
+[m,n] = size(X);
+cg = zeros(m,n);
+<span class="comment">% record accuracy with different c &amp; g,and find the best mse with the smallest c</span>
+bestc = 0;
+bestg = 0;
+mse = 10^10;
+basenum = 2;
+<span class="keyword">for</span> i = 1:m
+    <span class="keyword">for</span> j = 1:n
+        cmd = [<span class="string">'-v '</span>,num2str(v),<span class="string">' -c '</span>,num2str( basenum^X(i,j) ),<span class="string">' -g '</span>,num2str( basenum^Y(i,j) ),<span class="string">' -s 3'</span>];
+        cg(i,j) = svmtrain(train_label, train, cmd);
+
+        <span class="keyword">if</span> cg(i,j) &lt; mse
+            mse = cg(i,j);
+            bestc = basenum^X(i,j);
+            bestg = basenum^Y(i,j);
+        <span class="keyword">end</span>
+        <span class="keyword">if</span> ( cg(i,j) == mse &amp;&amp; bestc &gt; basenum^X(i,j) )
+            mse = cg(i,j);
+            bestc = basenum^X(i,j);
+            bestg = basenum^Y(i,j);
+        <span class="keyword">end</span>
+
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+[cg,ps] = mapminmax(cg);
+<span class="comment">% draw the accuracy with different c &amp; g</span>
+figure;
+[C,h] = contour(X,Y,cg,0:msestep:1);
+clabel(C,h,<span class="string">'FontSize'</span>,10,<span class="string">'Color'</span>,<span class="string">'r'</span>);
+xlabel(<span class="string">'log2c'</span>,<span class="string">'FontSize'</span>,10);
+ylabel(<span class="string">'log2g'</span>,<span class="string">'FontSize'</span>,10);
+grid <span class="string">on</span>;
+</pre><p>
+<table align="center" >	<tr>		<td align="center"><font size="2">版权所有：</font><a
+href="http://www.ilovematlab.cn/">Matlab中文论坛</a>&nbsp;&nbsp; <script
+src="http://s3.cnzz.com/stat.php?id=971931&web_id=971931&show=pic" language="JavaScript" ></script>&nbsp;</td>	</tr></table>
+</p><p class="footer"><br>
+      Published with MATLAB&reg; 7.9<br></p></div><!--
+##### SOURCE BEGIN #####
+%% SVM神经网络的信息粒化时序回归预测REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH上证指数开盘指数变化趋势和变化空间预测 
+%
+% <html>
+% <table border="0" width="600px" id="table1">	<tr>		<td><b><font size="2">该案例作者申明：</font></b></td>	</tr>	<tr>		<td><span class="comment"><font size="2">1：本人长期驻扎在此<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html"><font color="#0000FF">板块</font></a>里，对<a target="_blank" href="http://www.ilovematlab.cn/thread-48362-1-1.html"><font color="#0000FF">该案例</font></a>提问，做到有问必答。</font></span></td></tr><tr>	<td><span class="comment"><font size="2">2：此案例有配套的教学视频，配套的完整可运行Matlab程序。</font></span></td>	</tr>	<tr>		<td><span class="comment"><font size="2">		3：以下内容为该案例的部分内容（约占该案例完整内容的1/10）。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		4：此案例为原创案例，转载请注明出处（<a target="_blank" href="http://www.ilovematlab.cn/">Matlab中文论坛</a>，<a target="_blank" href="http://www.ilovematlab.cn/forum-158-1.html">《Matlab神经网络30个案例分析》</a>）。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		5：若此案例碰巧与您的研究有关联，我们欢迎您提意见，要求等，我们考虑后可以加在案例里。</font></span></td>	</tr>		<tr>		<td><span class="comment"><font size="2">		6：您看到的以下内容为初稿，书籍的实际内容可能有少许出入，以书籍实际发行内容为准。</font></span></td>	</tr><tr>		<td><span class="comment"><font size="2">		7：此书其他常见问题、预定方式等，<a target="_blank" href="http://www.ilovematlab.cn/thread-47939-1-1.html">请点击这里</a>。</font></span></td>	</tr></table>
+% </html>
+%
+
+%% 清空环境变量
+function chapter15
+tic;
+clear;
+clc;
+
+%% 原始数据的提取
+
+% 载入测试数据上证指数(1990.12.19-2009.08.19)
+% 数据是一个4579*6的double型的矩阵,每一行表示每一天的上证指数
+% 6列分别表示当天上证指数的开盘指数,指数最高值,指数最低值,收盘指数,当日交易量,当日交易额.
+load chapter15_sh.mat;
+
+% 提取数据
+ts = sh_open;
+time = length(ts);
+
+% 画出原始上证指数的每日开盘数
+figure;
+plot(ts,'LineWidth',2);
+title('上证指数的每日开盘数(1990.12.20-2009.08.19)','FontSize',12);
+grid on;
+snapnow;
+
+%% 对原始数据进行模糊信息粒化
+
+win_num = floor(time/5);
+tsx = 1:win_num;
+tsx = tsx';
+[Low,R,Up]=FIG_D(ts','triangle',win_num);
+
+% 模糊信息粒化可视化图
+figure;
+hold on;
+plot(Low,'b+');
+plot(R,'r*');
+plot(Up,'gx');
+hold off;
+legend('Low','R','Up',2);
+title('模糊信息粒化可视化图','FontSize',12);
+grid on;
+snapnow;
+
+%% 利用SVM对Low进行回归预测
+
+% 数据预处理,将Low进行归一化处理
+% mapminmax为matlab自带的映射函数
+[low,low_ps] = mapminmax(Low);
+low_ps.ymin = 100;
+low_ps.ymax = 500;
+% 对Low进行归一化
+[low,low_ps] = mapminmax(Low,low_ps);
+% 画出Low归一化后的图像
+figure;
+plot(low,'b+');
+title('Low归一化后的图像','FontSize',12);
+grid on;
+% 对low进行转置,以符合libsvm工具箱的数据格式要求
+low = low';
+snapnow;
+
+% 选择回归预测分析中最佳的SVM参数c&g
+% 首先进行粗略选择
+[bestmse,bestc,bestg] = SVMcgForRegress(low,tsx,-10,10,-10,10,3,1,1,0.1);
+
+% 打印粗略选择结果
+disp('打印粗略选择结果');
+str = sprintf( 'SVM parameters for Low:Best Cross Validation MSE = %g Best c = %g Best g = %g',bestmse,bestc,bestg);
+disp(str);
+
+% 根据粗略选择的结果图再进行精细选择
+[bestmse,bestc,bestg] = SVMcgForRegress(low,tsx,-4,8,-10,10,3,0.5,0.5,0.05);
+
+% 打印精细选择结果
+disp('打印精细选择结果');
+str = sprintf( 'SVM parameters for Low:Best Cross Validation MSE = %g Best c = %g Best g = %g',bestmse,bestc,bestg);
+disp(str);
+
+% 训练SVM
+cmd = ['-c ', num2str(bestc), ' -g ', num2str(bestg) , ' -s 3 -p 0.1'];
+low_model = svmtrain(low, tsx, cmd);
+
+% 预测
+[low_predict,low_mse] = svmpredict(low,tsx,low_model);
+low_predict = mapminmax('reverse',low_predict,low_ps);
+predict_low = svmpredict(1,win_num+1,low_model);
+predict_low = mapminmax('reverse',predict_low,low_ps);
+predict_low
+
+%% 对于Low的回归预测结果分析
+figure;
+hold on;
+plot(Low,'b+');
+plot(low_predict,'r*');
+legend('original low','predict low',2);
+title('original vs predict','FontSize',12);
+grid on;
+figure;
+error = low_predict - Low';
+plot(error,'ro');
+title('误差(predicted data-original data)','FontSize',12);
+grid on;
+snapnow;
+
+%% 利用SVM对R进行回归预测
+
+% 数据预处理,将R进行归一化处理
+% mapminmax为matlab自带的映射函数
+[r,r_ps] = mapminmax(R);
+r_ps.ymin = 100;
+r_ps.ymax = 500;
+% 对R进行归一化
+[r,r_ps] = mapminmax(R,r_ps);
+% 画出R归一化后的图像
+figure;
+plot(r,'r*');
+title('r归一化后的图像','FontSize',12);
+grid on;
+% 对R进行转置,以符合libsvm工具箱的数据格式要求
+r = r';
+snapnow;
+
+% 选择回归预测分析中最佳的SVM参数c&g
+% 首先进行粗略选择
+[bestmse,bestc,bestg] = SVMcgForRegress(r,tsx,-10,10,-10,10,3,1,1,0.1);
+
+% 打印粗略选择结果
+disp('打印粗略选择结果');
+str = sprintf( 'SVM parameters for R:Best Cross Validation MSE = %g Best c = %g Best g = %g',bestmse,bestc,bestg);
+disp(str);
+
+% 根据粗略选择的结果图再进行精细选择
+[bestmse,bestc,bestg] = SVMcgForRegress(r,tsx,-4,8,-10,10,3,0.5,0.5,0.05);
+
+% 打印精细选择结果
+disp('打印精细选择结果');
+str = sprintf( 'SVM parameters for R:Best Cross Validation MSE = %g Best c = %g Best g = %g',bestmse,bestc,bestg);
+disp(str);
+
+% 训练SVM
+cmd = ['-c ', num2str(bestc), ' -g ', num2str(bestg) , ' -s 3 -p 0.1'];
+r_model = svmtrain(r, tsx, cmd);
+
+% 预测
+[r_predict,r_mse] = svmpredict(r,tsx,low_model);
+r_predict = mapminmax('reverse',r_predict,r_ps);
+predict_r = svmpredict(1,win_num+1,r_model);
+predict_r = mapminmax('reverse',predict_r,r_ps);
+predict_r
+
+%% 对于R的回归预测结果分析
+figure;
+hold on;
+plot(R,'b+');
+plot(r_predict,'r*');
+legend('original r','predict r',2);
+title('original vs predict','FontSize',12);
+grid on;
+figure;
+error = r_predict - R';
+plot(error,'ro');
+title('误差(predicted data-original data)','FontSize',12);
+grid on;
+snapnow;
+
+%% 利用SVM对Up进行回归预测
+
+% 数据预处理,将up进行归一化处理
+% mapminmax为matlab自带的映射函数
+[up,up_ps] = mapminmax(Up);
+up_ps.ymin = 100;
+up_ps.ymax = 500;
+% 对Up进行归一化
+[up,up_ps] = mapminmax(Up,up_ps);
+% 画出Up归一化后的图像
+figure;
+plot(up,'gx');
+title('Up归一化后的图像','FontSize',12);
+grid on;
+% 对up进行转置,以符合libsvm工具箱的数据格式要求
+up = up';
+snapnow;
+
+% 选择回归预测分析中最佳的SVM参数c&g
+% 首先进行粗略选择
+[bestmse,bestc,bestg] = SVMcgForRegress(up,tsx,-10,10,-10,10,3,1,1,0.5);
+
+% 打印粗略选择结果
+disp('打印粗略选择结果');
+str = sprintf( 'SVM parameters for Up:Best Cross Validation MSE = %g Best c = %g Best g = %g',bestmse,bestc,bestg);
+disp(str);
+
+% 根据粗略选择的结果图再进行精细选择
+[bestmse,bestc,bestg] = SVMcgForRegress(up,tsx,-4,8,-10,10,3,0.5,0.5,0.2);
+
+% 打印精细选择结果
+disp('打印精细选择结果');
+str = sprintf( 'SVM parameters for Up:Best Cross Validation MSE = %g Best c = %g Best g = %g',bestmse,bestc,bestg);
+disp(str);
+
+% 训练SVM
+cmd = ['-c ', num2str(bestc), ' -g ', num2str(bestg) , ' -s 3 -p 0.1'];
+up_model = svmtrain(up, tsx, cmd);
+
+% 预测
+[up_predict,up_mse] = svmpredict(up,tsx,up_model);
+up_predict = mapminmax('reverse',up_predict,up_ps);
+predict_up = svmpredict(1,win_num+1,up_model);
+predict_up = mapminmax('reverse',predict_up,up_ps);
+predict_up
+
+%% 对于Up的回归预测结果分析
+figure;
+hold on;
+plot(Up,'b+');
+plot(up_predict,'r*');
+legend('original up','predict up',2);
+title('original vs predict','FontSize',12);
+grid on;
+figure;
+error = up_predict - Up';
+plot(error,'ro');
+title('误差(predicted data-original data)','FontSize',12);
+grid on;
+toc;
+snapnow;
+
+%% 子函数 SVMcgForRegress.m
+function [mse,bestc,bestg] = SVMcgForRegress(train_label,train,cmin,cmax,gmin,gmax,v,cstep,gstep,msestep)
+% SVMcgForClass
+% 输入:
+% train_label:训练集标签.要求与libsvm工具箱中要求一致.
+% train:训练集.要求与libsvm工具箱中要求一致.
+% cmin:惩罚参数c的变化范围的最小值(取以2为底的对数后),即 c_min = 2^(cmin).默认为 -5
+% cmax:惩罚参数c的变化范围的最大值(取以2为底的对数后),即 c_max = 2^(cmax).默认为 5
+% gmin:参数g的变化范围的最小值(取以2为底的对数后),即 g_min = 2^(gmin).默认为 -5
+% gmax:参数g的变化范围的最小值(取以2为底的对数后),即 g_min = 2^(gmax).默认为 5
+% v:cross validation的参数,即给测试集分为几部分进行cross validation.默认为 3
+% cstep:参数c步进的大小.默认为 1
+% gstep:参数g步进的大小.默认为 1
+% msestep:最后显示MSE图时的步进大小.默认为 20
+% 输出:
+% bestacc:Cross Validation 过程中的最高分类准确率
+% bestc:最佳的参数c
+% bestg:最佳的参数g
+
+% about the parameters of SVMcgForRegress
+if nargin < 10
+    msestep = 0.1;
+end
+if nargin < 7
+    msestep = 0.1;
+    v = 3;
+    cstep = 1;
+    gstep = 1;
+end
+if nargin < 6
+    msestep = 0.1;
+    v = 3;
+    cstep = 1;
+    gstep = 1;
+    gmax = 5;
+end
+if nargin < 5
+    msestep = 0.1;
+    v = 3;
+    cstep = 1;
+    gstep = 1;
+    gmax = 5;
+    gmin = -5;
+end
+if nargin < 4
+    msestep = 0.1;
+    v = 3;
+    cstep = 1;
+    gstep = 1;
+    gmax = 5;
+    gmin = -5;
+    cmax = 5;
+end
+if nargin < 3
+    msestep = 0.1;
+    v = 3;
+    cstep = 1;
+    gstep = 1;
+    gmax = 5;
+    gmin = -5;
+    cmax = 5;
+    cmin = -5;
+end
+% X:c Y:g cg:mse
+[X,Y] = meshgrid(cmin:cstep:cmax,gmin:gstep:gmax);
+[m,n] = size(X);
+cg = zeros(m,n);
+% record accuracy with different c & g,and find the best mse with the smallest c
+bestc = 0;
+bestg = 0;
+mse = 10^10;
+basenum = 2;
+for i = 1:m
+    for j = 1:n
+        cmd = ['-v ',num2str(v),' -c ',num2str( basenum^X(i,j) ),' -g ',num2str( basenum^Y(i,j) ),' -s 3'];
+        cg(i,j) = svmtrain(train_label, train, cmd);
+        
+        if cg(i,j) < mse
+            mse = cg(i,j);
+            bestc = basenum^X(i,j);
+            bestg = basenum^Y(i,j);
+        end
+        if ( cg(i,j) == mse && bestc > basenum^X(i,j) )
+            mse = cg(i,j);
+            bestc = basenum^X(i,j);
+            bestg = basenum^Y(i,j);
+        end
+        
+    end
+end
+
+[cg,ps] = mapminmax(cg);
+% draw the accuracy with different c & g
+figure;
+[C,h] = contour(X,Y,cg,0:msestep:1);
+clabel(C,h,'FontSize',10,'Color','r');
+xlabel('log2c','FontSize',10);
+ylabel('log2g','FontSize',10);
+grid on;
+
+%%%
+% 
+% <html>
+% <table align="center" >	<tr>		<td align="center"><font size="2">版权所有：</font><a
+% href="http://www.ilovematlab.cn/">Matlab中文论坛</a>&nbsp;&nbsp; <script
+% src="http://s3.cnzz.com/stat.php?id=971931&web_id=971931&show=pic" language="JavaScript" ></script>&nbsp;</td>	</tr></table>
+% </html>
+% 
+
+
+##### SOURCE END #####
+--></body></html>

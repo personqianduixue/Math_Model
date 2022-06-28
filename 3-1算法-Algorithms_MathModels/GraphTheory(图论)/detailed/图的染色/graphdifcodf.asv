@@ -1,0 +1,5 @@
+function [k C W] = graphdifcodf(M)
+% 图的邻点可区别
+
+end
+
