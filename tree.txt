@@ -1,6 +1,6 @@
 Folder PATH listing for volume 新加卷
 Volume serial number is FEFD-7BE2
-G:.
+G:
 │   Snipaste_2022-06-14_00-50-42.png
 │   tree.txt
 │   历年比赛题目.xlsx
