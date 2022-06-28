@@ -1,0 +1,35 @@
+%计算碎片之间距离
+clear
+clc 
+clear
+
+b=[53	208	70	93	126	137	138	153	175	0	32	45	56	68	166	174	196	7	158
+]';%每行或列都不一样
+a1=imread('D:\Program Files\matlab\附件3\000.bmp');
+N=19;
+[m,n]=size(a1);
+aa=zeros(m,n,N);
+for i=1:N
+    if b(i)<10
+           imageName=strcat('D:\Program Files\matlab\附件3\','0','0',int2str(b(i)),'.bmp');
+    elseif b(i)<100
+            imageName=strcat('D:\Program Files\matlab\附件3\','0',num2str(b(i)),'.bmp');
+    else
+           imageName=strcat('D:\Program Files\matlab\附件3\',num2str(b(i)),'.bmp');
+    end
+    aa(:,:,i) = imread(imageName);
+end
+[m,n]=size(a1);
+
+
+d=zeros(N,N);
+for i=1:N
+    for j=1:N
+        if i~=j
+        s=abs(aa(:,n,i)-aa(:,1,j));
+        d(i,j)=d(i,j)+sum(s');
+        else 
+            d(i,j)=0;
+        end
+    end
+end

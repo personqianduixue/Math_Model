@@ -1,0 +1,33 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: code_贪心_南面 - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\Users\CJW\AppData\Local\Temp\RSP9737.tmp" with contents
+[
+/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Debug/code_贪心_南面.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\Users\CJW\Downloads\1346975481848\B\材料整理\源程序\问题一\南面\code_贪心_南面.cpp"
+]
+Creating command line "cl.exe @C:\Users\CJW\AppData\Local\Temp\RSP9737.tmp" 
+Creating temporary file "C:\Users\CJW\AppData\Local\Temp\RSP9738.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes /pdb:"Debug/code_贪心_南面.pdb" /debug /machine:I386 /out:"Debug/code_贪心_南面.exe" /pdbtype:sept 
+".\Debug\code_贪心_南面.obj"
+]
+Creating command line "link.exe @C:\Users\CJW\AppData\Local\Temp\RSP9738.tmp"
+<h3>Output Window</h3>
+Compiling...
+code_贪心_南面.cpp
+c:\users\cjw\downloads\1346975481848\b\材料整理\源程序\问题一\南面\code_贪心_南面.cpp(70) : warning C4715: 'RectFun' : not all control paths return a value
+Linking...
+
+
+
+<h3>Results</h3>
+code_贪心_南面.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

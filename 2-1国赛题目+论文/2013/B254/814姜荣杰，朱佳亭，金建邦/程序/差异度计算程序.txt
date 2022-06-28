@@ -1,0 +1,61 @@
+%计算碎片列之间距离
+
+clc 
+clear
+%读入要计算的碎片标号（这里以加1），并加以标号还原
+b=xlsread('C:\Users\Administrator\Desktop\程序\fujian3data.xlsx');
+[H,N]=size(b);
+b=(b-1)';%标号还原
+
+%记录某张图片的规格
+a1=imread('D:\Program Files\matlab\附件4\000.bmp');
+[m,n]=size(a1);
+
+%创建拼接纸张像素矩阵，并读取图片
+aa=zeros(m,n,N);
+
+for i=1:N
+    if b(i)<10
+           imageName=strcat('D:\Program Files\matlab\附件4\','0','0',int2str(b(i)),'.bmp');
+    elseif b(i)<100
+            imageName=strcat('D:\Program Files\matlab\附件4\','0',num2str(b(i)),'.bmp');
+    else
+           imageName=strcat('D:\Program Files\matlab\附件4\',num2str(b(i)),'.bmp');
+    end
+    aa(:,:,i) = imread(imageName);
+end
+
+
+if temp==1
+  d=zeros(N,N);
+  for i=1:N
+    for j=1:N
+        if i~=j
+        s=abs(aa(:,n,i)-aa(:,1,j));   
+        d(i,j)=d(i,j)+sum(s');
+        else 
+            d(i,j)=0;
+        end
+    end
+  end
+elseif temp==0
+  for i=1:N
+    for j=1:N
+        if i~=j
+            
+        s=abs(aa(m,:,i)-aa(1,:,j));
+        d(i,j)=d(i,j)+sum(s');
+        else 
+            d(i,j)=0;
+        end
+    end
+  end 
+else
+  disp('请输入temp值，0表示纵向，1表示横向')
+end
+
+
+
+
+
+

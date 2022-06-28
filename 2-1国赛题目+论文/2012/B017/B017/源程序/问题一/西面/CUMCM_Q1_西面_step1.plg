@@ -1,0 +1,33 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: CUMCM_Q1_西面_step1 - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\Users\CJW\AppData\Local\Temp\RSP55F7.tmp" with contents
+[
+/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Debug/CUMCM_Q1_西面_step1.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\Users\CJW\Downloads\1346975481848\B\代码2353\西面\CUMCM_Q1_西面_step1.cpp"
+]
+Creating command line "cl.exe @C:\Users\CJW\AppData\Local\Temp\RSP55F7.tmp" 
+Creating temporary file "C:\Users\CJW\AppData\Local\Temp\RSP55F8.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes /pdb:"Debug/CUMCM_Q1_西面_step1.pdb" /debug /machine:I386 /out:"Debug/CUMCM_Q1_西面_step1.exe" /pdbtype:sept 
+".\Debug\CUMCM_Q1_西面_step1.obj"
+]
+Creating command line "link.exe @C:\Users\CJW\AppData\Local\Temp\RSP55F8.tmp"
+<h3>Output Window</h3>
+Compiling...
+CUMCM_Q1_西面_step1.cpp
+c:\users\cjw\downloads\1346975481848\b\代码2353\西面\cumcm_q1_西面_step1.cpp(70) : warning C4715: 'RectFun' : not all control paths return a value
+Linking...
+
+
+
+<h3>Results</h3>
+CUMCM_Q1_西面_step1.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

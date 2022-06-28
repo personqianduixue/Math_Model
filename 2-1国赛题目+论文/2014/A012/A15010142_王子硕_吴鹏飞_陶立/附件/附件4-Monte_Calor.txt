@@ -1,0 +1,45 @@
+A=2+sqrt(1)*randn(15);
+B=A;
+t=0;
+for i=1:1:15
+    for j=1:1:15
+        if A(i,j)<=0;
+            t=A(i,j);
+            B(i,j)=-t;
+        else 
+            
+        end
+    end
+end
+for i=1:1:15
+    for j=1:1:15
+        r=B(i,j);
+        x=(rand().*2-1)*r;
+        c=rand();
+        if c>=0.5
+            c=1;
+        else
+            c=-1;
+        end
+        y=sqrt(r.^2-x.^2)*c;
+        plot(x,y,'+ r');%plot(x,y,'d b')
+        hold on
+    end
+end
+for i=1:1:15
+    for j=1:1:15
+        r=A(i,j);
+        yy=(rand().*2-1)*r;
+        c=rand();
+        if c>=0.5
+            c=1;
+        else
+            c=-1;
+        end
+        xx=sqrt(r.^2-yy.^2)*c;
+        plot(xx,yy,'+ r');%plot(xx,yy,'d b')
+        hold on
+    end
+end
+xlswrite('rrrr.xls',A,'sheet1','A1');%xlswrite('bbbb.xls',A,'sheet1','A1');
+        

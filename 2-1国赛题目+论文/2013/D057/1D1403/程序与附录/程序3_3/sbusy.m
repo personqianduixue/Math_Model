@@ -1,0 +1,12 @@
+clc;clear;
+x1=xlsread('每时间段各站点的借车频次.xls','Sheet1','B3:BI182');%各时段各站点借车频次
+x2=xlsread('每时间段各站点的还车频次.xls','Sheet1','B3:BI182');%各时段各站点还车频次
+y1=duiqi(x1);
+gaofeng1=gaofengqi(y1);
+y2=duiqi(x2);
+gaofeng2=gaofengqi(y2);
+%第一列为站号，第二列为最大值，第三列为最大值对应时段，
+%第四列为次大值，第五列为次大值对应时段，
+%各时段对应值为：1、6-6:30；2、6：30-7点；3、7-7：30点；。。。。依次类推。。。30、20-21点；16：21-22点
+xlswrite('day_20_gaofeng_jie',gaofeng1);
+xlswrite('day_20_gaofeng_huan',gaofeng2);

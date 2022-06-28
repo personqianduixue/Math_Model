@@ -1,0 +1,53 @@
+clc
+clear
+%ÔØÈëlingoÊä³öµÄ01±äÁ¿
+filename='C:\Users\Administrator\Desktop\³ÌĞò\output.txt';
+X=load(filename)
+[h,l]=size(X);
+simbol=[];
+
+%¶ÁÈë´ıÅÅĞòËéÆ¬±àºÅ
+a=xlsread('C:\Users\Administrator\Desktop\³ÌĞò\fujian3data.xlsx');
+[H,N]=size(a);
+a=a-1;
+for i=1:N
+    simbol(1:N,i) = X((i-1)*N+1:i*N,1);
+end
+
+[ind,m]=max(simbol);
+xuhao=ones(2,N);
+for i=1:N
+    if ind(i)==1
+        xuhao(1,i)=i;
+    else ind(i)=inf;
+    end
+end
+               
+xuhao(2,:)=m;
+xuhao;
+
+ for j=1:N
+        xuhao(1,j)=a(j);
+        xuhao(2,j)=a(xuhao(2,j));  
+ end
+ xuhao;
+ 
+
+%ËéÆ¬Í¼Æ¬µÄÆ´½ÓË³Ğò±àºÅ
+shunxu=[];
+shunxu(1)=4;%×î×ó¶ËÍ¼Æ¬ĞòºÅ
+
+for i=1:N-1
+    for j=1:N
+       if    shunxu(i)==xuhao(1,j);
+             shunxu(i+1)=xuhao(2,j);
+       else
+           continue
+        end
+     end
+ 
+end
+
+%Êä³öËéÖ½Æ¬Ë³Ğò
+disp('ËéÖ½Æ¬Ë³ĞòÎª£º')
+shunxu
