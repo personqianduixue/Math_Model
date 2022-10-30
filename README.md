@@ -6,7 +6,7 @@
 
 ## 本仓库停止更新
 
-考虑到仓库太大，不方便下载，转为更新百度网盘地址，**以后更新的地址**为：[新的地址](https://mianbaoduo.com/o/bread/mbd-YpuYlJ1w) 
+考虑到仓库太大，不方便下载，转为更新百度网盘地址，**以后更新的地址**为：[新的地址](https://mbd.pub/o/bread/mbd-YpuYlJ1w) 
 
 新地址仓库的目录结构查看：[新仓库目录结构](https://github.com/personqianduixue/Math_Model/blob/master/tree.txt)
 
